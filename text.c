@@ -39,7 +39,7 @@ int npcDiag(int npc = 0, int dialog = 0) {
 					xsEnableRule("subscribe_complete");
 					dialog = 0;
 				}
-								case 5:
+				case 5:
 				{
 					extra = "" + 1*trQuestVarGet("operand1") + " + " + 1*trQuestVarGet("operand2") + " = " + 1*trQuestVarGet("wrongAnswer");
 					uiMessageBox("You fools! We're now trapped in a world where " + extra + "!");

@@ -46,7 +46,7 @@ highFrequency
 	}
 	//start fade to black
 	//trUIFadeToColor(1,0,0,0,0,true);
-	trShowImageDialog("world a tamarisk tree leaf", MapName + " by Yeebaagooon");
+	trShowImageDialog("icons\improvement wealth of erebus icon 64", MapName + " by Yeebaagooon");
 	gadgetUnreal("ShowImageBox-BordersTop");
 	gadgetUnreal("ShowImageBox-BordersBottom");
 	gadgetUnreal("ShowImageBox-BordersLeft");
@@ -127,7 +127,9 @@ highFrequency
 		gadgetReal("ShowImageBox-BordersRightBottom");
 		gadgetReal("ShowImageBox-BordersRightTop");
 		gadgetReal("ShowImageBox-CloseButton");
-		startNPCDialog(1);
+		//startNPCDialog(1);
+		trTechGodPower(1, "Animal Magnetism", 1);
+		trTechGodPower(1, "Nidhogg", 1);
 		while(cNumberNonGaiaPlayers>=trQuestVarGet("PlayerID")) {
 			trQuestVarSet("PlayerID2", 0);
 			while(cNumberNonGaiaPlayers>=trQuestVarGet("PlayerID2")) {
