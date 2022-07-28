@@ -32,7 +32,6 @@ rule START
 active
 highFrequency
 {
-	aiSet("NoAI", 0);
 	trPlayerKillAllGodPowers(0);
 	for(p = 1; <= cNumberNonGaiaPlayers){
 		trSetCivAndCulture(p, 3, 1);
@@ -87,7 +86,6 @@ highFrequency
 {
 	if((trTime()-cActivationTime) >= 1){
 		characterDialog("Loading map...", ""+MapVersion+"", "icons\special e son of osiris icon 64");
-		aiSet("NoAI", 0);
 		for(p = 1; <= cNumberNonGaiaPlayers){
 			trPlayerGrantResources(p, "Food", -10000.0);
 			trPlayerGrantResources(p, "Wood", -10000.0);
