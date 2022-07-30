@@ -35,6 +35,7 @@ highFrequency
 	trModifyProtounit("Wadjet Spit", 0, 8, 1000);
 	for(p = 1; <= cNumberNonGaiaPlayers){
 		trModifyProtounit("Dwarf", p, 55, 4);
+		trModifyProtounit("Animal Attractor", p, 55, 4);
 		trModifyProtounit("Wadjet Spit", p, 8, 1000);
 		//trQuestVarSet("P"+p+"FlagBaseWarnF", 15);
 		//modifyProtounitAbsolute("Gate", p, 0, 1000);

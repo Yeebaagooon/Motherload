@@ -1,3 +1,27 @@
+int TERRAIN_TYPE = 2;
+int TERRAIN_SUBTYPE = 2;
+
+void RockType(int rock = 0) {
+	switch(rock)
+	{
+		case 1:
+		{
+			TERRAIN_TYPE = 2;
+			TERRAIN_SUBTYPE = 2;
+		}
+		case 2:
+		{
+			TERRAIN_TYPE = 2;
+			TERRAIN_SUBTYPE = 3;
+		}
+		case 3:
+		{
+			TERRAIN_TYPE = 2;
+			TERRAIN_SUBTYPE = 4;
+		}
+	}
+}
+
 string stageName(int stage = 0) {
 	string name = "(This stage has not been made yet)";
 	switch(stage)

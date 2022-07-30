@@ -81,6 +81,7 @@ highFrequency
 {
 	characterDialog("Loading map..", ""+MapVersion+"", "icons\special e son of osiris icon 64");
 	xsEnableRule("load3");
+	trSoundPlayFN("Yeebaagooon\test sound.mp3", "1", 13, "", "");
 	xsDisableSelf();
 }
 
@@ -96,8 +97,6 @@ highFrequency
 			trPlayerGrantResources(p, "Gold", -10000.0);
 			trPlayerGrantResources(p, "Favor", -10000.0);
 			trPlayerKillAllGodPowers(p);
-			//this does custom content
-			//trSoundPlayFN("Yeebaagooon\test sound.mp3", "1", 13, "", "");
 		}
 		xsEnableRule("load4");
 		xsDisableSelf();
@@ -141,13 +140,4 @@ highFrequency
 		trQuestVarSet("PlayerID", trQuestVarGet("PlayerID")+1);}
 	}
 }
-/*
-rule CustomContent
-inactive
-highFrequency
-{
-	xsDisableSelf();
-	trQuestVarSet("CustomContent", 1);
-	trChatSend(0, "custom");
-}
-*/
+

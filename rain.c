@@ -18,8 +18,14 @@ highFrequency
 	trEventSetHandler(10, "UngarrisonDrill");
 	trEventSetHandler(11, "UngarrisonDrill");
 	trEventSetHandler(12, "UngarrisonDrill");
-	//trEventSetHandler(13, "CustomContent");
+	trEventSetHandler(13, "CustomContent");
 	xsDisableSelf();
+}
+
+void CustomContent(int p = 0){
+	xsDisableSelf();
+	trQuestVarSet("CustomContent", 1);
+	trChatSend(0, "Custom Content enabled!");
 }
 
 rule lure
@@ -32,10 +38,10 @@ highFrequency
 			trVectorSetUnitPos("TargetVector"+p+"", "p"+p+"LureObject", true);
 			trMutateSelected(kbGetProtoUnitID("Osiris SFX"));
 			trVectorSnapToGrid("TargetVector"+p+"");
-			trVectorSetUnitPos("SiphonPos", "P"+p+"Siphon");
-			trVectorSnapToGrid("SiphonPos");
-			int startXPos = (trVectorQuestVarGetX("SiphonPos") ) / 8 +1;
-			int startZPos = (trVectorQuestVarGetZ("SiphonPos") ) / 8 +1;
+			trVectorSetUnitPos("SiphonPos"+p+"", "P"+p+"Siphon");
+			trVectorSnapToGrid("SiphonPos"+p+"");
+			int startXPos = (trVectorQuestVarGetX("SiphonPos"+p+"") ) / 8 +1;
+			int startZPos = (trVectorQuestVarGetZ("SiphonPos"+p+"") ) / 8 +1;
 			/*
 			trArmyDispatch(""+p+",0", "Ajax", 1, trVectorQuestVarGetX("TargetVector"+p+""), trVectorQuestVarGetY("TargetVector"+p+""),
 				trVectorQuestVarGetZ("TargetVector"+p+""), 0, true);
@@ -72,27 +78,24 @@ highFrequency
 			}
 			
 			// DISTANCE <92 IS OK TO DRILL
-			trChatSend(0, "Type "+trGetTerrainType(1*trQuestVarGet("P"+p+"DrillTargetX")/2,
-					1*trQuestVarGet("P"+p+"DrillTargetZ")/2)+"");
-			trChatSend(0, "Sub"+trGetTerrainSubType(1*trQuestVarGet("P"+p+"DrillTargetX")/2,
-					1*trQuestVarGet("P"+p+"DrillTargetZ")/2)+"");
+			trChatSend(0, "Type "+trGetTerrainType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
+					1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1)+"");
+			trChatSend(0, "Sub"+trGetTerrainSubType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
+					1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1)+"");
 			
-			//NOT NEEDED as mine terrain is unbuildable, also doesn't work
-			/*
-			if(trGetTerrainSubType(1*trQuestVarGet("P"+p+"DrillTargetX"),
-					1*trQuestVarGet("P"+p+"DrillTargetZ")) == 5) {
-				if(trGetTerrainType(1*trQuestVarGet("P"+p+"DrillTargetX"),
-						1*trQuestVarGet("P"+p+"DrillTargetZ")) == 2) {
-					
-					trChatSendToPlayer(0, p, "<color=1,0,0>This spot has already been drilled!</color>");
-					if(trCurrentPlayer() == p){
-						trSoundPlayFN("cantdothat.wav","1",-1,"","");
-					}
-					trTechGodPower(p, "Animal Magnetism", 1);
+			//Terrain check fails
+			
+			if((trGetTerrainSubType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
+						1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 3) && (trGetTerrainType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
+						1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 5)){
+				trChatSendToPlayer(0, p, "<color=1,0,0>This spot has already been drilled!</color>");
+				if(trCurrentPlayer() == p){
+					trSoundPlayFN("cantdothat.wav","1",-1,"","");
 				}
+				trTechGodPower(p, "Animal Magnetism", 1);
 			}
-			*/
-			if(zPos > MaxRows){
+			
+			else if(zPos > MaxRows){
 				trChatSendToPlayer(0, p, "<color=1,0,0>You can't drill above ground!</color>");
 				if(trCurrentPlayer() == p){
 					trSoundPlayFN("cantdothat.wav","1",-1,"","");
@@ -120,11 +123,11 @@ highFrequency
 				trUnitSelectClear();
 				trUnitSelectByQV("P"+p+"MainSpy", true);
 				trMutateSelected(kbGetProtoUnitID("Heka Shockwave SFX"));
-				trArmyDispatch(""+p+",0", "Revealer", 1, trVectorQuestVarGetX("SiphonPos"), trVectorQuestVarGetY("SiphonPos"),
-					trVectorQuestVarGetZ("SiphonPos"), 180, true);
+				trArmyDispatch(""+p+",0", "Revealer", 1, trVectorQuestVarGetX("SiphonPos"+p+""), trVectorQuestVarGetY("SiphonPos"+p+""),
+					trVectorQuestVarGetZ("SiphonPos"+p+""), 180, true);
 				trQuestVarSet("DrillAttach"+p+"", trGetNextUnitScenarioNameNumber());
-				trArmyDispatch(""+p+",0", "Victory Marker", 1, trVectorQuestVarGetX("SiphonPos"), trVectorQuestVarGetY("SiphonPos"),
-					trVectorQuestVarGetZ("SiphonPos"), 180, true);
+				trArmyDispatch(""+p+",0", "Victory Marker", 1, trVectorQuestVarGetX("SiphonPos"+p+""), trVectorQuestVarGetY("SiphonPos"+p+""),
+					trVectorQuestVarGetZ("SiphonPos"+p+""), 180, true);
 				//trUnitSelectClear();
 				//trUnitSelectByQV("P"+p+"Siphon", false);
 				//trUnitChangeProtoUnit("Wadjet Spit");
@@ -159,20 +162,18 @@ highFrequency
 }
 
 void UngarrisonDrill(int p = 1){
+	trUnitSelectByQV("P"+p+"Siphon", false);
+	trUnitEjectContained();
+	trUnitChangeProtoUnit("Hero Greek Atalanta");
 	trUnitSelectClear();
 	trUnitSelectByQV("DrillAttach"+p+"", true);
 	trUnitDestroy();
 	trUnitSelectClear();
-	trUnitSelectByQV("P"+p+"Siphon", false);
-	//trUnitEjectContained();
-	//trDamageUnitPercent(-100);
-	trUnitChangeProtoUnit("Hero Greek Atalanta");
 	//trMutateSelected(kbGetProtoUnitID("Hero Greek Atalanta"));
 	//garrison relics
-	//trDamageUnitPercent(-100);
 	trTechGodPower(p, "Animal Magnetism", 1);
-	trVectorSetUnitPos("SiphonPos", "P"+p+"Siphon");
-	trVectorSnapToGrid("SiphonPos");
+	trVectorSetUnitPos("SiphonPos"+p+"", "P"+p+"Siphon");
+	trVectorSnapToGrid("SiphonPos"+p+"");
 	trArmyDispatch(""+p+",0", "Revealer", 1, 1*trQuestVarGet("P"+p+"DrillTargetX"), 1,
 		1*trQuestVarGet("P"+p+"DrillTargetZ"), 180, true);
 	trUnitSelectClear();
@@ -182,6 +183,7 @@ void UngarrisonDrill(int p = 1){
 	trPaintTerrain(1*trQuestVarGet("P"+p+"DrillTargetX")/2-3,1*trQuestVarGet("P"+p+"DrillTargetZ")/2-3,
 		1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1,5,3,false);
 	//This paints the black area around the square depending on entry point
+	/*
 	if(1*trQuestVarGet("P"+p+"Approach") == 1){
 		trPaintTerrain(1*trQuestVarGet("P"+p+"DrillTargetX")/2-3,1*trQuestVarGet("P"+p+"DrillTargetZ")/2-4,
 			1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1,5,3,false);
@@ -198,15 +200,42 @@ void UngarrisonDrill(int p = 1){
 		trPaintTerrain(1*trQuestVarGet("P"+p+"DrillTargetX")/2-4,1*trQuestVarGet("P"+p+"DrillTargetZ")/2-3,
 			1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1,5,3,false);
 	}
-	//trPaintTerrain(0,0,0,0,0,0, true);
-	
-	//FEATURE ** - needs some sort of snap to grid tp for the atalanta
-	/*
-	trUnitSelectClear();
-	trUnitSelectByQV("P"+p+"Siphon", true);
-	trUnitTeleport(1*trQuestVarGet("P"+p+"DrillTargetX"), 1,
-		1*trQuestVarGet("P"+p+"DrillTargetZ"));
 	*/
+	//IMPROVED - this checked and removes any connecting walls after a drill
+	//upwards
+	trChatSend(0, "Debug - "+trGetTerrainSubType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
+			1*trQuestVarGet("P"+p+"DrillTargetZ")/2+3)+"");
+	//paint from up
+	if((trGetTerrainSubType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
+				1*trQuestVarGet("P"+p+"DrillTargetZ")/2+3) == 3) && (trGetTerrainType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
+				1*trQuestVarGet("P"+p+"DrillTargetZ")/2+3) == 5)){
+		trPaintTerrain(1*trQuestVarGet("P"+p+"DrillTargetX")/2-3,1*trQuestVarGet("P"+p+"DrillTargetZ")/2+1,
+			1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,1*trQuestVarGet("P"+p+"DrillTargetZ")/2,5,3,false);
+	}
+	//paint from down
+	if((trGetTerrainSubType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
+				1*trQuestVarGet("P"+p+"DrillTargetZ")/2-5) == 3) && (trGetTerrainType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
+				1*trQuestVarGet("P"+p+"DrillTargetZ")/2-5) == 5)){
+		trPaintTerrain(1*trQuestVarGet("P"+p+"DrillTargetX")/2-3,1*trQuestVarGet("P"+p+"DrillTargetZ")/2-4,
+			1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1,5,3,false);
+	}
+	
+	//paint from left -5x
+	if((trGetTerrainSubType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-5,
+				1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 3) && (trGetTerrainType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-5,
+				1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 5)){
+		trPaintTerrain(1*trQuestVarGet("P"+p+"DrillTargetX")/2-4,1*trQuestVarGet("P"+p+"DrillTargetZ")/2-3,
+			1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1,5,3,false);
+	}
+	//paint from right -5x
+	if((trGetTerrainSubType(1*trQuestVarGet("P"+p+"DrillTargetX")/2+3,
+				1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 3) && (trGetTerrainType(1*trQuestVarGet("P"+p+"DrillTargetX")/2+3,
+				1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 5)){
+		trPaintTerrain(1*trQuestVarGet("P"+p+"DrillTargetX")/2-3,1*trQuestVarGet("P"+p+"DrillTargetZ")/2-3,
+			1*trQuestVarGet("P"+p+"DrillTargetX")/2,1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1,5,3,false);
+	}
+	
+	trPaintTerrain(0,0,0,0,0,0, true);
 	trQuestVarSet("P"+p+"Approach", 0);
 	xsDisableSelf();
 }
@@ -224,27 +253,22 @@ active
 highFrequency
 {
 	if(trTime() == 1){
-		int RockType = 5;
-		int RockSubType = 2;
 		//trPaintTerrain(0,0,4*col+4,4*row+4,2,13,false);
 		trPaintTerrain(0,0,4*MaxCols,4*MaxRows,2,13,false);
 		for(col = 1; <= MaxCols){
 			for(row = 1; <= MaxRows){
 				if(Stage == 1){
 					if(col <= 5){
-						RockType = 2;
-						RockSubType = 10;
+						RockType(1);
 					}
 					if((col > 5) && (col < 20)){
-						RockType = 0;
-						RockSubType = 39;
+						RockType(2);
 					}
 					if(col >= 20){
-						RockType = 5;
-						RockSubType = 2;
+						RockType(3);
 					}
 				}
-				trPaintTerrain(4*col-1,4*row-1,4*col-3,4*row-3,RockType,RockSubType,false);
+				trPaintTerrain(4*col-1,4*row-1,4*col-3,4*row-3,TERRAIN_TYPE,TERRAIN_SUBTYPE,false);
 				trQuestVarSet("R"+row+"C"+col+"CentreY", row*4-2);
 				trQuestVarSet("R"+row+"C"+col+"CentreX", col*4-2);
 				//trVectorQuestVarSet("R"+row+"C"+col+"", xsVectorSet(col*8-3, 3, row*8-3));
@@ -261,6 +285,7 @@ highFrequency
 			1*trQuestVarGet("R4C3CentreY"),2,2,false);
 		*/
 		xsDisableSelf();
+		trPaintTerrain(0,80,100,80,5,3,false);
 	}
 }
 
@@ -282,6 +307,20 @@ highFrequency
 		//trPaintTerrain(0,0,0,0,0,0, true);
 		xsDisableSelf();
 		trShowImageDialog(stageIcon(Stage), stageName(Stage));
+		xsEnableRule("TEMPfuel");
+	}
+}
+
+rule TEMPfuel
+inactive
+highFrequency
+//CHANGE condition to distance not time
+{
+	for(p = 1; <= cNumberNonGaiaPlayers){
+		if(trDistanceToVectorSquared("P"+p+"Siphon", "P"+p+"Pos") > 0){
+			trPlayerGrantResources(1, "Gold", 1);
+			trVectorSetUnitPos("P"+p+"Pos", "P"+p+"Siphon");
+		}
 	}
 }
 
