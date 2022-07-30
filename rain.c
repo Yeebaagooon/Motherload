@@ -322,6 +322,29 @@ highFrequency
 		*/
 		xsDisableSelf();
 		trPaintTerrain(0,80,100,80,5,3,false);
+		//xsEnableRule("PaintLoot");
+	}
+}
+
+rule PaintLoot
+inactive
+highFrequency
+{
+	xsDisableSelf();
+	for(col = 1; <= MaxCols){
+		for(row = 1; <= MaxRows){
+			if(Stage == 1){
+				if((col > 5) && (col < 20)){
+					trQuestVarSetFromRand("Temp",1,15);
+					if(1*trQuestVarGet("Temp") <= cNumberNonGaiaPlayers){
+						trQuestVarSet("TempLoot", trGetNextUnitScenarioNameNumber());
+						trArmyDispatch("0,0", "Dwarf", 1, col*8-4, 3, row*8-4, 0, true);
+						trUnitSelectByQV("TempLoot", true);
+						trUnitChangeProtoUnit("Relic");
+					}
+				}
+			}
+		}
 	}
 }
 
