@@ -78,13 +78,8 @@ highFrequency
 			}
 			
 			// DISTANCE <92 IS OK TO DRILL
-			trChatSend(0, "Type "+trGetTerrainType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
-					1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1)+"");
-			trChatSend(0, "Sub"+trGetTerrainSubType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
-					1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1)+"");
 			
 			//Terrain check fails
-			
 			if((trGetTerrainSubType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
 						1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 3) && (trGetTerrainType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
 						1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 5)){
@@ -128,9 +123,6 @@ highFrequency
 				trQuestVarSet("DrillAttach"+p+"", trGetNextUnitScenarioNameNumber());
 				trArmyDispatch(""+p+",0", "Victory Marker", 1, trVectorQuestVarGetX("SiphonPos"+p+""), trVectorQuestVarGetY("SiphonPos"+p+""),
 					trVectorQuestVarGetZ("SiphonPos"+p+""), 180, true);
-				//trUnitSelectClear();
-				//trUnitSelectByQV("P"+p+"Siphon", false);
-				//trUnitChangeProtoUnit("Wadjet Spit");
 				trUnitSelectClear();
 				trUnitSelectByQV("P"+p+"Siphon", false);
 				trMutateSelected(kbGetProtoUnitID("Relic"));
@@ -149,10 +141,13 @@ highFrequency
 				trUnitSelectClear();
 				trUnitSelectByQV("DrillAttach"+p+"", true);
 				trMutateSelected(kbGetProtoUnitID("Wadjet Spit"));
-				modifyProtounitAbsolute("Wadjet Spit", p, 1, 3);
+				//DRILL SPEED
+				modifyProtounitAbsolute("Wadjet Spit", p, 1, 30);
 				trUnitSelectClear();
 				trUnitSelectByQV("DrillAttach"+p+"", true);
 				trUnitMoveToVectorEvent("TargetVector"+p+"", false, 1);
+				trQuestVarSet("P"+p+"Drilling", 19);
+				//10 seems to be lowest value here
 			}
 		}
 		else {
@@ -180,6 +175,7 @@ void UngarrisonDrill(int p = 1){
 	trUnitSelectByQV("P"+p+"MainSpy", true);
 	trMutateSelected(kbGetProtoUnitID("Fire Siphon"));
 	//BUG** If terrain updates the vectors don't update for position and the unit dies on 2nd attempt
+	//RESOLVED** unit must have valid ungarrison position but change fixes this anyway
 	trPaintTerrain(1*trQuestVarGet("P"+p+"DrillTargetX")/2-3,1*trQuestVarGet("P"+p+"DrillTargetZ")/2-3,
 		1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1,5,3,false);
 	//This paints the black area around the square depending on entry point
@@ -203,8 +199,6 @@ void UngarrisonDrill(int p = 1){
 	*/
 	//IMPROVED - this checked and removes any connecting walls after a drill
 	//upwards
-	trChatSend(0, "Debug - "+trGetTerrainSubType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
-			1*trQuestVarGet("P"+p+"DrillTargetZ")/2+3)+"");
 	//paint from up
 	if((trGetTerrainSubType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
 				1*trQuestVarGet("P"+p+"DrillTargetZ")/2+3) == 3) && (trGetTerrainType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
@@ -237,6 +231,7 @@ void UngarrisonDrill(int p = 1){
 	
 	trPaintTerrain(0,0,0,0,0,0, true);
 	trQuestVarSet("P"+p+"Approach", 0);
+	trQuestVarSet("P"+p+"Drilling", 1);
 	xsDisableSelf();
 }
 
@@ -258,14 +253,55 @@ highFrequency
 		for(col = 1; <= MaxCols){
 			for(row = 1; <= MaxRows){
 				if(Stage == 1){
-					if(col <= 5){
-						RockType(1);
-					}
 					if((col > 5) && (col < 20)){
-						RockType(2);
+						if(row > 18){
+							RockType(1);
+						}
+						else if((row > 15) && (row <= 18 )){
+							trQuestVarSetFromRand("Temp",1,2,true);
+							RockType(1*trQuestVarGet("Temp"));
+						}
+						else if((row > 13) && (row <= 15 )){
+							trQuestVarSetFromRand("Temp",1,3,true);
+							if(trQuestVarGet("Temp") == 3){
+								trQuestVarModify("Temp", "-", 1);
+							}
+							RockType(1*trQuestVarGet("Temp"));
+						}
+						else if((row > 10) && (row <= 13 )){
+							trQuestVarSetFromRand("Temp",2,4,true);
+							if(trQuestVarGet("Temp") == 4){
+								trQuestVarModify("Temp", "-", 1);
+							}
+							RockType(1*trQuestVarGet("Temp"));
+						}
+						else if((row > 7) && (row <= 10 )){
+							trQuestVarSetFromRand("Temp",2,4,true);
+							if(trQuestVarGet("Temp") == 2){
+								trQuestVarModify("Temp", "+", 1);
+							}
+							RockType(1*trQuestVarGet("Temp"));
+						}
+						else if((row > 5) && (row <= 7 )){
+							trQuestVarSetFromRand("Temp",3,4,true);
+							RockType(1*trQuestVarGet("Temp"));
+						}
+						else if((row > 2) && (row <= 5 )){
+							trQuestVarSetFromRand("Temp",4,7,true);
+							if(trQuestVarGet("Temp") != 4){
+								trQuestVarSet("Temp", 5);
+							}
+							RockType(1*trQuestVarGet("Temp"));
+						}
+						else if(row <= 2 ){
+							RockType(5);
+						}
 					}
 					if(col >= 20){
-						RockType(3);
+						RockType(8);
+					}
+					if(col <= 5){
+						RockType(9);
 					}
 				}
 				trPaintTerrain(4*col-1,4*row-1,4*col-3,4*row-3,TERRAIN_TYPE,TERRAIN_SUBTYPE,false);
@@ -307,7 +343,13 @@ highFrequency
 		//trPaintTerrain(0,0,0,0,0,0, true);
 		xsDisableSelf();
 		trShowImageDialog(stageIcon(Stage), stageName(Stage));
+		
+		//TEMP trQuestVarS
+		/*
+		trQuestVarSet("P1EnginePower", 100);
+		trQuestVarSet("P1Radiator", 0.1);
 		xsEnableRule("TEMPfuel");
+		*/
 	}
 }
 
@@ -318,8 +360,16 @@ highFrequency
 {
 	for(p = 1; <= cNumberNonGaiaPlayers){
 		if(trDistanceToVectorSquared("P"+p+"Siphon", "P"+p+"Pos") > 0){
-			trPlayerGrantResources(1, "Gold", 1);
 			trVectorSetUnitPos("P"+p+"Pos", "P"+p+"Siphon");
+			//Disable surface penalty
+			if((trVectorQuestVarGetZ("P"+p+"Pos")) > 160){
+				trPlayerGrantResources(p, "Gold", 0);
+				trQuestVarSet("P"+p+"Depth", 0);
+			}
+			else{
+				FuelLoss(p);
+				trQuestVarSet("P"+p+"Depth", (160-1*trVectorQuestVarGetZ("P"+p+"Pos"))*10);
+			}
 		}
 	}
 }

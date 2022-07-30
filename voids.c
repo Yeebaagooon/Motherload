@@ -1401,3 +1401,17 @@ void activateCustomContent(int asdf = 13) {
 	xsEnableRule("CustomContent");
 }
 */
+
+void FuelLoss(int p = 0){
+	int engine = 1*trQuestVarGet("P"+p+"EnginePower");
+	int depth = 1*trQuestVarGet("P"+p+"Depth");
+	float radiator = trQuestVarGet("P"+p+"Radiator");
+	int drilling = 1*trQuestVarGet("P"+p+"Drilling");
+	trPlayerGrantResources(1, "Gold", 0.01*drilling*(((300-engine)+(0.1*depth)/radiator)));
+	trChatHistoryClear();
+	trChatSend(0, "drill "+drilling+"");
+	trChatSend(0, "depth "+depth+"");
+	trChatSend(0, "engine "+engine+"");
+	trChatSend(0, " radiator "+radiator+"");
+	//	Fuel loss = (300-engine power)+(depth/radiator)*distance
+}

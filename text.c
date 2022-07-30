@@ -3,21 +3,54 @@ int TERRAIN_SUBTYPE = 2;
 
 void RockType(int rock = 0) {
 	switch(rock)
+	//1-7 sandy
 	{
 		case 1:
+		{
+			TERRAIN_TYPE = 0;
+			TERRAIN_SUBTYPE = 36;
+		}
+		case 2:
+		{
+			TERRAIN_TYPE = 0;
+			TERRAIN_SUBTYPE = 31;
+		}
+		case 3:
+		{
+			TERRAIN_TYPE = 0;
+			TERRAIN_SUBTYPE = 39;
+		}
+		case 4:
+		{
+			TERRAIN_TYPE = 0;
+			TERRAIN_SUBTYPE = 17;
+		}
+		case 5:
+		{
+			TERRAIN_TYPE = 0;
+			TERRAIN_SUBTYPE = 18;
+		}
+		case 6:
+		{
+			TERRAIN_TYPE = 0;
+			TERRAIN_SUBTYPE = 38;
+		}
+		case 7:
 		{
 			TERRAIN_TYPE = 2;
 			TERRAIN_SUBTYPE = 2;
 		}
-		case 2:
+		//Ice C
+		case 8:
 		{
-			TERRAIN_TYPE = 2;
-			TERRAIN_SUBTYPE = 3;
+			TERRAIN_TYPE = 5;
+			TERRAIN_SUBTYPE = 2;
 		}
-		case 3:
+		//Hades 7
+		case 9:
 		{
 			TERRAIN_TYPE = 2;
-			TERRAIN_SUBTYPE = 4;
+			TERRAIN_SUBTYPE = 10;
 		}
 	}
 }
