@@ -1,4 +1,5 @@
 int QuickStart = 0;
+int Stage = 1;
 string MapVersion = "Test Version";
 string MapName = "Motherload.xs";
 
@@ -96,7 +97,7 @@ highFrequency
 			trPlayerGrantResources(p, "Favor", -10000.0);
 			trPlayerKillAllGodPowers(p);
 			//this does custom content
-			//	trSoundPlayFN("Yeebaagooon\test sound.mp3", "1", 3, "","");
+			//trSoundPlayFN("Yeebaagooon\test sound.mp3", "1", 13, "", "");
 		}
 		xsEnableRule("load4");
 		xsDisableSelf();
@@ -140,11 +141,13 @@ highFrequency
 		trQuestVarSet("PlayerID", trQuestVarGet("PlayerID")+1);}
 	}
 }
-
-rule customcontent
+/*
+rule CustomContent
 inactive
 highFrequency
 {
 	xsDisableSelf();
 	trQuestVarSet("CustomContent", 1);
+	trChatSend(0, "custom");
 }
+*/

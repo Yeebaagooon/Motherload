@@ -1,3 +1,104 @@
+string stageName(int stage = 0) {
+	string name = "(This stage has not been made yet)";
+	switch(stage)
+	{
+		case 1:
+		{
+			name = "Thule";
+		}
+		case 2:
+		{
+			name = "Murkwood";
+		}
+		case 3:
+		{
+			name = "Frozen Canyon";
+		}
+		case 4:
+		{
+			name = "Emerald Fields";
+		}
+		case 5:
+		{
+			name = "Miasma Crypt";
+		}
+		case 6:
+		{
+			name = "The Factory";
+		}
+		case 7:
+		{
+			name = "The Deep";
+		}
+		case 8:
+		{
+			name = "The Clouds";
+		}
+		case 9:
+		{
+			name = "The Pit";
+		}
+		case 10:
+		{
+			name = "The Apex";
+		}
+	}
+	return(name);
+}
+
+string stageIcon(int stage = 0) {
+	string img = "icons\special e son of osiris icon 64";
+	string customimg = "icons\special e son of osiris icon 64";
+	switch(stage)
+	{
+		case 1:
+		{
+			img = "Yeebaagooon\Motherload\testicon";
+			customimg = "ui_x_gp_indicator_on";
+			//Yeebaagooon\Motherload\testicon
+		}
+		case 2:
+		{
+			img = "ui\ui map deep jungle 256x256";
+		}
+		case 3:
+		{
+			img = "ui\ui map jotunheim 256x256";
+		}
+		case 4:
+		{
+			img = "ui\ui map open fields 256x256";
+		}
+		case 5:
+		{
+			img = "ui\ui map river styx 256x256";
+		}
+		case 6:
+		{
+			img = "icons\building siege workshop icon 64";
+		}
+		case 7:
+		{
+			img = "icons\improvement poseidons secret icons 64";
+		}
+		case 8:
+		{
+			img = "icons\improvement safe passage icons 64";
+		}
+		case 9:
+		{
+			img = "ui\ui map erebus 256x256";
+		}
+		case 10:
+		{
+			img = "ui\ui map missing 256x256";
+		}
+	}
+	return(img);
+}
+
+//trShowImageDialog(stageIcon(Stage), stageName(Stage));
+
 /*
 Set up the numbers corresponding to dialogs
 const int NPC_RELIC_TRANSPORTER = 0;
