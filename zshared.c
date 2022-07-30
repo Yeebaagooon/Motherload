@@ -990,6 +990,10 @@ void trUnitMoveToVector(string v = "", bool attack = false) {
 	trUnitMoveToPoint(trVectorQuestVarGetX(v),0,trVectorQuestVarGetZ(v),-1,attack);
 }
 
+void trUnitMoveToVectorEvent(string v = "", bool attack = false, int event = -1) {
+	trUnitMoveToPoint(trVectorQuestVarGetX(v),0,trVectorQuestVarGetZ(v),event,attack);
+}
+
 void trVectorScale(string db = "", float s = 1.0) {
 	trVectorQuestVarSet(db, trVectorQuestVarGet(db) * s);
 }

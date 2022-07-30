@@ -19,7 +19,7 @@ runImmediately
 	for(p = 1; <= cNumberNonGaiaPlayers){
 		deployLocHeading(0, p*2, "Victory Marker", p, 180);
 	}
-	trSetFogAndBlackmap(false, false);
+	//trSetFogAndBlackmap(false, false);
 	%
 	for(p=1; <= cNumberNonGaiaPlayers) {
 		code("trStringQuestVarSet(\"p"+p+"name\", \""+rmGetPlayerName(p)+"\");");
@@ -67,8 +67,11 @@ highFrequency
 {
 	characterDialog("Loading map.", ""+MapVersion+"", "icons\special e son of osiris icon 64");
 	xsEnableRule("load2");
+	xsEnableRule("Stats");
 	trBlockAllSounds(false);
 	xsDisableSelf();
+	modifyProtounitAbsolute("Vision Revealer", 0, 2, 2400);
+	trArmyDispatch("0,0", "Vision Revealer", 1, 0, 0, 0, 0, false);
 }
 
 rule load2

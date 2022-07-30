@@ -32,35 +32,12 @@ inactive
 highFrequency
 {
 	trModifyProtounit("Dwarf", 0, 55, 4);
+	trModifyProtounit("Wadjet Spit", 0, 8, 1000);
 	for(p = 1; <= cNumberNonGaiaPlayers){
 		trModifyProtounit("Dwarf", p, 55, 4);
+		trModifyProtounit("Wadjet Spit", p, 8, 1000);
 		//trQuestVarSet("P"+p+"FlagBaseWarnF", 15);
 		//modifyProtounitAbsolute("Gate", p, 0, 1000);
-		modifyProtounitAbsolute("Atlantis Wall Long", p, 0, 10000000);
-		modifyProtounitAbsolute("Atlantis Wall Connector", p, 0, 10000000);
-		modifyProtounitAbsolute("Tower Mirror", p, 0, 10000000);
-		modifyProtounitAbsolute("Storage Pit", p, 0, 10000000);
-		trUnforbidProtounit(p, "Outpost");
-		modifyProtounitAbsolute("Outpost", p, 16, 0);
-		modifyProtounitAbsolute("Outpost", p, 17, 100);
-		modifyProtounitAbsolute("Mercenary", p, 8, 1);
-		modifyProtounitAbsolute("Farm", p, 16, 0);
-		modifyProtounitAbsolute("Farm", p, 17, 100);
-		modifyProtounitAbsolute("Farm", p, 18, 0);
-		modifyProtounitAbsolute("Tower", p, 16, 0);
-		modifyProtounitAbsolute("Tower", p, 17, 250);
-		modifyProtounitAbsolute("Tower", p, 18, 0);
-		modifyProtounitAbsolute("Tower", p, 10, 5);
-		modifyProtounitAbsolute("Ape of Set", p, 16, 50);
-		modifyProtounitAbsolute("Ape of Set", p, 17, 0);
-		modifyProtounitAbsolute("Ape of Set", p, 18, 0);
-		modifyProtounitAbsolute("Ape of Set", p, 19, 0);
-		modifyProtounitAbsolute("Ape of Set", p, 6, 0);
-		modifyProtounitAbsolute("Ape of Set", p, 3, 1);
-		modifyProtounitAbsolute("Market", p, 16, 0);
-		modifyProtounitAbsolute("Market", p, 17, 400);
-		modifyProtounitAbsolute("Market", p, 18, 0);
-		modifyProtounitAbsolute("Market", p, 10, 1);
 	}
 	xsDisableSelf();
 }
