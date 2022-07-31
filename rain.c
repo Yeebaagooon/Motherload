@@ -366,13 +366,23 @@ highFrequency
 		//trPaintTerrain(0,0,0,0,0,0, true);
 		xsDisableSelf();
 		trShowImageDialog(stageIcon(Stage), stageName(Stage));
-		
-		//TEMP trQuestVarS
 		/*
 		trQuestVarSet("P1EnginePower", 100);
 		trQuestVarSet("P1Radiator", 0.1);
 		xsEnableRule("TEMPfuel");
 		*/
+	}
+}
+
+rule temprelic
+active
+highFrequency
+{
+	if(trTime() == 5){
+		vector v = vector(100,0,100);
+		spawnRelicSpecific(v,1);
+		trSetFogAndBlackmap(false,false);
+		xsDisableSelf();
 	}
 }
 
