@@ -37,6 +37,8 @@ highFrequency
 		trModifyProtounit("Dwarf", p, 55, 4);
 		trModifyProtounit("Animal Attractor", p, 55, 4);
 		trModifyProtounit("Wadjet Spit", p, 8, 1000);
+		trModifyProtounit("Hero Greek Atalanta", p, 1, 10);
+		trModifyProtounit("Hero Greek Atalanta", p, 5, 4);
 		//trQuestVarSet("P"+p+"FlagBaseWarnF", 15);
 		//modifyProtounitAbsolute("Gate", p, 0, 1000);
 	}
