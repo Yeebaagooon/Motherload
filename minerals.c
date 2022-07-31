@@ -111,6 +111,7 @@ void relicDescription(int relic = 0) {
 
 //declare the db first
 int dFreeRelics = 0;
+int dHeldRelics = 0;
 int xRelicName = 0;
 int xRelicValue = 0;
 //int xRelicPrice = 0;
@@ -122,6 +123,9 @@ highFrequency
 	dFreeRelics = xInitDatabase("FreeRelics"); //db name
 	xRelicName = xInitAddInt(dFreeRelics, "name"); //unit name
 	xRelicValue = xInitAddInt(dFreeRelics, "value", 1); //value of the relic, default to 1=iron
+	dHeldRelics = xInitDatabase("HeldRelics"); //db name
+	xRelicName = xInitAddInt(dHeldRelics, "name"); //unit name
+	xRelicValue = xInitAddInt(dHeldRelics, "value", 1); //value of the relic, default to 1=iron
 	xsDisableSelf();
 }
 
@@ -134,7 +138,7 @@ void spawnRelicSpecific(vector v = vector (0,0,0), int val = 1){
 	trUnitSelectClear();
 	trUnitSelectByQV("TEMP");
 	trUnitChangeProtoUnit("Relic");
-	trChatSend(0, "Free relics = "+xGetDatabaseCount(dFreeRelics)+"");
+	//trChatSend(0, "Free relics = "+xGetDatabaseCount(dFreeRelics)+"");
 }
 
 void reselectMyself() {
@@ -194,6 +198,9 @@ void processFreeRelics(int count = 1) {
 					xSetInt(db, xRelicName, xGetInt(dFreeRelics, xRelicName));
 					xSetInt(db, xRelicType, xGetInt(dFreeRelics, xRelicType));
 					*/
+					xAddDatabaseBlock(dHeldRelics, true);
+					xSetInt(dHeldRelics, xRelicName, 1*xGetInt(dFreeRelics, xRelicName));
+					xSetInt(dHeldRelics, xRelicValue, 1*xGetInt(dFreeRelics, xRelicValue));
 					xFreeDatabaseBlock(dFreeRelics);
 					break; //ends the loop
 				}
@@ -206,11 +213,36 @@ void processFreeRelics(int count = 1) {
 	}
 }
 
+void processHeldRelics(int count = 1) {
+	float amt = 0;
+	int db = 0;
+	vector pos = vector(0,0,0);
+	for (x=xsMin(count, xGetDatabaseCount(dHeldRelics)); > 0) {
+		amt = 0;
+		xDatabaseNext(dHeldRelics);
+		xUnitSelect(dHeldRelics, xRelicName);
+		//If relic is dropped
+		if (trUnitGetIsContained("Unit") == false) {
+			for(p=1; < cNumberNonGaiaPlayers) {
+				if (trUnitIsOwnedBy(p)) {
+					//trChatSend(0, "Dropped by p"+p+""); //WHO DROPPED THE RELIC
+				}
+			}
+			trUnitChangeProtoUnit("Relic");
+			xAddDatabaseBlock(dFreeRelics, true);
+			xSetInt(dFreeRelics, xRelicName, 1*xGetInt(dHeldRelics, xRelicName));
+			xSetInt(dFreeRelics, xRelicValue, 1*xGetInt(dHeldRelics, xRelicValue));
+			xFreeDatabaseBlock(dHeldRelics);
+		}
+	}
+}
+
 rule eternal_loops
 active
 highFrequency
 {
 	processFreeRelics(5);
+	processHeldRelics(5);
 	//trChatSend(0, "Free relics = "+xGetDatabaseCount(dFreeRelics)+"");
 	/* relics dropped */
 	/*
