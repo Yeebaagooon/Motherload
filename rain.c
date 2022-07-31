@@ -381,6 +381,12 @@ highFrequency
 	if(trTime() == 5){
 		vector v = vector(100,0,100);
 		spawnRelicSpecific(v,1);
+		v = vector(105,0,105);
+		spawnRelicSpecific(v,2);
+		v = vector(110,0,110);
+		spawnRelicSpecific(v,2);
+		v = vector(115,0,115);
+		spawnRelicSpecific(v,3);
 		trSetFogAndBlackmap(false,false);
 		xsDisableSelf();
 	}

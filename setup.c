@@ -3,6 +3,7 @@ int Stage = 1;
 string MapVersion = "Test Version";
 string MapName = "Motherload.xs";
 
+
 rule Initialise
 active
 highFrequency
@@ -22,7 +23,7 @@ runImmediately
 	}
 	//trSetFogAndBlackmap(false, false);
 	%
-	for(p=1; <= cNumberNonGaiaPlayers) {
+	for(p=1; < cNumberNonGaiaPlayers) {
 		code("trStringQuestVarSet(\"p"+p+"name\", \""+rmGetPlayerName(p)+"\");");
 	}
 	%

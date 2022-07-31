@@ -28,6 +28,30 @@ string relicName(int relic = 0) {
 	return(msg);
 }
 
+int relicCost(int relic = 0) {
+	int price = 0;
+	switch(relic)
+	{
+		case RELIC_IRON:
+		{
+			price = 1;
+		}
+		case RELIC_BRONZE:
+		{
+			price = 2;
+		}
+		case RELIC_SILVER:
+		{
+			price = 3;
+		}
+		case RELIC_GOLD:
+		{
+			price = 5;
+		}
+	}
+	return(price);
+}
+
 string relicIcon(int relic = 0) {
 	string icon = "icons\infantry g hoplite icon 64";
 	switch(relic)
@@ -55,7 +79,10 @@ string relicIcon(int relic = 0) {
 void relicDescription(int relic = 0) {
 	string icon = relicIcon(relic);
 	string msg = relicName(relic);
-	trShowImageDialog(icon, msg);
+	string textgap = " - Value = ";
+	int price = relicCost(relic);
+	string message = msg + textgap + price;
+	trShowImageDialog(icon, message);
 }
 
 //declare the db first
@@ -77,7 +104,7 @@ highFrequency
 	xAddDatabaseBlock(dRelicUnits, true);
 	xSetInt(dRelicUnits, xRelicName, 1*trQuestVarGet("TEMP"));
 	*/
-	
+	xsDisableSelf();
 }
 
 void spawnRelicSpecific(vector v = vector (0,0,0), int val = 1){
@@ -92,6 +119,20 @@ void spawnRelicSpecific(vector v = vector (0,0,0), int val = 1){
 	trChatSend(0, "Free relics = "+xGetDatabaseCount(dRelicUnits)+"");
 }
 
+void reselectMyself() {
+	uiClearSelection();
+	/*
+	int p = trCurrentPlayer();
+	int class = xGetInt(dPlayerData, xPlayerClass, p);
+	trackInsert();
+	trackAddWaypoint();
+	trackAddWaypoint();
+	trBlockAllSounds(false);
+	uiFindType(kbGetProtoUnitName(xGetInt(dClass, xClassProto, class)));
+	trackPlay(1,999);
+	*/
+}
+
 void processFreeRelics(int count = 1) {
 	float amt = 0;
 	int db = 0;
@@ -102,11 +143,10 @@ void processFreeRelics(int count = 1) {
 		xUnitSelect(dRelicUnits, xRelicName);
 		//STARRED CODE HERE AND BELOW ELSEIF
 		if(trUnitIsSelected()) {
-			trChatSend(0, "not showing");
-			//trShowImageDialog(relicIcon(xGetInt(dRelicUnits, xRelicName)), relicName(xGetInt(dRelicUnits, xRelicName)));
-			//	reselectMyself();
+			//trShowImageDialog(relicIcon(xGetInt(dRelicUnits, xRelicValue)), relicName(xGetInt(dRelicUnits, xRelicValue)));
+			relicDescription(xGetInt(dRelicUnits, xRelicValue));
+			reselectMyself();
 		}
-		trChatSend(0, "not showing");
 	}
 }
 
@@ -115,5 +155,5 @@ active
 highFrequency
 {
 	processFreeRelics(5);
-	trChatSend(0, "Free relics = "+xGetDatabaseCount(dRelicUnits)+"");
+	//trChatSend(0, "Free relics = "+xGetDatabaseCount(dRelicUnits)+"");
 }
