@@ -322,7 +322,7 @@ highFrequency
 		*/
 		xsDisableSelf();
 		trPaintTerrain(0,80,100,80,5,3,false);
-		//xsEnableRule("PaintLoot");
+		xsEnableRule("PaintLoot");
 	}
 }
 
@@ -333,14 +333,42 @@ highFrequency
 	xsDisableSelf();
 	for(col = 1; <= MaxCols){
 		for(row = 1; <= MaxRows){
+			vector v = xsVectorSet(col*8-4,0,row*8-4);
 			if(Stage == 1){
 				if((col > 5) && (col < 20)){
-					trQuestVarSetFromRand("Temp",1,15);
-					if(1*trQuestVarGet("Temp") <= cNumberNonGaiaPlayers){
-						trQuestVarSet("TempLoot", trGetNextUnitScenarioNameNumber());
-						trArmyDispatch("0,0", "Dwarf", 1, col*8-4, 3, row*8-4, 0, true);
-						trUnitSelectByQV("TempLoot", true);
-						trUnitChangeProtoUnit("Relic");
+					if(row > 16){
+						trQuestVarSetFromRand("Temp",1,15);
+						if(1*trQuestVarGet("Temp") <= cNumberNonGaiaPlayers){
+							spawnRelicSpecific(v,1);
+						}
+					}
+					else if((row > 10) && (row <= 16)){
+						trQuestVarSetFromRand("Temp",1,15);
+						trQuestVarSetFromRand("Temp2",1,2);
+						if(1*trQuestVarGet("Temp") <= cNumberNonGaiaPlayers){
+							spawnRelicSpecific(v,1*trQuestVarGet("Temp2"));
+						}
+					}
+					else if((row > 6) && (row <= 10)){
+						trQuestVarSetFromRand("Temp",1,15);
+						trQuestVarSetFromRand("Temp2",1,3);
+						if(1*trQuestVarGet("Temp") <= cNumberNonGaiaPlayers){
+							spawnRelicSpecific(v,1*trQuestVarGet("Temp2"));
+						}
+					}
+					else if((row > 3) && (row <= 6)){
+						trQuestVarSetFromRand("Temp",1,15);
+						trQuestVarSetFromRand("Temp2",2,3);
+						if(1*trQuestVarGet("Temp") <= cNumberNonGaiaPlayers){
+							spawnRelicSpecific(v,1*trQuestVarGet("Temp2"));
+						}
+					}
+					else if(row <= 3){
+						trQuestVarSetFromRand("Temp",1,15);
+						trQuestVarSetFromRand("Temp2",2,4);
+						if(1*trQuestVarGet("Temp") <= cNumberNonGaiaPlayers){
+							spawnRelicSpecific(v,1*trQuestVarGet("Temp2"));
+						}
 					}
 				}
 			}
@@ -371,24 +399,6 @@ highFrequency
 		trQuestVarSet("P1Radiator", 0.1);
 		xsEnableRule("TEMPfuel");
 		*/
-	}
-}
-
-rule temprelic
-active
-highFrequency
-{
-	if(trTime() == 5){
-		vector v = vector(100,0,100);
-		spawnRelicSpecific(v,1);
-		v = vector(105,0,105);
-		spawnRelicSpecific(v,2);
-		v = vector(110,0,110);
-		spawnRelicSpecific(v,3);
-		v = vector(115,0,115);
-		spawnRelicSpecific(v,4);
-		trSetFogAndBlackmap(false,false);
-		xsDisableSelf();
 	}
 }
 
