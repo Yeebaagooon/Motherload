@@ -118,8 +118,6 @@ highFrequency
 		trOverlayText(MapName, 8.0, 566, 35, 1000);
 		trSetUnitIdleProcessing(true);
 		xsDisableSelf();
-		paintShopSquare(3,3, "Black");
-		UnitCreate(0, "Hoplite", 6, 6, 180);
 		gadgetReal("ShowImageBox-BordersTop");
 		gadgetReal("ShowImageBox-BordersBottom");
 		gadgetReal("ShowImageBox-BordersLeft");

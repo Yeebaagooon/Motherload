@@ -214,14 +214,14 @@ void UngarrisonDrill(int p = 1){
 			1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1,5,3,false);
 	}
 	
-	//paint from left -5x
+	//paint from left
 	if((trGetTerrainSubType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-5,
 				1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 3) && (trGetTerrainType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-5,
 				1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 5)){
 		trPaintTerrain(1*trQuestVarGet("P"+p+"DrillTargetX")/2-4,1*trQuestVarGet("P"+p+"DrillTargetZ")/2-3,
 			1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1,5,3,false);
 	}
-	//paint from right -5x
+	//paint from right
 	if((trGetTerrainSubType(1*trQuestVarGet("P"+p+"DrillTargetX")/2+3,
 				1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 3) && (trGetTerrainType(1*trQuestVarGet("P"+p+"DrillTargetX")/2+3,
 				1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 5)){
@@ -323,6 +323,8 @@ highFrequency
 		xsDisableSelf();
 		trPaintTerrain(0,80,100,80,5,3,false);
 		xsEnableRule("PaintLoot");
+		paintShopSquare(10,90, "Black");
+		UnitCreate(0, "Hoplite", 20, 180, 180);
 	}
 }
 

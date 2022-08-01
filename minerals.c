@@ -58,19 +58,19 @@ string relicIcon(int relic = 0) {
 	{
 		case RELIC_IRON:
 		{
-			icon = "icons\building armory icon 64";
+			icon = "icons\scenario thors hammer icon 64";
 		}
 		case RELIC_BRONZE:
 		{
-			icon = "icons\icon building wooden fence 64";
+			icon = "icons\special x behemoth icons 64";
 		}
 		case RELIC_SILVER:
 		{
-			icon = "icons\building dock icon 64";
+			icon = "icons\special x automaton icons 64";
 		}
 		case RELIC_GOLD:
 		{
-			icon = "icons\building lighthouse icon 64";
+			icon = "icons\special n battle boar icon 64";
 		}
 	}
 	return(icon);
@@ -82,19 +82,19 @@ int relicProto(int relic = 0) {
 	{
 		case RELIC_IRON:
 		{
-			proto = kbGetProtoUnitID("Armory");
+			proto = kbGetProtoUnitID("Thor Hammer Head");
 		}
 		case RELIC_BRONZE:
 		{
-			proto = kbGetProtoUnitID("Fence Iron");
+			proto = kbGetProtoUnitID("Behemoth");
 		}
 		case RELIC_SILVER:
 		{
-			proto = kbGetProtoUnitID("Dock");
+			proto = kbGetProtoUnitID("Automaton SPC");
 		}
 		case RELIC_GOLD:
 		{
-			proto = kbGetProtoUnitID("Lighthouse");
+			proto = kbGetProtoUnitID("Battle Boar");
 		}
 	}
 	return(proto);
@@ -177,7 +177,7 @@ void processFreeRelicsOLD(int count = 1) {
 void processFreeRelics(int count = 1) {
 	float amt = 0;
 	int db = 0;
-	vector pos = vector(0,0,0);
+	//vector pos = vector(0,0,0);
 	for (x=xsMin(count, xGetDatabaseCount(dFreeRelics)); > 0) {
 		amt = 0;
 		xDatabaseNext(dFreeRelics);
@@ -215,8 +215,10 @@ void processFreeRelics(int count = 1) {
 
 void processHeldRelics(int count = 1) {
 	float amt = 0;
+	int dropper = 0;
 	int db = 0;
-	vector pos = vector(0,0,0);
+	float currentDistance = 0;
+	vector pos = vector(20,3,180);
 	for (x=xsMin(count, xGetDatabaseCount(dHeldRelics)); > 0) {
 		amt = 0;
 		xDatabaseNext(dHeldRelics);
@@ -226,13 +228,28 @@ void processHeldRelics(int count = 1) {
 			for(p=1; < cNumberNonGaiaPlayers) {
 				if (trUnitIsOwnedBy(p)) {
 					//trChatSend(0, "Dropped by p"+p+""); //WHO DROPPED THE RELIC
+					dropper = p;
 				}
 			}
-			trUnitChangeProtoUnit("Relic");
-			xAddDatabaseBlock(dFreeRelics, true);
-			xSetInt(dFreeRelics, xRelicName, 1*xGetInt(dHeldRelics, xRelicName));
-			xSetInt(dFreeRelics, xRelicValue, 1*xGetInt(dHeldRelics, xRelicValue));
-			xFreeDatabaseBlock(dHeldRelics);
+			currentDistance = unitDistanceToVector(xGetInt(dHeldRelics, xRelicName), pos);
+			if (currentDistance < 120) {
+				trUnitChangeProtoUnit("Curse SFX");
+				trPlayerGrantResources(dropper, "Gold", 1*relicCost(1*xGetInt(dHeldRelics, xRelicValue)));
+				if (trCurrentPlayer() == dropper) {
+					trChatSend(0, relicName(xGetInt(dHeldRelics, xRelicValue)) + " sold!");
+					trSoundPlayFN("favordump.wav","1",-1,"","");
+				}
+				xFreeDatabaseBlock(dHeldRelics);
+				//break;
+			}
+			else{
+				trUnitChangeProtoUnit("Relic");
+				xAddDatabaseBlock(dFreeRelics, true);
+				xSetInt(dFreeRelics, xRelicName, 1*xGetInt(dHeldRelics, xRelicName));
+				xSetInt(dFreeRelics, xRelicValue, 1*xGetInt(dHeldRelics, xRelicValue));
+				xFreeDatabaseBlock(dHeldRelics);
+				//break;
+			}
 		}
 	}
 }

@@ -32,9 +32,12 @@ inactive
 highFrequency
 {
 	trModifyProtounit("Dwarf", 0, 55, 4);
+	trModifyProtounit("Armory", 0, 55, 4);
+	//movetype to air for mutated relics means they ungarrison in a pile
 	trModifyProtounit("Wadjet Spit", 0, 8, 1000);
 	for(p = 1; <= cNumberNonGaiaPlayers){
 		trModifyProtounit("Dwarf", p, 55, 4);
+		trModifyProtounit("Armory", p, 55, 4);
 		trModifyProtounit("Animal Attractor", p, 55, 4);
 		trModifyProtounit("Wadjet Spit", p, 8, 1000);
 		trModifyProtounit("Hero Greek Atalanta", p, 1, 10);
