@@ -30,7 +30,7 @@ import sys
 FILENAME = 'Motherload.xs'
 rmsFunc = ''
 rmsMain = 'main.c'
-files = ['zshared.c', 'voids.c', 'text.c', 'globals.c', 'terrain.c', 'setup.c', 'techstat.c', 'minerals.c', 'rain.c']
+files = ['zshared.c', 'voids.c', 'globals.c', 'setup.c', 'text.c', 'terrain.c', 'techstat.c', 'minerals.c', 'rain.c']
 
 #########################################
 ####### CODE BELOW (DO NOT TOUCH) #######

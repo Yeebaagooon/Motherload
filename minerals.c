@@ -195,7 +195,8 @@ void processFreeRelics(int count = 1) {
 					trMutateSelected(relicProto(xGetInt(dFreeRelics, xRelicValue)));
 					trUnitSetAnimationPath("1,0,1,1,0,0,0");
 					if (trCurrentPlayer() == p) {
-						trChatSend(0, relicName(xGetInt(dFreeRelics, xRelicValue)) + " stored in cargo hold!");
+						//trChatSend(0, relicName(xGetInt(dFreeRelics, xRelicValue)) + " stored in cargo hold!");
+						ColouredChatToPlayer(p, "1,1,1", relicName(xGetInt(dFreeRelics, xRelicValue)) + " stored in cargo hold!");
 						trSoundPlayFN("researchcomplete.wav","1",-1,"","");
 					}
 					/*
@@ -224,7 +225,6 @@ void processHeldRelics(int count = 1) {
 	int dropper = 0;
 	int db = 0;
 	float currentDistance = 0;
-	vector pos = vector(20,3,180);
 	for (x=xsMin(count, xGetDatabaseCount(dHeldRelics)); > 0) {
 		amt = 0;
 		xDatabaseNext(dHeldRelics);
@@ -237,8 +237,8 @@ void processHeldRelics(int count = 1) {
 					dropper = p;
 				}
 			}
-			currentDistance = unitDistanceToVector(xGetInt(dHeldRelics, xRelicName), pos);
-			if (currentDistance < 120) {
+			currentDistance = unitDistanceToVector(xGetInt(dHeldRelics, xRelicName), GVectorSellPos);
+			if (currentDistance < 125) {
 				trUnitChangeProtoUnit("Curse SFX");
 				trPlayerGrantResources(dropper, "Gold", 1*relicCost(1*xGetInt(dHeldRelics, xRelicValue)));
 				if (trCurrentPlayer() == dropper) {
@@ -246,7 +246,11 @@ void processHeldRelics(int count = 1) {
 					trQuestVarModify("P"+dropper+"R"+1*xGetInt(dHeldRelics, xRelicValue)+"", "+", 1);
 					trSoundPlayFN("favordump.wav","1",-1,"","");
 				}
+				GSeller = dropper;
+				trQuestVarSet("TEMPValue", 1*xGetInt(dHeldRelics, xRelicValue));
+				trQuestVarModify("TEMPNumber", "+", 1);
 				xFreeDatabaseBlock(dHeldRelics);
+				trDelayedRuleActivation("SellMinerals");
 				//break;
 			}
 			else{
@@ -277,7 +281,7 @@ void HideRelics(int owner = 1) {
 			xSetInt(dHiddenRelics, xRelicValue, 1*xGetInt(dHeldRelics, xRelicValue));
 			xSetInt(dHiddenRelics, xOwner, owner);
 			xFreeDatabaseBlock(dHeldRelics);
-			trChatSend(0, ""+xGetDatabaseCount(dHiddenRelics));
+			//trChatSend(0, ""+xGetDatabaseCount(dHiddenRelics));
 			//break;
 		}
 	}
@@ -305,9 +309,15 @@ void ReturnRelics(int owner = 1) {
 	}
 }
 
-void SellMinerals(int p = 1){
+rule SellMinerals
+inactive
+highFrequency
+{
 	xsDisableSelf();
-	trChatSend(0, "Sold from "+p+"");
+	//trChatSendToPlayer(0, GSeller, ""+1*trQuestVarGet("TEMPNumber")+"x "+relicName(1*trQuestVarGet("TEMPValue"))+" sold!");
+	ColouredChatToPlayer(GSeller, "0,1,0", ""+1*trQuestVarGet("TEMPNumber")+"x "+relicName(1*trQuestVarGet("TEMPValue"))+" sold!");
+	trQuestVarSet("TEMPNumber", 0);
+	trQuestVarSet("TEMPValue", 0);
 }
 
 rule eternal_loops

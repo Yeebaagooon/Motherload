@@ -1322,6 +1322,37 @@ void ColouredIconChatToPlayer(int p = 1, string colour = "1,1,1", string icon = 
 	trChatSendToPlayer(0, p, "<color=" + colour + "><icon=(20)(" + icon + ")> " + chats + "</color>");
 }
 
+void ColouredChatToPlayer(int p = 1, string colour = "1,1,1", string chats = ""){
+	trChatSendToPlayer(0, p, "<color=" + colour + ">" + chats + "</color>");
+}
+
+void PaintSmelter(int x = 0, int z = 0){
+	trBlockAllSounds();
+	trQuestVarSet("Temp", trGetNextUnitScenarioNameNumber());
+	trArmyDispatch("0,0", "Victory Marker", 1, x+5.64,3,z+6.52, 0, true);
+	trUnitSelectByQV("Temp");
+	trUnitChangeProtoUnit("Dwarven Foundry");
+	trQuestVarSet("Temp", trGetNextUnitScenarioNameNumber());
+	trArmyDispatch("0,0", "Victory Marker", 1, x+12.2,3,z+6.47, 0, true);
+	trUnitSelectByQV("Temp");
+	trUnitChangeProtoUnit("Dwarven Forge");
+	trUnitSelectByQV("Temp");
+	trUnitSetAnimationPath("0,0,0,0,1");
+	trQuestVarSet("Temp", trGetNextUnitScenarioNameNumber());
+	trArmyDispatch("0,0", "Victory Marker", 1, x+17,3,z+4.34, 0, true);
+	trUnitSelectByQV("Temp");
+	trUnitChangeProtoUnit("Dwarven Forge");
+	trUnitSelectByQV("Temp");
+	trUnitSetAnimationPath("0,0,0,0,0");
+	trQuestVarSet("Temp", trGetNextUnitScenarioNameNumber());
+	trArmyDispatch("0,0", "Victory Marker", 1, x+20.1,3,z+4.69, 0, true);
+	trUnitSelectByQV("Temp");
+	trUnitChangeProtoUnit("Dwarven Forge");
+	trUnitSelectByQV("Temp");
+	trUnitSetAnimationPath("0,0,0,0,1");
+	trUnblockAllSounds();
+}
+
 void PwnPlayer(int p = 0, int v = 0){
 	trSetPlayerDefeated(p);
 	OverlayTextPlayerColor(p);
@@ -1412,3 +1443,4 @@ void FuelLoss(int p = 0){
 	trChatSend(0, " radiator "+radiator+"");
 	//	Fuel loss = (300-engine power)+(depth/radiator)*distance
 }
+

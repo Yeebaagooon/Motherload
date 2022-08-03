@@ -1,5 +1,18 @@
 int TERRAIN_TYPE = 2;
 int TERRAIN_SUBTYPE = 2;
+int OVERTERRAIN_TYPE = 2;
+int OVERTERRAIN_SUBTYPE = 2;
+
+void GroundType(int rock = 0) {
+	switch(rock)
+	{
+		case 1:
+		{
+			OVERTERRAIN_TYPE = 0;
+			OVERTERRAIN_SUBTYPE = 1;
+		}
+	}
+}
 
 void RockType(int rock = 0) {
 	switch(rock)

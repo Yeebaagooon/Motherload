@@ -1,6 +1,4 @@
 /* lure ability */
-int MaxRows = 20;
-int MaxCols = 25;
 
 rule EventSetHandler
 active
@@ -70,7 +68,7 @@ highFrequency
 				//right
 			}
 			
-			// DISTANCE <92 IS OK TO DRILL
+			// DISTANCE <111 IS OK TO DRILL
 			
 			//Terrain check fails
 			if((trGetTerrainSubType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
@@ -81,6 +79,7 @@ highFrequency
 					trSoundPlayFN("cantdothat.wav","1",-1,"","");
 				}
 				trTechGodPower(p, "Animal Magnetism", 1);
+				break;
 			}
 			
 			else if(zPos > MaxRows){
@@ -89,14 +88,16 @@ highFrequency
 					trSoundPlayFN("cantdothat.wav","1",-1,"","");
 				}
 				trTechGodPower(p, "Animal Magnetism", 1);
+				break;
 			}
-			else if(trDistanceToVectorSquared("P"+p+"Siphon", "TargetVector"+p+"") > 101){
+			else if(trDistanceToVectorSquared("P"+p+"Siphon", "TargetVector"+p+"") > 111){
 				trChatSendToPlayer(0, p,
 					"<color=1,0,0>Drill request too far!</color>  "+trDistanceToVectorSquared("P"+p+"Siphon", "TargetVector"+p+"")+"");
 				if(trCurrentPlayer() == p){
 					trSoundPlayFN("cantdothat.wav","1",-1,"","");
 				}
 				trTechGodPower(p, "Animal Magnetism", 1);
+				break;
 			}
 			//Stop diagonal drills
 			else if((startXPos != xPos) && (startZPos != zPos)){
@@ -105,6 +106,7 @@ highFrequency
 					trSoundPlayFN("cantdothat.wav","1",-1,"","");
 				}
 				trTechGodPower(p, "Animal Magnetism", 1);
+				break;
 			}
 			else if((startXPos == xPos) || (startZPos == zPos)){
 				//SUCCEESSFUL DRILL
@@ -283,6 +285,12 @@ void UngarrisonDrill(int p = 1){
 		trUnitSelectByQV("R"+zPos+"C"+xPos+"WallX");
 		trUnitChangeProtoUnit("Heka Shockwave SFX");
 	}
+	if((trGetTerrainSubType((xPos)*4-2,(zPos)*4+2) == OVERTERRAIN_SUBTYPE) && (trGetTerrainType((xPos)*4-2,
+				(zPos)*4+2) == OVERTERRAIN_TYPE)){
+		//trChatSend(0, "X = "+xPos+" Z = "+zPos+"");
+		trUnitSelectByQV("R"+zPos+"C"+xPos+"WallX");
+		trUnitChangeProtoUnit("Heka Shockwave SFX");
+	}
 	//*ADD*DESTROY TOP WALL WHEN TUNNELING UNDER *** THIS NEEDS TO DETECT BASE PLANET TERRAIN
 	if((trGetTerrainSubType((xPos)*4-2,(zPos)*4+2) == 1) && (trGetTerrainType((xPos)*4-2,
 				(zPos)*4+2) == 0)){
@@ -336,6 +344,8 @@ highFrequency
 	if(trTime() == 1){
 		//trPaintTerrain(0,0,4*col+4,4*row+4,2,13,false);
 		trPaintTerrain(0,0,4*MaxCols,4*MaxRows,2,13,false);
+		GroundType(Stage);
+		trPaintTerrain(0,4*MaxRows+1,200,200,OVERTERRAIN_TYPE,OVERTERRAIN_SUBTYPE,false); //paints the land above the dig area
 		for(col = 1; <= MaxCols){
 			for(row = 1; <= MaxRows){
 				trQuestVarSet("R"+row+"C"+col+"WallX", 1*trGetNextUnitScenarioNameNumber());
@@ -413,10 +423,19 @@ highFrequency
 		xsDisableSelf();
 		trPaintTerrain(0,80,100,80,5,3,false);
 		xsEnableRule("PaintLoot");
-		//paintShopSquare(10,90, "Black");
-		PaintAtlantisArea(0,90,4,94,"Black");
+		xsEnableRule("PainSmeltShop");
 		//UnitCreate(0, "Hoplite", 20, 180, 180);
 	}
+}
+
+rule PainSmeltShop
+inactive
+highFrequency
+{
+	PaintSmelter(20,180);
+	PaintAtlantisArea(16,86,20,90,"black");
+	GVectorSellPos = vector(40,3,180);
+	xsDisableSelf();
 }
 
 rule PaintLoot
@@ -485,7 +504,6 @@ highFrequency
 	xsDisableSelf();
 }
 
-
 rule TEMPdeployP1
 active
 highFrequency
@@ -513,6 +531,7 @@ highFrequency
 		*/
 	}
 }
+
 
 rule TEMPfuel
 inactive

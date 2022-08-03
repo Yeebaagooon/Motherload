@@ -2,7 +2,10 @@ int QuickStart = 0;
 int Stage = 1;
 string MapVersion = "Test Version";
 string MapName = "Motherload.xs";
-
+int MaxRows = 20;
+int MaxCols = 25;
+int GSeller = 0;
+vector GVectorSellPos = vector(5,3,180);
 
 rule Initialise
 active
@@ -28,6 +31,8 @@ runImmediately
 	}
 	%
 	xsDisableSelf();
+	xsSetContextPlayer(0);
+	map("q", "game", "uiSetSpecialPower(227) uiSpecialPowerAtPointer");
 }
 
 rule START
