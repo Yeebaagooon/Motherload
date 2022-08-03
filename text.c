@@ -105,53 +105,57 @@ string stageName(int stage = 0) {
 
 string stageIcon(int stage = 0) {
 	string img = "icons\special e son of osiris icon 64";
-	string customimg = "icons\special e son of osiris icon 64";
-	switch(stage)
-	{
-		case 1:
-		{
-			img = "Yeebaagooon\Motherload\testicon";
-			customimg = "ui_x_gp_indicator_on";
-			//Yeebaagooon\Motherload\testicon
-		}
-		case 2:
-		{
-			img = "ui\ui map deep jungle 256x256";
-		}
-		case 3:
-		{
-			img = "ui\ui map jotunheim 256x256";
-		}
-		case 4:
-		{
-			img = "ui\ui map open fields 256x256";
-		}
-		case 5:
-		{
-			img = "ui\ui map river styx 256x256";
-		}
-		case 6:
-		{
-			img = "icons\building siege workshop icon 64";
-		}
-		case 7:
-		{
-			img = "icons\improvement poseidons secret icons 64";
-		}
-		case 8:
-		{
-			img = "icons\improvement safe passage icons 64";
-		}
-		case 9:
-		{
-			img = "ui\ui map erebus 256x256";
-		}
-		case 10:
-		{
-			img = "ui\ui map missing 256x256";
-		}
+	if (1*trQuestVarGet("CustomContent") == 1){
+		img = "Yeebaagooon\Motherload\Stage" + stage;
+		return(img);
 	}
-	return(img);
+	else if (1*trQuestVarGet("CustomContent") == 0){
+		switch(stage)
+		{
+			case 1:
+			{
+				img = "ui_x_gp_indicator_on";
+				
+			}
+			case 2:
+			{
+				img = "ui\ui map deep jungle 256x256";
+			}
+			case 3:
+			{
+				img = "ui\ui map jotunheim 256x256";
+			}
+			case 4:
+			{
+				img = "ui\ui map open fields 256x256";
+			}
+			case 5:
+			{
+				img = "ui\ui map river styx 256x256";
+			}
+			case 6:
+			{
+				img = "icons\building siege workshop icon 64";
+			}
+			case 7:
+			{
+				img = "icons\improvement poseidons secret icons 64";
+			}
+			case 8:
+			{
+				img = "icons\improvement safe passage icons 64";
+			}
+			case 9:
+			{
+				img = "ui\ui map erebus 256x256";
+			}
+			case 10:
+			{
+				img = "ui\ui map missing 256x256";
+			}
+		}
+		return(img);
+	}
 }
 
 //trShowImageDialog(stageIcon(Stage), stageName(Stage));

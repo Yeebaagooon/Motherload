@@ -62,15 +62,15 @@ highFrequency
 			//SET APPROACH DIRECTION
 			if(zPos > startZPos){
 				trQuestVarSet("P"+p+"Approach", 1);
-				//up
+				//drill up
 			}
 			else if(zPos < startZPos){
 				trQuestVarSet("P"+p+"Approach", 2);
-				//down
+				//drill down
 			}
 			if(xPos < startXPos){
 				trQuestVarSet("P"+p+"Approach", 3);
-				//left
+				//drill left
 			}
 			else if(xPos > startXPos){
 				trQuestVarSet("P"+p+"Approach", 4);
@@ -97,7 +97,7 @@ highFrequency
 				}
 				trTechGodPower(p, "Animal Magnetism", 1);
 			}
-			else if(trDistanceToVectorSquared("P1Siphon", "TargetVector"+p+"") > 92){
+			else if(trDistanceToVectorSquared("P1Siphon", "TargetVector"+p+"") > 101){
 				trChatSendToPlayer(0, p,
 					"<color=1,0,0>Drill request too far!</color>  "+trDistanceToVectorSquared("P"+p+"Siphon", "TargetVector"+p+"")+"");
 				if(trCurrentPlayer() == p){
@@ -114,6 +114,51 @@ highFrequency
 				trTechGodPower(p, "Animal Magnetism", 1);
 			}
 			else if((startXPos == xPos) || (startZPos == zPos)){
+				//SUCCEESSFUL DRILL
+				if(zPos > startZPos){
+					trQuestVarSet("P"+p+"Approach", 1);
+					/*trUnitSelectClear();
+					trUnitSelectByQV("R"+startZPos+"C"+xPos+"WallX");
+					trUnitDestroy();*/
+					//	trQuestVarEcho("R"+startZPos+"C"+xPos+"WallX");
+					if (zPos == 20){
+						trUnitSelectClear();
+						trUnitSelectByQV("R"+zPos+"C"+xPos+"WallX");
+						trUnitDestroy();
+						//destroy top wall
+					}
+					//drill up
+				}
+				else if(zPos < startZPos){
+					trQuestVarSet("P"+p+"Approach", 2);
+					/*trUnitSelectClear();
+					trUnitSelectByQV("R"+zPos+"C"+xPos+"WallX");
+					trUnitDestroy();*/
+					//trQuestVarEcho("R"+zPos+"C"+xPos+"WallX");
+					//drill down
+					if (zPos == 20){
+						trUnitSelectClear();
+						trUnitSelectByQV("R"+zPos+"C"+xPos+"WallX");
+						trUnitDestroy();
+						//destroy top wall
+					}
+				}
+				if(xPos < startXPos){
+					trQuestVarSet("P"+p+"Approach", 3);
+					/*trUnitSelectClear();
+					trUnitSelectByQV("R"+zPos+"C"+xPos+"WallY");
+					trUnitDestroy();*/
+					//trQuestVarEcho("R"+zPos+"C"+xPos+"WallY");
+					//drill left
+				}
+				else if(xPos > startXPos){
+					trQuestVarSet("P"+p+"Approach", 4);
+					/*trUnitSelectClear();
+					trUnitSelectByQV("R"+zPos+"C"+startXPos+"WallY");
+					trUnitDestroy();*/
+					//trQuestVarEcho("R"+zPos+"C"+startXPos+"WallY");
+					//right
+				}
 				//trChatSend(0, "DIST "+trDistanceToVectorSquared("P"+p+"Siphon", "TargetVector"+p+"")+" OK");
 				trUnitSelectClear();
 				trUnitSelectByQV("P"+p+"MainSpy", true);
@@ -157,6 +202,8 @@ highFrequency
 }
 
 void UngarrisonDrill(int p = 1){
+	int zPos = 0;
+	int xPos = 0;
 	trUnitSelectByQV("P"+p+"Siphon", false);
 	trUnitEjectContained();
 	trUnitChangeProtoUnit("Hero Greek Atalanta");
@@ -205,8 +252,11 @@ void UngarrisonDrill(int p = 1){
 				1*trQuestVarGet("P"+p+"DrillTargetZ")/2+3) == 5)){
 		trPaintTerrain(1*trQuestVarGet("P"+p+"DrillTargetX")/2-3,1*trQuestVarGet("P"+p+"DrillTargetZ")/2+1,
 			1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,1*trQuestVarGet("P"+p+"DrillTargetZ")/2,5,3,false);
+		if((trGetTerrainSubType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
+					1*trQuestVarGet("P"+p+"DrillTargetZ")/2-5) == 3) && (trGetTerrainType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
+					1*trQuestVarGet("P"+p+"DrillTargetZ")/2-5) == 5)){
+		}
 	}
-	//paint from down
 	if((trGetTerrainSubType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
 				1*trQuestVarGet("P"+p+"DrillTargetZ")/2-5) == 3) && (trGetTerrainType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
 				1*trQuestVarGet("P"+p+"DrillTargetZ")/2-5) == 5)){
@@ -228,11 +278,41 @@ void UngarrisonDrill(int p = 1){
 		trPaintTerrain(1*trQuestVarGet("P"+p+"DrillTargetX")/2-3,1*trQuestVarGet("P"+p+"DrillTargetZ")/2-3,
 			1*trQuestVarGet("P"+p+"DrillTargetX")/2,1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1,5,3,false);
 	}
+	//wall destruction post drilling
+	zPos = 1*((trQuestVarGet("P"+p+"DrillTargetZ")-1)/8);
+	xPos = 1*((trQuestVarGet("P"+p+"DrillTargetX")-1)/8);
+	//trPaintTerrain((xPos)*4-2,(zPos)*4-2,(xPos)*4-2,(zPos)*4-2,2,2, false);
+	if((trGetTerrainSubType((xPos)*4-2,(zPos)*4+2) == 3) && (trGetTerrainType((xPos)*4-2,
+				(zPos)*4+2) == 5)){
+		//trChatSend(0, "X = "+xPos+" Z = "+zPos+"");
+		trUnitSelectByQV("R"+zPos+"C"+xPos+"WallX");
+		trUnitDestroy();
+	}
+	if((trGetTerrainSubType((xPos)*4-2,(zPos)*4-6) == 3) && (trGetTerrainType((xPos)*4-2,
+				(zPos)*4-6) == 5)){
+		trUnitSelectByQV("R"+(zPos-1)+"C"+xPos+"WallX");
+		trUnitDestroy();
+	}
 	
-	trPaintTerrain(0,0,0,0,0,0, true);
+	if((trGetTerrainSubType((xPos)*4+2,(zPos)*4-2) == 3) && (trGetTerrainType((xPos)*4+2,
+				(zPos)*4-2) == 5)){
+		trUnitSelectByQV("R"+zPos+"C"+xPos+"WallY");
+		trUnitDestroy();
+	}
+	if((trGetTerrainSubType((xPos)*4-6,(zPos)*4-2) == 3) && (trGetTerrainType((xPos)*4-6,
+				(zPos)*4-2) == 5)){
+		trUnitSelectByQV("R"+zPos+"C"+(xPos-1)+"WallY");
+		trUnitDestroy();
+	}
+	
+	//trPaintTerrain(0,0,0,0,0,0, true);
 	trQuestVarSet("P"+p+"Approach", 0);
 	trQuestVarSet("P"+p+"Drilling", 1);
 	xsDisableSelf();
+	//snap
+	trUnitSelectByQV("P"+p+"Siphon", false);
+	trUnitTeleport(xPos*8-3,3,zPos*8-3);
+	//var x = trQuestVarGet("p"+p+"drillTargetX") / 2 //VAR MAKES IT TRANSFER BETWEEN EFFECTS
 }
 
 //UNUSED
@@ -252,6 +332,10 @@ highFrequency
 		trPaintTerrain(0,0,4*MaxCols,4*MaxRows,2,13,false);
 		for(col = 1; <= MaxCols){
 			for(row = 1; <= MaxRows){
+				trQuestVarSet("R"+row+"C"+col+"WallX", 1*trGetNextUnitScenarioNameNumber());
+				UnitCreate(1, "Victory Marker", 8*col-4, 8*row, 0);
+				trQuestVarSet("R"+row+"C"+col+"WallY", 1*trGetNextUnitScenarioNameNumber());
+				UnitCreate(1, "Victory Marker", 8*col, 8*row-4, 90);
 				if(Stage == 1){
 					if((col > 5) && (col < 20)){
 						if(row > 18){
@@ -324,7 +408,7 @@ highFrequency
 		trPaintTerrain(0,80,100,80,5,3,false);
 		xsEnableRule("PaintLoot");
 		paintShopSquare(10,90, "Black");
-		UnitCreate(0, "Hoplite", 20, 180, 180);
+		//UnitCreate(0, "Hoplite", 20, 180, 180);
 	}
 }
 
@@ -376,7 +460,24 @@ highFrequency
 			}
 		}
 	}
+	xsEnableRule("WallUp");
 }
+
+rule WallUp
+inactive
+highFrequency
+{
+	for(col = 1; <= MaxCols){
+		for(row = 1; <= MaxRows){
+			trUnitSelectByQV("R"+row+"C"+col+"WallX");
+			trUnitChangeProtoUnit("Invisible Wall");
+			trUnitSelectByQV("R"+row+"C"+col+"WallY");
+			trUnitChangeProtoUnit("Invisible Wall");
+		}
+	}
+	xsDisableSelf();
+}
+
 
 rule TEMPdeployP1
 active

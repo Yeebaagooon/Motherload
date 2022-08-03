@@ -38,13 +38,13 @@ files = ['zshared.c', 'voids.c', 'text.c', 'globals.c', 'terrain.c', 'setup.c', 
 
 OUTPUT_COMMENTS = False
 OUTPUT_TABS = False
-REFORMAT = False
+REFORMAT = True
 VERBOSE = False
 for t in sys.argv:
 	if t == '-v':
 		VERBOSE = True
 	elif t == '-r':
-		REFORMAT = True
+		REFORMAT = False
 	elif t == '-t':
 		OUTPUT_TABS = True
 	elif t == '-c':
