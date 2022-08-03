@@ -6,19 +6,12 @@ rule EventSetHandler
 active
 highFrequency
 {
-	trEventSetHandler(1, "UngarrisonDrill");
-	trEventSetHandler(2, "UngarrisonDrill");
-	trEventSetHandler(3, "UngarrisonDrill");
-	trEventSetHandler(4, "UngarrisonDrill");
-	trEventSetHandler(5, "UngarrisonDrill");
-	trEventSetHandler(6, "UngarrisonDrill");
-	trEventSetHandler(7, "UngarrisonDrill");
-	trEventSetHandler(8, "UngarrisonDrill");
-	trEventSetHandler(9, "UngarrisonDrill");
-	trEventSetHandler(10, "UngarrisonDrill");
-	trEventSetHandler(11, "UngarrisonDrill");
-	trEventSetHandler(12, "UngarrisonDrill");
+	for(p = 1; <= cNumberNonGaiaPlayers){
+		trEventSetHandler(p, "UngarrisonDrill");
+		trEventSetHandler(13+p, "SellMinerals");
+	}
 	trEventSetHandler(13, "CustomContent");
+	//reserved to 24
 	xsDisableSelf();
 }
 
@@ -36,7 +29,7 @@ highFrequency
 		if (trPlayerUnitCountSpecific(p, "Animal Attractor") == 1) {
 			yFindLatestReverse("p"+p+"LureObject", "Animal Attractor", p);
 			trVectorSetUnitPos("TargetVector"+p+"", "p"+p+"LureObject", true);
-			trMutateSelected(kbGetProtoUnitID("Osiris SFX"));
+			trMutateSelected(kbGetProtoUnitID("Rocket"));
 			trVectorSnapToGrid("TargetVector"+p+"");
 			trVectorSetUnitPos("SiphonPos"+p+"", "P"+p+"Siphon");
 			trVectorSnapToGrid("SiphonPos"+p+"");
@@ -97,7 +90,7 @@ highFrequency
 				}
 				trTechGodPower(p, "Animal Magnetism", 1);
 			}
-			else if(trDistanceToVectorSquared("P1Siphon", "TargetVector"+p+"") > 101){
+			else if(trDistanceToVectorSquared("P"+p+"Siphon", "TargetVector"+p+"") > 101){
 				trChatSendToPlayer(0, p,
 					"<color=1,0,0>Drill request too far!</color>  "+trDistanceToVectorSquared("P"+p+"Siphon", "TargetVector"+p+"")+"");
 				if(trCurrentPlayer() == p){
@@ -160,9 +153,11 @@ highFrequency
 					//right
 				}
 				//trChatSend(0, "DIST "+trDistanceToVectorSquared("P"+p+"Siphon", "TargetVector"+p+"")+" OK");
-				trUnitSelectClear();
-				trUnitSelectByQV("P"+p+"MainSpy", true);
-				trMutateSelected(kbGetProtoUnitID("Heka Shockwave SFX"));
+				//trQuestVarEcho("P"+p+"MainSpy");
+				HideRelics(p);
+				//trUnitSelectClear();
+				//trUnitSelectByQV("P"+p+"MainSpy", true);
+				//trMutateSelected(kbGetProtoUnitID("Heka Shockwave SFX"));
 				trArmyDispatch(""+p+",0", "Revealer", 1, trVectorQuestVarGetX("SiphonPos"+p+""), trVectorQuestVarGetY("SiphonPos"+p+""),
 					trVectorQuestVarGetZ("SiphonPos"+p+""), 180, true);
 				trQuestVarSet("DrillAttach"+p+"", trGetNextUnitScenarioNameNumber());
@@ -190,7 +185,7 @@ highFrequency
 				modifyProtounitAbsolute("Wadjet Spit", p, 1, 30);
 				trUnitSelectClear();
 				trUnitSelectByQV("DrillAttach"+p+"", true);
-				trUnitMoveToVectorEvent("TargetVector"+p+"", false, 1);
+				trUnitMoveToVectorEvent("TargetVector"+p+"", false, p);
 				trQuestVarSet("P"+p+"Drilling", 19);
 				//10 seems to be lowest value here
 			}
@@ -218,9 +213,9 @@ void UngarrisonDrill(int p = 1){
 	trVectorSnapToGrid("SiphonPos"+p+"");
 	trArmyDispatch(""+p+",0", "Revealer", 1, 1*trQuestVarGet("P"+p+"DrillTargetX"), 1,
 		1*trQuestVarGet("P"+p+"DrillTargetZ"), 180, true);
-	trUnitSelectClear();
-	trUnitSelectByQV("P"+p+"MainSpy", true);
-	trMutateSelected(kbGetProtoUnitID("Fire Siphon"));
+	//trUnitSelectClear();
+	//trUnitSelectByQV("P"+p+"MainSpy", true);
+	//trMutateSelected(kbGetProtoUnitID("Fire Siphon"));
 	//BUG** If terrain updates the vectors don't update for position and the unit dies on 2nd attempt
 	//RESOLVED** unit must have valid ungarrison position but change fixes this anyway
 	trPaintTerrain(1*trQuestVarGet("P"+p+"DrillTargetX")/2-3,1*trQuestVarGet("P"+p+"DrillTargetZ")/2-3,
@@ -286,23 +281,30 @@ void UngarrisonDrill(int p = 1){
 				(zPos)*4+2) == 5)){
 		//trChatSend(0, "X = "+xPos+" Z = "+zPos+"");
 		trUnitSelectByQV("R"+zPos+"C"+xPos+"WallX");
-		trUnitDestroy();
+		trUnitChangeProtoUnit("Heka Shockwave SFX");
+	}
+	//*ADD*DESTROY TOP WALL WHEN TUNNELING UNDER *** THIS NEEDS TO DETECT BASE PLANET TERRAIN
+	if((trGetTerrainSubType((xPos)*4-2,(zPos)*4+2) == 1) && (trGetTerrainType((xPos)*4-2,
+				(zPos)*4+2) == 0)){
+		//trChatSend(0, "X = "+xPos+" Z = "+zPos+"");
+		trUnitSelectByQV("R"+zPos+"C"+xPos+"WallX");
+		trUnitChangeProtoUnit("Heka Shockwave SFX");
 	}
 	if((trGetTerrainSubType((xPos)*4-2,(zPos)*4-6) == 3) && (trGetTerrainType((xPos)*4-2,
 				(zPos)*4-6) == 5)){
 		trUnitSelectByQV("R"+(zPos-1)+"C"+xPos+"WallX");
-		trUnitDestroy();
+		trUnitChangeProtoUnit("Heka Shockwave SFX");
 	}
 	
 	if((trGetTerrainSubType((xPos)*4+2,(zPos)*4-2) == 3) && (trGetTerrainType((xPos)*4+2,
 				(zPos)*4-2) == 5)){
 		trUnitSelectByQV("R"+zPos+"C"+xPos+"WallY");
-		trUnitDestroy();
+		trUnitChangeProtoUnit("Heka Shockwave SFX");
 	}
 	if((trGetTerrainSubType((xPos)*4-6,(zPos)*4-2) == 3) && (trGetTerrainType((xPos)*4-6,
 				(zPos)*4-2) == 5)){
 		trUnitSelectByQV("R"+zPos+"C"+(xPos-1)+"WallY");
-		trUnitDestroy();
+		trUnitChangeProtoUnit("Heka Shockwave SFX");
 	}
 	
 	//trPaintTerrain(0,0,0,0,0,0, true);
@@ -312,10 +314,14 @@ void UngarrisonDrill(int p = 1){
 	//snap
 	trUnitSelectByQV("P"+p+"Siphon", false);
 	trUnitTeleport(xPos*8-3,3,zPos*8-3);
+	ReturnRelics(p);
+	trUnitSelectByQV("P"+p+"Siphon", false);
+	trUnitSetAnimation("Idle");
 	//var x = trQuestVarGet("p"+p+"drillTargetX") / 2 //VAR MAKES IT TRANSFER BETWEEN EFFECTS
 }
 
 //UNUSED
+
 void ChangeMainSpy(int p = 1){
 	trUnitSelectClear();
 	trUnitSelectByQV("P"+p+"MainSpy", true);
@@ -333,9 +339,9 @@ highFrequency
 		for(col = 1; <= MaxCols){
 			for(row = 1; <= MaxRows){
 				trQuestVarSet("R"+row+"C"+col+"WallX", 1*trGetNextUnitScenarioNameNumber());
-				UnitCreate(1, "Victory Marker", 8*col-4, 8*row, 0);
+				UnitCreate(cNumberNonGaiaPlayers, "Victory Marker", 8*col-4, 8*row, 0);
 				trQuestVarSet("R"+row+"C"+col+"WallY", 1*trGetNextUnitScenarioNameNumber());
-				UnitCreate(1, "Victory Marker", 8*col, 8*row-4, 90);
+				UnitCreate(cNumberNonGaiaPlayers, "Victory Marker", 8*col, 8*row-4, 90);
 				if(Stage == 1){
 					if((col > 5) && (col < 20)){
 						if(row > 18){
@@ -407,7 +413,8 @@ highFrequency
 		xsDisableSelf();
 		trPaintTerrain(0,80,100,80,5,3,false);
 		xsEnableRule("PaintLoot");
-		paintShopSquare(10,90, "Black");
+		//paintShopSquare(10,90, "Black");
+		PaintAtlantisArea(0,90,4,94,"Black");
 		//UnitCreate(0, "Hoplite", 20, 180, 180);
 	}
 }
@@ -484,17 +491,19 @@ active
 highFrequency
 {
 	if(trTime() == 2){
-		trQuestVarSet("P1Siphon", trGetNextUnitScenarioNameNumber());
-		//VECTOR IS 2X+1
-		UnitCreate(1, "Hero Greek Atalanta", 12, 180, 180);
-		yAddToDatabase("Siphon1", "P1Siphon");
-		trQuestVarSet("P1MainSpy", trGetNextUnitScenarioNameNumber());
-		trPlayerSetDiplomacy(0, 1, "Enemy");
-		trUnitSelectClear();
-		trUnitSelectByQV("P1Siphon", false);
-		trTechInvokeGodPower(0, "spy", vector(0,0,0), vector(0,0,0));
-		//trDelayedRuleActivation("ChangeMainSpy1");
-		//trPaintTerrain(0,0,0,0,0,0, true);
+		for(p = 1; < cNumberNonGaiaPlayers){
+			trQuestVarSet("P"+p+"Siphon", trGetNextUnitScenarioNameNumber());
+			//VECTOR IS 2X+1
+			UnitCreate(p, "Hero Greek Atalanta", 75+5*p, 180, 180);
+			yAddToDatabase("Siphon"+p+"", "P"+p+"Siphon");
+			trPlayerSetDiplomacy(0, p, "Enemy");
+			trUnitSelectClear();
+			trUnitSelectByQV("P"+p+"Siphon", false);
+			trQuestVarSet("P"+p+"MainSpy", trGetNextUnitScenarioNameNumber());
+			trTechInvokeGodPower(0, "spy", vector(0,0,0), vector(0,0,0));
+			//trDelayedRuleActivation("ChangeMainSpy1");
+			//trPaintTerrain(0,0,0,0,0,0, true);
+		}
 		xsDisableSelf();
 		trShowImageDialog(stageIcon(Stage), stageName(Stage));
 		/*

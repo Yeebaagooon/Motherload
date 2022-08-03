@@ -128,13 +128,18 @@ highFrequency
 		gadgetReal("ShowImageBox-BordersRightTop");
 		gadgetReal("ShowImageBox-CloseButton");
 		//startNPCDialog(1);
-		trTechGodPower(1, "Animal Magnetism", 1);
-		trTechGodPower(1, "Nidhogg", 1);
+		for(p = 1; <= cNumberNonGaiaPlayers){
+			trTechGodPower(p, "Animal Magnetism", 1);
+		}
 		while(cNumberNonGaiaPlayers>=trQuestVarGet("PlayerID")) {
 			trQuestVarSet("PlayerID2", 0);
 			while(cNumberNonGaiaPlayers>=trQuestVarGet("PlayerID2")) {
-				trPlayerSetDiplomacy(trQuestVarGet("PlayerID"), trQuestVarGet("PlayerID2"), "Enemy");
-				trPlayerSetDiplomacy(trQuestVarGet("PlayerID2"), trQuestVarGet("PlayerID"), "Enemy");
+				trPlayerSetDiplomacy(trQuestVarGet("PlayerID"), trQuestVarGet("PlayerID2"), "Ally");
+				trPlayerSetDiplomacy(trQuestVarGet("PlayerID2"), trQuestVarGet("PlayerID"), "Ally");
+				trPlayerSetDiplomacy(trQuestVarGet("PlayerID2"), 0, "Enemy");
+				trPlayerSetDiplomacy(0, trQuestVarGet("PlayerID2"), "Enemy");
+				trPlayerSetDiplomacy(trQuestVarGet("PlayerID2"), cNumberNonGaiaPlayers, "Enemy");
+				trPlayerSetDiplomacy(cNumberNonGaiaPlayers, trQuestVarGet("PlayerID2"), "Enemy");
 			trQuestVarSet("PlayerID2", trQuestVarGet("PlayerID2")+1);}
 		trQuestVarSet("PlayerID", trQuestVarGet("PlayerID")+1);}
 	}

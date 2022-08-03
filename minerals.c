@@ -112,8 +112,10 @@ void relicDescription(int relic = 0) {
 //declare the db first
 int dFreeRelics = 0;
 int dHeldRelics = 0;
+int dHiddenRelics = 0;
 int xRelicName = 0;
 int xRelicValue = 0;
+int xOwner = 0;
 //int xRelicPrice = 0;
 
 rule setup_databases
@@ -126,6 +128,10 @@ highFrequency
 	dHeldRelics = xInitDatabase("HeldRelics"); //db name
 	xRelicName = xInitAddInt(dHeldRelics, "name"); //unit name
 	xRelicValue = xInitAddInt(dHeldRelics, "value", 1); //value of the relic, default to 1=iron
+	dHiddenRelics = xInitDatabase("HiddenRelics"); //db name
+	xRelicName = xInitAddInt(dHiddenRelics, "name"); //unit name
+	xRelicValue = xInitAddInt(dHiddenRelics, "value", 1); //value of the relic, default to 1=iron
+	xOwner = xInitAddInt(dHiddenRelics, "owner", 0); //value of the relic, default to 0
 	xsDisableSelf();
 }
 
@@ -236,7 +242,8 @@ void processHeldRelics(int count = 1) {
 				trUnitChangeProtoUnit("Curse SFX");
 				trPlayerGrantResources(dropper, "Gold", 1*relicCost(1*xGetInt(dHeldRelics, xRelicValue)));
 				if (trCurrentPlayer() == dropper) {
-					trChatSend(0, relicName(xGetInt(dHeldRelics, xRelicValue)) + " sold!");
+					//trChatSend(0, relicName(xGetInt(dHeldRelics, xRelicValue)) + " sold!");
+					trQuestVarModify("P"+dropper+"R"+1*xGetInt(dHeldRelics, xRelicValue)+"", "+", 1);
 					trSoundPlayFN("favordump.wav","1",-1,"","");
 				}
 				xFreeDatabaseBlock(dHeldRelics);
@@ -252,6 +259,55 @@ void processHeldRelics(int count = 1) {
 			}
 		}
 	}
+}
+
+//These two are probably wrong anyway, also DB set
+void HideRelics(int owner = 1) {
+	int db = 0;
+	float currentDistance = 0;
+	vector pos = vector(1,1,1);
+	for (x=xsMin(30, xGetDatabaseCount(dHeldRelics)); > 0) {
+		xDatabaseNext(dHeldRelics);
+		xUnitSelect(dHeldRelics, xRelicName);
+		//If relic is owned
+		if (trUnitIsOwnedBy(owner)) {
+			trUnitChangeProtoUnit("Rocket");
+			xAddDatabaseBlock(dHiddenRelics, true);
+			xSetInt(dHiddenRelics, xRelicName, 1*xGetInt(dHeldRelics, xRelicName));
+			xSetInt(dHiddenRelics, xRelicValue, 1*xGetInt(dHeldRelics, xRelicValue));
+			xSetInt(dHiddenRelics, xOwner, owner);
+			xFreeDatabaseBlock(dHeldRelics);
+			trChatSend(0, ""+xGetDatabaseCount(dHiddenRelics));
+			//break;
+		}
+	}
+}
+
+void ReturnRelics(int owner = 1) {
+	xsSetContextPlayer(0);
+	for (x= xGetDatabaseCount(dHiddenRelics); > 0) {
+		xDatabaseNext(dHiddenRelics);
+		xUnitSelect(dHiddenRelics, xRelicName);
+		if (xGetInt(dHiddenRelics, xOwner) == owner) {
+			trUnitChangeProtoUnit("Relic");
+			trBlockAllSounds();
+			trImmediateUnitGarrison(""+(1*trQuestVarGet("P"+owner+"Siphon"))+"");
+			trUnblockAllSounds();
+			trSetSelectedScale(0,0,-1);
+			trMutateSelected(relicProto(xGetInt(dHiddenRelics, xRelicValue)));
+			trUnitSetAnimationPath("1,0,1,1,0,0,0");
+			xAddDatabaseBlock(dHeldRelics, true);
+			xSetInt(dHeldRelics, xRelicName, 1*xGetInt(dHiddenRelics, xRelicName));
+			xSetInt(dHeldRelics, xRelicValue, 1*xGetInt(dHiddenRelics, xRelicValue));
+			xFreeDatabaseBlock(dHiddenRelics);
+			//break;
+		}
+	}
+}
+
+void SellMinerals(int p = 1){
+	xsDisableSelf();
+	trChatSend(0, "Sold from "+p+"");
 }
 
 rule eternal_loops

@@ -1380,7 +1380,9 @@ void PwnPlayer(int p = 0, int v = 0){
 
 
 
-void PaintAtlantisArea (int x0 = 0, int z0 = 0, int x1 = 0, int z1 = 0, int fill1 = 0, int fill2 = 0){
+void PaintAtlantisArea (int x0 = 0, int z0 = 0, int x1 = 0, int z1 = 0, string terrain = ""){
+	int terrainType = getTerrainType(terrain);
+	int terrainSubType = getTerrainSubType(terrain);
 	//bottom corner
 	trPaintTerrain(x0, z1, x0, z1, 0, 83, false);
 	trPaintTerrain(x1, z1, x1, z1, 0, 80, false);
@@ -1394,13 +1396,8 @@ void PaintAtlantisArea (int x0 = 0, int z0 = 0, int x1 = 0, int z1 = 0, int fill
 	trPaintTerrain(x1, z1-1, x1, z0+1, 0, 74, false);
 	trPaintTerrain(x0, z1-1, x0, z0+1, 0, 74, false);
 	//fill
-	trPaintTerrain(x1-1, z1-1, x0+1, z0+1, fill1, fill2, false);
+	trPaintTerrain(x1-1, z1-1, x0+1, z0+1, terrainType, terrainSubType, false);
 }
-/*
-void activateCustomContent(int asdf = 13) {
-	xsEnableRule("CustomContent");
-}
-*/
 
 void FuelLoss(int p = 0){
 	int engine = 1*trQuestVarGet("P"+p+"EnginePower");
