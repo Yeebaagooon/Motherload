@@ -154,14 +154,121 @@ highFrequency
 	trCameraCut(vector(100.463554,153.803818,-59.088593), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
 	trOverlayText("Host, choose a stage", 8.0, 506, 70, 1000);
 	for(p = 1; <= 9){
-		trQuestVarSet("StageObelisk"+p+"", trGetNextUnitScenarioNameNumber());
+		int next = trGetNextUnitScenarioNameNumber();
 		int x = 0;
 		if (iModulo(2, p) == 0) { //if is divisble by 2
 			x = 20;
 		}
 		UnitCreate(0, "Outpost", 40+12*p, 50+x, 90);
+		xAddDatabaseBlock(dObelisks, true);
+		xSetInt(dObelisks, xObeliskName,next);
+		xSetInt(dObelisks, xObeliskStage, p);
 	}
+	//EYECANDY PLANET 1
+	FloatingUnit("Rock Granite Big", 52, 8, 50, 0, 2,2,2);
+	xAddDatabaseBlock(dPlanetEyecandy, true);
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVRelic"));
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 1);
+	xAddDatabaseBlock(dPlanetEyecandy, true);
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVHero"));
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 1);
+	FloatingUnit("Fire Hades", 51, 8, 50, 0, 2,2,2);
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVRelic"));
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 1);
+	xAddDatabaseBlock(dPlanetEyecandy, true);
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVHero"));
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 1);
+	FloatingUnit("Ice Block", 53, 8, 50, 0, 2,2,2);
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVRelic"));
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 1);
+	xAddDatabaseBlock(dPlanetEyecandy, true);
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVHero"));
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 1);
+	//EYECANDY PLANET 2
+	FloatingUnit("Rock Sandstone Big", 64, 8, 70, 0, 2,2,2);
+	xAddDatabaseBlock(dPlanetEyecandy, true);
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVRelic"));
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 2);
+	xAddDatabaseBlock(dPlanetEyecandy, true);
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVHero"));
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 2);
+	//EYECANDY PLANET 3
+	FloatingUnitAnimIdle("Earth", 76, 9, 48, 0, 0.2,0.2,0.2);
+	xAddDatabaseBlock(dPlanetEyecandy, true);
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVRelic"));
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 3);
+	xAddDatabaseBlock(dPlanetEyecandy, true);
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVHero"));
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 3);
+	trQuestVarSet("tempH", 3.141593 * 180.0 / 180.0);
+	trQuestVarSet("tempT", 3.141593 * 90.0 / 180.0);
+	trQuestVarSet("tempSinH", xsSin(trQuestVarGet("tempH")));
+	trQuestVarSet("tempCosH", xsCos(trQuestVarGet("tempH")));
+	trQuestVarSet("tempSinT", xsSin(trQuestVarGet("tempT")));
+	trQuestVarSet("tempCosT", xsCos(trQuestVarGet("tempT")));
+	trUnitSelectClear();
+	trUnitSelectByQV("QVHero");
+	trSetUnitOrientation(xsVectorSet(trQuestVarGet("tempCosH"),0,trQuestVarGet("tempSinH")),xsVectorSet(trQuestVarGet("tempSinT")*trQuestVarGet("tempSinH"),
+			trQuestVarGet("tempCosT"),0.0-trQuestVarGet("tempSinT")*trQuestVarGet("tempCosH")),true);
+	//END
 	xsDisableSelf();
+	xsEnableRule("choose_stage");
+}
+
+rule choose_stage
+inactive
+highFrequency
+{
+	xDatabaseNext(dObelisks);
+	int n = xGetInt(dObelisks, xObeliskName);
+	xUnitSelect(dObelisks,xObeliskName);
+	if (trCountUnitsInArea(""+n, 1, "Athena",5) == 1) {
+		trQuestVarSet("Stage", xGetInt(dObelisks,xObeliskStage));
+		Stage = 1*trQuestVarGet("Stage");
+		//fire event build stage
+		trUnitSelectClear();
+		trUnitSelectByQV("StageSelector", true);
+		trUnitChangeProtoUnit("Rocket");
+		for(x=xGetDatabaseCount(dObelisks); >0) {
+			xDatabaseNext(dObelisks);
+			xUnitSelect(dObelisks,xObeliskName);
+			trUnitDestroy();
+		}
+		aiPlanDestroy(dObelisks);
+		xsDisableSelf();
+		xsEnableRule("stage_chosen");
+		//trForceNonCinematicModels(true);
+		//trLetterBox(true);
+		trUIFadeToColor(0,0,0,1000,0,true);
+		trSoundPlayFN("ui\thunder2.wav","1",-1,"","");
+		trOverlayText("Planet " + xGetInt(dObelisks, xObeliskStage) + ": " + stageName(Stage), 3.0, 520, 380, 800);
+	} else if (trUnitIsSelected()) {
+		uiClearSelection();
+		if (xGetInt(dObelisks, xObeliskStage) > 0 && xGetInt(dObelisks, xObeliskStage) <= 10) {
+			trShowImageDialog(stageIcon(xGetInt(dObelisks, xObeliskStage)), "Planet " + xGetInt(dObelisks, xObeliskStage) + ": " + stageName(xGetInt(dObelisks, xObeliskStage)));
+		}
+	}
+}
+
+rule stage_chosen
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 1){
+		xsDisableSelf();
+		for(x=xGetDatabaseCount(dPlanetEyecandy); >0) {
+			xDatabaseNext(dPlanetEyecandy);
+			xUnitSelect(dPlanetEyecandy,xPlanetEyecandyName);
+			trUnitDestroy();
+		}
+		aiPlanDestroy(dPlanetEyecandy);
+		xsEnableRule("lure");
+		xsEnableRule("TEMPdeployP1");
+		xsEnableRule("squarespaint");
+		trUnitSelectClear();
+		trUnitSelect("0");
+		trUnitChangeInArea(0, 0, "Outpost", "Rocket", 999.0);
+	}
 }
 
 /*RULES DISABLED IN THE RAIN DOC THAT STARTS GAMES

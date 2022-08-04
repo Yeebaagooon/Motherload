@@ -82,7 +82,7 @@ int GetRockHardness(int rock = 0) {
 		}
 		case CliffEgyptianA:
 		{
-			return(200);
+			return(150);
 		}
 		//Ice C
 		case IceC:
@@ -137,7 +137,7 @@ void SetDrillSpeed(int p = 0, int x = 0, int z = 0){
 	xsSetContextPlayer(0);
 	int terraintype = trGetTerrainType(x,z);
 	int terrainsubtype = trGetTerrainSubType(x,z);
-	trQuestVarSet("DrillCalc", P1DrillPower/GetRockHardness(GetRockType(terraintype, terrainsubtype)));
-	trChatSend(0, ""+trQuestVarGet("DrillCalc"));
+	xSetPointer(dPlayerData, p);
+	trQuestVarSet("DrillCalc", xGetFloat(dPlayerData, xDrillPower)/GetRockHardness(GetRockType(terraintype, terrainsubtype)));
 	modifyProtounitAbsolute("Wadjet Spit", p, 1, trQuestVarGet("DrillCalc")*3);
 }

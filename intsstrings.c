@@ -23,4 +23,4 @@ const int IceC = 8;
 const int Hades7 = 9;
 
 /* TEMPORARY TEST VARS */
-float P1DrillPower = 100;
+//float P1DrillPower = 10;

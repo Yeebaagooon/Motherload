@@ -20,39 +20,39 @@ string stageName(int stage = 0) {
 		}
 		case 2:
 		{
-			name = "Murkwood";
+			name = "Planet 2 name";
 		}
 		case 3:
 		{
-			name = "Frozen Canyon";
+			name = "Planet 3 name";
 		}
 		case 4:
 		{
-			name = "Emerald Fields";
+			name = "Planet 4 name";
 		}
 		case 5:
 		{
-			name = "Miasma Crypt";
+			name = "Planet 5 name";
 		}
 		case 6:
 		{
-			name = "The Factory";
+			name = "Planet 6 name";
 		}
 		case 7:
 		{
-			name = "The Deep";
+			name = "Planet 7 name";
 		}
 		case 8:
 		{
-			name = "The Clouds";
+			name = "Planet 8 name";
 		}
 		case 9:
 		{
-			name = "The Pit";
+			name = "Planet 9 name";
 		}
 		case 10:
 		{
-			name = "The Apex";
+			name = "Planet X";
 		}
 	}
 	return(name);

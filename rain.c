@@ -499,7 +499,7 @@ rule TEMPdeployP1
 inactive
 highFrequency
 {
-	if((trTime()-cActivationTime) >= 2){
+	if((trTime()-cActivationTime) >= 1){
 		for(p = 1; < cNumberNonGaiaPlayers){
 			trQuestVarSet("P"+p+"Siphon", trGetNextUnitScenarioNameNumber());
 			//VECTOR IS 2X+1
@@ -514,13 +514,28 @@ highFrequency
 			//trPaintTerrain(0,0,0,0,0,0, true);
 		}
 		xsDisableSelf();
-		trShowImageDialog(stageIcon(Stage), stageName(Stage));
+		trDelayedRuleActivation("FadeOut");
+		unitTransform("Outpost", "Rocket");
+		//trShowImageDialog(stageIcon(Stage), stageName(Stage));
 		/*
 		trQuestVarSet("P1EnginePower", 100);
 		trQuestVarSet("P1Radiator", 0.1);
 		xsEnableRule("TEMPfuel");
 		*/
 	}
+}
+
+rule FadeOut
+inactive
+highFrequency
+{
+	trSetFogAndBlackmap(true, true);
+	trUIFadeToColor(0,0,0,1000,500,false);
+	uiZoomToProto("Hero Greek Atalanta");
+	xsDisableSelf();
+	//REVEALERS LOS - CHange LOS and more w/e
+	trArmyDispatch("0,0", "Revealer", 1, 190, 1, 190, 0, true);
+	trArmyDispatch("0,0", "Revealer", 1, 190, 1, 180, 0, true);
 }
 
 
@@ -534,7 +549,6 @@ highFrequency
 			trVectorSetUnitPos("P"+p+"Pos", "P"+p+"Siphon");
 			//Disable surface penalty
 			if((trVectorQuestVarGetZ("P"+p+"Pos")) > MaxRows*8){
-				trPlayerGrantResources(p, "Gold", 0);
 				trQuestVarSet("P"+p+"Depth", 0);
 			}
 			else{

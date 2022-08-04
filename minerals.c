@@ -109,32 +109,6 @@ void relicDescription(int relic = 0) {
 	trShowImageDialog(icon, message);
 }
 
-//declare the db first
-int dFreeRelics = 0;
-int dHeldRelics = 0;
-int dHiddenRelics = 0;
-int xRelicName = 0;
-int xRelicValue = 0;
-int xOwner = 0;
-//int xRelicPrice = 0;
-
-rule setup_databases
-active
-highFrequency
-{
-	dFreeRelics = xInitDatabase("FreeRelics"); //db name
-	xRelicName = xInitAddInt(dFreeRelics, "name"); //unit name
-	xRelicValue = xInitAddInt(dFreeRelics, "value", 1); //value of the relic, default to 1=iron
-	dHeldRelics = xInitDatabase("HeldRelics"); //db name
-	xRelicName = xInitAddInt(dHeldRelics, "name"); //unit name
-	xRelicValue = xInitAddInt(dHeldRelics, "value", 1); //value of the relic, default to 1=iron
-	dHiddenRelics = xInitDatabase("HiddenRelics"); //db name
-	xRelicName = xInitAddInt(dHiddenRelics, "name"); //unit name
-	xRelicValue = xInitAddInt(dHiddenRelics, "value", 1); //value of the relic, default to 1=iron
-	xOwner = xInitAddInt(dHiddenRelics, "owner", 0); //value of the relic, default to 0
-	xsDisableSelf();
-}
-
 void spawnRelicSpecific(vector v = vector (0,0,0), int val = 1){
 	trQuestVarSet("TEMP", trGetNextUnitScenarioNameNumber());
 	trArmyDispatch("0,0", "Dwarf", 1,xsVectorGetX(v),0,xsVectorGetZ(v),0,true);
@@ -240,6 +214,7 @@ void processHeldRelics(int count = 1) {
 			currentDistance = unitDistanceToVector(xGetInt(dHeldRelics, xRelicName), GVectorSellPos);
 			if (currentDistance < 125) {
 				trUnitChangeProtoUnit("Curse SFX");
+				xUnitSelect(dHeldRelics, xRelicName);
 				trPlayerGrantResources(dropper, "Gold", 1*relicCost(1*xGetInt(dHeldRelics, xRelicValue)));
 				if (trCurrentPlayer() == dropper) {
 					//trChatSend(0, relicName(xGetInt(dHeldRelics, xRelicValue)) + " sold!");
@@ -255,6 +230,7 @@ void processHeldRelics(int count = 1) {
 			}
 			else{
 				trUnitChangeProtoUnit("Relic");
+				xUnitSelect(dHeldRelics, xRelicName);
 				xAddDatabaseBlock(dFreeRelics, true);
 				xSetInt(dFreeRelics, xRelicName, 1*xGetInt(dHeldRelics, xRelicName));
 				xSetInt(dFreeRelics, xRelicValue, 1*xGetInt(dHeldRelics, xRelicValue));
@@ -275,7 +251,8 @@ void HideRelics(int owner = 1) {
 		xUnitSelect(dHeldRelics, xRelicName);
 		//If relic is owned
 		if (trUnitIsOwnedBy(owner)) {
-			trUnitChangeProtoUnit("Rocket");
+			trUnitChangeProtoUnit("Cinematic Block");
+			xUnitSelect(dHeldRelics, xRelicName);
 			xAddDatabaseBlock(dHiddenRelics, true);
 			xSetInt(dHiddenRelics, xRelicName, 1*xGetInt(dHeldRelics, xRelicName));
 			xSetInt(dHiddenRelics, xRelicValue, 1*xGetInt(dHeldRelics, xRelicValue));
@@ -294,6 +271,7 @@ void ReturnRelics(int owner = 1) {
 		xUnitSelect(dHiddenRelics, xRelicName);
 		if (xGetInt(dHiddenRelics, xOwner) == owner) {
 			trUnitChangeProtoUnit("Relic");
+			xUnitSelect(dHiddenRelics, xRelicName);
 			trBlockAllSounds();
 			trImmediateUnitGarrison(""+(1*trQuestVarGet("P"+owner+"Siphon"))+"");
 			trUnblockAllSounds();
