@@ -1,12 +1,3 @@
-int QuickStart = 0;
-int Stage = 1;
-string MapVersion = "Test Version";
-string MapName = "Motherload.xs";
-int MaxRows = 20;
-int MaxCols = 25;
-int GSeller = 0;
-vector GVectorSellPos = vector(5,3,180);
-
 rule Initialise
 active
 highFrequency
@@ -123,6 +114,8 @@ highFrequency
 		trOverlayText(MapName, 8.0, 566, 35, 1000);
 		trSetUnitIdleProcessing(true);
 		xsDisableSelf();
+		trDelayedRuleActivation("PaintStageSelect");
+		trSetFogAndBlackmap(false, false);
 		gadgetReal("ShowImageBox-BordersTop");
 		gadgetReal("ShowImageBox-BordersBottom");
 		gadgetReal("ShowImageBox-BordersLeft");
@@ -141,7 +134,7 @@ highFrequency
 			while(cNumberNonGaiaPlayers>=trQuestVarGet("PlayerID2")) {
 				trPlayerSetDiplomacy(trQuestVarGet("PlayerID"), trQuestVarGet("PlayerID2"), "Ally");
 				trPlayerSetDiplomacy(trQuestVarGet("PlayerID2"), trQuestVarGet("PlayerID"), "Ally");
-				trPlayerSetDiplomacy(trQuestVarGet("PlayerID2"), 0, "Enemy");
+				trPlayerSetDiplomacy(trQuestVarGet("PlayerID2"), 0, "Ally");
 				trPlayerSetDiplomacy(0, trQuestVarGet("PlayerID2"), "Enemy");
 				trPlayerSetDiplomacy(trQuestVarGet("PlayerID2"), cNumberNonGaiaPlayers, "Enemy");
 				trPlayerSetDiplomacy(cNumberNonGaiaPlayers, trQuestVarGet("PlayerID2"), "Enemy");
@@ -149,4 +142,34 @@ highFrequency
 		trQuestVarSet("PlayerID", trQuestVarGet("PlayerID")+1);}
 	}
 }
+
+rule PaintStageSelect
+inactive
+highFrequency
+{
+	PaintAtlantisArea(20,20,80,40,"black");
+	trPaintTerrain(21,30,79,30, 0, 50, false);
+	trQuestVarSet("StageSelector", trGetNextUnitScenarioNameNumber());
+	UnitCreate(1, "Athena", 40, 60, 90);
+	trCameraCut(vector(100.463554,153.803818,-59.088593), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
+	trOverlayText("Host, choose a stage", 8.0, 506, 70, 1000);
+	for(p = 1; <= 9){
+		trQuestVarSet("StageObelisk"+p+"", trGetNextUnitScenarioNameNumber());
+		int x = 0;
+		if (iModulo(2, p) == 0) { //if is divisble by 2
+			x = 20;
+		}
+		UnitCreate(0, "Outpost", 40+12*p, 50+x, 90);
+	}
+	xsDisableSelf();
+}
+
+/*RULES DISABLED IN THE RAIN DOC THAT STARTS GAMES
+rule TEMPdeployP1
+rule squarespaint
+rule lure
+xsEnableRule("lure");
+xsEnableRule("TEMPdeployP1");
+xsEnableRule("squarespaint");
+*/
 

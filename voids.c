@@ -1353,64 +1353,6 @@ void PaintSmelter(int x = 0, int z = 0){
 	trUnblockAllSounds();
 }
 
-void PwnPlayer(int p = 0, int v = 0){
-	trSetPlayerDefeated(p);
-	OverlayTextPlayerColor(p);
-	trOverlayText(trStringQuestVarGet("p"+p+"name") + "'s flag has been captured!", 5.0, 350, 350, 800);
-	playSound("Yeebaagooon\Capture The Flag\Warp.mp3");
-	playSound("timeshift.wav");
-	trCameraShake(5, 0.1);
-	trPlayerKillAllBuildings(p);
-	trPlayerKillAllUnits(p);
-	trUnitSelectClear();
-	trUnitSelect("+p+");
-	trUnitChangeProtoUnit("Cinematic Block");
-	trPlayerGrantResources(v, "Food", 1*trPlayerResourceCount(p, "Food"));
-	trPlayerGrantResources(v, "Wood", 1*trPlayerResourceCount(p, "Wood"));
-	trPlayerGrantResources(v, "Gold", 1*trPlayerResourceCount(p, "Gold"));
-	ColouredIconChatToPlayer(v, "{PlayerColor("+p+")}", "icons\icon resource food",
-		""+1*trPlayerResourceCount(p, "Food")+"");
-	ColouredIconChatToPlayer(v, "{PlayerColor("+p+")}", "icons\icon resource wood",
-		""+1*trPlayerResourceCount(p, "Wood")+"");
-	ColouredIconChatToPlayer(v, "{PlayerColor("+p+")}", "icons\icon resource gold",
-		""+1*trPlayerResourceCount(p, "Gold")+"");
-	trPlayerGrantResources(p, "Food", -10000.0);
-	trPlayerGrantResources(p, "Wood", -10000.0);
-	trPlayerGrantResources(p, "Gold", -10000.0);
-	trPlayerGrantResources(p, "Favor", -10000.0);
-	trQuestVarModify("P"+v+"FlagsGot", "+", 1);
-	if(1*trQuestVarGet("P"+v+"FlagsGot") < 9){
-		//flag go on base
-		//0 = heading
-		//Seems to be off for 3 of them
-		/*
-		trQuestVarSet("QVGateFlag", trGetNextUnitScenarioNameNumber()-10);
-		trUnitSelectClear();
-		trUnitSelect(""+1*trQuestVarGet("P"+p+"FlagSlot"+1*trQuestVarGet("P"+v+"FlagsGot")+""));
-		trUnitChangeProtoUnit("Titan Atlantean");
-		trUnitSelectClear();
-		yFindLatestAll("QVGateFlag", "Titan Gate Dead");
-		trUnitSelectClear();
-		trUnitSelect(""+1*trQuestVarGet("QVGateFlag"));
-		trUnitChangeProtoUnit("Ajax");
-		trUnitSelectClear();
-		trUnitSelect(""+1*trQuestVarGet("P"+p+"FlagSlot"+1*trQuestVarGet("P"+v+"FlagsGot")+""));
-		trUnitChangeProtoUnit("Atlantis Wall Connector");
-		trUnitSelectClear();
-		trUnitSelect(""+1*trQuestVarGet("QVGateFlag"));
-		trUnitChangeProtoUnit("Flag");
-		trUnitSetAnimationPath("0,0,0,0,0");
-		*/
-		FloatingUnitAnim4("Flag",
-			1*trVectorQuestVarGetX("P"+v+"FlagSlot"+1*trQuestVarGet("P"+v+"FlagsGot")),
-			1*trVectorQuestVarGetY("P"+v+"FlagSlot"+1*trQuestVarGet("P"+v+"FlagsGot")),
-			1*trVectorQuestVarGetZ("P"+v+"FlagSlot"+1*trQuestVarGet("P"+v+"FlagsGot")),
-			0, 1, 1, 1, "0,0,0,0,0", p);
-	}
-}
-
-
-
 void PaintAtlantisArea (int x0 = 0, int z0 = 0, int x1 = 0, int z1 = 0, string terrain = ""){
 	int terrainType = getTerrainType(terrain);
 	int terrainSubType = getTerrainSubType(terrain);
@@ -1444,3 +1386,31 @@ void FuelLoss(int p = 0){
 	//	Fuel loss = (300-engine power)+(depth/radiator)*distance
 }
 
+void PainSellTerrain (int x =0, int z = 0){
+	//row one
+	trPaintTerrain(x, z, x, z, 0, 83, false);
+	trPaintTerrain(x+1, z, x+1, z, 0, 77, false);
+	trPaintTerrain(x+2, z, x+2, z, 0, 83, false);
+	trPaintTerrain(x+3, z, x+3, z, 0, 80, false);
+	trPaintTerrain(x+4, z, x+4, z, 0, 76, false);
+	//null
+	trPaintTerrain(x+6, z, x+6, z, 0, 76, false);
+	
+	//row two
+	trPaintTerrain(x, z-1, x, z-1, 0, 82, false);
+	trPaintTerrain(x+1, z-1, x+1, z-1, 0, 80, false);
+	trPaintTerrain(x+2, z-1, x+2, z-1, 0, 74, false);
+	trPaintTerrain(x+3, z-1, x+3, z-1, 0, 81, false);
+	trPaintTerrain(x+4, z-1, x+4, z-1, 0, 74, false);
+	//null
+	trPaintTerrain(x+6, z-1, x+6, z-1, 0, 74, false);
+	//row three
+	trPaintTerrain(x, z-2, x, z-2, 0, 79, false);
+	trPaintTerrain(x+1, z-2, x+1, z-2, 0, 81, false);
+	trPaintTerrain(x+2, z-2, x+2, z-2, 0, 82, false);
+	trPaintTerrain(x+3, z-2, x+3, z-2, 0, 77, false);
+	trPaintTerrain(x+4, z-2, x+4, z-2, 0, 82, false);
+	trPaintTerrain(x+5, z-2, x+5, z-2, 0, 77, false);
+	trPaintTerrain(x+6, z-2, x+6, z-2, 0, 82, false);
+	trPaintTerrain(x+7, z-2, x+7, z-2, 0, 77, false);
+}

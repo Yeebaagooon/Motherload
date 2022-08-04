@@ -20,7 +20,7 @@ void CustomContent(int p = 0){
 }
 
 rule lure
-active
+inactive
 highFrequency
 {
 	for(p = 1; <= cNumberNonGaiaPlayers){
@@ -184,7 +184,7 @@ highFrequency
 				trUnitSelectByQV("DrillAttach"+p+"", true);
 				trMutateSelected(kbGetProtoUnitID("Wadjet Spit"));
 				//DRILL SPEED
-				modifyProtounitAbsolute("Wadjet Spit", p, 1, 30);
+				SetDrillSpeed(p, 1*trQuestVarGet("P"+p+"DrillTargetX")/2-1, 1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1);
 				trUnitSelectClear();
 				trUnitSelectByQV("DrillAttach"+p+"", true);
 				trUnitMoveToVectorEvent("TargetVector"+p+"", false, p);
@@ -202,7 +202,7 @@ void UngarrisonDrill(int p = 1){
 	int zPos = 0;
 	int xPos = 0;
 	trUnitSelectByQV("P"+p+"Siphon", false);
-	trUnitEjectContained();
+	//trUnitEjectContained();
 	trUnitChangeProtoUnit("Hero Greek Atalanta");
 	trUnitSelectClear();
 	trUnitSelectByQV("DrillAttach"+p+"", true);
@@ -322,26 +322,17 @@ void UngarrisonDrill(int p = 1){
 	//snap
 	trUnitSelectByQV("P"+p+"Siphon", false);
 	trUnitTeleport(xPos*8-3,3,zPos*8-3);
-	ReturnRelics(p);
 	trUnitSelectByQV("P"+p+"Siphon", false);
 	trUnitSetAnimation("Idle");
+	ReturnRelics(p);
 	//var x = trQuestVarGet("p"+p+"drillTargetX") / 2 //VAR MAKES IT TRANSFER BETWEEN EFFECTS
 }
 
-//UNUSED
-
-void ChangeMainSpy(int p = 1){
-	trUnitSelectClear();
-	trUnitSelectByQV("P"+p+"MainSpy", true);
-	trMutateSelected(kbGetProtoUnitID("Curse SFX"));
-	trChatSend(0, ""+p+"");
-}
-
 rule squarespaint
-active
+inactive
 highFrequency
 {
-	if(trTime() == 1){
+	if((trTime()-cActivationTime) >= 1){
 		//trPaintTerrain(0,0,4*col+4,4*row+4,2,13,false);
 		trPaintTerrain(0,0,4*MaxCols,4*MaxRows,2,13,false);
 		GroundType(Stage);
@@ -433,8 +424,8 @@ inactive
 highFrequency
 {
 	PaintSmelter(20,180);
-	PaintAtlantisArea(16,86,20,90,"black");
-	GVectorSellPos = vector(40,3,180);
+	PainSellTerrain(15,89);
+	GVectorSellPos = vector(38,3,176);
 	xsDisableSelf();
 }
 
@@ -505,10 +496,10 @@ highFrequency
 }
 
 rule TEMPdeployP1
-active
+inactive
 highFrequency
 {
-	if(trTime() == 2){
+	if((trTime()-cActivationTime) >= 2){
 		for(p = 1; < cNumberNonGaiaPlayers){
 			trQuestVarSet("P"+p+"Siphon", trGetNextUnitScenarioNameNumber());
 			//VECTOR IS 2X+1
@@ -542,13 +533,13 @@ highFrequency
 		if(trDistanceToVectorSquared("P"+p+"Siphon", "P"+p+"Pos") > 0){
 			trVectorSetUnitPos("P"+p+"Pos", "P"+p+"Siphon");
 			//Disable surface penalty
-			if((trVectorQuestVarGetZ("P"+p+"Pos")) > 160){
+			if((trVectorQuestVarGetZ("P"+p+"Pos")) > MaxRows*8){
 				trPlayerGrantResources(p, "Gold", 0);
 				trQuestVarSet("P"+p+"Depth", 0);
 			}
 			else{
 				FuelLoss(p);
-				trQuestVarSet("P"+p+"Depth", (160-1*trVectorQuestVarGetZ("P"+p+"Pos"))*10);
+				trQuestVarSet("P"+p+"Depth", (MaxRows*8-1*trVectorQuestVarGetZ("P"+p+"Pos"))*10);
 			}
 		}
 	}

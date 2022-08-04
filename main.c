@@ -3,7 +3,7 @@ int MapSize = 100;
 rmSetMapSize(202, 200);
 rmSetSeaLevel(0);
 rmSetSeaType("greek river");
-rmTerrainInitialize("GrassB",3);
+rmTerrainInitialize("Black",3);
 rmSetLightingSet("Default");
 rmSetGaiaCiv(cCivZeus);
 
