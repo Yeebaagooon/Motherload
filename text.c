@@ -4,8 +4,8 @@ void GroundType(int rock = 0) {
 	{
 		case 1:
 		{
-			OVERTERRAIN_TYPE = 0;
-			OVERTERRAIN_SUBTYPE = 1;
+			OVERTERRAIN_TYPE = 3;
+			OVERTERRAIN_SUBTYPE = 13;
 		}
 	}
 }
@@ -179,6 +179,41 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				case 3:
 				{
 					trShowImageDialog("icons\infantry g hoplite icon 64", "Success!");
+					dialog = 0;
+				}
+			}
+		}
+		case 2:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Welcome to Thule, we need you to dig some minerals out of this planet!");
+				}
+				case 2:
+				{
+					uiMessageBox("Use lure or 'Q' on a square to drill it out.");
+				}
+				case 3:
+				{
+					uiMessageBox("Then pick up minerals...");
+				}
+				case 4:
+				{
+					uiMessageBox("And drop them infront of the processing shop to sell them");
+				}
+				case 5:
+				{
+					uiMessageBox("We are subsidising fuel, so fuel is free here.");
+				}
+				case 6:
+				{
+					uiMessageBox("Just remember to fill up and don't run out!");
+				}
+				case 7:
+				{
+					uiMessageBox("Make 10 gold in 8 minutes to unlock the next planet, as well as the ability to upgrade your ship.");
 					dialog = 0;
 				}
 			}

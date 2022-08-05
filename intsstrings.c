@@ -1,5 +1,5 @@
-int QuickStart = 0;
-int Stage = 1;
+int QuickStart = 1;
+int Stage = 0;
 string MapVersion = "Test Version";
 string MapName = "Motherload.xs";
 int MaxRows = 20;

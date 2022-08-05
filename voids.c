@@ -682,10 +682,7 @@ void CounterShow(int xx = 0){
 	trSetCounterDisplay(colourString+incomeString);
 }
 
-void ColouredTimer(int c = 0, string text = "", int time = 0, string name = "countdown", int eventID = -1){
-	string colourString = "<color={PlayerColor("+c+")}>";
-	trCounterAddTime(name, time, 0, colourString + text, eventID);
-}
+
 
 void ColouredIconTimer(int c = 0, string icon ="", string text = "", int time = 0,
 	string name = "countdown", int eventID = -1){
@@ -947,7 +944,7 @@ void FloatingUnitAnim2(string protounitname="", int xx = 0, int yy = 0, int zz =
 
 void FloatingUnitAnimIdle(string protounitname="", int xx = 0, int yy = 0, int zz = 0, int xheadingx = 0,
 	float scalex = 1, float scaley = 1, float scalez = 1, string anim="0,0,0,0,0", int animtype = 2){
-	trArmyDispatch("0,0", "Revealer", 1, xx, yy, zz, xheadingx, true);
+	//trArmyDispatch("0,0", "Revealer", 1, xx, yy, zz, xheadingx, true);
 	trQuestVarSet("BuildID", trQuestVarGet("BuildID") + 1);
 	trQuestVarSet("QVHero"+(1*trQuestVarGet("BuildID"))+"", trGetNextUnitScenarioNameNumber());
 	trQuestVarSet("QVHero", trGetNextUnitScenarioNameNumber());
@@ -1286,25 +1283,6 @@ void CTFBuildBase(int p = 1, float PosX = 0, float PosZ = 0){
 	
 }
 
-void setupUnitShop(int slot = 0, string displayname = "", string protoname = "",
-	string description = "", int cost = 0, int limit = 0) {
-	trStringQuestVarSet("unit"+slot+"displayname", displayname);
-	trStringQuestVarSet("unit"+slot+"protoname", protoname);
-	trStringQuestVarSet("unit"+slot+"description", description);
-	trQuestVarSet("unit"+slot+"cost", cost);
-	trQuestVarSet("unit"+slot+"limit", limit);
-}
-
-void setupPowerShop(int slot = 0, string displayname = "", string powername = "",
-	string protoname = "", string description = "", int cost = 0, int idneeded = 0) {
-	trStringQuestVarSet("power"+slot+"displayname", displayname);
-	trStringQuestVarSet("power"+slot+"powername", powername);
-	trStringQuestVarSet("power"+slot+"protoname", protoname);
-	trStringQuestVarSet("power"+slot+"description", description);
-	trQuestVarSet("power"+slot+"cost", cost);
-	trQuestVarSet("power"+slot+"id", idneeded);
-}
-
 void playSoundCustom(string BasesoundName = "", string CustomsoundName = ""){
 	if(1*trQuestVarGet("CustomContent") == 0){
 		trSoundPlayPaused(""+BasesoundName+"", "1", -1, "", "");
@@ -1372,17 +1350,27 @@ void PaintAtlantisArea (int x0 = 0, int z0 = 0, int x1 = 0, int z1 = 0, string t
 	trPaintTerrain(x1-1, z1-1, x0+1, z0+1, terrainType, terrainSubType, false);
 }
 
+void ColouredTimer(int c = 0, string text = "", int time = 0, string name = "countdown", int eventID = -1){
+	string colourString = "<color={PlayerColor("+c+")}>";
+	trCounterAddTime(name, time, 0, colourString + text, eventID);
+}
+
 void FuelLoss(int p = 0){
-	int engine = 1*trQuestVarGet("P"+p+"EnginePower");
-	int depth = 1*trQuestVarGet("P"+p+"Depth");
-	float radiator = trQuestVarGet("P"+p+"Radiator");
+	xSetPointer(dPlayerData, p);
+	int engine = xGetInt(dPlayerData, xEnginePower);
+	int depth = xGetInt(dPlayerData, xDepth);
+	float radiator = xGetInt(dPlayerData, xRadiator);
 	int drilling = 1*trQuestVarGet("P"+p+"Drilling");
-	trPlayerGrantResources(1, "Gold", 0.01*drilling*(((300-engine)+(0.1*depth)/radiator)));
-	trChatHistoryClear();
-	trChatSend(0, "drill "+drilling+"");
-	trChatSend(0, "depth "+depth+"");
-	trChatSend(0, "engine "+engine+"");
-	trChatSend(0, " radiator "+radiator+"");
+	xSetFloat(dPlayerData, xFuel, xGetFloat(dPlayerData, xFuel)-0.0001*drilling*(((300-engine)+(0.15*depth)/radiator)));
+	//trChatHistoryClear();
+	//trChatSend(0, "depth "+depth+"");
+	//trChatSend(0, "fuel "+xGetFloat(dPlayerData, xFuel)+"");
+	if(trCurrentPlayer() == p){
+		trCounterAbort("CDFuel");
+		trCounterAbort("CDDepth");
+		trCounterAddTime("CDFuel", -40, -30, "<color=1,1,0>Fuel:" + 1*xGetFloat(dPlayerData, xFuel) + " L", -1);
+		trCounterAddTime("CDDepth", -30, -20, "<color=1,0,0>Depth: " + 1*xGetInt(dPlayerData, xDepth) + " metres", -1);
+	}
 	//	Fuel loss = (300-engine power)+(depth/radiator)*distance
 }
 
@@ -1413,4 +1401,34 @@ void PainSellTerrain (int x =0, int z = 0){
 	trPaintTerrain(x+5, z-2, x+5, z-2, 0, 77, false);
 	trPaintTerrain(x+6, z-2, x+6, z-2, 0, 82, false);
 	trPaintTerrain(x+7, z-2, x+7, z-2, 0, 77, false);
+}
+
+void PainFuelTerrain (int x =0, int z = 0){
+	//row one
+	trPaintTerrain(x, z, x, z, 0, 83, false);
+	trPaintTerrain(x+1, z, x+1, z, 0, 77, false);
+	trPaintTerrain(x+2, z, x+2, z, 0, 76, false);
+	trPaintTerrain(x+3, z, x+3, z, 0, 76, false);
+	trPaintTerrain(x+4, z, x+4, z, 0, 83, false);
+	trPaintTerrain(x+5, z, x+5, z, 0, 80, false);
+	trPaintTerrain(x+6, z, x+6, z, 0, 76, false);
+	
+	//row two
+	trPaintTerrain(x, z-1, x, z-1, 0, 74, false);
+	trPaintTerrain(x+1, z-1, x+1, z-1, 0, 77, false);
+	trPaintTerrain(x+2, z-1, x+2, z-1, 0, 74, false);
+	trPaintTerrain(x+3, z-1, x+3, z-1, 0, 74, false);
+	trPaintTerrain(x+4, z-1, x+4, z-1, 0, 74, false);
+	trPaintTerrain(x+5, z-1, x+5, z-1, 0, 81, false);
+	trPaintTerrain(x+6, z-1, x+6, z-1, 0, 74, false);
+	//row three
+	trPaintTerrain(x, z-2, x, z-2, 0, 78, false);
+	//null
+	trPaintTerrain(x+2, z-2, x+2, z-2, 0, 82, false);
+	trPaintTerrain(x+3, z-2, x+3, z-2, 0, 81, false);
+	trPaintTerrain(x+4, z-2, x+4, z-2, 0, 82, false);
+	trPaintTerrain(x+5, z-2, x+5, z-2, 0, 77, false);
+	trPaintTerrain(x+6, z-2, x+6, z-2, 0, 82, false);
+	trPaintTerrain(x+7, z-2, x+7, z-2, 0, 77, false);
+	trArmyDispatch("0,0", "Dwarf", 1, x*2+7, 1, z*2+3, 0, false);
 }

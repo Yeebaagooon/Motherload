@@ -13,6 +13,8 @@ int xEnginePower = 0;
 int xRadiator = 0;
 int xCargoHold = 2;
 int xFuelTank = 1000;
+float xFuel = 0;
+int xDepth = 0;
 int dObelisks = 0;
 int xObeliskName = 0;
 int xObeliskStage = 0;
@@ -52,6 +54,8 @@ highFrequency
 	xRadiator = xInitAddInt(dPlayerData, "radiator", 10);
 	xCargoHold = xInitAddInt(dPlayerData, "cargohold", 2);
 	xFuelTank = xInitAddInt(dPlayerData, "fueltank", 1000);
+	xFuel = xInitAddFloat(dPlayerData, "fuel", 1000);
+	xDepth = xInitAddInt(dPlayerData, "depth", 0);
 	xsEnableRule("fill_database");
 }
 

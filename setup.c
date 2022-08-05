@@ -151,6 +151,10 @@ highFrequency
 	trPaintTerrain(21,30,79,30, 0, 50, false);
 	trQuestVarSet("StageSelector", trGetNextUnitScenarioNameNumber());
 	UnitCreate(1, "Athena", 40, 60, 90);
+	if(QuickStart == 1){
+		trUnitSelectByQV("StageSelector");
+		trUnitMoveToPoint(52,3,50,-1,false);
+	}
 	trCameraCut(vector(100.463554,153.803818,-59.088593), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
 	trOverlayText("Host, choose a stage", 8.0, 506, 70, 1000);
 	for(p = 1; <= 9){
@@ -164,6 +168,7 @@ highFrequency
 		xSetInt(dObelisks, xObeliskName,next);
 		xSetInt(dObelisks, xObeliskStage, p);
 	}
+	
 	//EYECANDY PLANET 1
 	FloatingUnit("Rock Granite Big", 52, 8, 50, 0, 2,2,2);
 	xAddDatabaseBlock(dPlanetEyecandy, true);
@@ -262,6 +267,12 @@ highFrequency
 			trUnitDestroy();
 		}
 		aiPlanDestroy(dPlanetEyecandy);
+		/*int limit = trGetNextUnitScenarioNameNumber()-1;
+		for(x = cNumberNonGaiaPlayers+1; < limit){
+			trUnitSelectClear();
+			trUnitSelect("+x+");
+			trUnitDestroy();
+		}*/
 		xsEnableRule("lure");
 		xsEnableRule("TEMPdeployP1");
 		xsEnableRule("squarespaint");

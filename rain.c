@@ -423,9 +423,13 @@ rule PainSmeltShop
 inactive
 highFrequency
 {
-	PaintSmelter(20,180);
-	PainSellTerrain(15,89);
-	GVectorSellPos = vector(38,3,176);
+	if(Stage == 1){
+		PaintSmelter(20,180);
+		PainSellTerrain(15,89);
+		PainFuelTerrain(80,89);
+		PaintAtlantisArea(88,87,90,92,"GrassB");
+		GVectorSellPos = vector(38,3,176);
+	}
 	xsDisableSelf();
 }
 
@@ -516,6 +520,7 @@ highFrequency
 		xsDisableSelf();
 		trDelayedRuleActivation("FadeOut");
 		unitTransform("Outpost", "Rocket");
+		trSetFogAndBlackmap(true, true);
 		//trShowImageDialog(stageIcon(Stage), stageName(Stage));
 		/*
 		trQuestVarSet("P1EnginePower", 100);
@@ -534,8 +539,14 @@ highFrequency
 	uiZoomToProto("Hero Greek Atalanta");
 	xsDisableSelf();
 	//REVEALERS LOS - CHange LOS and more w/e
-	trArmyDispatch("0,0", "Revealer", 1, 190, 1, 190, 0, true);
-	trArmyDispatch("0,0", "Revealer", 1, 190, 1, 180, 0, true);
+	trModifyProtounit("Revealer", 0, 2, 14);
+	for(x = 1; <= 19){
+		trArmyDispatch("0,8", "Revealer", 1, 200-x*10, 1, 190, 0, true);
+	}
+	trPlayerResetBlackMapForAllPlayers();
+	//Tutorial dialog
+	//startNPCDialog(2);
+	xsEnableRule("TEMPfuel");
 }
 
 
@@ -545,15 +556,18 @@ highFrequency
 //CHANGE condition to distance not time
 {
 	for(p = 1; <= cNumberNonGaiaPlayers){
+		xSetPointer(dPlayerData, p);
 		if(trDistanceToVectorSquared("P"+p+"Siphon", "P"+p+"Pos") > 0){
 			trVectorSetUnitPos("P"+p+"Pos", "P"+p+"Siphon");
-			//Disable surface penalty
+			//Disable surface penalty by not having fuel loss here
 			if((trVectorQuestVarGetZ("P"+p+"Pos")) > MaxRows*8){
+				xSetInt(dPlayerData, xDepth, 0);
 				trQuestVarSet("P"+p+"Depth", 0);
 			}
 			else{
 				FuelLoss(p);
-				trQuestVarSet("P"+p+"Depth", (MaxRows*8-1*trVectorQuestVarGetZ("P"+p+"Pos"))*10);
+				xSetInt(dPlayerData, xDepth, (MaxRows*8-1*trVectorQuestVarGetZ("P"+p+"Pos"))*10-10);
+				//trQuestVarSet("P"+p+"Depth", (MaxRows*8-1*trVectorQuestVarGetZ("P"+p+"Pos"))*10-10);
 			}
 		}
 	}
