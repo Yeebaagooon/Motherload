@@ -1368,8 +1368,8 @@ void FuelLoss(int p = 0){
 	if(trCurrentPlayer() == p){
 		trCounterAbort("CDFuel");
 		trCounterAbort("CDDepth");
-		trCounterAddTime("CDFuel", -40, -30, "<color=1,1,0>Fuel:" + 1*xGetFloat(dPlayerData, xFuel) + " L", -1);
-		trCounterAddTime("CDDepth", -30, -20, "<color=1,0,0>Depth: " + 1*xGetInt(dPlayerData, xDepth) + " metres", -1);
+		trCounterAddTime("CDFuel", -40, -30, "</color>Fuel:" + 1*xGetFloat(dPlayerData, xFuel) + " L", -1);
+		trCounterAddTime("CDDepth", -30, -20, "Depth: " + 1*xGetInt(dPlayerData, xDepth) + " metres", -1);
 	}
 	//	Fuel loss = (300-engine power)+(depth/radiator)*distance
 }

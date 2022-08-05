@@ -9,7 +9,7 @@ highFrequency
 		trEventSetHandler(13+p, "SellMinerals");
 	}
 	trEventSetHandler(13, "CustomContent");
-	//reserved to 24
+	trEventSetHandler(14, "StageEnd");
 	xsDisableSelf();
 }
 
@@ -547,6 +547,31 @@ highFrequency
 	//Tutorial dialog
 	//startNPCDialog(2);
 	xsEnableRule("TEMPfuel");
+	xsEnableRule("StageTimer");
+}
+
+rule StageTimer
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 60){
+		if(Stage == 1){
+			StageTime = 480;
+			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
+		}
+		xsDisableSelf();
+		xsEnableRule("StageEnd");
+	}
+}
+
+rule StageEnd
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= StageTime){
+		xsDisableSelf();
+		uiMessageBox("Time up!");
+	}
 }
 
 
