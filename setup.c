@@ -78,7 +78,7 @@ highFrequency
 {
 	characterDialog("Loading map..", ""+MapVersion+"", "icons\special e son of osiris icon 64");
 	xsEnableRule("load3");
-	trSoundPlayFN("Yeebaagooon\test sound.mp3", "1", 13, "", "");
+	trSoundPlayFN("Yeebaagooon\Motherload\test sound.mp3", "1", 13, "", "");
 	xsDisableSelf();
 }
 
@@ -95,8 +95,8 @@ highFrequency
 			trPlayerGrantResources(p, "Favor", -10000.0);
 			trPlayerKillAllGodPowers(p);
 		}
-		xsEnableRule("load4");
 		xsDisableSelf();
+		xsEnableRule("load4");
 	}
 }
 
@@ -111,10 +111,20 @@ highFrequency
 		trUIFadeToColor(0,0,0,1000,1,false);
 		trOverlayTextColour(255, 125, 0);
 		gadgetUnreal("ShowImageBox");
-		trOverlayText(MapName, 8.0, 566, 35, 1000);
+		trOverlayText(MapName, 8.0, 579, 35, 1000);
 		trSetUnitIdleProcessing(true);
 		xsDisableSelf();
-		trDelayedRuleActivation("PaintStageSelect");
+		if(aiIsMultiplayer() == false){
+			if(OverrideSP == false){
+				trDelayedRuleActivation("LoadSP");
+			}
+			else if(OverrideSP == true){
+				trDelayedRuleActivation("PaintStageSelect");
+			}
+		}
+		else if(aiIsMultiplayer() == true){
+			trDelayedRuleActivation("PaintStageSelect");
+		}
 		trSetFogAndBlackmap(false, false);
 		gadgetReal("ShowImageBox-BordersTop");
 		gadgetReal("ShowImageBox-BordersBottom");
@@ -126,9 +136,6 @@ highFrequency
 		gadgetReal("ShowImageBox-BordersRightTop");
 		gadgetReal("ShowImageBox-CloseButton");
 		//startNPCDialog(1);
-		for(p = 1; <= cNumberNonGaiaPlayers){
-			trTechGodPower(p, "Animal Magnetism", 1);
-		}
 		while(cNumberNonGaiaPlayers>=trQuestVarGet("PlayerID")) {
 			trQuestVarSet("PlayerID2", 0);
 			while(cNumberNonGaiaPlayers>=trQuestVarGet("PlayerID2")) {
@@ -143,10 +150,38 @@ highFrequency
 	}
 }
 
+rule LoadSP
+inactive
+highFrequency
+{
+	trSetFogAndBlackmap(false, false);
+	xsDisableSelf();
+	xsEnableRule("SPCineChoice");
+}
+
 rule PaintStageSelect
 inactive
 highFrequency
 {
+	for(p = 2; < cNumberNonGaiaPlayers){
+		xSetPointer(dPlayerData, p);
+		if(xGetInt(dPlayerData, xPlayerActive) == 1){
+			if(kbIsPlayerHuman(p) == false){
+				trPlayerKillAllUnits(p);
+				trPlayerKillAllBuildings(p);
+				trSetPlayerDefeated(p);
+				xSetInt(dPlayerData, xPlayerActive, 0);
+			}
+			if(xGetInt(dPlayerData, xPlayerActive) == 1){
+				if(kbIsPlayerResigned(p) == true){
+					trPlayerKillAllUnits(p);
+					trPlayerKillAllBuildings(p);
+					trSetPlayerDefeated(p);
+					xSetInt(dPlayerData, xPlayerActive, 0);
+				}
+			}
+		}
+	}
 	PaintAtlantisArea(20,20,80,40,"black");
 	trPaintTerrain(21,30,79,30, 0, 50, false);
 	trQuestVarSet("StageSelector", trGetNextUnitScenarioNameNumber());
@@ -156,7 +191,7 @@ highFrequency
 		trUnitMoveToPoint(52,3,50,-1,false);
 	}
 	trCameraCut(vector(100.463554,153.803818,-59.088593), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
-	trOverlayText("Host, choose a stage", 8.0, 506, 70, 1000);
+	trOverlayText("Host, choose a stage", 8.0, 508, 70, 1000);
 	for(p = 1; <= 9){
 		int next = trGetNextUnitScenarioNameNumber();
 		int x = 0;
@@ -274,7 +309,7 @@ highFrequency
 			trUnitDestroy();
 		}*/
 		xsEnableRule("lure");
-		xsEnableRule("TEMPdeployP1");
+		xsEnableRule("DeployPlayers");
 		xsEnableRule("squarespaint");
 		trUnitSelectClear();
 		trUnitSelect("0");

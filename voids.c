@@ -1365,16 +1365,16 @@ void FuelLoss(int p = 0){
 	//trChatHistoryClear();
 	//trChatSend(0, "depth "+depth+"");
 	//trChatSend(0, "fuel "+xGetFloat(dPlayerData, xFuel)+"");
-	if(trCurrentPlayer() == p){
+	/*if(trCurrentPlayer() == p){
 		trCounterAbort("CDFuel");
 		trCounterAbort("CDDepth");
 		trCounterAddTime("CDFuel", -40, -30, "</color>Fuel:" + 1*xGetFloat(dPlayerData, xFuel) + " L", -1);
 		trCounterAddTime("CDDepth", -30, -20, "Depth: " + 1*xGetInt(dPlayerData, xDepth) + " metres", -1);
-	}
+	}*/
 	//	Fuel loss = (300-engine power)+(depth/radiator)*distance
 }
 
-void PainSellTerrain (int x =0, int z = 0){
+void PaintSellTerrain (int x =0, int z = 0){
 	//row one
 	trPaintTerrain(x, z, x, z, 0, 83, false);
 	trPaintTerrain(x+1, z, x+1, z, 0, 77, false);
@@ -1403,7 +1403,7 @@ void PainSellTerrain (int x =0, int z = 0){
 	trPaintTerrain(x+7, z-2, x+7, z-2, 0, 77, false);
 }
 
-void PainFuelTerrain (int x =0, int z = 0){
+void PaintFuelTerrain (int x =0, int z = 0){
 	//row one
 	trPaintTerrain(x, z, x, z, 0, 83, false);
 	trPaintTerrain(x+1, z, x+1, z, 0, 77, false);
@@ -1430,5 +1430,4 @@ void PainFuelTerrain (int x =0, int z = 0){
 	trPaintTerrain(x+5, z-2, x+5, z-2, 0, 77, false);
 	trPaintTerrain(x+6, z-2, x+6, z-2, 0, 82, false);
 	trPaintTerrain(x+7, z-2, x+7, z-2, 0, 77, false);
-	trArmyDispatch("0,0", "Dwarf", 1, x*2+7, 1, z*2+3, 0, false);
 }

@@ -110,13 +110,13 @@ void relicDescription(int relic = 0) {
 }
 
 void spawnRelicSpecific(vector v = vector (0,0,0), int val = 1){
-	trQuestVarSet("TEMP", trGetNextUnitScenarioNameNumber());
-	trArmyDispatch("0,0", "Dwarf", 1,xsVectorGetX(v),0,xsVectorGetZ(v),0,true);
+	trQuestVarSet("TEMPRELIC", trGetNextUnitScenarioNameNumber());
+	trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1,xsVectorGetX(v),0,xsVectorGetZ(v),0,true);
 	xAddDatabaseBlock(dFreeRelics, true);
-	xSetInt(dFreeRelics, xRelicName, 1*trQuestVarGet("TEMP"));
+	xSetInt(dFreeRelics, xRelicName, 1*trQuestVarGet("TEMPRELIC"));
 	xSetInt(dFreeRelics, xRelicValue, val);
 	trUnitSelectClear();
-	trUnitSelectByQV("TEMP");
+	trUnitSelectByQV("TEMPRELIC");
 	trUnitChangeProtoUnit("Relic");
 	//trChatSend(0, "Free relics = "+xGetDatabaseCount(dFreeRelics)+"");
 }
@@ -213,7 +213,9 @@ void processHeldRelics(int count = 1) {
 			}
 			currentDistance = unitDistanceToVector(xGetInt(dHeldRelics, xRelicName), GVectorSellPos);
 			if (currentDistance < 125) {
-				trUnitChangeProtoUnit("Curse SFX");
+				trUnitChangeProtoUnit("Rocket");
+				spyEffect(1*trQuestVarGet("P"+dropper+"Siphon"), kbGetProtoUnitID("Automaton"), vector(0,0,0), vector(0,0,0), 18);
+				//trMutateSelected(kbGetProtoUnitID("Rocket"));
 				xUnitSelect(dHeldRelics, xRelicName);
 				trPlayerGrantResources(dropper, "Gold", 1*relicCost(1*xGetInt(dHeldRelics, xRelicValue)));
 				if (trCurrentPlayer() == dropper) {

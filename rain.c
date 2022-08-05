@@ -3,13 +3,16 @@
 rule EventSetHandler
 active
 highFrequency
+//THESE ONLY WORK IF FIRES FUNCTION, SO USE VOID!
 {
 	for(p = 1; <= cNumberNonGaiaPlayers){
 		trEventSetHandler(p, "UngarrisonDrill");
-		trEventSetHandler(13+p, "SellMinerals");
+		//trEventSetHandler(13+p, "SellMinerals");
 	}
 	trEventSetHandler(13, "CustomContent");
 	trEventSetHandler(14, "StageEnd");
+	trEventSetHandler(15, "SPCineYes");
+	trEventSetHandler(16, "SPCineNo");
 	xsDisableSelf();
 }
 
@@ -17,6 +20,24 @@ void CustomContent(int p = 0){
 	xsDisableSelf();
 	trQuestVarSet("CustomContent", 1);
 	trChatSend(0, "Custom Content enabled!");
+}
+
+rule SPCineChoice
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 1){
+		xsDisableSelf();
+		trShowChoiceDialog("Play opening cinematic?", "Yes", 15, "No", 16);
+	}
+}
+
+void SPCineYes(int p = 0){
+	trChatSend(0, "Yes cine");
+}
+
+void SPCineNo(int p = 0){
+	trChatSend(0, "No cine");
 }
 
 rule lure
@@ -71,6 +92,28 @@ highFrequency
 			// DISTANCE <111 IS OK TO DRILL
 			
 			//Terrain check fails
+			if(Stage == 1){
+				if((trGetTerrainSubType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
+							1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 2) && (trGetTerrainType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
+							1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 5)){
+					trChatSendToPlayer(0, p, "<color=1,0,0>The ice is too hard for you to drill!</color>");
+					if(trCurrentPlayer() == p){
+						trSoundPlayFN("cantdothat.wav","1",-1,"","");
+					}
+					trTechGodPower(p, "Animal Magnetism", 1);
+					break;
+				}
+				if((trGetTerrainSubType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
+							1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 10) && (trGetTerrainType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
+							1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 2)){
+					trChatSendToPlayer(0, p, "<color=1,0,0>Bad idea to drill into the lava...</color>");
+					if(trCurrentPlayer() == p){
+						trSoundPlayFN("cantdothat.wav","1",-1,"","");
+					}
+					trTechGodPower(p, "Animal Magnetism", 1);
+					break;
+				}
+			}
 			if((trGetTerrainSubType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
 						1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 3) && (trGetTerrainType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
 						1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 5)){
@@ -81,7 +124,6 @@ highFrequency
 				trTechGodPower(p, "Animal Magnetism", 1);
 				break;
 			}
-			
 			else if(zPos > MaxRows){
 				trChatSendToPlayer(0, p, "<color=1,0,0>You can't drill above ground!</color>");
 				if(trCurrentPlayer() == p){
@@ -178,7 +220,7 @@ highFrequency
 				trUnblockAllSounds();
 				trUnitSelectClear();
 				trUnitSelectByQV("P"+p+"Siphon", false);
-				trMutateSelected(kbGetProtoUnitID("Fire Siphon"));
+				trMutateSelected(kbGetProtoUnitID("Heka Shockwave SFX"));
 				trUnitOverrideAnimation(1, 0, true, false, -1, 0);
 				trUnitSelectClear();
 				trUnitSelectByQV("DrillAttach"+p+"", true);
@@ -325,6 +367,20 @@ void UngarrisonDrill(int p = 1){
 	trUnitSelectByQV("P"+p+"Siphon", false);
 	trUnitSetAnimation("Idle");
 	ReturnRelics(p);
+	xSetPointer(dPlayerData, p);
+	trUnitSelectClear();
+	trUnitSelectByQV("P"+p+"Siphon");
+	if(trUnitGetContained() < xGetInt(dPlayerData, xCargoHold)){
+		for(x=xGetDatabaseCount(dFreeRelics); >0) {
+			xDatabaseNext(dFreeRelics);
+			//VECTOR FROM TARGET NOT DESTINATION
+			if(unitDistanceToQVVector(xGetInt(dFreeRelics, xRelicName), "P"+p+"Pos", true) < 10){
+				xUnitSelect(dFreeRelics,xRelicName);
+				trImmediateUnitGarrison(""+(1*trQuestVarGet("P"+p+"Siphon"))+"");
+				break;
+			}
+		}
+	}
 	//var x = trQuestVarGet("p"+p+"drillTargetX") / 2 //VAR MAKES IT TRANSFER BETWEEN EFFECTS
 }
 
@@ -415,6 +471,7 @@ highFrequency
 		trPaintTerrain(0,80,100,80,5,3,false);
 		xsEnableRule("PaintLoot");
 		xsEnableRule("PainSmeltShop");
+		xsEnableRule("Selectables");
 		//UnitCreate(0, "Hoplite", 20, 180, 180);
 	}
 }
@@ -425,12 +482,52 @@ highFrequency
 {
 	if(Stage == 1){
 		PaintSmelter(20,180);
-		PainSellTerrain(15,89);
-		PainFuelTerrain(80,89);
+		PaintSellTerrain(15,89);
+		int temp = trGetNextUnitScenarioNameNumber();
+		trArmyDispatch("0,0", "Dwarf", 1, 31,3,180, 180, true);
+		xAddDatabaseBlock(dSelectables, true);
+		xSetInt(dSelectables, xSelectablesName,temp);
+		xSetInt(dSelectables, xSelectablesPrompt, 3);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitChangeProtoUnit("Sign");
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitHighlight(1000, true);
+		PaintFuelTerrain(80,89);
+		temp = trGetNextUnitScenarioNameNumber();
+		trArmyDispatch("0,0", "Dwarf", 1, 167,3,181, 180, true);
+		xAddDatabaseBlock(dSelectables, true);
+		xSetInt(dSelectables, xSelectablesName,temp);
+		xSetInt(dSelectables, xSelectablesPrompt, 4);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitChangeProtoUnit("Sign");
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitHighlight(1000, true);
+		//fuel full pump
 		PaintAtlantisArea(88,87,90,92,"GrassB");
 		GVectorSellPos = vector(38,3,176);
+		FloatingUnitAnimIdle("Earth", 190, -10, 190, 0, 4.5,-0.1,4.5);
+		FloatingUnitAnimIdle("Earth", 10, -10, 190, 0, 4.5,-0.1,4.5);
+		FloatingUnitAnimIdle("Earth", 105, -10, 190, 0, 4.5,-0.1,4.5);
 	}
 	xsDisableSelf();
+}
+
+rule Selectables
+inactive
+highFrequency
+{
+	xDatabaseNext(dSelectables);
+	int n = xGetInt(dSelectables, xSelectablesName);
+	xUnitSelect(dSelectables,xSelectablesName);
+	if (trUnitIsSelected()) {
+		uiClearSelection();
+		startNPCDialog(xGetInt(dSelectables, xSelectablesPrompt));
+		trUnitHighlight(1, true);
+	}
 }
 
 rule PaintLoot
@@ -482,6 +579,7 @@ highFrequency
 		}
 	}
 	xsEnableRule("WallUp");
+	trDelayedRuleActivation("ChangeRelics");
 }
 
 rule WallUp
@@ -499,23 +597,29 @@ highFrequency
 	xsDisableSelf();
 }
 
-rule TEMPdeployP1
+rule DeployPlayers
 inactive
 highFrequency
 {
 	if((trTime()-cActivationTime) >= 1){
 		for(p = 1; < cNumberNonGaiaPlayers){
-			trQuestVarSet("P"+p+"Siphon", trGetNextUnitScenarioNameNumber());
-			//VECTOR IS 2X+1
-			UnitCreate(p, "Hero Greek Atalanta", 75+5*p, 180, 180);
-			yAddToDatabase("Siphon"+p+"", "P"+p+"Siphon");
-			trPlayerSetDiplomacy(0, p, "Enemy");
-			trUnitSelectClear();
-			trUnitSelectByQV("P"+p+"Siphon", false);
-			trQuestVarSet("P"+p+"MainSpy", trGetNextUnitScenarioNameNumber());
-			trTechInvokeGodPower(0, "spy", vector(0,0,0), vector(0,0,0));
-			//trDelayedRuleActivation("ChangeMainSpy1");
-			//trPaintTerrain(0,0,0,0,0,0, true);
+			xSetPointer(dPlayerData, p);
+			if(xGetInt(dPlayerData, xPlayerActive) == 1){
+				trQuestVarSet("P"+p+"Siphon", trGetNextUnitScenarioNameNumber());
+				//VECTOR IS 2X+1
+				UnitCreate(p, "Hero Greek Atalanta", 75+5*p, 180, 180);
+				yAddToDatabase("Siphon"+p+"", "P"+p+"Siphon");
+				trPlayerSetDiplomacy(0, p, "Enemy");
+				trUnitSelectClear();
+				trUnitSelectByQV("P"+p+"Siphon");
+				trSetSelectedScale(1,0.1,1);
+				spyEffect(1*trQuestVarGet("P"+p+"Siphon"), kbGetProtoUnitID("Fire Siphon"), vector(0,0,0), vector(1,1,1));
+				/*trUnitSelectByQV("P"+p+"Siphon", false);
+				trQuestVarSet("P"+p+"MainSpy", trGetNextUnitScenarioNameNumber());
+				trTechInvokeGodPower(0, "spy", vector(0,0,0), vector(0,0,0));*/
+				//trDelayedRuleActivation("ChangeMainSpy1");
+				//trPaintTerrain(0,0,0,0,0,0, true);
+			}
 		}
 		xsDisableSelf();
 		trDelayedRuleActivation("FadeOut");
@@ -534,6 +638,9 @@ rule FadeOut
 inactive
 highFrequency
 {
+	for(p = 1; <= cNumberNonGaiaPlayers){
+		trTechGodPower(p, "Animal Magnetism", 1);
+	}
 	trSetFogAndBlackmap(true, true);
 	trUIFadeToColor(0,0,0,1000,500,false);
 	uiZoomToProto("Hero Greek Atalanta");
@@ -545,9 +652,12 @@ highFrequency
 	}
 	trPlayerResetBlackMapForAllPlayers();
 	//Tutorial dialog
-	//startNPCDialog(2);
-	xsEnableRule("TEMPfuel");
+	if(QuickStart == 0){
+		startNPCDialog(2);
+	}
+	xsEnableRule("FuelEconomy");
 	xsEnableRule("StageTimer");
+	xsEnableRule("CheckResigns");
 }
 
 rule StageTimer
@@ -570,29 +680,131 @@ highFrequency
 {
 	if((trTime()-cActivationTime) >= StageTime){
 		xsDisableSelf();
-		uiMessageBox("Time up!");
+		xsEnableRule("TimesUp");
+	}
+}
+
+rule CheckResigns
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= CheckTime){
+		CheckTime = CheckTime+1;
+		for(p = 1; < cNumberNonGaiaPlayers){
+			xSetPointer(dPlayerData, p);
+			if(xGetInt(dPlayerData, xPlayerActive) == 1){
+				if(kbIsPlayerHuman(p) == false){
+					trPlayerKillAllUnits(p);
+					trPlayerKillAllBuildings(p);
+					trSetPlayerDefeated(p);
+					xSetInt(dPlayerData, xPlayerActive, 0);
+				}
+				if(xGetInt(dPlayerData, xPlayerActive) == 1){
+					if(kbIsPlayerResigned(p) == true){
+						trPlayerKillAllUnits(p);
+						trPlayerKillAllBuildings(p);
+						trSetPlayerDefeated(p);
+						xSetInt(dPlayerData, xPlayerActive, 0);
+					}
+				}
+			}
+		}
 	}
 }
 
 
-rule TEMPfuel
+rule FuelEconomy
 inactive
 highFrequency
 //CHANGE condition to distance not time
 {
 	for(p = 1; <= cNumberNonGaiaPlayers){
 		xSetPointer(dPlayerData, p);
-		if(trDistanceToVectorSquared("P"+p+"Siphon", "P"+p+"Pos") > 0){
-			trVectorSetUnitPos("P"+p+"Pos", "P"+p+"Siphon");
-			//Disable surface penalty by not having fuel loss here
-			if((trVectorQuestVarGetZ("P"+p+"Pos")) > MaxRows*8){
-				xSetInt(dPlayerData, xDepth, 0);
-				trQuestVarSet("P"+p+"Depth", 0);
+		if(xGetInt(dPlayerData, xPlayerActive) == 1){
+			if(trDistanceToVectorSquared("P"+p+"Siphon", "P"+p+"Pos") > 0){
+				trVectorSetUnitPos("P"+p+"Pos", "P"+p+"Siphon");
+				//Disable surface penalty by not having fuel loss here
+				if((trVectorQuestVarGetZ("P"+p+"Pos")) > MaxRows*8){
+					xSetInt(dPlayerData, xDepth, 0);
+					trQuestVarSet("P"+p+"Depth", 0);
+					if(((trVectorQuestVarGetX("P"+p+"Pos")) > 176) && (trVectorQuestVarGetX("P"+p+"Pos")) < 182){
+						if(((trVectorQuestVarGetZ("P"+p+"Pos")) > 174) && (trVectorQuestVarGetZ("P"+p+"Pos")) < 186){
+							if(xGetInt(dPlayerData, xFuelCountdown) == 0){
+								xSetInt(dPlayerData, xFuelCountdown, 1);
+								if(xGetFloat(dPlayerData, xFuel) < 1000){
+									ColouredChatToPlayer(p, "1,1,0", "Refilling fuel tank if you remain stationary...");
+								}
+								xSetInt(dPlayerData, xFuelCountdownTime, 4);
+								xSetInt(dPlayerData, xFuelActivationTime, trTime()+1);
+							}
+						}
+					}
+					else{
+						if(trTime() > xGetInt(dPlayerData, xFuelActivationTime)){
+							if(xGetInt(dPlayerData, xFuelCountdown) == 1){
+								xSetInt(dPlayerData, xFuelCountdown, 0);
+								//trChatSendToPlayer(0, p, "Refuelling cancelled.");
+								xSetInt(dPlayerData, xFuelCountdownTime, 4);
+								xSetInt(dPlayerData, xFuelActivationTime, trTime()+10000);
+								break;
+							}
+						}
+					}
+				}
+				else{
+					FuelLoss(p);
+					xSetInt(dPlayerData, xDepth, (MaxRows*8-1*trVectorQuestVarGetZ("P"+p+"Pos"))*10-10);
+					//trQuestVarSet("P"+p+"Depth", (MaxRows*8-1*trVectorQuestVarGetZ("P"+p+"Pos"))*10-10);
+				}
 			}
 			else{
-				FuelLoss(p);
-				xSetInt(dPlayerData, xDepth, (MaxRows*8-1*trVectorQuestVarGetZ("P"+p+"Pos"))*10-10);
-				//trQuestVarSet("P"+p+"Depth", (MaxRows*8-1*trVectorQuestVarGetZ("P"+p+"Pos"))*10-10);
+				if(((trVectorQuestVarGetX("P"+p+"Pos")) > 176) && (trVectorQuestVarGetX("P"+p+"Pos")) < 182){
+					if(((trVectorQuestVarGetZ("P"+p+"Pos")) > 174) && (trVectorQuestVarGetZ("P"+p+"Pos")) < 186){
+						if(trTime() > xGetInt(dPlayerData, xFuelActivationTime)){
+							if(xGetInt(dPlayerData, xFuelCountdownTime) > 1){
+								xSetInt(dPlayerData, xFuelCountdownTime, xGetInt(dPlayerData, xFuelCountdownTime)-1);
+								ColouredChatToPlayer(p, "1,1,0", ""+xGetInt(dPlayerData, xFuelCountdownTime)+"...");
+								xSetInt(dPlayerData, xFuelActivationTime, trTime()+1);
+							}
+							else if (xGetInt(dPlayerData, xFuelCountdownTime) == 1){
+								ColouredChatToPlayer(p, "0,1,0", "Refuel complete.");
+								xSetFloat(dPlayerData, xFuel, xGetInt(dPlayerData, xFuelTank));
+								xSetInt(dPlayerData, xFuelCountdown, 0);
+								xSetInt(dPlayerData, xFuelCountdownTime, 4);
+								xSetInt(dPlayerData, xFuelActivationTime, trTime()+10000);
+							}
+						}
+					}
+				}
+			}
+			if(trCurrentPlayer() == p){
+				trCounterAbort("CDFuel");
+				trCounterAbort("CDDepth");
+				if(cNumberNonGaiaPlayers > 2){
+					//coloured fuel function
+					if(xGetFloat(dPlayerData, xFuel) > xGetInt(dPlayerData, xFuelTank)*0.75){
+						trCounterAddTime("CDFuel", -40, -30, "<color={PlayerColor(3)}>Fuel:" + 1*xGetFloat(dPlayerData, xFuel) + " L", -1);
+						trCounterAddTime("CDDepth", -30, -20, "</color>Depth: " + 1*xGetInt(dPlayerData, xDepth) + " metres", -1);
+					}
+					else if(xGetFloat(dPlayerData, xFuel) < 150){
+						trCounterAddTime("CDFuel", -40, -30, "<color={PlayerColor(2)}>Fuel:" + 1*xGetFloat(dPlayerData, xFuel) + " L", -1);
+						trCounterAddTime("CDDepth", -30, -20, "</color>Depth: " + 1*xGetInt(dPlayerData, xDepth) + " metres", -1);
+					}
+					else{
+						trCounterAddTime("CDFuel", -40, -30, "</color>Fuel:" + 1*xGetFloat(dPlayerData, xFuel) + " L", -1);
+						trCounterAddTime("CDDepth", -30, -20, "</color>Depth: " + 1*xGetInt(dPlayerData, xDepth) + " metres", -1);
+					}
+				}
+				else if(cNumberNonGaiaPlayers <= 2){
+					trCounterAddTime("CDFuel", -40, -30, "</color>Fuel:" + 1*xGetFloat(dPlayerData, xFuel) + " L", -1);
+					trCounterAddTime("CDDepth", -30, -20, "</color>Depth: " + 1*xGetInt(dPlayerData, xDepth) + " metres", -1);
+				}
+			}
+			if((xGetFloat(dPlayerData, xFuel) <= 0) && (xGetInt(dPlayerData, xPlayerActive) == 1)){
+				trChatSendToPlayer(0, p, "OUT OF FUEL DEATH");
+				trUnitSelectByQV("P"+p+"Siphon");
+				trUnitDestroy();
+				xSetInt(dPlayerData, xPlayerActive, 0);
 			}
 		}
 	}

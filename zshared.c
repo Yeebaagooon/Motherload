@@ -1130,6 +1130,11 @@ float unitDistanceToVector(int name = 0, vector v = vector(0,0,0), bool squared 
 	return(distanceBetweenVectors(temp,v,squared));
 }
 
+float unitDistanceToQVVector(int name = 0, string v = "", bool squared = true) {
+	vector temp = kbGetBlockPosition(""+name,true);
+	return(distanceBetweenVectors(temp,trVectorQuestVarGet(v),squared));
+}
+
 float trDistanceToVectorSquared(string qv = "", string v = "") {
 	return(unitDistanceToVector(1*trQuestVarGet(qv),trVectorQuestVarGet(v)));
 }

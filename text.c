@@ -205,7 +205,7 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				}
 				case 5:
 				{
-					uiMessageBox("We are subsidising fuel, so fuel is free here.");
+					uiMessageBox("We are subsidising petrol, so fuel is free here.");
 				}
 				case 6:
 				{
@@ -214,6 +214,32 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				case 7:
 				{
 					uiMessageBox("Make 10 gold in 8 minutes to unlock the next planet, as well as the ability to upgrade your ship.");
+					dialog = 0;
+				}
+			}
+		}
+		case 3:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Drop garrisoned minerals on the 'sell' pad to sell them.");
+					dialog = 0;
+				}
+			}
+		}
+		case 4:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Move your vehicle over the green fuel bar to the right to refill your fuel tank.");
+				}
+				case 2:
+				{
+					uiMessageBox("Since this is the first stage, fuel is free!");
 					dialog = 0;
 				}
 			}

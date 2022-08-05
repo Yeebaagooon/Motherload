@@ -1,4 +1,5 @@
-int QuickStart = 1;
+int QuickStart = 0;
+bool OverrideSP = false;
 int Stage = 0;
 int StageTime = 0;
 string MapVersion = "Test Version";
@@ -11,6 +12,7 @@ int TERRAIN_TYPE = 2;
 int TERRAIN_SUBTYPE = 2;
 int OVERTERRAIN_TYPE = 5;
 int OVERTERRAIN_SUBTYPE = 4;
+int CheckTime = 1;
 
 /* TERRAINS */
 const int SandC = 1;
