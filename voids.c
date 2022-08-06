@@ -1431,3 +1431,9 @@ void PaintFuelTerrain (int x =0, int z = 0){
 	trPaintTerrain(x+6, z-2, x+6, z-2, 0, 82, false);
 	trPaintTerrain(x+7, z-2, x+7, z-2, 0, 77, false);
 }
+
+void trUnitSetVariation(int name = 0, int var = 0){
+	trUnitSelectClear();
+	trUnitSelect(""+name);
+	trUnitSetAnimationPath(""+(var)+",0,0,0,0,0,0");
+}
