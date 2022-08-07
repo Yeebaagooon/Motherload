@@ -12,7 +12,7 @@ for(x = 1; <= 9){
 }
 
 */
-const int TOTAL_LOAD = 3;
+const int TOTAL_LOAD = 7;
 
 void showLoadProgress() {
 	trSoundPlayFN("default","1",-1,"Loading Data:"+100 * loadProgress / TOTAL_LOAD,"icons\god power reverse time icons 64");
@@ -196,72 +196,69 @@ inactive
 	}
 	if (swordsmen == cNumberNonGaiaPlayers - 1) { //why was this 2
 		for(p=1; < cNumberNonGaiaPlayers) {
-			if (xSetPointer(dPlayerData,p) == false) {
+			if (xSetPointer(dPlayerData, p) == false) {
 				debugLog("Cannot set pointer for " + aiPlanGetName(dPlayerData) + " to: " + p);
 				//debugLog("database size is " + aiPlanGetNumberUserVariableValues(dPlayerData,xDirtyBit));
 				debugLog("Progress: " + loadProgress + " context: " + xsGetContextPlayer());
 			}
 			swordsmen = 10 * (p - 1);
+			// Check which swordsman is a hero and use his ID to figure out the number
 			for(x=0; < 10) {
 				if (kbGetUnitBaseTypeID(x + swordsmen) == kbGetProtoUnitID("Swordsman Hero")) {
 					/* read the data */
 					if (loadProgress == 0) {
-						//Stage
-					} else if (loadProgress == 1) {
-						//xSetInt(dPlayerData,xPlayerLevel,x);
-					} else if (loadProgress == 2) {
-						//xSetInt(dPlayerData,xPlayerGodBoon,x);
-						trUnitSelectClear();
-						trUnitSelectByID(x + swordsmen);
-						trMutateSelected(kbGetProtoUnitID("Swordsman"));
-						break;
-					}
-				}
-			}
-			loadProgress = loadProgress + 1;
-			showLoadProgress();
-			if (loadProgress == TOTAL_LOAD) {
-				xsDisableSelf();
-				xsEnableRule("data_load_03_done");
-			} else {
-				/* prepare the next data */
-				xsEnableRule("data_load_01_load_data");
-				switch(loadProgress)
-				{
-					case 1: // gold
-					{
-						savedata = trGetScenarioUserData(1);
-						if (savedata < 0) {
-							savedata = 0;
-						} else if (savedata > 10000) {
-							savedata = 10000;
+						trQuestVarSet("p"+p+"stage", x);
+					} else if (loadProgress < 7) {
+						// Gold
+						if (p  == 1) {
+							debugLog("digit is " + x);
 						}
-						trChatSend(0, "Gold savedata "+savedata);
-						trQuestVarSet("GoldGrant", savedata);
-					}
-					case 2: // drill level
-					{
-						savedata = trGetScenarioUserData(2);
-						if (savedata <= 0) {
-							savedata = 1;
-						}
-						trQuestVarSet("DrillLevel"+p+"", savedata);
-						//trChatSend(0, "Drill savedata "+savedata);
-						xSetInt(dPlayerData, xDrillLevel ,1*trQuestVarGet("DrillLevel"+p+""));
-						xSetFloat(dPlayerData, xDrillPower ,1*trQuestVarGet("DrillPowerL"+xGetInt(dPlayerData, xDrillLevel)+""));
-						trQuestVarEcho("DrillLevel"+p+"");
-						trChatSend(0, ""+1*trQuestVarGet("DrillPowerL"+xGetInt(dPlayerData, xDrillLevel)));
-					}
-					case 9: // relics part 1
-					{
-						savedata = trGetScenarioUserData(2);
-						if (savedata < 0) {
-							savedata = 0;
-						}
+						trQuestVarSet("p"+p+"goldGrant", trQuestVarGet("p"+p+"goldGrant") + x * xsPow(10, loadProgress - 1));
+					} else if (loadProgress == 7) {
+						xSetInt(dPlayerData, xDrillLevel, 1*xsMax(1, x));
+						xSetFloat(dPlayerData, xDrillPower, 1*trQuestVarGet("DrillPowerL"+xGetInt(dPlayerData, xDrillLevel)+""));
 					}
 					
+					trUnitSelectClear();
+					trUnitSelectByID(x + swordsmen);
+					trMutateSelected(kbGetProtoUnitID("Swordsman"));
+					break;
 				}
 			}
+		}
+		
+		
+		loadProgress = loadProgress + 1;
+		showLoadProgress();
+		
+		
+		if (loadProgress == TOTAL_LOAD) {
+			xsDisableSelf();
+			xsEnableRule("data_load_03_done");
+		} else {
+			/* prepare the next data */
+			xsEnableRule("data_load_01_load_data");
+			switch(loadProgress)
+			{
+				case 1: // done reading slot 0.
+				{
+					savedata = trGetScenarioUserData(1);
+				}
+				case 7: // done reading slot 0.
+				{
+					savedata = trGetScenarioUserData(2);
+				}
+				case 300: // done reading slot 0.
+				{
+					savedata = trGetScenarioUserData(3);
+				}
+			}
+			if (savedata < 0) {
+				savedata = 0;
+			}
+			
+			currentdata = iModulo(10, savedata);
+			savedata = savedata / 10;
 		}
 	}
 }

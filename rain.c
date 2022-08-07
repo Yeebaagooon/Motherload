@@ -621,8 +621,10 @@ highFrequency
 				trTechInvokeGodPower(0, "spy", vector(0,0,0), vector(0,0,0));*/
 				//trDelayedRuleActivation("ChangeMainSpy1");
 				//trPaintTerrain(0,0,0,0,0,0, true);
-				trPlayerGrantResources(p, "Gold", 1*trQuestVarGet("GoldGrant"));
+				trPlayerGrantResources(p, "Gold", 1*trQuestVarGet("p"+p+"goldGrant"));
 			}
+			trChatSend(0, "P"+p+"gold is " + 1*trQuestVarGet("p"+p+"goldGrant"));
+			trChatSend(0, "p"+p+"Drill level is " + xGetInt(dPlayerData, xDrillLevel));
 		}
 		xsDisableSelf();
 		trDelayedRuleActivation("FadeOut");
