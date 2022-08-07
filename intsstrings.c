@@ -1,10 +1,13 @@
 //---Test controls
-int QuickStart = 1;
+int QuickStart = 0;
 bool OverrideSP = false;
 
 //---
 int Stage = 0;
 int StageTime = 0;
+int savedata = 0;
+int loadProgress = 0;
+int currentdata = 0;
 string MapVersion = "Test Version";
 string MapName = "Motherload.xs";
 int MaxRows = 20;
@@ -41,8 +44,8 @@ highFrequency
 	trQuestVarSet("DrillCostL2", 25);
 	trQuestVarSet("DrillCostL3", 50);
 	trQuestVarSet("DrillPowerL1", 10);
-	trQuestVarSet("DrillPowerL2", 15);
-	trQuestVarSet("DrillPowerL3", 20);
+	trQuestVarSet("DrillPowerL2", 18);
+	trQuestVarSet("DrillPowerL3", 30);
 	trStringQuestVarSet("DrillL1", "Iron Drill");
 	trStringQuestVarSet("DrillL2", "Steel Drill");
 	trStringQuestVarSet("DrillL3", "Aluminium Drill");

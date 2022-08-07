@@ -201,10 +201,12 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				}
 				case 4:
 				{
+					trCameraCut(vector(62.953140,98.965134,111.442215), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
 					uiMessageBox("And drop them infront of the processing shop to sell them");
 				}
 				case 5:
 				{
+					trCameraCut(vector(146.952896,98.965134,111.240631), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
 					uiMessageBox("We are subsidising petrol, so fuel is free here.");
 				}
 				case 6:
@@ -213,6 +215,8 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				}
 				case 7:
 				{
+					trCameraCut(vector(100.463554,153.803818,-59.088593), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
+					uiZoomToProto("Hero Greek Atalanta");
 					uiMessageBox("Make 10 gold in 8 minutes to unlock the next planet, as well as the ability to upgrade your ship.");
 					dialog = 0;
 				}

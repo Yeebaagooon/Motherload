@@ -227,6 +227,7 @@ highFrequency
 				trUnitSelectByQV("DrillAttach"+p+"", true);
 				trMutateSelected(kbGetProtoUnitID("Wadjet Spit"));
 				//DRILL SPEED
+				xSetPointer(dPlayerData, p);
 				SetDrillSpeed(p, 1*trQuestVarGet("P"+p+"DrillTargetX")/2-1, 1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1);
 				trUnitSelectClear();
 				trUnitSelectByQV("DrillAttach"+p+"", true);
@@ -620,6 +621,7 @@ highFrequency
 				trTechInvokeGodPower(0, "spy", vector(0,0,0), vector(0,0,0));*/
 				//trDelayedRuleActivation("ChangeMainSpy1");
 				//trPaintTerrain(0,0,0,0,0,0, true);
+				trPlayerGrantResources(p, "Gold", 1*trQuestVarGet("GoldGrant"));
 			}
 		}
 		xsDisableSelf();
@@ -665,9 +667,9 @@ rule StageTimer
 inactive
 highFrequency
 {
-	if((trTime()-cActivationTime) >= 60){
+	if((trTime()-cActivationTime) >= 20){ //60
 		if(Stage == 1){
-			StageTime = 480;
+			StageTime = 60; //480
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
 		}
 		xsDisableSelf();

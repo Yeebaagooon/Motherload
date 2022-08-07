@@ -1,17 +1,24 @@
 /*	int loaddata = 0;
-	loaddata = trGetScenarioUserData(1);
-	trQuestVarSet("Gold", loaddata);
-	trQuestVarEcho("Gold");
-	if(trQuestVarGet("Gold") == -1){
-		trQuestVarSet("Gold", 0);
-		loaddata = 0;
-	}
-	for(x = 1; <= 9){
-		trQuestVarSet("GoldDigit"+x+"", iModulo(10, loaddata));
-		loaddata = loaddata / 10;
-	}
+loaddata = trGetScenarioUserData(1);
+trQuestVarSet("Gold", loaddata);
+trQuestVarEcho("Gold");
+if(trQuestVarGet("Gold") == -1){
+	trQuestVarSet("Gold", 0);
+	loaddata = 0;
+}
+for(x = 1; <= 9){
+	trQuestVarSet("GoldDigit"+x+"", iModulo(10, loaddata));
+	loaddata = loaddata / 10;
+}
 
-	*/
+*/
+const int TOTAL_LOAD = 3;
+
+void showLoadProgress() {
+	trSoundPlayFN("default","1",-1,"Loading Data:"+100 * loadProgress / TOTAL_LOAD,"icons\god power reverse time icons 64");
+}
+
+
 rule Initialise
 active
 highFrequency
@@ -62,22 +69,46 @@ highFrequency
 	trQuestVarSet("PlayerID", trQuestVarGet("PlayerID")+1);}
 	
 	//SWRODSMEN DEPLOY
-	/*
-	for(p=1; < cNumberNonGaiaPlayers) {
-		trModifyProtounit("Swordsman Hero", p, 6, -100);
-		trModifyProtounit("Swordsman Hero", p, 16, 9999999999999999999.0);
-		trModifyProtounit("Swordsman Hero", p, 17, 9999999999999999999.0);
-		trModifyProtounit("Swordsman Hero", p, 18, 9999999999999999999.0);
-		trModifyProtounit("Swordsman Hero", p, 19, 9999999999999999999.0);
-		trModifyProtounit("Swordsman Hero", p, 16, -9999999999999999999.0);
-		trModifyProtounit("Swordsman Hero", p, 17, -9999999999999999999.0);
-		trModifyProtounit("Swordsman Hero", p, 18, -9999999999999999999.0);
-		trModifyProtounit("Swordsman Hero", p, 19, -9999999999999999999.0);
-		int posX = 20;
-		trArmyDispatch(""+p+",0","Swordsman", 10, posX,0,10,0,true);
-		posX = posX + 10;
+	int DeployXX = 20;
+	if(aiIsMultiplayer() == false){
+		if(OverrideSP == false){
+			trDelayedRuleActivation("load1");
+		}
+		else if(OverrideSP == true){
+			for(p=1; < cNumberNonGaiaPlayers) {
+				trModifyProtounit("Swordsman Hero", p, 6, -100);
+				trModifyProtounit("Swordsman Hero", p, 16, 9999999999999999999.0);
+				trModifyProtounit("Swordsman Hero", p, 17, 9999999999999999999.0);
+				trModifyProtounit("Swordsman Hero", p, 18, 9999999999999999999.0);
+				trModifyProtounit("Swordsman Hero", p, 19, 9999999999999999999.0);
+				trModifyProtounit("Swordsman Hero", p, 16, -9999999999999999999.0);
+				trModifyProtounit("Swordsman Hero", p, 17, -9999999999999999999.0);
+				trModifyProtounit("Swordsman Hero", p, 18, -9999999999999999999.0);
+				trModifyProtounit("Swordsman Hero", p, 19, -9999999999999999999.0);
+				trArmyDispatch(""+p+",0","Swordsman", 10, DeployXX,0,10,0,true);
+				DeployXX = DeployXX + 20;
+			}
+			xsEnableRule("data_load_01_ready");
+		}
 	}
-	*/
+	else if(aiIsMultiplayer() == true){
+		for(p=1; < cNumberNonGaiaPlayers) {
+			trModifyProtounit("Swordsman Hero", p, 6, -100);
+			trModifyProtounit("Swordsman Hero", p, 16, 9999999999999999999.0);
+			trModifyProtounit("Swordsman Hero", p, 17, 9999999999999999999.0);
+			trModifyProtounit("Swordsman Hero", p, 18, 9999999999999999999.0);
+			trModifyProtounit("Swordsman Hero", p, 19, 9999999999999999999.0);
+			trModifyProtounit("Swordsman Hero", p, 16, -9999999999999999999.0);
+			trModifyProtounit("Swordsman Hero", p, 17, -9999999999999999999.0);
+			trModifyProtounit("Swordsman Hero", p, 18, -9999999999999999999.0);
+			trModifyProtounit("Swordsman Hero", p, 19, -9999999999999999999.0);
+			trArmyDispatch(""+p+",0","Swordsman", 10, DeployXX,0,10,0,true);
+			DeployXX = DeployXX + 20;
+		}
+		xsEnableRule("data_load_01_ready");
+	}
+	
+	
 	//start fade to black
 	//trUIFadeToColor(1,0,0,0,0,true);
 	
@@ -95,9 +126,231 @@ highFrequency
 	pause(0);
 	*/
 	characterDialog("Initialising map", " ", "icons\special e son of osiris icon 64");
-	xsEnableRule("load1");
 	xsDisableSelf();
 }
+
+rule data_load_01_ready
+highFrequency
+inactive
+{
+	int swordsmen = 0;
+	int total = 10 * (cNumberNonGaiaPlayers - 1); //why was this 2
+	for(p=1; < cNumberNonGaiaPlayers) {
+		swordsmen = swordsmen + trPlayerUnitCountSpecific(p, "Swordsman");
+	}
+	if (swordsmen == total) {
+		savedata = trGetScenarioUserData(0);
+		if (savedata < 0) {
+			savedata = 0;
+		}
+		currentdata = iModulo(10, savedata);
+		savedata = savedata / 10;
+		
+		xsEnableRule("data_load_01_load_data");
+		xsEnableRule("data_load_02_detect_data");
+		//	xsEnableRule("data_load_emergency_exit");
+		xsDisableSelf();
+	}
+}
+
+/*
+ASYNC
+*/
+rule data_load_01_load_data
+highFrequency
+inactive
+{
+	trLetterBox(false);
+	trBlockAllSounds(true);
+	if (currentdata >= 10) {
+		trSoundPlayFN("cantdothat.wav","1",-1,"Invalid code at " + loadProgress + "!","");
+	}
+	trUnitSelectClear();
+	trUnitSelectByID(currentdata + 10 * (trCurrentPlayer() - 1));
+	for(i=10; >0) {
+		if (trUnitIsSelected() == false) {
+			uiFindType("Swordsman");
+		} else {
+			break;
+		}
+	}
+	uiTransformSelectedUnit("Swordsman Hero");
+	trForceNonCinematicModels(true);
+	
+	//trLetterBox(true);
+	
+	showLoadProgress();
+	xsDisableSelf();
+}
+
+/*
+SYNC
+*/
+rule data_load_02_detect_data
+highFrequency
+inactive
+{
+	int swordsmen = 0;
+	for(p=1; < cNumberNonGaiaPlayers) {
+		swordsmen = swordsmen + trPlayerUnitCountSpecific(p, "Swordsman Hero");
+	}
+	if (swordsmen == cNumberNonGaiaPlayers - 1) { //why was this 2
+		for(p=1; < cNumberNonGaiaPlayers) {
+			if (xSetPointer(dPlayerData,p) == false) {
+				debugLog("Cannot set pointer for " + aiPlanGetName(dPlayerData) + " to: " + p);
+				//debugLog("database size is " + aiPlanGetNumberUserVariableValues(dPlayerData,xDirtyBit));
+				debugLog("Progress: " + loadProgress + " context: " + xsGetContextPlayer());
+			}
+			swordsmen = 10 * (p - 1);
+			for(x=0; < 10) {
+				if (kbGetUnitBaseTypeID(x + swordsmen) == kbGetProtoUnitID("Swordsman Hero")) {
+					/* read the data */
+					if (loadProgress == 0) {
+						//Stage
+					} else if (loadProgress == 1) {
+						//xSetInt(dPlayerData,xPlayerLevel,x);
+					} else if (loadProgress == 2) {
+						//xSetInt(dPlayerData,xPlayerGodBoon,x);
+						trUnitSelectClear();
+						trUnitSelectByID(x + swordsmen);
+						trMutateSelected(kbGetProtoUnitID("Swordsman"));
+						break;
+					}
+				}
+			}
+			loadProgress = loadProgress + 1;
+			showLoadProgress();
+			if (loadProgress == TOTAL_LOAD) {
+				xsDisableSelf();
+				xsEnableRule("data_load_03_done");
+			} else {
+				/* prepare the next data */
+				xsEnableRule("data_load_01_load_data");
+				switch(loadProgress)
+				{
+					case 1: // gold
+					{
+						savedata = trGetScenarioUserData(1);
+						if (savedata < 0) {
+							savedata = 0;
+						} else if (savedata > 10000) {
+							savedata = 10000;
+						}
+						trChatSend(0, "Gold savedata "+savedata);
+						trQuestVarSet("GoldGrant", savedata);
+					}
+					case 2: // drill level
+					{
+						savedata = trGetScenarioUserData(2);
+						if (savedata <= 0) {
+							savedata = 1;
+						}
+						trQuestVarSet("DrillLevel"+p+"", savedata);
+						//trChatSend(0, "Drill savedata "+savedata);
+						xSetInt(dPlayerData, xDrillLevel ,1*trQuestVarGet("DrillLevel"+p+""));
+						xSetFloat(dPlayerData, xDrillPower ,1*trQuestVarGet("DrillPowerL"+xGetInt(dPlayerData, xDrillLevel)+""));
+						trQuestVarEcho("DrillLevel"+p+"");
+						trChatSend(0, ""+1*trQuestVarGet("DrillPowerL"+xGetInt(dPlayerData, xDrillLevel)));
+					}
+					case 9: // relics part 1
+					{
+						savedata = trGetScenarioUserData(2);
+						if (savedata < 0) {
+							savedata = 0;
+						}
+					}
+					
+				}
+			}
+		}
+	}
+}
+
+
+rule data_load_03_done
+highFrequency
+inactive
+{
+	/*
+	Destroy swordsmen
+	*/
+	for(x=0; < trQuestVarGet("temp")) {
+		trUnitSelectClear();
+		trUnitSelectByID(x);
+		trUnitDestroy();
+	}
+	/*
+	Deploy victory markers to avoid defeats
+	modify class hold capacity
+	*/
+	for(p=1; < cNumberNonGaiaPlayers) {
+		
+		trForbidProtounit(p, "Swordsman Hero");
+		trArmyDispatch(""+p+",0","Victory Marker",1,1,0,1,0,true);
+		trUnblockAllSounds();
+		trSoundPlayFN("favordump.wav","1",-1,"Done!","icons\god power reverse time icons 64");
+		xsDisableSelf();
+		xsEnableRule("load1");
+		unitTransform("Swordsman", "Rocket");
+		unitTransform("Swordsman Hero", "Rocket");
+	}
+}
+
+rule data_load_emergency_exit
+highFrequency
+inactive
+{
+	if (trTime() > cActivationTime + 5) {
+		xsDisableSelf();
+		if (loadProgress == 0) {
+			int x = 0;
+			for(p=1; < cNumberNonGaiaPlayers) {
+				x = x + trPlayerUnitCountSpecific(p, "Swordsman Hero");
+			}
+			if (x <= 1) {
+				trSoundPlayFN("default","1",-1,
+					"Zenophobia: Hmm, looks like AoM has sent everyone into singleplayer. Returning you to main menu now.",
+					"icons\infantry g hoplite icon 64");
+				if (trCurrentPlayer() == 1) {
+					xsEnableRule("data_load_emergency_exit_01");
+				} else {
+					xsEnableRule("data_load_emergency_exit_02");
+				}
+			}
+		}
+	}
+}
+
+rule data_load_emergency_exit_01
+highFrequency
+inactive
+{
+	if (trTime() > cActivationTime + 5) {
+		xsDisableSelf();
+		xsEnableRule("data_load_emergency_exit_02");
+		trSoundPlayFN("default","1",-1,
+			"Zenophobia:Host, make sure all spots are filled with humans and the last player is a CPU.",
+			"icons\infantry g hoplite icon 64");
+	}
+}
+
+rule data_load_emergency_exit_02
+highFrequency
+inactive
+{
+	if (trTime() > cActivationTime + 7) {
+		xsDisableSelf();
+		trLetterBox(false);
+		subModeEnter("Simulation","Editor");
+		uiMessageBox("","leaveGame()");
+		uiCycleCurrentActivate();
+		uiCycleCurrentActivate();
+		subModeLeave("Simulation","Editor");
+		modeEnter("pregame");
+		modeEnter("Simulation");
+	}
+}
+
 
 
 rule load1
@@ -105,44 +358,23 @@ inactive
 highFrequency
 {
 	characterDialog("Loading map.", ""+MapVersion+"", "icons\special e son of osiris icon 64");
-	xsEnableRule("load2");
+	xsEnableRule("load4");
 	xsEnableRule("Stats");
 	trBlockAllSounds(false);
-	xsDisableSelf();
 	modifyProtounitAbsolute("Vision Revealer", 0, 2, 2400);
 	trArmyDispatch("0,0", "Vision Revealer", 1, 0, 0, 0, 0, false);
 	trArmyDispatch("0,0", "Cinematic Block", 1, 0, 0, 0, 0, false);
 	for(p = 1; <= cNumberNonGaiaPlayers){
 		deployLocHeading(0, p*2, "Victory Marker", p, 180);
 	}
-}
-
-rule load2
-inactive
-highFrequency
-{
-	characterDialog("Loading map..", ""+MapVersion+"", "icons\special e son of osiris icon 64");
-	xsEnableRule("load3");
-	trSoundPlayFN("Yeebaagooon\Motherload\test sound.mp3", "1", 13, "", "");
-	xsDisableSelf();
-}
-
-rule load3
-inactive
-highFrequency
-{
-	if((trTime()-cActivationTime) >= 1){
-		characterDialog("Loading map...", ""+MapVersion+"", "icons\special e son of osiris icon 64");
-		for(p = 1; <= cNumberNonGaiaPlayers){
-			trPlayerGrantResources(p, "Food", -10000.0);
-			trPlayerGrantResources(p, "Wood", -10000.0);
-			trPlayerGrantResources(p, "Gold", -10000.0);
-			trPlayerGrantResources(p, "Favor", -10000.0);
-			trPlayerKillAllGodPowers(p);
-		}
-		xsDisableSelf();
-		xsEnableRule("load4");
+	for(p = 1; <= cNumberNonGaiaPlayers){
+		trPlayerGrantResources(p, "Food", -10000.0);
+		trPlayerGrantResources(p, "Wood", -10000.0);
+		trPlayerGrantResources(p, "Gold", -10000.0);
+		trPlayerGrantResources(p, "Favor", -10000.0);
+		trPlayerKillAllGodPowers(p);
 	}
+	xsDisableSelf();
 }
 
 rule load4
@@ -278,6 +510,7 @@ highFrequency
 	//END
 	xsDisableSelf();
 	xsEnableRule("choose_stage");
+	uiZoomToProto("Athena");
 }
 
 rule choose_stage

@@ -1,19 +1,39 @@
 void LoadDataSP(int p = -1){
 	xsSetContextPlayer(0);
-	int loaddata = 0;
-	loaddata = trGetScenarioUserData(1);
-	trPlayerGrantResources(1, "Gold", loaddata);
+	//SLOT 1, GOLD
+	xSetPointer(dPlayerData, 1);
+	int loaddatasp = 0;
+	loaddatasp = trGetScenarioUserData(1);
+	trPlayerGrantResources(1, "Gold", loaddatasp);
+	loaddatasp = 0;
+	//SLOT 2, DRILL LEVEL
+	loaddatasp = trGetScenarioUserData(2);
+	if(loaddatasp <= 0){
+		loaddatasp = 1;
+	}
+	xSetPointer(dPlayerData, 1);
+	xSetInt(dPlayerData, xDrillLevel, loaddatasp);
+	trChatSend(0, ""+loaddatasp + " SP loaded as drill level");
+	trQuestVarSet("CurrentDrillL", loaddatasp);
+	xSetInt(dPlayerData, xDrillLevel ,1*trQuestVarGet("CurrentDrillL"));
+	xSetFloat(dPlayerData, xDrillPower ,1*trQuestVarGet("DrillPowerL"+xGetInt(dPlayerData, xDrillLevel)+""));
 }
 
-void SaveDataSP(int p = -1){
+void savedataspSP(int p = -1){
 	xsSetContextPlayer(0);
+	xSetPointer(dPlayerData, 1);
 	//DATA SAVE SP
 	//SLOT 1, GOLD
-	int savedata = 0;
-	savedata = trPlayerResourceCount(1, "Gold");
-	trSetCurrentScenarioUserData(1, savedata);
+	int savedatasp = 0;
+	savedatasp = trPlayerResourceCount(1, "Gold");
+	trSetCurrentScenarioUserData(1, savedatasp);
 	trDelayedRuleActivation("SPExit");
-	trChatSend(0, ""+savedata + " saved as gold");
+	trChatSend(0, ""+savedatasp + " saved as gold");
+	//SLOT 2, DRILL LEVEL
+	savedatasp = 1*xGetInt(dPlayerData, xDrillLevel);
+	trSetCurrentScenarioUserData(2, savedatasp); //drill level save
+	trChatSend(0, ""+savedatasp + " saved as drill level");
+	//trSetCurrentScenarioUserData(2, 0); //drill level reset
 }
 
 rule LoadSP
@@ -288,7 +308,7 @@ highFrequency
 	trChatSend(0, trStringQuestVarGet("DrillL"+1*trQuestVarGet("CurrentDrillL")+"") + " "+1*xGetFloat(dPlayerData, xDrillPower)+" m/s");
 	*/
 	trUnblockAllSounds();
-	//LoadDataSP();
+	LoadDataSP();
 }
 
 void UpgradeDrill(int p = -1){
@@ -314,7 +334,7 @@ highFrequency
 	if (trUnitGetContained() == 1) {
 		xsSetContextPlayer(0);
 		xsDisableSelf();
-		SaveDataSP();
+		savedataspSP();
 	} else if (trUnitIsSelected()) {
 		uiClearSelection();
 		uiMessageBox("Garrison in me to save your progress!");
