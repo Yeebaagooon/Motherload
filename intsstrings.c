@@ -1,5 +1,8 @@
-int QuickStart = 0;
+//---Test controls
+int QuickStart = 1;
 bool OverrideSP = false;
+
+//---
 int Stage = 0;
 int StageTime = 0;
 string MapVersion = "Test Version";
@@ -27,3 +30,20 @@ const int Hades7 = 9;
 
 /* TEMPORARY TEST VARS */
 //float P1DrillPower = 10;
+
+
+rule CostofLevels
+active
+highFrequency
+{
+	xsDisableSelf();
+	//DRILL UPGRADES
+	trQuestVarSet("DrillCostL2", 25);
+	trQuestVarSet("DrillCostL3", 50);
+	trQuestVarSet("DrillPowerL1", 10);
+	trQuestVarSet("DrillPowerL2", 15);
+	trQuestVarSet("DrillPowerL3", 20);
+	trStringQuestVarSet("DrillL1", "Iron Drill");
+	trStringQuestVarSet("DrillL2", "Steel Drill");
+	trStringQuestVarSet("DrillL3", "Aluminium Drill");
+}

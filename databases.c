@@ -25,6 +25,12 @@ int dPlanetEyecandy = 0;
 int xPlanetEyecandyName = 0;
 int xPlanetEyecandyStage = 0;
 int xPlayerActive = 0;
+int xDrillLevel = 1;
+int xHullLevel = 1;
+int xFuelLevel = 1;
+int xCargoLevel = 1;
+int xEngineLevel = 1;
+int xRadiatorLevel = 1;
 
 int dSelectables = 0;
 int xSelectablesName = 0;
@@ -77,10 +83,19 @@ highFrequency
 	xFuelTank = xInitAddInt(dPlayerData, "fueltank", 1000);
 	xFuel = xInitAddFloat(dPlayerData, "fuel", 1000);
 	xDepth = xInitAddInt(dPlayerData, "depth", 0);
+	
+	//LEVELS -- all set to 0 at start as for new players and then data read will update them
+	xDrillLevel = xInitAddInt(dPlayerData, "Drill level", 1);
+	xHullLevel = xInitAddInt(dPlayerData, "Hull level", 1);
+	xFuelLevel = xInitAddInt(dPlayerData, "Fuel level", 1);
+	xCargoLevel = xInitAddInt(dPlayerData, "Cargo level", 1);
+	xEngineLevel = xInitAddInt(dPlayerData, "Engine level", 1);
+	xRadiatorLevel = xInitAddInt(dPlayerData, "Radiator level", 1);
 	xFuelCountdown = xInitAddInt(dPlayerData, "fuel countdown boolean", 0);
 	xFuelCountdownTime = xInitAddInt(dPlayerData, "fuel countdown time", 3);
 	xFuelActivationTime = xInitAddInt(dPlayerData, "fuel activation time", 10000);
-	xPlayerActive = xInitAddInt(dPlayerData, "is player alive", 0);
+	xPlayerActive = xInitAddInt(dPlayerData, "is player alive", 1);
+	
 	xsEnableRule("fill_database");
 }
 
@@ -88,9 +103,11 @@ rule fill_database
 inactive
 highFrequency
 {
-	for(p=1; < cNumberNonGaiaPlayers) {
+	for(p=1; < 7) {
 		xAddDatabaseBlock(dPlayerData, true);
-		xSetInt(dPlayerData, xPlayerActive, 1);
+		xSetPointer(dPlayerData, 1);
+		xSetFloat(dPlayerData, xDrillPower, 10);
+		//Sets the drill power for that player (1)
 	}
 	//This sets up basic stats for all players
 	//xSetPointer(dPlayerData, 1);

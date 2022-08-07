@@ -244,6 +244,133 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				}
 			}
 		}
+		case 100:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					trChatHistoryClear();
+					trChatSend(0, "<u><color=1,1,1>Current Drill:</color></u>");
+					trChatSend(0, trStringQuestVarGet("DrillL"+1*trQuestVarGet("CurrentDrillL")+"") + " "+1*xGetFloat(dPlayerData, xDrillPower)+" m/s");
+					uiMessageBox("Your drill power controls how easy it is to drill through harder rock.");
+				}
+				case 2:
+				{
+					xSetPointer(dPlayerData, 1);
+					uiMessageBox("Current drill power = " + 1*xGetFloat(dPlayerData, xDrillPower) +  " m/s");
+					dialog = 0;
+				}
+			}
+		}
+		case 101:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					xSetPointer(dPlayerData, 1);
+					trQuestVarSet("CurrentDrillL", xGetInt(dPlayerData, xDrillLevel));
+					trQuestVarSet("NextDrillL", 1*trQuestVarGet("CurrentDrillL")+1);
+					trQuestVarSet("goldCost", 1*trQuestVarGet("DrillCostL"+1*trQuestVarGet("NextDrillL")+""));
+					string yesPrompt = "Yes (" + 1*trQuestVarGet("goldCost") + " gold )";
+					if(trPlayerResourceCount(1, "Gold") < 1*trQuestVarGet("goldCost")){
+						uiMessageBox("You do not have enough gold to upgrade your drill! (" + 1*trQuestVarGet("goldCost") + ")");
+						dialog = 0;
+					}
+					else if(trPlayerResourceCount(1, "Gold") >= 1*trQuestVarGet("goldCost")){
+						if (xGetInt(dPlayerData, xDrillLevel) < 8) {
+							trShowChoiceDialog("Increase drill to level " + 1*trQuestVarGet("NextDrillL") + "?",
+								yesPrompt, 17, "No", -1);
+						} else {
+							uiMessageBox("You have reached the max level!");
+						}
+						trChatHistoryClear();
+						trChatSend(0, "<u><color=1,1,1>Current Drill:</color></u>");
+						trChatSend(0, trStringQuestVarGet("DrillL"+1*trQuestVarGet("CurrentDrillL")+"") + " "+1*xGetFloat(dPlayerData, xDrillPower)+" m/s");
+						trChatSend(0, "<u><color=1,1,1>Upgraded Drill:</color></u>");
+						string DrillUp = trStringQuestVarGet("DrillL"+1*trQuestVarGet("NextDrillL")+"");
+						trChatSend(0, DrillUp + " "+1*trQuestVarGet("DrillPowerL"+1*trQuestVarGet("NextDrillL")+"")+" m/s");
+						dialog = 0;
+					}
+				}
+			}
+		}
+		case 200:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Your hull strenght determines how much damage your ship can take before exploding.");
+				}
+				case 2:
+				{
+					uiMessageBox("Current hull strength = x");
+					dialog = 0;
+				}
+			}
+		}
+		case 300:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Your fuel tank capacity is fairly self explanatory.");
+				}
+				case 2:
+				{
+					uiMessageBox("Current fuel tank capacity = x L");
+					dialog = 0;
+				}
+			}
+		}
+		case 400:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Your cargo hold specifies how many minerals you can hold at any one time.");
+				}
+				case 2:
+				{
+					uiMessageBox("Current cargo hold limit = x");
+					dialog = 0;
+				}
+			}
+		}
+		case 500:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("A more powerful engine will help with fuel efficiency.");
+				}
+				case 2:
+				{
+					uiMessageBox("Current engine power = x HP");
+					dialog = 0;
+				}
+			}
+		}
+		case 600:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Your radiator will help save fuel and prevent temperature damage.");
+				}
+				case 2:
+				{
+					uiMessageBox("Current radiator efficiency = x");
+					dialog = 0;
+				}
+			}
+		}
 		
 	}
 	return(dialog);
