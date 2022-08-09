@@ -131,6 +131,7 @@ void startNPCDialog(int npc = 0) {
 int npcDiag(int npc = 0, int dialog = 0) {
 	dialog = dialog + 1;
 	string extra = "";
+	string yesPrompt = "";
 	switch(npc)
 	{
 		/*
@@ -277,7 +278,7 @@ int npcDiag(int npc = 0, int dialog = 0) {
 					trQuestVarSet("CurrentDrillL", xGetInt(dPlayerData, xDrillLevel));
 					trQuestVarSet("NextDrillL", 1*trQuestVarGet("CurrentDrillL")+1);
 					trQuestVarSet("goldCost", 1*trQuestVarGet("DrillCostL"+1*trQuestVarGet("NextDrillL")+""));
-					string yesPrompt = "Yes (" + 1*trQuestVarGet("goldCost") + " gold )";
+					yesPrompt = "Yes (" + 1*trQuestVarGet("goldCost") + " gold )";
 					if(trPlayerResourceCount(1, "Gold") < 1*trQuestVarGet("goldCost")){
 						uiMessageBox("You do not have enough gold to upgrade your drill! (" + 1*trQuestVarGet("goldCost") + ")");
 						dialog = 0;
@@ -306,12 +307,47 @@ int npcDiag(int npc = 0, int dialog = 0) {
 			{
 				case 1:
 				{
-					uiMessageBox("Your hull strenght determines how much damage your ship can take before exploding.");
+					uiMessageBox("Your hull strength determines how much damage your ship can take before exploding.");
 				}
 				case 2:
 				{
-					uiMessageBox("Current hull strength = x");
+					xSetPointer(dPlayerData, 1);
+					uiMessageBox("Current hull strength = " + 1*xGetInt(dPlayerData, xHullHP) +  " hp");
 					dialog = 0;
+				}
+			}
+		}
+		//CULPRIT CODE
+		case 201:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					xSetPointer(dPlayerData, 1);
+					trQuestVarSet("CurrentHullL", xGetInt(dPlayerData, xHullLevel));
+					trQuestVarSet("NextHullL", 1*trQuestVarGet("CurrentHullL")+1);
+					trQuestVarSet("goldCost", 1*trQuestVarGet("HullCostL"+1*trQuestVarGet("NextHullL")+""));
+					yesPrompt = "Yes (" + 1*trQuestVarGet("goldCost") + " gold )";
+					if(trPlayerResourceCount(1, "Gold") < 1*trQuestVarGet("goldCost")){
+						uiMessageBox("You do not have enough gold to upgrade your hull! (" + 1*trQuestVarGet("goldCost") + ")");
+						dialog = 0;
+					}
+					else if(trPlayerResourceCount(1, "Gold") >= 1*trQuestVarGet("goldCost")){
+						if (xGetInt(dPlayerData, xHullLevel) < 8) {
+							trShowChoiceDialog("Increase hull to level " + 1*trQuestVarGet("NextHullL") + "?",
+								yesPrompt, 18, "No", -1);
+						} else {
+							uiMessageBox("You have reached the max level!");
+						}
+						trChatHistoryClear();
+						trChatSend(0, "<u><color=1,1,1>Current Hull:</color></u>");
+						trChatSend(0, trStringQuestVarGet("HullL"+1*trQuestVarGet("CurrentHullL")+"") + " "+1*xGetInt(dPlayerData, xHullHP)+" hp");
+						trChatSend(0, "<u><color=1,1,1>Upgraded Hull:</color></u>");
+						string HullUp = trStringQuestVarGet("HullL"+1*trQuestVarGet("NextHullL")+"");
+						trChatSend(0, HullUp + " "+1*trQuestVarGet("HullHPL"+1*trQuestVarGet("NextHullL")+"")+" hp");
+						dialog = 0;
+					}
 				}
 			}
 		}

@@ -12,7 +12,7 @@ for(x = 1; <= 9){
 }
 
 */
-const int TOTAL_LOAD = 7;
+const int TOTAL_LOAD = 9;
 
 void showLoadProgress() {
 	trSoundPlayFN("default","1",-1,"Loading Data:"+100 * loadProgress / TOTAL_LOAD,"icons\god power reverse time icons 64");
@@ -134,7 +134,7 @@ highFrequency
 inactive
 {
 	int swordsmen = 0;
-	int total = 10 * (cNumberNonGaiaPlayers - 1); //why was this 2
+	int total = 10 * (cNumberNonGaiaPlayers - 1);
 	for(p=1; < cNumberNonGaiaPlayers) {
 		swordsmen = swordsmen + trPlayerUnitCountSpecific(p, "Swordsman");
 	}
@@ -210,13 +210,16 @@ inactive
 						trQuestVarSet("p"+p+"stage", x);
 					} else if (loadProgress < 7) {
 						// Gold
-						if (p  == 1) {
-							debugLog("digit is " + x);
-						}
 						trQuestVarSet("p"+p+"goldGrant", trQuestVarGet("p"+p+"goldGrant") + x * xsPow(10, loadProgress - 1));
 					} else if (loadProgress == 7) {
 						xSetInt(dPlayerData, xDrillLevel, 1*xsMax(1, x));
 						xSetFloat(dPlayerData, xDrillPower, 1*trQuestVarGet("DrillPowerL"+xGetInt(dPlayerData, xDrillLevel)+""));
+					} else if (loadProgress == 8) {
+						xSetInt(dPlayerData, xHullLevel, 1*xsMax(1, x));
+						xSetInt(dPlayerData, xHullHP, 1*trQuestVarGet("HullHPL"+xGetInt(dPlayerData, xHullLevel)+""));
+					}
+					if (p  == 1) {
+						debugLog("digit is " + x);
 					}
 					
 					trUnitSelectClear();
@@ -244,11 +247,11 @@ inactive
 				{
 					savedata = trGetScenarioUserData(1);
 				}
-				case 7: // done reading slot 0.
+				case 7: // done reading slot 1.
 				{
 					savedata = trGetScenarioUserData(2);
 				}
-				case 300: // done reading slot 0.
+				case 8: // done reading slot 2.
 				{
 					savedata = trGetScenarioUserData(3);
 				}
@@ -581,3 +584,24 @@ xsEnableRule("TEMPdeployP1");
 xsEnableRule("squarespaint");
 */
 
+void saveAllData() {
+	xsSetContextPlayer(0);
+	int p = trCurrentPlayer();
+	if (p != cNumberNonGaiaPlayers) {
+		xSetPointer(dPlayerData, p);
+		//DATA SAVE SP
+		//SLOT 1, GOLD
+		int savedatasp = 0;
+		savedatasp = trPlayerResourceCount(p, "Gold");
+		trSetCurrentScenarioUserData(1, savedatasp);
+		trChatSend(0, ""+savedatasp + " saved as gold");
+		//SLOT 2, DRILL LEVEL
+		savedatasp = 1*xGetInt(dPlayerData, xDrillLevel);
+		trSetCurrentScenarioUserData(2, savedatasp); //drill level save
+		trChatSend(0, ""+savedatasp + " saved as drill level");
+		//SLOT 3, HULL LEVEL
+		savedatasp = 1*xGetInt(dPlayerData, xHullLevel);
+		trSetCurrentScenarioUserData(3, savedatasp); //drill level save
+		trChatSend(0, ""+savedatasp + " saved as hull level");
+	}
+}

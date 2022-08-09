@@ -76,7 +76,7 @@ highFrequency
 	//PLAYER DATA
 	dPlayerData = xInitDatabase("playerData");
 	xDrillPower = xInitAddFloat(dPlayerData, "drillpower", 10);
-	xHullHP = xInitAddInt(dPlayerData, "hullhp", 1000);
+	xHullHP = xInitAddInt(dPlayerData, "hullhp", 100);
 	xEnginePower = xInitAddInt(dPlayerData, "enginepower", 10);
 	xRadiator = xInitAddInt(dPlayerData, "radiator", 10);
 	xCargoHold = xInitAddInt(dPlayerData, "cargohold", 2);

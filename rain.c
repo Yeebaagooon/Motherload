@@ -14,6 +14,7 @@ highFrequency
 	trEventSetHandler(15, "SPCineYes");
 	trEventSetHandler(16, "SPCineNo");
 	trEventSetHandler(17, "UpgradeDrill");
+	trEventSetHandler(18, "UpgradeHull");
 	xsDisableSelf();
 }
 

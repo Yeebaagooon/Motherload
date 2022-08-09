@@ -49,4 +49,14 @@ highFrequency
 	trStringQuestVarSet("DrillL1", "Iron Drill");
 	trStringQuestVarSet("DrillL2", "Steel Drill");
 	trStringQuestVarSet("DrillL3", "Aluminium Drill");
+	
+	//HULL UPGRADES
+	trQuestVarSet("HullCostL2", 50);
+	trQuestVarSet("HullCostL3", 100);
+	trQuestVarSet("HullHPL1", 100);
+	trQuestVarSet("HullHPL2", 300);
+	trQuestVarSet("HullHPL3", 500);
+	trStringQuestVarSet("HullL1", "Iron hull");
+	trStringQuestVarSet("HullL2", "Plastic composite hull");
+	trStringQuestVarSet("HullL3", "Aluminium hull");
 }

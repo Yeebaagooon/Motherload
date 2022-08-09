@@ -46,6 +46,7 @@ highFrequency
 		trModifyProtounit("Hero Greek Atalanta", p, 1, 10);
 		xSetPointer(dPlayerData, p);
 		modifyProtounitAbsolute("Hero Greek Atalanta", p, 5, xGetInt(dPlayerData, xCargoHold));
+		modifyProtounitAbsolute("Hero Greek Atalanta", p, 0, xGetInt(dPlayerData, xHullHP));
 	}
 	xsDisableSelf();
 }

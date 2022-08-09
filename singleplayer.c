@@ -17,24 +17,20 @@ void LoadDataSP(int p = -1){
 	trQuestVarSet("CurrentDrillL", loaddatasp);
 	xSetInt(dPlayerData, xDrillLevel ,1*trQuestVarGet("CurrentDrillL"));
 	xSetFloat(dPlayerData, xDrillPower ,1*trQuestVarGet("DrillPowerL"+xGetInt(dPlayerData, xDrillLevel)+""));
+	
+	//SLOT 3, HULL LEVEL
+	loaddatasp = trGetScenarioUserData(3);
+	if(loaddatasp <= 0){
+		loaddatasp = 1;
+	}
+	xSetPointer(dPlayerData, 1);
+	xSetInt(dPlayerData, xHullLevel, loaddatasp);
+	trChatSend(0, ""+loaddatasp + " SP loaded as hull level");
+	trQuestVarSet("CurrentHullL", loaddatasp);
+	xSetInt(dPlayerData, xHullLevel ,1*trQuestVarGet("CurrentHullL"));
+	xSetInt(dPlayerData, xHullHP ,1*trQuestVarGet("HullHPL"+xGetInt(dPlayerData, xHullLevel)+""));
 }
 
-void savedataspSP(int p = -1){
-	xsSetContextPlayer(0);
-	xSetPointer(dPlayerData, 1);
-	//DATA SAVE SP
-	//SLOT 1, GOLD
-	int savedatasp = 0;
-	savedatasp = trPlayerResourceCount(1, "Gold");
-	trSetCurrentScenarioUserData(1, savedatasp);
-	trDelayedRuleActivation("SPExit");
-	trChatSend(0, ""+savedatasp + " saved as gold");
-	//SLOT 2, DRILL LEVEL
-	savedatasp = 1*xGetInt(dPlayerData, xDrillLevel);
-	trSetCurrentScenarioUserData(2, savedatasp); //drill level save
-	trChatSend(0, ""+savedatasp + " saved as drill level");
-	//trSetCurrentScenarioUserData(2, 0); //drill level reset
-}
 
 rule LoadSP
 inactive
@@ -298,17 +294,22 @@ highFrequency
 	xAddDatabaseBlock(dSelectables, true);
 	xSetInt(dSelectables, xSelectablesName, UnitObelisk1);
 	xSetInt(dSelectables, xSelectablesPrompt, 101);
+	xAddDatabaseBlock(dSelectables, true);
+	xSetInt(dSelectables, xSelectablesName, UnitObelisk2);
+	xSetInt(dSelectables, xSelectablesPrompt, 201);
 	
 	//Loadout chat
 	/*
 	xSetPointer(dPlayerData, 1);
 	trQuestVarSet("CurrentDrillL", xGetInt(dPlayerData, xDrillLevel));
 	trChatHistoryClear();
+	
 	trChatSend(0, "<u><color=1,1,1>Current Drill:</color></u>");
-	trChatSend(0, trStringQuestVarGet("DrillL"+1*trQuestVarGet("CurrentDrillL")+"") + " "+1*xGetFloat(dPlayerData, xDrillPower)+" m/s");
 	*/
 	trUnblockAllSounds();
 	LoadDataSP();
+	trUnitSetVariation(UnitFlag1,1*trQuestVarGet("CurrentDrillL")-1);
+	trUnitSetVariation(UnitFlag2,1*trQuestVarGet("CurrentHullL")-1);
 }
 
 void UpgradeDrill(int p = -1){
@@ -323,6 +324,26 @@ void UpgradeDrill(int p = -1){
 	trQuestVarSet("NextDrillL", 1*trQuestVarGet("CurrentDrillL")+1);
 	trQuestVarSet("goldCost", 1*trQuestVarGet("DrillCostL"+1*trQuestVarGet("NextDrillL")+""));
 	trSoundPlayFN("ui\thunder2.wav","1",-1,"","");
+	trChatHistoryClear();
+	trChatSend(0, "<u><color=1,1,1>Drill Upgraded:</color></u>");
+	trChatSend(0, trStringQuestVarGet("DrillL"+1*trQuestVarGet("CurrentDrillL")+"") + " "+1*xGetFloat(dPlayerData, xDrillPower)+" m/s");
+}
+
+void UpgradeHull(int p = -1){
+	xsSetContextPlayer(0);
+	trPlayerGrantResources(1, "Gold", -1*trQuestVarGet("goldCost"));
+	xSetPointer(dPlayerData, 1);
+	int HullLevelDummy = xGetInt(dPlayerData, xHullLevel);
+	xSetInt(dPlayerData, xHullLevel, HullLevelDummy+1);
+	xSetInt(dPlayerData, xHullHP, trQuestVarGet("HullHPL"+xGetInt(dPlayerData, xHullLevel)+""));
+	trUnitSetVariation(1*trQuestVarGet("UnitFlag2"),HullLevelDummy);
+	trQuestVarSet("CurrentHullL", xGetInt(dPlayerData, xHullLevel));
+	trQuestVarSet("NextHullL", 1*trQuestVarGet("CurrentHullL")+1);
+	trQuestVarSet("goldCost", 1*trQuestVarGet("HullCostL"+1*trQuestVarGet("NextHullL")+""));
+	trSoundPlayFN("ui\thunder2.wav","1",-1,"","");
+	trChatHistoryClear();
+	trChatSend(0, "<u><color=1,1,1>Hull Upgraded:</color></u>");
+	trChatSend(0, trStringQuestVarGet("HullL"+1*trQuestVarGet("CurrentHullL")+"") + " "+1*xGetInt(dPlayerData, xHullHP)+" hp");
 }
 
 rule SPLoops
@@ -334,7 +355,8 @@ highFrequency
 	if (trUnitGetContained() == 1) {
 		xsSetContextPlayer(0);
 		xsDisableSelf();
-		savedataspSP();
+		saveAllData();
+		xsEnableRule("SPExit");
 	} else if (trUnitIsSelected()) {
 		uiClearSelection();
 		uiMessageBox("Garrison in me to save your progress!");
