@@ -317,7 +317,6 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				}
 			}
 		}
-		//CULPRIT CODE
 		case 201:
 		{
 			switch(dialog)
@@ -361,8 +360,41 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				}
 				case 2:
 				{
-					uiMessageBox("Current fuel tank capacity = x L");
+					uiMessageBox("Current fuel tank capacity =  "+ 1*xGetInt(dPlayerData, xFuelTank) +  " L");
 					dialog = 0;
+				}
+			}
+		}
+		case 301:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					xSetPointer(dPlayerData, 1);
+					trQuestVarSet("CurrentFuelL", xGetInt(dPlayerData, xFuelLevel));
+					trQuestVarSet("NextFuelL", 1*trQuestVarGet("CurrentFuelL")+1);
+					trQuestVarSet("goldCost", 1*trQuestVarGet("FuelCostL"+1*trQuestVarGet("NextFuelL")+""));
+					yesPrompt = "Yes (" + 1*trQuestVarGet("goldCost") + " gold )";
+					if(trPlayerResourceCount(1, "Gold") < 1*trQuestVarGet("goldCost")){
+						uiMessageBox("You do not have enough gold to upgrade your Fuel! (" + 1*trQuestVarGet("goldCost") + ")");
+						dialog = 0;
+					}
+					else if(trPlayerResourceCount(1, "Gold") >= 1*trQuestVarGet("goldCost")){
+						if (xGetInt(dPlayerData, xFuelLevel) < 8) {
+							trShowChoiceDialog("Increase Fuel to level " + 1*trQuestVarGet("NextFuelL") + "?",
+								yesPrompt, 19, "No", -1);
+						} else {
+							uiMessageBox("You have reached the max level!");
+						}
+						trChatHistoryClear();
+						trChatSend(0, "<u><color=1,1,1>Current Fuel:</color></u>");
+						trChatSend(0, trStringQuestVarGet("FuelL"+1*trQuestVarGet("CurrentFuelL")+"") + " "+1*xGetInt(dPlayerData, xFuelTank)+" L");
+						trChatSend(0, "<u><color=1,1,1>Upgraded Fuel:</color></u>");
+						string FuelUp = trStringQuestVarGet("FuelL"+1*trQuestVarGet("NextFuelL")+"");
+						trChatSend(0, FuelUp + " "+1*trQuestVarGet("FuelCL"+1*trQuestVarGet("NextFuelL")+"")+" L");
+						dialog = 0;
+					}
 				}
 			}
 		}
@@ -376,7 +408,7 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				}
 				case 2:
 				{
-					uiMessageBox("Current cargo hold limit = x");
+					uiMessageBox("Current cargo hold limit = "+ 1*xGetInt(dPlayerData, xCargoHold) +  " minerals");
 					dialog = 0;
 				}
 			}
@@ -391,7 +423,7 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				}
 				case 2:
 				{
-					uiMessageBox("Current engine power = x HP");
+					uiMessageBox("Current engine power = "+ 1*xGetInt(dPlayerData, xEnginePower) +  " kW");
 					dialog = 0;
 				}
 			}
@@ -406,7 +438,7 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				}
 				case 2:
 				{
-					uiMessageBox("Current radiator efficiency = x");
+					uiMessageBox("Current radiator efficiency = "+ 1*xGetInt(dPlayerData, xRadiator) +  " percent");
 					dialog = 0;
 				}
 			}

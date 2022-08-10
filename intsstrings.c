@@ -59,4 +59,14 @@ highFrequency
 	trStringQuestVarSet("HullL1", "Iron hull");
 	trStringQuestVarSet("HullL2", "Plastic composite hull");
 	trStringQuestVarSet("HullL3", "Aluminium hull");
+	
+	//Fuel UPGRADES
+	trQuestVarSet("FuelCostL2", 30);
+	trQuestVarSet("FuelCostL3", 60);
+	trQuestVarSet("FuelCL1", 1000);
+	trQuestVarSet("FuelCL2", 1250);
+	trQuestVarSet("FuelCL3", 1500);
+	trStringQuestVarSet("FuelL1", "Standard tank");
+	trStringQuestVarSet("FuelL2", "Injector tank");
+	trStringQuestVarSet("FuelL3", "Vaccum tank");
 }

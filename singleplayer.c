@@ -29,6 +29,18 @@ void LoadDataSP(int p = -1){
 	trQuestVarSet("CurrentHullL", loaddatasp);
 	xSetInt(dPlayerData, xHullLevel ,1*trQuestVarGet("CurrentHullL"));
 	xSetInt(dPlayerData, xHullHP ,1*trQuestVarGet("HullHPL"+xGetInt(dPlayerData, xHullLevel)+""));
+	
+	//SLOT 4, FUEL LEVEL
+	loaddatasp = trGetScenarioUserData(4);
+	if(loaddatasp <= 0){
+		loaddatasp = 1;
+	}
+	xSetPointer(dPlayerData, 1);
+	xSetInt(dPlayerData, xFuelLevel, loaddatasp);
+	trChatSend(0, ""+loaddatasp + " SP loaded as fuel tank level");
+	trQuestVarSet("CurrentFuelL", loaddatasp);
+	xSetInt(dPlayerData, xFuelLevel ,1*trQuestVarGet("CurrentFuelL"));
+	xSetInt(dPlayerData, xFuelTank ,1*trQuestVarGet("FuelCL"+xGetInt(dPlayerData, xFuelLevel)+""));
 }
 
 
@@ -297,6 +309,9 @@ highFrequency
 	xAddDatabaseBlock(dSelectables, true);
 	xSetInt(dSelectables, xSelectablesName, UnitObelisk2);
 	xSetInt(dSelectables, xSelectablesPrompt, 201);
+	xAddDatabaseBlock(dSelectables, true);
+	xSetInt(dSelectables, xSelectablesName, UnitObelisk3);
+	xSetInt(dSelectables, xSelectablesPrompt, 301);
 	
 	//Loadout chat
 	/*
@@ -310,6 +325,7 @@ highFrequency
 	LoadDataSP();
 	trUnitSetVariation(UnitFlag1,1*trQuestVarGet("CurrentDrillL")-1);
 	trUnitSetVariation(UnitFlag2,1*trQuestVarGet("CurrentHullL")-1);
+	trUnitSetVariation(UnitFlag3,1*trQuestVarGet("CurrentFuelL")-1);
 }
 
 void UpgradeDrill(int p = -1){
@@ -344,6 +360,23 @@ void UpgradeHull(int p = -1){
 	trChatHistoryClear();
 	trChatSend(0, "<u><color=1,1,1>Hull Upgraded:</color></u>");
 	trChatSend(0, trStringQuestVarGet("HullL"+1*trQuestVarGet("CurrentHullL")+"") + " "+1*xGetInt(dPlayerData, xHullHP)+" hp");
+}
+
+void UpgradeFuel(int p = -1){
+	xsSetContextPlayer(0);
+	trPlayerGrantResources(1, "Gold", -1*trQuestVarGet("goldCost"));
+	xSetPointer(dPlayerData, 1);
+	int FuelLevelDummy = xGetInt(dPlayerData, xFuelLevel);
+	xSetInt(dPlayerData, xFuelLevel, FuelLevelDummy+1);
+	xSetInt(dPlayerData, xFuelTank, trQuestVarGet("FuelCL"+xGetInt(dPlayerData, xFuelLevel)+""));
+	trUnitSetVariation(1*trQuestVarGet("UnitFlag3"),FuelLevelDummy);
+	trQuestVarSet("CurrentFuelL", xGetInt(dPlayerData, xFuelLevel));
+	trQuestVarSet("NextFuelL", 1*trQuestVarGet("CurrentFuelL")+1);
+	trQuestVarSet("goldCost", 1*trQuestVarGet("FuelCostL"+1*trQuestVarGet("NextFuelL")+""));
+	trSoundPlayFN("ui\thunder2.wav","1",-1,"","");
+	trChatHistoryClear();
+	trChatSend(0, "<u><color=1,1,1>Fuel Upgraded:</color></u>");
+	trChatSend(0, trStringQuestVarGet("FuelL"+1*trQuestVarGet("CurrentFuelL")+"") + " "+1*xGetInt(dPlayerData, xFuelTank)+" L");
 }
 
 rule SPLoops

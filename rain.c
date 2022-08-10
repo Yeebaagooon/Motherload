@@ -15,6 +15,7 @@ highFrequency
 	trEventSetHandler(16, "SPCineNo");
 	trEventSetHandler(17, "UpgradeDrill");
 	trEventSetHandler(18, "UpgradeHull");
+	trEventSetHandler(19, "UpgradeFuel");
 	xsDisableSelf();
 }
 
@@ -623,6 +624,7 @@ highFrequency
 				//trDelayedRuleActivation("ChangeMainSpy1");
 				//trPaintTerrain(0,0,0,0,0,0, true);
 				trPlayerGrantResources(p, "Gold", 1*trQuestVarGet("p"+p+"goldGrant"));
+				xSetFloat(dPlayerData, xFuel, xGetInt(dPlayerData, xFuelTank));
 			}
 			trChatSend(0, "P"+p+"gold is " + 1*trQuestVarGet("p"+p+"goldGrant"));
 			trChatSend(0, "p"+p+"Drill level is " + xGetInt(dPlayerData, xDrillLevel));
@@ -737,7 +739,7 @@ highFrequency
 						if(((trVectorQuestVarGetZ("P"+p+"Pos")) > 174) && (trVectorQuestVarGetZ("P"+p+"Pos")) < 186){
 							if(xGetInt(dPlayerData, xFuelCountdown) == 0){
 								xSetInt(dPlayerData, xFuelCountdown, 1);
-								if(xGetFloat(dPlayerData, xFuel) < 1000){
+								if(xGetFloat(dPlayerData, xFuel) < xGetInt(dPlayerData, xFuelTank)){
 									ColouredChatToPlayer(p, "1,1,0", "Refilling fuel tank if you remain stationary...");
 								}
 								xSetInt(dPlayerData, xFuelCountdownTime, 4);
