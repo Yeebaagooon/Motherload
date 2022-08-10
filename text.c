@@ -413,6 +413,39 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				}
 			}
 		}
+		case 401:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					xSetPointer(dPlayerData, 1);
+					trQuestVarSet("CurrentCargoL", xGetInt(dPlayerData, xCargoLevel));
+					trQuestVarSet("NextCargoL", 1*trQuestVarGet("CurrentCargoL")+1);
+					trQuestVarSet("goldCost", 1*trQuestVarGet("CargoCostL"+1*trQuestVarGet("NextCargoL")+""));
+					yesPrompt = "Yes (" + 1*trQuestVarGet("goldCost") + " gold )";
+					if(trPlayerResourceCount(1, "Gold") < 1*trQuestVarGet("goldCost")){
+						uiMessageBox("You do not have enough gold to upgrade your cargo hold! (" + 1*trQuestVarGet("goldCost") + ")");
+						dialog = 0;
+					}
+					else if(trPlayerResourceCount(1, "Gold") >= 1*trQuestVarGet("goldCost")){
+						if (xGetInt(dPlayerData, xCargoLevel) < 8) {
+							trShowChoiceDialog("Increase Cargo to level " + 1*trQuestVarGet("NextCargoL") + "?",
+								yesPrompt, 20, "No", -1);
+						} else {
+							uiMessageBox("You have reached the max level!");
+						}
+						trChatHistoryClear();
+						trChatSend(0, "<u><color=1,1,1>Current cargo hold:</color></u>");
+						trChatSend(0, trStringQuestVarGet("CargoL"+1*trQuestVarGet("CurrentCargoL")+"") + " "+1*xGetInt(dPlayerData, xCargoHold)+" minerals");
+						trChatSend(0, "<u><color=1,1,1>Upgraded cargo hold:</color></u>");
+						string CargoUp = trStringQuestVarGet("CargoL"+1*trQuestVarGet("NextCargoL")+"");
+						trChatSend(0, CargoUp + " "+1*trQuestVarGet("CargoCL"+1*trQuestVarGet("NextCargoL")+"")+" minerals");
+						dialog = 0;
+					}
+				}
+			}
+		}
 		case 500:
 		{
 			switch(dialog)
@@ -425,6 +458,39 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				{
 					uiMessageBox("Current engine power = "+ 1*xGetInt(dPlayerData, xEnginePower) +  " kW");
 					dialog = 0;
+				}
+			}
+		}
+		case 501:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					xSetPointer(dPlayerData, 1);
+					trQuestVarSet("CurrentEngineL", xGetInt(dPlayerData, xEngineLevel));
+					trQuestVarSet("NextEngineL", 1*trQuestVarGet("CurrentEngineL")+1);
+					trQuestVarSet("goldCost", 1*trQuestVarGet("EngineCostL"+1*trQuestVarGet("NextEngineL")+""));
+					yesPrompt = "Yes (" + 1*trQuestVarGet("goldCost") + " gold )";
+					if(trPlayerResourceCount(1, "Gold") < 1*trQuestVarGet("goldCost")){
+						uiMessageBox("You do not have enough gold to upgrade your engine! (" + 1*trQuestVarGet("goldCost") + ")");
+						dialog = 0;
+					}
+					else if(trPlayerResourceCount(1, "Gold") >= 1*trQuestVarGet("goldCost")){
+						if (xGetInt(dPlayerData, xEngineLevel) < 8) {
+							trShowChoiceDialog("Increase engine to level " + 1*trQuestVarGet("NextEngineL") + "?",
+								yesPrompt, 21, "No", -1);
+						} else {
+							uiMessageBox("You have reached the max level!");
+						}
+						trChatHistoryClear();
+						trChatSend(0, "<u><color=1,1,1>Current Engine:</color></u>");
+						trChatSend(0, trStringQuestVarGet("EngineL"+1*trQuestVarGet("CurrentEngineL")+"") + " "+1*xGetInt(dPlayerData, xEnginePower)+" kW");
+						trChatSend(0, "<u><color=1,1,1>Upgraded Engine:</color></u>");
+						string EngineUp = trStringQuestVarGet("EngineL"+1*trQuestVarGet("NextEngineL")+"");
+						trChatSend(0, EngineUp + " "+1*trQuestVarGet("EngineCL"+1*trQuestVarGet("NextEngineL")+"")+" kW");
+						dialog = 0;
+					}
 				}
 			}
 		}

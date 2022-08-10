@@ -16,6 +16,8 @@ highFrequency
 	trEventSetHandler(17, "UpgradeDrill");
 	trEventSetHandler(18, "UpgradeHull");
 	trEventSetHandler(19, "UpgradeFuel");
+	trEventSetHandler(20, "UpgradeCargo");
+	trEventSetHandler(21, "UpgradeEngine");
 	xsDisableSelf();
 }
 

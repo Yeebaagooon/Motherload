@@ -12,7 +12,7 @@ for(x = 1; <= 9){
 }
 
 */
-const int TOTAL_LOAD = 10;
+const int TOTAL_LOAD = 12;
 
 void showLoadProgress() {
 	trSoundPlayFN("default","1",-1,"Loading Data:"+100 * loadProgress / TOTAL_LOAD,"icons\god power reverse time icons 64");
@@ -220,6 +220,12 @@ inactive
 					} else if (loadProgress == 9) {
 						xSetInt(dPlayerData, xFuelLevel, 1*xsMax(1, x));
 						xSetInt(dPlayerData, xFuelTank, 1*trQuestVarGet("FuelCL"+xGetInt(dPlayerData, xFuelLevel)+""));
+					} else if (loadProgress == 10) {
+						xSetInt(dPlayerData, xCargoLevel, 1*xsMax(1, x));
+						xSetInt(dPlayerData, xCargoHold, 1*trQuestVarGet("CargoCL"+xGetInt(dPlayerData, xCargoLevel)+""));
+					} else if (loadProgress == 11) {
+						xSetInt(dPlayerData, xEngineLevel, 1*xsMax(1, x));
+						xSetInt(dPlayerData, xEnginePower, 1*trQuestVarGet("CargoCL"+xGetInt(dPlayerData, xEngineLevel)+""));
 					}
 					if (p  == 1) {
 						debugLog("digit is " + x);
@@ -261,6 +267,14 @@ inactive
 				case 9: // done reading slot 3.
 				{
 					savedata = trGetScenarioUserData(4);
+				}
+				case 10: // done reading slot 4.
+				{
+					savedata = trGetScenarioUserData(5);
+				}
+				case 11: // done reading slot 5.
+				{
+					savedata = trGetScenarioUserData(6);
 				}
 			}
 			if (savedata < 0) {
@@ -614,5 +628,13 @@ void saveAllData() {
 		savedatasp = 1*xGetInt(dPlayerData, xFuelLevel);
 		trSetCurrentScenarioUserData(4, savedatasp); //drill level save
 		trChatSend(0, ""+savedatasp + " saved as fuel level");
+		//SLOT 5, CARGO LEVEL
+		savedatasp = 1*xGetInt(dPlayerData, xCargoLevel);
+		trSetCurrentScenarioUserData(5, savedatasp); //drill level save
+		trChatSend(0, ""+savedatasp + " saved as cargo level");
+		//SLOT 6, ENGINE LEVEL
+		savedatasp = 1*xGetInt(dPlayerData, xEngineLevel);
+		trSetCurrentScenarioUserData(6, savedatasp); //drill level save
+		trChatSend(0, ""+savedatasp + " saved as engine level");
 	}
 }

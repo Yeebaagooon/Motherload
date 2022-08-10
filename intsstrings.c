@@ -1,5 +1,5 @@
 //---Test controls
-int QuickStart = 0;
+int QuickStart = 1;
 bool OverrideSP = false;
 
 //---
@@ -69,4 +69,24 @@ highFrequency
 	trStringQuestVarSet("FuelL1", "Standard tank");
 	trStringQuestVarSet("FuelL2", "Injector tank");
 	trStringQuestVarSet("FuelL3", "Vaccum tank");
+	
+	//Cargo UPGRADES
+	trQuestVarSet("CargoCostL2", 20);
+	trQuestVarSet("CargoCostL3", 30);
+	trQuestVarSet("CargoCL1", 2);
+	trQuestVarSet("CargoCL2", 3);
+	trQuestVarSet("CargoCL3", 4);
+	trStringQuestVarSet("CargoL1", "Micro hold");
+	trStringQuestVarSet("CargoL2", "Standard hold");
+	trStringQuestVarSet("CargoL3", "Medium Hold");
+	
+	//Engine UPGRADES
+	trQuestVarSet("EngineCostL2", 30);
+	trQuestVarSet("EngineCostL3", 50);
+	trQuestVarSet("EngineCL1", 10);
+	trQuestVarSet("EngineCL2", 20);
+	trQuestVarSet("EngineCL3", 35);
+	trStringQuestVarSet("EngineL1", "Hamsterwheel engine");
+	trStringQuestVarSet("EngineL2", "Horsepower engine");
+	trStringQuestVarSet("EngineL3", "Zebraforce engine");
 }

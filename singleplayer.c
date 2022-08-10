@@ -35,12 +35,42 @@ void LoadDataSP(int p = -1){
 	if(loaddatasp <= 0){
 		loaddatasp = 1;
 	}
+	
+	
 	xSetPointer(dPlayerData, 1);
 	xSetInt(dPlayerData, xFuelLevel, loaddatasp);
 	trChatSend(0, ""+loaddatasp + " SP loaded as fuel tank level");
 	trQuestVarSet("CurrentFuelL", loaddatasp);
 	xSetInt(dPlayerData, xFuelLevel ,1*trQuestVarGet("CurrentFuelL"));
 	xSetInt(dPlayerData, xFuelTank ,1*trQuestVarGet("FuelCL"+xGetInt(dPlayerData, xFuelLevel)+""));
+	
+	//SLOT 5, Cargo LEVEL
+	loaddatasp = trGetScenarioUserData(5);
+	if(loaddatasp <= 0){
+		loaddatasp = 1;
+	}
+	
+	
+	xSetPointer(dPlayerData, 1);
+	xSetInt(dPlayerData, xCargoLevel, loaddatasp);
+	trChatSend(0, ""+loaddatasp + " SP loaded as cargo level");
+	trQuestVarSet("CurrentCargoL", loaddatasp);
+	xSetInt(dPlayerData, xCargoLevel ,1*trQuestVarGet("CurrentCargoL"));
+	xSetInt(dPlayerData, xCargoHold ,1*trQuestVarGet("CargoCL"+xGetInt(dPlayerData, xCargoLevel)+""));
+	
+	//SLOT 6, Engine LEVEL
+	loaddatasp = trGetScenarioUserData(6);
+	if(loaddatasp <= 0){
+		loaddatasp = 1;
+	}
+	
+	
+	xSetPointer(dPlayerData, 1);
+	xSetInt(dPlayerData, xEngineLevel, loaddatasp);
+	trChatSend(0, ""+loaddatasp + " SP loaded as engine level");
+	trQuestVarSet("CurrentEngineL", loaddatasp);
+	xSetInt(dPlayerData, xEngineLevel ,1*trQuestVarGet("CurrentEngineL"));
+	xSetInt(dPlayerData, xEnginePower ,1*trQuestVarGet("EngineCL"+xGetInt(dPlayerData, xEngineLevel)+""));
 }
 
 
@@ -312,6 +342,12 @@ highFrequency
 	xAddDatabaseBlock(dSelectables, true);
 	xSetInt(dSelectables, xSelectablesName, UnitObelisk3);
 	xSetInt(dSelectables, xSelectablesPrompt, 301);
+	xAddDatabaseBlock(dSelectables, true);
+	xSetInt(dSelectables, xSelectablesName, UnitObelisk4);
+	xSetInt(dSelectables, xSelectablesPrompt, 401);
+	xAddDatabaseBlock(dSelectables, true);
+	xSetInt(dSelectables, xSelectablesName, UnitObelisk5);
+	xSetInt(dSelectables, xSelectablesPrompt, 501);
 	
 	//Loadout chat
 	/*
@@ -326,6 +362,8 @@ highFrequency
 	trUnitSetVariation(UnitFlag1,1*trQuestVarGet("CurrentDrillL")-1);
 	trUnitSetVariation(UnitFlag2,1*trQuestVarGet("CurrentHullL")-1);
 	trUnitSetVariation(UnitFlag3,1*trQuestVarGet("CurrentFuelL")-1);
+	trUnitSetVariation(UnitFlag4,1*trQuestVarGet("CurrentCargoL")-1);
+	trUnitSetVariation(UnitFlag5,1*trQuestVarGet("CurrentEngineL")-1);
 }
 
 void UpgradeDrill(int p = -1){
@@ -377,6 +415,40 @@ void UpgradeFuel(int p = -1){
 	trChatHistoryClear();
 	trChatSend(0, "<u><color=1,1,1>Fuel Upgraded:</color></u>");
 	trChatSend(0, trStringQuestVarGet("FuelL"+1*trQuestVarGet("CurrentFuelL")+"") + " "+1*xGetInt(dPlayerData, xFuelTank)+" L");
+}
+
+void UpgradeCargo(int p = -1){
+	xsSetContextPlayer(0);
+	trPlayerGrantResources(1, "Gold", -1*trQuestVarGet("goldCost"));
+	xSetPointer(dPlayerData, 1);
+	int CargoLevelDummy = xGetInt(dPlayerData, xCargoLevel);
+	xSetInt(dPlayerData, xCargoLevel, CargoLevelDummy+1);
+	xSetInt(dPlayerData, xCargoHold, trQuestVarGet("CargoCL"+xGetInt(dPlayerData, xCargoLevel)+""));
+	trUnitSetVariation(1*trQuestVarGet("UnitFlag4"),CargoLevelDummy);
+	trQuestVarSet("CurrentCargoL", xGetInt(dPlayerData, xCargoLevel));
+	trQuestVarSet("NextCargoL", 1*trQuestVarGet("CurrentCargoL")+1);
+	trQuestVarSet("goldCost", 1*trQuestVarGet("CargoCostL"+1*trQuestVarGet("NextCargoL")+""));
+	trSoundPlayFN("ui\thunder2.wav","1",-1,"","");
+	trChatHistoryClear();
+	trChatSend(0, "<u><color=1,1,1>Cargo Upgraded:</color></u>");
+	trChatSend(0, trStringQuestVarGet("CargoL"+1*trQuestVarGet("CurrentCargoL")+"") + " "+1*xGetInt(dPlayerData, xCargoHold)+" minerals");
+}
+
+void UpgradeEngine(int p = -1){
+	xsSetContextPlayer(0);
+	trPlayerGrantResources(1, "Gold", -1*trQuestVarGet("goldCost"));
+	xSetPointer(dPlayerData, 1);
+	int EngineLevelDummy = xGetInt(dPlayerData, xEngineLevel);
+	xSetInt(dPlayerData, xEngineLevel, EngineLevelDummy+1);
+	xSetInt(dPlayerData, xEnginePower, trQuestVarGet("EngineCL"+xGetInt(dPlayerData, xEngineLevel)+""));
+	trUnitSetVariation(1*trQuestVarGet("UnitFlag5"),EngineLevelDummy);
+	trQuestVarSet("CurrentEngineL", xGetInt(dPlayerData, xEngineLevel));
+	trQuestVarSet("NextEngineL", 1*trQuestVarGet("CurrentEngineL")+1);
+	trQuestVarSet("goldCost", 1*trQuestVarGet("EngineCostL"+1*trQuestVarGet("NextEngineL")+""));
+	trSoundPlayFN("ui\thunder2.wav","1",-1,"","");
+	trChatHistoryClear();
+	trChatSend(0, "<u><color=1,1,1>Engine Upgraded:</color></u>");
+	trChatSend(0, trStringQuestVarGet("EngineL"+1*trQuestVarGet("CurrentEngineL")+"") + " "+1*xGetInt(dPlayerData, xEnginePower)+" kW");
 }
 
 rule SPLoops
