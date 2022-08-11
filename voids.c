@@ -729,7 +729,7 @@ void FloatingUnit(string protounitname="", int xx = 0, int yy = 0, int zz = 0, i
 	trQuestVarSet("QVRelic", trGetNextUnitScenarioNameNumber());
 	trArmyDispatch("0,0", "Relic", 1, xx, yy, zz, trQuestVarGet("Heading"+(1*trQuestVarGet("Build"))+""), true);
 	trQuestVarCopy("QVHero", "QVHero"+(1*trQuestVarGet("BuildID"))+"");
-	trVectorQuestVarSet("V1", kbGetBlockPosition("0"));
+	trVectorQuestVarSet("V1", vector(1,1,1));
 	trVectorQuestVarSet("V1", xsVectorSet(trVectorQuestVarGetX("V1") + xx,
 			yy,trVectorQuestVarGetZ("V1") + zz));
 	trUnitSelectClear();

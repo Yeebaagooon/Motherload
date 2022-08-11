@@ -12,7 +12,7 @@ for(x = 1; <= 9){
 }
 
 */
-const int TOTAL_LOAD = 12;
+const int TOTAL_LOAD = 13;
 
 void showLoadProgress() {
 	trSoundPlayFN("default","1",-1,"Loading Data:"+100 * loadProgress / TOTAL_LOAD,"icons\god power reverse time icons 64");
@@ -225,7 +225,10 @@ inactive
 						xSetInt(dPlayerData, xCargoHold, 1*trQuestVarGet("CargoCL"+xGetInt(dPlayerData, xCargoLevel)+""));
 					} else if (loadProgress == 11) {
 						xSetInt(dPlayerData, xEngineLevel, 1*xsMax(1, x));
-						xSetInt(dPlayerData, xEnginePower, 1*trQuestVarGet("CargoCL"+xGetInt(dPlayerData, xEngineLevel)+""));
+						xSetInt(dPlayerData, xEnginePower, 1*trQuestVarGet("EngineCL"+xGetInt(dPlayerData, xEngineLevel)+""));
+					} else if (loadProgress == 12) {
+						xSetInt(dPlayerData, xRadiatorLevel, 1*xsMax(1, x));
+						xSetInt(dPlayerData, xRadiator, 1*trQuestVarGet("RadiatorCL"+xGetInt(dPlayerData, xRadiatorLevel)+""));
 					}
 					if (p  == 1) {
 						debugLog("digit is " + x);
@@ -275,6 +278,10 @@ inactive
 				case 11: // done reading slot 5.
 				{
 					savedata = trGetScenarioUserData(6);
+				}
+				case 12: // done reading slot 6.
+				{
+					savedata = trGetScenarioUserData(7);
 				}
 			}
 			if (savedata < 0) {
@@ -510,8 +517,8 @@ highFrequency
 	xAddDatabaseBlock(dPlanetEyecandy, true);
 	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVHero"));
 	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 2);
-	//EYECANDY PLANET 3
-	FloatingUnitAnimIdle("Earth", 76, 9, 48, 0, 0.2,0.2,0.2);
+	//EYECANDY PLANET 4
+	FloatingUnitAnimIdle("Earth", 68, 9, 59, 0, 0.2,0.2,0.2);
 	xAddDatabaseBlock(dPlanetEyecandy, true);
 	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVRelic"));
 	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 3);
@@ -636,5 +643,9 @@ void saveAllData() {
 		savedatasp = 1*xGetInt(dPlayerData, xEngineLevel);
 		trSetCurrentScenarioUserData(6, savedatasp); //drill level save
 		trChatSend(0, ""+savedatasp + " saved as engine level");
+		//SLOT 7, RADIATOR LEVEL
+		savedatasp = 1*xGetInt(dPlayerData, xRadiatorLevel);
+		trSetCurrentScenarioUserData(7, savedatasp); //drill level save
+		trChatSend(0, ""+savedatasp + " saved as rad level");
 	}
 }

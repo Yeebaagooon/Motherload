@@ -71,6 +71,20 @@ void LoadDataSP(int p = -1){
 	trQuestVarSet("CurrentEngineL", loaddatasp);
 	xSetInt(dPlayerData, xEngineLevel ,1*trQuestVarGet("CurrentEngineL"));
 	xSetInt(dPlayerData, xEnginePower ,1*trQuestVarGet("EngineCL"+xGetInt(dPlayerData, xEngineLevel)+""));
+	
+	//SLOT 7, Engine LEVEL
+	loaddatasp = trGetScenarioUserData(7);
+	if(loaddatasp <= 0){
+		loaddatasp = 1;
+	}
+	
+	
+	xSetPointer(dPlayerData, 1);
+	xSetInt(dPlayerData, xRadiatorLevel, loaddatasp);
+	trChatSend(0, ""+loaddatasp + " SP loaded as radiator level");
+	trQuestVarSet("CurrentRadiatorL", loaddatasp);
+	xSetInt(dPlayerData, xRadiatorLevel ,1*trQuestVarGet("CurrentRadiatorL"));
+	xSetInt(dPlayerData, xRadiator ,1*trQuestVarGet("RadiatorCL"+xGetInt(dPlayerData, xRadiatorLevel)+""));
 }
 
 
@@ -348,6 +362,9 @@ highFrequency
 	xAddDatabaseBlock(dSelectables, true);
 	xSetInt(dSelectables, xSelectablesName, UnitObelisk5);
 	xSetInt(dSelectables, xSelectablesPrompt, 501);
+	xAddDatabaseBlock(dSelectables, true);
+	xSetInt(dSelectables, xSelectablesName, UnitObelisk6);
+	xSetInt(dSelectables, xSelectablesPrompt, 601);
 	
 	//Loadout chat
 	/*
@@ -364,6 +381,7 @@ highFrequency
 	trUnitSetVariation(UnitFlag3,1*trQuestVarGet("CurrentFuelL")-1);
 	trUnitSetVariation(UnitFlag4,1*trQuestVarGet("CurrentCargoL")-1);
 	trUnitSetVariation(UnitFlag5,1*trQuestVarGet("CurrentEngineL")-1);
+	trUnitSetVariation(UnitFlag6,1*trQuestVarGet("CurrentRadiatorL")-1);
 }
 
 void UpgradeDrill(int p = -1){
@@ -449,6 +467,23 @@ void UpgradeEngine(int p = -1){
 	trChatHistoryClear();
 	trChatSend(0, "<u><color=1,1,1>Engine Upgraded:</color></u>");
 	trChatSend(0, trStringQuestVarGet("EngineL"+1*trQuestVarGet("CurrentEngineL")+"") + " "+1*xGetInt(dPlayerData, xEnginePower)+" kW");
+}
+
+void UpgradeRadiator(int p = -1){
+	xsSetContextPlayer(0);
+	trPlayerGrantResources(1, "Gold", -1*trQuestVarGet("goldCost"));
+	xSetPointer(dPlayerData, 1);
+	int RadiatorLevelDummy = xGetInt(dPlayerData, xRadiatorLevel);
+	xSetInt(dPlayerData, xRadiatorLevel, RadiatorLevelDummy+1);
+	xSetInt(dPlayerData, xRadiator, trQuestVarGet("RadiatorCL"+xGetInt(dPlayerData, xRadiatorLevel)+""));
+	trUnitSetVariation(1*trQuestVarGet("UnitFlag6"),RadiatorLevelDummy);
+	trQuestVarSet("CurrentRadiatorL", xGetInt(dPlayerData, xRadiatorLevel));
+	trQuestVarSet("NextRadiatorL", 1*trQuestVarGet("CurrentRadiatorL")+1);
+	trQuestVarSet("goldCost", 1*trQuestVarGet("RadiatorCostL"+1*trQuestVarGet("NextRadiatorL")+""));
+	trSoundPlayFN("ui\thunder2.wav","1",-1,"","");
+	trChatHistoryClear();
+	trChatSend(0, "<u><color=1,1,1>Radiator Upgraded:</color></u>");
+	trChatSend(0, trStringQuestVarGet("RadiatorL"+1*trQuestVarGet("CurrentRadiatorL")+"") + " "+1*xGetInt(dPlayerData, xRadiator)+" percent efficient");
 }
 
 rule SPLoops

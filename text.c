@@ -7,6 +7,11 @@ void GroundType(int rock = 0) {
 			OVERTERRAIN_TYPE = 3;
 			OVERTERRAIN_SUBTYPE = 13;
 		}
+		case 2:
+		{
+			OVERTERRAIN_TYPE = 4;
+			OVERTERRAIN_SUBTYPE = 2;
+		}
 	}
 }
 
@@ -509,7 +514,39 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				}
 			}
 		}
-		
+		case 601:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					xSetPointer(dPlayerData, 1);
+					trQuestVarSet("CurrentRadiatorL", xGetInt(dPlayerData, xRadiatorLevel));
+					trQuestVarSet("NextRadiatorL", 1*trQuestVarGet("CurrentRadiatorL")+1);
+					trQuestVarSet("goldCost", 1*trQuestVarGet("RadiatorCostL"+1*trQuestVarGet("NextRadiatorL")+""));
+					yesPrompt = "Yes (" + 1*trQuestVarGet("goldCost") + " gold )";
+					if(trPlayerResourceCount(1, "Gold") < 1*trQuestVarGet("goldCost")){
+						uiMessageBox("You do not have enough gold to upgrade your Radiator! (" + 1*trQuestVarGet("goldCost") + ")");
+						dialog = 0;
+					}
+					else if(trPlayerResourceCount(1, "Gold") >= 1*trQuestVarGet("goldCost")){
+						if (xGetInt(dPlayerData, xRadiatorLevel) < 8) {
+							trShowChoiceDialog("Increase Radiator to level " + 1*trQuestVarGet("NextRadiatorL") + "?",
+								yesPrompt, 22, "No", -1);
+						} else {
+							uiMessageBox("You have reached the max level!");
+						}
+						trChatHistoryClear();
+						trChatSend(0, "<u><color=1,1,1>Current Radiator:</color></u>");
+						trChatSend(0, trStringQuestVarGet("RadiatorL"+1*trQuestVarGet("CurrentRadiatorL")+"") + " "+1*xGetInt(dPlayerData, xRadiator)+" percent efficient");
+						trChatSend(0, "<u><color=1,1,1>Upgraded Radiator:</color></u>");
+						string RadiatorUp = trStringQuestVarGet("RadiatorL"+1*trQuestVarGet("NextRadiatorL")+"");
+						trChatSend(0, RadiatorUp + " "+1*trQuestVarGet("RadiatorCL"+1*trQuestVarGet("NextRadiatorL")+"")+" percent efficient");
+						dialog = 0;
+					}
+				}
+			}
+		}
 	}
 	return(dialog);
 }

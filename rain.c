@@ -18,6 +18,7 @@ highFrequency
 	trEventSetHandler(19, "UpgradeFuel");
 	trEventSetHandler(20, "UpgradeCargo");
 	trEventSetHandler(21, "UpgradeEngine");
+	trEventSetHandler(22, "UpgradeRadiator");
 	xsDisableSelf();
 }
 
@@ -457,6 +458,9 @@ highFrequency
 						RockType(9);
 					}
 				}
+				if(Stage == 2){
+					RockType(3);
+				}
 				trPaintTerrain(4*col-1,4*row-1,4*col-3,4*row-3,TERRAIN_TYPE,TERRAIN_SUBTYPE,false);
 				trQuestVarSet("R"+row+"C"+col+"CentreY", row*4-2);
 				trQuestVarSet("R"+row+"C"+col+"CentreX", col*4-2);
@@ -582,6 +586,9 @@ highFrequency
 					}
 				}
 			}
+			if(Stage == 2){
+				spawnRelicSpecific(v,1);
+			}
 		}
 	}
 	xsEnableRule("WallUp");
@@ -630,6 +637,7 @@ highFrequency
 			}
 			trChatSend(0, "P"+p+"gold is " + 1*trQuestVarGet("p"+p+"goldGrant"));
 			trChatSend(0, "p"+p+"Drill level is " + xGetInt(dPlayerData, xDrillLevel));
+			trChatSend(0, "p"+p+"Rad level is " + xGetInt(dPlayerData, xRadiatorLevel));
 		}
 		xsDisableSelf();
 		trDelayedRuleActivation("FadeOut");

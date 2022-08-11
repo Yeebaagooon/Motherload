@@ -1,6 +1,6 @@
 //---Test controls
 int QuickStart = 1;
-bool OverrideSP = false;
+bool OverrideSP = true;
 
 //---
 int Stage = 0;
@@ -89,4 +89,14 @@ highFrequency
 	trStringQuestVarSet("EngineL1", "Hamsterwheel engine");
 	trStringQuestVarSet("EngineL2", "Horsepower engine");
 	trStringQuestVarSet("EngineL3", "Zebraforce engine");
+	
+	//Radiator UPGRADES
+	trQuestVarSet("RadiatorCostL2", 20);
+	trQuestVarSet("RadiatorCostL3", 50);
+	trQuestVarSet("RadiatorCL1", 10);
+	trQuestVarSet("RadiatorCL2", 15);
+	trQuestVarSet("RadiatorCL3", 20);
+	trStringQuestVarSet("RadiatorL1", "Basic Radiator");
+	trStringQuestVarSet("RadiatorL2", "Ploddyphut Radiator");
+	trStringQuestVarSet("RadiatorL3", "Wheezy Radiator");
 }
