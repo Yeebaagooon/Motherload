@@ -19,6 +19,7 @@ int TERRAIN_SUBTYPE = 2;
 int OVERTERRAIN_TYPE = 5;
 int OVERTERRAIN_SUBTYPE = 4;
 int CheckTime = 1;
+int FuelCost = 0;
 
 /* TERRAINS */
 const int SandC = 1;
@@ -41,8 +42,8 @@ highFrequency
 {
 	xsDisableSelf();
 	//DRILL UPGRADES
-	trQuestVarSet("DrillCostL2", 25);
-	trQuestVarSet("DrillCostL3", 50);
+	trQuestVarSet("DrillCostL2", 10);
+	trQuestVarSet("DrillCostL3", 30);
 	trQuestVarSet("DrillPowerL1", 10);
 	trQuestVarSet("DrillPowerL2", 18);
 	trQuestVarSet("DrillPowerL3", 30);
@@ -51,8 +52,8 @@ highFrequency
 	trStringQuestVarSet("DrillL3", "Aluminium Drill");
 	
 	//HULL UPGRADES
-	trQuestVarSet("HullCostL2", 50);
-	trQuestVarSet("HullCostL3", 100);
+	trQuestVarSet("HullCostL2", 10);
+	trQuestVarSet("HullCostL3", 40);
 	trQuestVarSet("HullHPL1", 100);
 	trQuestVarSet("HullHPL2", 300);
 	trQuestVarSet("HullHPL3", 500);
@@ -61,8 +62,8 @@ highFrequency
 	trStringQuestVarSet("HullL3", "Aluminium hull");
 	
 	//Fuel UPGRADES
-	trQuestVarSet("FuelCostL2", 30);
-	trQuestVarSet("FuelCostL3", 60);
+	trQuestVarSet("FuelCostL2", 10);
+	trQuestVarSet("FuelCostL3", 40);
 	trQuestVarSet("FuelCL1", 1000);
 	trQuestVarSet("FuelCL2", 1250);
 	trQuestVarSet("FuelCL3", 1500);
@@ -71,8 +72,8 @@ highFrequency
 	trStringQuestVarSet("FuelL3", "Vaccum tank");
 	
 	//Cargo UPGRADES
-	trQuestVarSet("CargoCostL2", 20);
-	trQuestVarSet("CargoCostL3", 30);
+	trQuestVarSet("CargoCostL2", 10);
+	trQuestVarSet("CargoCostL3", 25);
 	trQuestVarSet("CargoCL1", 2);
 	trQuestVarSet("CargoCL2", 3);
 	trQuestVarSet("CargoCL3", 4);
@@ -81,8 +82,8 @@ highFrequency
 	trStringQuestVarSet("CargoL3", "Medium Hold");
 	
 	//Engine UPGRADES
-	trQuestVarSet("EngineCostL2", 30);
-	trQuestVarSet("EngineCostL3", 50);
+	trQuestVarSet("EngineCostL2", 10);
+	trQuestVarSet("EngineCostL3", 35);
 	trQuestVarSet("EngineCL1", 10);
 	trQuestVarSet("EngineCL2", 20);
 	trQuestVarSet("EngineCL3", 35);
@@ -91,8 +92,8 @@ highFrequency
 	trStringQuestVarSet("EngineL3", "Zebraforce engine");
 	
 	//Radiator UPGRADES
-	trQuestVarSet("RadiatorCostL2", 20);
-	trQuestVarSet("RadiatorCostL3", 50);
+	trQuestVarSet("RadiatorCostL2", 10);
+	trQuestVarSet("RadiatorCostL3", 30);
 	trQuestVarSet("RadiatorCL1", 10);
 	trQuestVarSet("RadiatorCL2", 15);
 	trQuestVarSet("RadiatorCL3", 20);

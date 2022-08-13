@@ -78,11 +78,11 @@ int GetRockHardness(int rock = 0) {
 		}
 		case CliffEgyptianB:
 		{
-			return(100);
+			return(80);
 		}
 		case CliffEgyptianA:
 		{
-			return(150);
+			return(100);
 		}
 		//Ice C
 		case IceC:

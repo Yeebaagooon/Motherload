@@ -1,20 +1,3 @@
-//This paints the overworld terrain for each stage
-void GroundType(int rock = 0) {
-	switch(rock)
-	{
-		case 1:
-		{
-			OVERTERRAIN_TYPE = 3;
-			OVERTERRAIN_SUBTYPE = 13;
-		}
-		case 2:
-		{
-			OVERTERRAIN_TYPE = 4;
-			OVERTERRAIN_SUBTYPE = 2;
-		}
-	}
-}
-
 string stageName(int stage = 0) {
 	string name = "(This stage has not been made yet)";
 	switch(stage)
@@ -25,7 +8,7 @@ string stageName(int stage = 0) {
 		}
 		case 2:
 		{
-			name = "Planet 2 name";
+			name = "Lyssa";
 		}
 		case 3:
 		{
@@ -79,7 +62,7 @@ string stageIcon(int stage = 0) {
 			}
 			case 2:
 			{
-				img = "ui\ui map deep jungle 256x256";
+				img = "sfx e meteor map";
 			}
 			case 3:
 			{

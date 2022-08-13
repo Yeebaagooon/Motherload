@@ -54,6 +54,9 @@ highFrequency
 		trPlayerGrantResources(p, "Gold", -10000.0);
 		trPlayerGrantResources(p, "Favor", -10000.0);
 		trPlayerKillAllGodPowers(p);
+		if(trCurrentPlayer() == p){
+			trSoundPlayFN("\Yeebaagooon\Motherload\Test sound.mp3", "1", 13, "","");
+		}
 	}
 	
 	while(cNumberNonGaiaPlayers>=trQuestVarGet("PlayerID")) {
