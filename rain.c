@@ -188,6 +188,63 @@ highFrequency
 	}
 }
 
+int GetFuelPump(float x = 0, float z = 0){
+	if((x > FSOneXMin) && (x < FSOneXMax)){
+		if((z > FSOneZMin) && (z < FSOneZMax)){
+			return(1);
+		}return(0);
+	}
+	else if((x > FSTwoXMin) && (x < FSTwoXMax)){
+		if((z > FSTwoZMin) && (z < FSTwoZMax)){
+			return(2);
+		}return(0);
+	}
+	else{
+		return(0);
+	}
+}
+
+void FuelBuy(int p = 0){
+	if(trTime() > 1*xGetInt(dPlayerData, xFuelCountdownTime)){
+		if(xGetFloat(dPlayerData, xFuel) < xGetInt(dPlayerData, xFuelTank)){
+			if(GetFuelPump(trVectorQuestVarGetX("P"+p+"Pos"),trVectorQuestVarGetZ("P"+p+"Pos")) != 0){
+				if(xGetInt(dPlayerData, xFuelCountdown) == 0){
+					if (trPlayerResourceCount(p, "Gold") >= FuelCost) {
+						ColouredChatToPlayer(p, "1,1,0", "Refilling fuel tank if you remain stationary...");
+						xSetInt(dPlayerData, xFuelCountdown, 4);
+					}
+					else{
+						ColouredChatToPlayer(p, "1,0,0", "You do not have enough gold to buy fuel!");
+					}
+				}
+				
+				if(xGetInt(dPlayerData, xFuelCountdown) > 1){
+					xSetInt(dPlayerData, xFuelCountdown, xGetInt(dPlayerData, xFuelCountdown)-1);
+					ColouredChatToPlayer(p, "1,1,0", ""+xGetInt(dPlayerData, xFuelCountdown)+"...");
+				}
+				else if (xGetInt(dPlayerData, xFuelCountdown) == 1){
+					if(Stage == 1){
+						ColouredChatToPlayer(p, "0,1,0", "Refuel complete.");
+						xSetFloat(dPlayerData, xFuel, xGetInt(dPlayerData, xFuelTank));
+						xSetInt(dPlayerData, xFuelCountdown, 0);
+					}
+					else if(Stage == 2){
+						xSetFloat(dPlayerData, xFuel, xGetFloat(dPlayerData, xFuel)+1000*GetFuelPump(trVectorQuestVarGetX("P"+p+"Pos"),trVectorQuestVarGetZ("P"+p+"Pos")));
+						xSetInt(dPlayerData, xFuelCountdown, 0);
+						trPlayerGrantResources(p, "Gold", -1*FuelCost*GetFuelPump(trVectorQuestVarGetX("P"+p+"Pos"),trVectorQuestVarGetZ("P"+p+"Pos")));
+						ColouredChatToPlayer(p, "0,1,0", "Refuel complete.");
+						if(xGetFloat(dPlayerData, xFuel) > xGetInt(dPlayerData,xFuelTank)){
+							xSetFloat(dPlayerData, xFuel, xGetInt(dPlayerData, xFuelTank));
+						}
+						
+					}
+				}
+			}
+			xSetInt(dPlayerData, xFuelCountdownTime, trTime()+1);
+		}
+	}
+}
+
 
 rule FuelEconomy
 inactive
@@ -199,91 +256,52 @@ highFrequency
 		if(xGetInt(dPlayerData, xPlayerActive) == 1){
 			if(trDistanceToVectorSquared("P"+p+"Siphon", "P"+p+"Pos") > 0){
 				trVectorSetUnitPos("P"+p+"Pos", "P"+p+"Siphon");
-				//Disable surface penalty by not having fuel loss here
+				if(xGetInt(dPlayerData, xFuelCountdown) != 0){
+					xSetInt(dPlayerData, xFuelCountdown, 0);
+				}
 				if((trVectorQuestVarGetZ("P"+p+"Pos")) > MaxRows*8){
 					xSetInt(dPlayerData, xDepth, 0);
 					trQuestVarSet("P"+p+"Depth", 0);
-					if(((trVectorQuestVarGetX("P"+p+"Pos")) > 176) && (trVectorQuestVarGetX("P"+p+"Pos")) < 182){
-						if(((trVectorQuestVarGetZ("P"+p+"Pos")) > 174) && (trVectorQuestVarGetZ("P"+p+"Pos")) < 186){
-							if(xGetInt(dPlayerData, xFuelCountdown) == 0){
-								xSetInt(dPlayerData, xFuelCountdown, 1);
-								if(xGetFloat(dPlayerData, xFuel) < xGetInt(dPlayerData, xFuelTank)){
-									if (trPlayerResourceCount(p, "Gold") >= FuelCost) {
-										ColouredChatToPlayer(p, "1,1,0", "Refilling fuel tank if you remain stationary...");
-									}
-								}
-								xSetInt(dPlayerData, xFuelCountdownTime, 4);
-								xSetInt(dPlayerData, xFuelActivationTime, trTime()+1);
-							}
-						}
-					}
-					else{
-						if(trTime() > xGetInt(dPlayerData, xFuelActivationTime)){
-							if(xGetInt(dPlayerData, xFuelCountdown) == 1){
-								xSetInt(dPlayerData, xFuelCountdown, 0);
-								//trChatSendToPlayer(0, p, "Refuelling cancelled.");
-								xSetInt(dPlayerData, xFuelCountdownTime, 4);
-								xSetInt(dPlayerData, xFuelActivationTime, trTime()+10000);
-								break;
-							}
-						}
-					}
 				}
 				else{
 					FuelLoss(p);
 					xSetInt(dPlayerData, xDepth, (MaxRows*8-1*trVectorQuestVarGetZ("P"+p+"Pos"))*10-10);
-					//trQuestVarSet("P"+p+"Depth", (MaxRows*8-1*trVectorQuestVarGetZ("P"+p+"Pos"))*10-10);
 				}
 			}
 			else{
-				if(((trVectorQuestVarGetX("P"+p+"Pos")) > 176) && (trVectorQuestVarGetX("P"+p+"Pos")) < 182){
-					if(((trVectorQuestVarGetZ("P"+p+"Pos")) > 174) && (trVectorQuestVarGetZ("P"+p+"Pos")) < 186){
-						if(trTime() > xGetInt(dPlayerData, xFuelActivationTime)){
-							if(xGetInt(dPlayerData, xFuelCountdownTime) > 1){
-								xSetInt(dPlayerData, xFuelCountdownTime, xGetInt(dPlayerData, xFuelCountdownTime)-1);
-								ColouredChatToPlayer(p, "1,1,0", ""+xGetInt(dPlayerData, xFuelCountdownTime)+"...");
-								xSetInt(dPlayerData, xFuelActivationTime, trTime()+1);
-							}
-							else if (xGetInt(dPlayerData, xFuelCountdownTime) == 1){
-								ColouredChatToPlayer(p, "0,1,0", "Refuel complete.");
-								xSetFloat(dPlayerData, xFuel, xGetInt(dPlayerData, xFuelTank));
-								xSetInt(dPlayerData, xFuelCountdown, 0);
-								xSetInt(dPlayerData, xFuelCountdownTime, 4);
-								xSetInt(dPlayerData, xFuelActivationTime, trTime()+10000);
-							}
-						}
-					}
+				if((trVectorQuestVarGetZ("P"+p+"Pos")) > MaxRows*8){
+					FuelBuy(p);
 				}
 			}
-			if(trCurrentPlayer() == p){
-				trCounterAbort("CDFuel");
-				trCounterAbort("CDDepth");
-				if(cNumberNonGaiaPlayers > 2){
-					//coloured fuel function
-					if(xGetFloat(dPlayerData, xFuel) > xGetInt(dPlayerData, xFuelTank)*0.75){
-						trCounterAddTime("CDFuel", -40, -30, "<color={PlayerColor(3)}>Fuel:" + 1*xGetFloat(dPlayerData, xFuel) + " L", -1);
-						trCounterAddTime("CDDepth", -30, -20, "</color>Depth: " + 1*xGetInt(dPlayerData, xDepth) + " metres", -1);
-					}
-					else if(xGetFloat(dPlayerData, xFuel) < 150){
-						trCounterAddTime("CDFuel", -40, -30, "<color={PlayerColor(2)}>Fuel:" + 1*xGetFloat(dPlayerData, xFuel) + " L", -1);
-						trCounterAddTime("CDDepth", -30, -20, "</color>Depth: " + 1*xGetInt(dPlayerData, xDepth) + " metres", -1);
-					}
-					else{
-						trCounterAddTime("CDFuel", -40, -30, "</color>Fuel:" + 1*xGetFloat(dPlayerData, xFuel) + " L", -1);
-						trCounterAddTime("CDDepth", -30, -20, "</color>Depth: " + 1*xGetInt(dPlayerData, xDepth) + " metres", -1);
-					}
+		}
+		if(trCurrentPlayer() == p){
+			trCounterAbort("CDFuel");
+			trCounterAbort("CDDepth");
+			if(cNumberNonGaiaPlayers > 2){
+				//coloured fuel function
+				if(xGetFloat(dPlayerData, xFuel) > xGetInt(dPlayerData, xFuelTank)*0.75){
+					trCounterAddTime("CDFuel", -40, -30, "<color={PlayerColor(3)}>Fuel:" + 1*xGetFloat(dPlayerData, xFuel) + " L", -1);
+					trCounterAddTime("CDDepth", -30, -20, "</color>Depth: " + 1*xGetInt(dPlayerData, xDepth) + " metres", -1);
 				}
-				else if(cNumberNonGaiaPlayers <= 2){
+				else if(xGetFloat(dPlayerData, xFuel) < 150){
+					trCounterAddTime("CDFuel", -40, -30, "<color={PlayerColor(2)}>Fuel:" + 1*xGetFloat(dPlayerData, xFuel) + " L", -1);
+					trCounterAddTime("CDDepth", -30, -20, "</color>Depth: " + 1*xGetInt(dPlayerData, xDepth) + " metres", -1);
+				}
+				else{
 					trCounterAddTime("CDFuel", -40, -30, "</color>Fuel:" + 1*xGetFloat(dPlayerData, xFuel) + " L", -1);
 					trCounterAddTime("CDDepth", -30, -20, "</color>Depth: " + 1*xGetInt(dPlayerData, xDepth) + " metres", -1);
 				}
 			}
-			if((xGetFloat(dPlayerData, xFuel) <= 0) && (xGetInt(dPlayerData, xPlayerActive) == 1)){
-				trChatSendToPlayer(0, p, "OUT OF FUEL DEATH");
-				trUnitSelectByQV("P"+p+"Siphon");
-				trUnitDestroy();
-				xSetInt(dPlayerData, xPlayerActive, 0);
+			else if(cNumberNonGaiaPlayers <= 2){
+				trCounterAddTime("CDFuel", -40, -30, "</color>Fuel:" + 1*xGetFloat(dPlayerData, xFuel) + " L", -1);
+				trCounterAddTime("CDDepth", -30, -20, "</color>Depth: " + 1*xGetInt(dPlayerData, xDepth) + " metres", -1);
 			}
+		}
+		if((xGetFloat(dPlayerData, xFuel) <= 0) && (xGetInt(dPlayerData, xPlayerActive) == 1)){
+			trChatSendToPlayer(0, p, "OUT OF FUEL DEATH");
+			trUnitSelectByQV("P"+p+"Siphon");
+			trUnitDestroy();
+			xSetInt(dPlayerData, xPlayerActive, 0);
 		}
 	}
 }

@@ -19,7 +19,16 @@ int TERRAIN_SUBTYPE = 2;
 int OVERTERRAIN_TYPE = 5;
 int OVERTERRAIN_SUBTYPE = 4;
 int CheckTime = 1;
-int FuelCost = 0;
+
+float FuelCost = 0;
+float FSOneXMin = 10;
+float FSOneXMax = 0;
+float FSOneZMin = 10;
+float FSOneZMax = 0;
+float FSTwoXMin = 10;
+float FSTwoXMax = 0;
+float FSTwoZMin = 10;
+float FSTwoZMax = 0;
 
 /* TERRAINS */
 const int SandC = 1;
