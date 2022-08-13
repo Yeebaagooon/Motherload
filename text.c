@@ -206,7 +206,7 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				{
 					trCameraCut(vector(100.463554,153.803818,-59.088593), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
 					uiZoomToProto("Hero Greek Atalanta");
-					uiMessageBox("Make 10 gold in 8 minutes to unlock the next planet, as well as the ability to upgrade your ship.");
+					//uiMessageBox("Make 10 gold in 8 minutes to unlock the next planet.");
 					dialog = 0;
 				}
 			}

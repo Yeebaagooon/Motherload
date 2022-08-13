@@ -188,16 +188,16 @@ highFrequency
 	}
 }
 
-int GetFuelPump(int x = 0, int z = 0){
+int GetFuelPump(float x = 0, float z = 0){
 	if((x > FSOneXMin) && (x < FSOneXMax)){
 		if((z > FSOneZMin) && (z < FSOneZMax)){
 			return(1);
-		}
+		}return(0);
 	}
 	else if((x > FSTwoXMin) && (x < FSTwoXMax)){
 		if((z > FSTwoZMin) && (z < FSTwoZMax)){
 			return(2);
-		}
+		}return(0);
 	}
 	else{
 		return(0);
@@ -228,15 +228,15 @@ void FuelBuy(int p = 0){
 						xSetFloat(dPlayerData, xFuel, xGetInt(dPlayerData, xFuelTank));
 						xSetInt(dPlayerData, xFuelCountdown, 0);
 					}
-					else{
-						xSetFloat(dPlayerData, xFuel, xGetFloat(dPlayerData, xFuel)+1000);
+					else if(Stage == 2){
+						xSetFloat(dPlayerData, xFuel, xGetFloat(dPlayerData, xFuel)+1000*GetFuelPump(trVectorQuestVarGetX("P"+p+"Pos"),trVectorQuestVarGetZ("P"+p+"Pos")));
 						xSetInt(dPlayerData, xFuelCountdown, 0);
+						trPlayerGrantResources(p, "Gold", -1*FuelCost*GetFuelPump(trVectorQuestVarGetX("P"+p+"Pos"),trVectorQuestVarGetZ("P"+p+"Pos")));
+						ColouredChatToPlayer(p, "0,1,0", "Refuel complete.");
+						if(xGetFloat(dPlayerData, xFuel) > xGetInt(dPlayerData,xFuelTank)){
+							xSetFloat(dPlayerData, xFuel, xGetInt(dPlayerData, xFuelTank));
+						}
 						
-						trChatSend(0, ""+GetFuelPump(trVectorQuestVarGetX("P"+p+"Pos"),trVectorQuestVarGetZ("P"+p+"Pos")));
-						trChatSend(0, ""+trVectorQuestVarGetX("P"+p+"Pos"));
-						trChatSend(0, ""+trVectorQuestVarGetZ("P"+p+"Pos"));
-						trPlayerGrantResources(p, "Gold", -1*FuelCost);
-						//ColouredChatToPlayer(p, "0,1,0", "Refuel complete.");
 					}
 				}
 			}
