@@ -1,6 +1,6 @@
 //---Test controls
-int QuickStart = 1;
-bool OverrideSP = true;
+int QuickStart = 0;
+bool OverrideSP = false;
 
 //---
 int Stage = 0;
