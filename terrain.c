@@ -165,6 +165,10 @@ highFrequency
 		trUnitHighlight(1000, true);
 		//fuel full pump
 		PaintAtlantisArea(88,87,90,92,"GrassB");
+		FSOneXMin = 176;
+		FSOneXMax = 182;
+		FSOneZMin = 174;
+		FSOneZMax = 186;
 		GVectorSellPos = vector(38,3,176);
 		FloatingUnitAnimIdle("Earth", 190, -10, 190, 0, 4.5,-0.1,4.5);
 		FloatingUnitAnimIdle("Earth", 10, -10, 190, 0, 4.5,-0.1,4.5);
@@ -188,7 +192,15 @@ highFrequency
 		PaintFuelTerrain(80,89);
 		//fuel full pump
 		PaintAtlantisArea(88,87,90,89,"GrassA");
+		FSOneXMin = 176;
+		FSOneXMax = 182;
+		FSOneZMin = 174;
+		FSOneZMax = 180;
 		PaintAtlantisArea(91,87,93,90,"GrassB");
+		FSTwoXMin = 182;
+		FSTwoXMax = 188;
+		FSTwoZMin = 174;
+		FSTwoZMax = 182;
 		GVectorSellPos = vector(38,3,176);
 		FloatingUnitAnimIdle("Earth", 190, -10, 190, 0, 4.5,-0.1,4.5);
 		FloatingUnitAnimIdle("Earth", 10, -10, 190, 0, 4.5,-0.1,4.5);
