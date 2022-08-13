@@ -201,7 +201,6 @@ int GetFuelPump(int x = 0, int z = 0){
 	}
 	else{
 		return(0);
-		//why tf does this return 150 via line 236, should either be 0,1 or 2
 	}
 }
 
@@ -224,16 +223,20 @@ void FuelBuy(int p = 0){
 					ColouredChatToPlayer(p, "1,1,0", ""+xGetInt(dPlayerData, xFuelCountdown)+"...");
 				}
 				else if (xGetInt(dPlayerData, xFuelCountdown) == 1){
-					ColouredChatToPlayer(p, "0,1,0", "Refuel complete.");
-					trPlayerGrantResources(p, "Gold", -1*FuelCost);
 					if(Stage == 1){
+						ColouredChatToPlayer(p, "0,1,0", "Refuel complete.");
 						xSetFloat(dPlayerData, xFuel, xGetInt(dPlayerData, xFuelTank));
 						xSetInt(dPlayerData, xFuelCountdown, 0);
 					}
 					else{
 						xSetFloat(dPlayerData, xFuel, xGetFloat(dPlayerData, xFuel)+1000);
 						xSetInt(dPlayerData, xFuelCountdown, 0);
+						
 						trChatSend(0, ""+GetFuelPump(trVectorQuestVarGetX("P"+p+"Pos"),trVectorQuestVarGetZ("P"+p+"Pos")));
+						trChatSend(0, ""+trVectorQuestVarGetX("P"+p+"Pos"));
+						trChatSend(0, ""+trVectorQuestVarGetZ("P"+p+"Pos"));
+						trPlayerGrantResources(p, "Gold", -1*FuelCost);
+						//ColouredChatToPlayer(p, "0,1,0", "Refuel complete.");
 					}
 				}
 			}
@@ -259,7 +262,6 @@ highFrequency
 				if((trVectorQuestVarGetZ("P"+p+"Pos")) > MaxRows*8){
 					xSetInt(dPlayerData, xDepth, 0);
 					trQuestVarSet("P"+p+"Depth", 0);
-					
 				}
 				else{
 					FuelLoss(p);
@@ -267,7 +269,9 @@ highFrequency
 				}
 			}
 			else{
-				FuelBuy(p);
+				if((trVectorQuestVarGetZ("P"+p+"Pos")) > MaxRows*8){
+					FuelBuy(p);
+				}
 			}
 		}
 		if(trCurrentPlayer() == p){
