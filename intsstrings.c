@@ -22,13 +22,13 @@ int CheckTime = 1;
 
 int FuelCost = 0;
 int FSOneXMin = 10;
-int	FSOneXMax = 0;
-int	FSOneZMin = 10;
-int	FSOneZMax = 0;
+int FSOneXMax = 0;
+int FSOneZMin = 10;
+int FSOneZMax = 0;
 int FSTwoXMin = 10;
-int	FSTwoXMax = 0;
-int	FSTwoZMin = 10;
-int	FSTwoZMax = 0;
+int FSTwoXMax = 0;
+int FSTwoZMin = 10;
+int FSTwoZMax = 0;
 
 /* TERRAINS */
 const int SandC = 1;
