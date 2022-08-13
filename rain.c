@@ -188,21 +188,20 @@ highFrequency
 	}
 }
 
-int GetFuelPump(int xa = 0, int za = 0){
-	trChatSend(0, "x is" + xa);
-	trChatSend(0, "z is" + za);
-	if((xa > FSOneXMin) && (xa < FSOneXMax)){
-		if((za > FSOneZMin) && (za < FSOneZMax)){
+int GetFuelPump(int x = 0, int z = 0){
+	if((x > FSOneXMin) && (x < FSOneXMax)){
+		if((z > FSOneZMin) && (z < FSOneZMax)){
 			return(1);
 		}
 	}
-	else if((xa > FSTwoXMin) && (xa < FSTwoXMax)){
-		if((za > FSTwoZMin) && (za < FSTwoZMax)){
+	else if((x > FSTwoXMin) && (x < FSTwoXMax)){
+		if((z > FSTwoZMin) && (z < FSTwoZMax)){
 			return(2);
 		}
 	}
 	else{
 		return(0);
+		//why tf does this return 150 via line 236, should either be 0,1 or 2
 	}
 }
 
@@ -211,7 +210,7 @@ void FuelBuy(int p = 0){
 		if(xGetFloat(dPlayerData, xFuel) < xGetInt(dPlayerData, xFuelTank)){
 			if(GetFuelPump(trVectorQuestVarGetX("P"+p+"Pos"),trVectorQuestVarGetZ("P"+p+"Pos")) != 0){
 				if(xGetInt(dPlayerData, xFuelCountdown) == 0){
-					if (trPlayerResourceCount(p, "Gold") >= FuelCost*GetFuelPump(trVectorQuestVarGetX("P"+p+"Pos"),trVectorQuestVarGetZ("P"+p+"Pos"))) {
+					if (trPlayerResourceCount(p, "Gold") >= FuelCost) {
 						ColouredChatToPlayer(p, "1,1,0", "Refilling fuel tank if you remain stationary...");
 						xSetInt(dPlayerData, xFuelCountdown, 4);
 					}
@@ -225,16 +224,16 @@ void FuelBuy(int p = 0){
 					ColouredChatToPlayer(p, "1,1,0", ""+xGetInt(dPlayerData, xFuelCountdown)+"...");
 				}
 				else if (xGetInt(dPlayerData, xFuelCountdown) == 1){
+					ColouredChatToPlayer(p, "0,1,0", "Refuel complete.");
+					trPlayerGrantResources(p, "Gold", -1*FuelCost);
 					if(Stage == 1){
 						xSetFloat(dPlayerData, xFuel, xGetInt(dPlayerData, xFuelTank));
 						xSetInt(dPlayerData, xFuelCountdown, 0);
-						ColouredChatToPlayer(p, "0,1,0", "Refuel complete.");
 					}
-					if(Stage == 2){
-						xSetFloat(dPlayerData, xFuel, xGetFloat(dPlayerData, xFuel)+1000*GetFuelPump(trVectorQuestVarGetX("P"+p+"Pos"),trVectorQuestVarGetZ("P"+p+"Pos")));
+					else{
+						xSetFloat(dPlayerData, xFuel, xGetFloat(dPlayerData, xFuel)+1000);
 						xSetInt(dPlayerData, xFuelCountdown, 0);
-						trPlayerGrantResources(p, "Gold", -1*FuelCost*GetFuelPump(trVectorQuestVarGetX("P"+p+"Pos"),trVectorQuestVarGetZ("P"+p+"Pos")));
-						ColouredChatToPlayer(p, "0,1,0", GetFuelPump(trVectorQuestVarGetX("P"+p+"Pos"),trVectorQuestVarGetZ("P"+p+"Pos")) + "L purchased");
+						trChatSend(0, ""+GetFuelPump(trVectorQuestVarGetX("P"+p+"Pos"),trVectorQuestVarGetZ("P"+p+"Pos")));
 					}
 				}
 			}
@@ -247,6 +246,7 @@ void FuelBuy(int p = 0){
 rule FuelEconomy
 inactive
 highFrequency
+//CHANGE condition to distance not time
 {
 	for(p = 1; <= cNumberNonGaiaPlayers){
 		xSetPointer(dPlayerData, p);
@@ -259,12 +259,15 @@ highFrequency
 				if((trVectorQuestVarGetZ("P"+p+"Pos")) > MaxRows*8){
 					xSetInt(dPlayerData, xDepth, 0);
 					trQuestVarSet("P"+p+"Depth", 0);
-					FuelBuy(p);
+					
 				}
 				else{
 					FuelLoss(p);
 					xSetInt(dPlayerData, xDepth, (MaxRows*8-1*trVectorQuestVarGetZ("P"+p+"Pos"))*10-10);
 				}
+			}
+			else{
+				FuelBuy(p);
 			}
 		}
 		if(trCurrentPlayer() == p){
