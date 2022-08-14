@@ -12,6 +12,16 @@ void GroundType(int rock = 0) {
 			OVERTERRAIN_TYPE = 4;
 			OVERTERRAIN_SUBTYPE = 2;
 		}
+		case 3:
+		{
+			OVERTERRAIN_TYPE = 0;
+			OVERTERRAIN_SUBTYPE = 63;
+		}
+		case 4:
+		{
+			OVERTERRAIN_TYPE = 4;
+			OVERTERRAIN_SUBTYPE = 34;
+		}
 	}
 }
 
@@ -107,6 +117,26 @@ highFrequency
 						RockType(1*trQuestVarGet("Temp"));
 					}
 				}
+				if(Stage == 3){
+					if(row > 18){
+						RockType(10);
+					}
+					else if((row > 15) && (row <= 18 )){
+						trQuestVarSetFromRand("Temp",10,11,true);
+						RockType(1*trQuestVarGet("Temp"));
+					}
+					else if((row > 12) && (row <= 15 )){
+						RockType(12);
+					}
+					else if((row > 9) && (row <= 12 )){
+						trQuestVarSetFromRand("Temp",12,13,true);
+						RockType(1*trQuestVarGet("Temp"));
+					}
+					else{
+						trQuestVarSetFromRand("Temp",13,14,true);
+						RockType(1*trQuestVarGet("Temp"));
+					}
+				}
 				trPaintTerrain(4*col-1,4*row-1,4*col-3,4*row-3,TERRAIN_TYPE,TERRAIN_SUBTYPE,false);
 				trQuestVarSet("R"+row+"C"+col+"CentreY", row*4-2);
 				trQuestVarSet("R"+row+"C"+col+"CentreX", col*4-2);
@@ -182,7 +212,7 @@ highFrequency
 		trUnitSelectClear();
 		trUnitSelect(""+temp);
 		trUnitHighlight(1000, false);
-		FloatingUnitAnimIdle("Earth", 105, -10, 190, 0, 4.5,-0.1,4.5);
+		FloatingUnitAnimIdle("Earth", 105, -10, 190, 0, -4.5,-0.15,-4.5);
 		temp = 1*trQuestVarGet("QVRelic");
 		trUnitSelectClear();
 		trUnitSelect(""+temp);
@@ -239,8 +269,71 @@ highFrequency
 		trUnitSelectClear();
 		trUnitSelect(""+temp);
 		trUnitHighlight(1000, false);
-		FloatingUnitAnimIdle("Earth", 105, -10, 190, 0, 4.5,-0.1,4.5);
+		FloatingUnitAnimIdle("Earth", 105, -10, 190, 0, -4.5,-0.15,-4.5);
 		temp = 1*trQuestVarGet("QVRelic");
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitHighlight(1000, false);
+		temp = trGetNextUnitScenarioNameNumber();
+		trArmyDispatch("0,0", "Dwarf", 1, 179,3,181, 0, true);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitChangeProtoUnit("Flag Numbered");
+		trUnitSetVariation(temp, 0);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trSetSelectedScale(2,2,2);
+		temp = trGetNextUnitScenarioNameNumber();
+		trArmyDispatch("0,0", "Dwarf", 1, 185,3,183, 0, true);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitChangeProtoUnit("Flag Numbered");
+		trUnitSetVariation(temp, 1);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trSetSelectedScale(2,2,2);
+	}
+	if(Stage == 3){
+		FuelCost = 4;
+		PaintSmelter(20,180);
+		PaintSellTerrain(15,89);
+		temp = trGetNextUnitScenarioNameNumber();
+		trArmyDispatch("0,0", "Dwarf", 1, 31,3,180, 90, true);
+		xAddDatabaseBlock(dSelectables, true);
+		xSetInt(dSelectables, xSelectablesName,temp);
+		xSetInt(dSelectables, xSelectablesPrompt, 3);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitChangeProtoUnit("Sign");
+		trUnitSetVariation(temp, 2);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitHighlight(1000, true);
+		PaintFuelTerrain(80,89);
+		//fuel full pump
+		temp = trGetNextUnitScenarioNameNumber();
+		trArmyDispatch("0,0", "Dwarf", 1, 167,3,181, 90, true);
+		xAddDatabaseBlock(dSelectables, true);
+		xSetInt(dSelectables, xSelectablesName,temp);
+		xSetInt(dSelectables, xSelectablesPrompt, 5);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitChangeProtoUnit("Sign");
+		trUnitSetVariation(temp, 2);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitHighlight(1000, false);
+		PaintAtlantisArea(88,87,90,89,"GrassA");
+		FSOneXMin = 176;
+		FSOneXMax = 182;
+		FSOneZMin = 174;
+		FSOneZMax = 180;
+		PaintAtlantisArea(91,87,93,90,"GrassB");
+		FSTwoXMin = 182;
+		FSTwoXMax = 188;
+		FSTwoZMin = 174;
+		FSTwoZMax = 182;
+		GVectorSellPos = vector(38,3,176);
 		trUnitSelectClear();
 		trUnitSelect(""+temp);
 		trUnitHighlight(1000, false);
@@ -344,6 +437,42 @@ highFrequency
 					trQuestVarSetFromRand("Temp",1,4);
 					if(1*trQuestVarGet("Temp") == 3){
 						trQuestVarSetFromRand("Temp2",3,4);
+						spawnRelicSpecific(v,1*trQuestVarGet("Temp2"));
+					}
+				}
+			}
+			if(Stage == 3){
+				if(row > 18){
+					trQuestVarSetFromRand("Temp",1,15);
+					if(1*trQuestVarGet("Temp") <= cNumberNonGaiaPlayers){
+						spawnRelicSpecific(v,2);
+					}
+				}
+				else if((row > 10) && (row <= 18)){
+					trQuestVarSetFromRand("Temp",1,15);
+					trQuestVarSetFromRand("Temp2",2,3);
+					if(1*trQuestVarGet("Temp") <= cNumberNonGaiaPlayers){
+						spawnRelicSpecific(v,1*trQuestVarGet("Temp2"));
+					}
+				}//
+				else if((row > 6) && (row <= 10)){
+					trQuestVarSetFromRand("Temp",1,13);
+					trQuestVarSetFromRand("Temp2",3,4);
+					if(1*trQuestVarGet("Temp") <= cNumberNonGaiaPlayers){
+						spawnRelicSpecific(v,1*trQuestVarGet("Temp2"));
+					}
+				}
+				else if((row > 3) && (row <= 6)){
+					trQuestVarSetFromRand("Temp",1,9);
+					trQuestVarSetFromRand("Temp2",3,4);
+					if(1*trQuestVarGet("Temp") <= cNumberNonGaiaPlayers){
+						spawnRelicSpecific(v,1*trQuestVarGet("Temp2"));
+					}
+				}
+				else if(row <= 3){
+					trQuestVarSetFromRand("Temp",1,4);
+					if(1*trQuestVarGet("Temp") == 3){
+						trQuestVarSetFromRand("Temp2",4,5);
 						spawnRelicSpecific(v,1*trQuestVarGet("Temp2"));
 					}
 				}

@@ -12,11 +12,11 @@ string stageName(int stage = 0) {
 		}
 		case 3:
 		{
-			name = "Planet 3 name";
+			name = "Verde";
 		}
 		case 4:
 		{
-			name = "Planet 4 name";
+			name = "Tian";
 		}
 		case 5:
 		{
@@ -66,11 +66,11 @@ string stageIcon(int stage = 0) {
 			}
 			case 3:
 			{
-				img = "ui\ui map jotunheim 256x256";
+				img = "icons/improvement landlord spirit icon";
 			}
 			case 4:
 			{
-				img = "ui\ui map open fields 256x256";
+				img = "icons/improvement lord of the river icon";
 			}
 			case 5:
 			{
@@ -206,6 +206,7 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				{
 					trCameraCut(vector(100.463554,153.803818,-59.088593), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
 					uiZoomToProto("Hero Greek Atalanta");
+					trMessageSetText("Click the flashing signs on type 'help' for further information.", 10000);
 					//uiMessageBox("Make 10 gold in 8 minutes to unlock the next planet.");
 					dialog = 0;
 				}
@@ -255,7 +256,33 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				}
 				case 4:
 				{
-					uiMessageBox("The cost here on " + stageName(Stage) + " is still highly subsidised, only " + 1*FuelCost + " gold per 1000L");
+					uiMessageBox("The cost here on " + stageName(Stage) + " is still very cheap, only " + 1*FuelCost + " gold per 1000L");
+					dialog = 0;
+				}
+			}
+		}
+		case 6:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Welcome to  " + stageName(Stage) + ", you should have the hang of things by now!");
+				}
+				case 2:
+				{
+					trCameraCut(vector(146.952896,98.965134,111.240631), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
+					uiMessageBox("You're going to have to start paying for petrol now, but don't worry it's cheap here.");
+				}
+				case 3:
+				{
+					uiMessageBox("As always, click the signs to find out more information about refuelling.");
+				}
+				case 4:
+				{
+					trCameraCut(vector(100.463554,153.803818,-59.088593), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
+					uiZoomToProto("Hero Greek Atalanta");
+					//uiMessageBox("Make 10 gold in 8 minutes to unlock the next planet.");
 					dialog = 0;
 				}
 			}

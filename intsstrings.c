@@ -8,6 +8,7 @@
 //---Test controls
 int QuickStart = 0;
 bool OverrideSP = true;
+bool OverrideStage = true;
 
 //---
 int Stage = 0;
@@ -47,6 +48,11 @@ const int CliffEgyptianB = 6;
 const int CliffEgyptianA = 7;
 const int IceC = 8;
 const int Hades7 = 9;
+const int PlainDirt50 = 10;
+const int PlainDirt75 = 11;
+const int CliffPlainB = 12;
+const int CliffJungleB = 13;
+const int CliffJungleA = 14;
 
 /* TEMPORARY TEST VARS */
 //float P1DrillPower = 10;
@@ -66,6 +72,9 @@ highFrequency
 	trStringQuestVarSet("DrillL1", "Iron Drill");
 	trStringQuestVarSet("DrillL2", "Steel Drill");
 	trStringQuestVarSet("DrillL3", "Aluminium Drill");
+	trQuestVarSet("DrillCostL4", 60);
+	trQuestVarSet("DrillPowerL4", 47);
+	trStringQuestVarSet("DrillL4", "Titanium Drill");
 	
 	//HULL UPGRADES
 	trQuestVarSet("HullCostL2", 10);
@@ -76,6 +85,9 @@ highFrequency
 	trStringQuestVarSet("HullL1", "Iron hull");
 	trStringQuestVarSet("HullL2", "Plastic composite hull");
 	trStringQuestVarSet("HullL3", "Aluminium hull");
+	trQuestVarSet("HullCostL4", 100);
+	trQuestVarSet("HullHPL4", 1000);
+	trStringQuestVarSet("HullL4", "Titanium hull");
 	
 	//Fuel UPGRADES
 	trQuestVarSet("FuelCostL2", 10);
@@ -86,6 +98,9 @@ highFrequency
 	trStringQuestVarSet("FuelL1", "Standard tank");
 	trStringQuestVarSet("FuelL2", "Injector tank");
 	trStringQuestVarSet("FuelL3", "Vaccum tank");
+	trQuestVarSet("FuelCostL4", 80);
+	trQuestVarSet("FuelCL4", 2000);
+	trStringQuestVarSet("FuelL4", "Compression tank");
 	
 	//Cargo UPGRADES
 	trQuestVarSet("CargoCostL2", 10);
@@ -96,6 +111,9 @@ highFrequency
 	trStringQuestVarSet("CargoL1", "Micro hold");
 	trStringQuestVarSet("CargoL2", "Standard hold");
 	trStringQuestVarSet("CargoL3", "Medium Hold");
+	trQuestVarSet("CargoCostL4", 70);
+	trQuestVarSet("CargoCL4", 6);
+	trStringQuestVarSet("CargoL4", "Expanded Hold");
 	
 	//Engine UPGRADES
 	trQuestVarSet("EngineCostL2", 10);
@@ -105,7 +123,10 @@ highFrequency
 	trQuestVarSet("EngineCL3", 35);
 	trStringQuestVarSet("EngineL1", "Hamsterwheel engine");
 	trStringQuestVarSet("EngineL2", "Horsepower engine");
-	trStringQuestVarSet("EngineL3", "Zebraforce engine");
+	trStringQuestVarSet("EngineL3", "Donkeywork engine");
+	trQuestVarSet("EngineCostL4", 90);
+	trQuestVarSet("EngineCL4", 75);
+	trStringQuestVarSet("EngineL4", "Zebraforce engine");
 	
 	//Radiator UPGRADES
 	trQuestVarSet("RadiatorCostL2", 10);
@@ -116,4 +137,7 @@ highFrequency
 	trStringQuestVarSet("RadiatorL1", "Basic Radiator");
 	trStringQuestVarSet("RadiatorL2", "Ploddyphut Radiator");
 	trStringQuestVarSet("RadiatorL3", "Wheezy Radiator");
+	trQuestVarSet("RadiatorCostL4", 80);
+	trQuestVarSet("RadiatorCL4", 30);
+	trStringQuestVarSet("RadiatorL4", "Vitality Radiator");
 }

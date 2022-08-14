@@ -914,7 +914,7 @@ void FloatingUnitAnim2(string protounitname="", int xx = 0, int yy = 0, int zz =
 	trQuestVarSet("BuildID", trQuestVarGet("BuildID") + 1);
 	trQuestVarSet("QVHero"+(1*trQuestVarGet("BuildID"))+"", trGetNextUnitScenarioNameNumber());
 	trQuestVarSet("QVHero", trGetNextUnitScenarioNameNumber());
-	trArmyDispatch("0,0", "Flying Medic", 1, 50, yy, 50, xheadingx, true);
+	trArmyDispatch("0,0", "Dwarf", 1, xx, yy, zz, xheadingx, true);
 	trUnitSelectClear();
 	trUnitSelect(""+1*trQuestVarGet("QVHero"));
 	trUnitChangeProtoUnit("Amanra");
@@ -948,7 +948,7 @@ void FloatingUnitAnimIdle(string protounitname="", int xx = 0, int yy = 0, int z
 	trQuestVarSet("BuildID", trQuestVarGet("BuildID") + 1);
 	trQuestVarSet("QVHero"+(1*trQuestVarGet("BuildID"))+"", trGetNextUnitScenarioNameNumber());
 	trQuestVarSet("QVHero", trGetNextUnitScenarioNameNumber());
-	trArmyDispatch("0,0", "Flying Medic", 1, xx, yy, zz, xheadingx, true);
+	trArmyDispatch("0,0", "Dwarf", 1, xx, yy, zz, xheadingx, true);
 	trUnitSelectClear();
 	trUnitSelect(""+1*trQuestVarGet("QVHero"));
 	trUnitChangeProtoUnit("Amanra");

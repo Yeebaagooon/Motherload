@@ -49,6 +49,31 @@ void RockType(int rock = 0) {
 			TERRAIN_TYPE = 2;
 			TERRAIN_SUBTYPE = 10;
 		}
+		case PlainDirt50:
+		{
+			TERRAIN_TYPE = 0;
+			TERRAIN_SUBTYPE = 28;
+		}
+		case PlainDirt75:
+		{
+			TERRAIN_TYPE = 0;
+			TERRAIN_SUBTYPE = 29;
+		}
+		case CliffPlainB:
+		{
+			TERRAIN_TYPE = 0;
+			TERRAIN_SUBTYPE = 30;
+		}
+		case CliffJungleB:
+		{
+			TERRAIN_TYPE = 0;
+			TERRAIN_SUBTYPE = 24;
+		}
+		case CliffJungleA:
+		{
+			TERRAIN_TYPE = 2;
+			TERRAIN_SUBTYPE = 4;
+		}
 	}
 }
 
@@ -84,6 +109,26 @@ int GetRockHardness(int rock = 0) {
 		{
 			return(100);
 		}
+		case PlainDirt50:
+		{
+			return(75);
+		}
+		case PlainDirt75:
+		{
+			return(90);
+		}
+		case CliffPlainB:
+		{
+			return(110);
+		}
+		case CliffJungleB:
+		{
+			return(130);
+		}
+		case CliffJungleA:
+		{
+			return(150);
+		}
 		//Ice C
 		case IceC:
 		{
@@ -117,10 +162,25 @@ int GetRockType(int t = 0, int st = 0){
 		if(st == 38){
 			return(CliffEgyptianB);
 		}
+		if(st == 28){
+			return(PlainDirt50);
+		}
+		if(st == 29){
+			return(PlainDirt75);
+		}
+		if(st == 30){
+			return(CliffPlainB);
+		}
+		if(st == 24){
+			return(CliffJungleB);
+		}
 	}
 	else if(t == 2){
 		if(st == 2){
 			return(CliffEgyptianA);
+		}
+		if(st == 4){
+			return(CliffJungleA);
 		}
 		if(st == 10){
 			return(Hades7); //lava
@@ -128,7 +188,7 @@ int GetRockType(int t = 0, int st = 0){
 	}
 	else if(t == 5){
 		if(st == 2){
-			return(IceC); //IceC
+			return(IceC);
 		}
 	}
 }

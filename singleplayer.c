@@ -1,8 +1,13 @@
 void LoadDataSP(int p = -1){
 	xsSetContextPlayer(0);
-	//SLOT 1, GOLD
+	//SLOT 0, STAGE
 	xSetPointer(dPlayerData, 1);
 	int loaddatasp = 0;
+	loaddatasp = trGetScenarioUserData(0);
+	trQuestVarSet("p1stage", loaddatasp);
+	//SLOT 1, GOLD
+	xSetPointer(dPlayerData, 1);
+	loaddatasp = 0;
 	loaddatasp = trGetScenarioUserData(1);
 	trPlayerGrantResources(1, "Gold", loaddatasp);
 	loaddatasp = 0;
@@ -379,6 +384,9 @@ highFrequency
 	trUIFadeToColor(0,0,0,1500,0,false);
 	uiZoomToProto("Pharaoh of Osiris XP");
 	uiClearSelection();
+	
+	PaintPlanets(8,35);
+	xsEnableRule("choose_stage");
 }
 
 void UpgradeDrill(int p = -1){

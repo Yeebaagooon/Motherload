@@ -212,6 +212,9 @@ inactive
 					/* read the data */
 					if (loadProgress == 0) {
 						trQuestVarSet("p"+p+"stage", x);
+						if(OverrideStage == true){
+							trQuestVarSet("p1stage", 9);
+						}
 					} else if (loadProgress < 7) {
 						// Gold
 						trQuestVarSet("p"+p+"goldGrant", trQuestVarGet("p"+p+"goldGrant") + x * xsPow(10, loadProgress - 1));
@@ -235,7 +238,7 @@ inactive
 						xSetInt(dPlayerData, xRadiator, 1*trQuestVarGet("RadiatorCL"+xGetInt(dPlayerData, xRadiatorLevel)+""));
 					}
 					if (p  == 1) {
-						debugLog("digit is " + x);
+						//debugLog("digit is " + x);
 					}
 					
 					trUnitSelectClear();
@@ -446,6 +449,85 @@ highFrequency
 	//startNPCDialog(1);
 }
 
+void PaintPlanets(int x = 0, int z = 0){
+	PaintAtlantisArea(x,z,x+60,z+20,"black");
+	trPaintTerrain(x+1,z+10,x+59,z+10, 0, 50, false);
+	for(p = 1; <= 9){
+		int next = trGetNextUnitScenarioNameNumber();
+		int offset = 0;
+		if (iModulo(2, p) == 0) { //if is divisble by 2
+			offset = 20;
+		}
+		if(1*trQuestVarGet("p1stage") > xGetInt(dObelisks, xObeliskStage)-1){
+			UnitCreate(0, "Outpost", x*2+12*p, z*2+10+offset, 90);
+		}
+		else{
+			UnitCreate(0, "Victory Marker", x*2+12*p, z*2+10+offset, 90);
+		}
+		xAddDatabaseBlock(dObelisks, true);
+		xSetInt(dObelisks, xObeliskName,next);
+		xSetInt(dObelisks, xObeliskStage, p);
+	}
+	//EYECANDY PLANET 1
+	FloatingUnit("Rock Granite Big", x*2+12, 8, z*2+10, 0, 2,2,2);
+	xAddDatabaseBlock(dPlanetEyecandy, true);
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVRelic"));
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 1);
+	xAddDatabaseBlock(dPlanetEyecandy, true);
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVHero"));
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 1);
+	trUnitSetVariation(1*trQuestVarGet("QVRelic"), 1);
+	FloatingUnit("Fire Hades", x*2+11, 8, z*2+10, 0, 2,2,2);
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVRelic"));
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 1);
+	xAddDatabaseBlock(dPlanetEyecandy, true);
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVHero"));
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 1);
+	FloatingUnit("Ice Block", x*2+13, 8, z*2+10, 0, 2,2,2);
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVRelic"));
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 1);
+	xAddDatabaseBlock(dPlanetEyecandy, true);
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVHero"));
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 1);
+	//EYECANDY PLANET 2
+	FloatingUnit("Rock Dirt Big", x*2+24, 8.5, z*2+31, 0, 1,2,2);
+	xAddDatabaseBlock(dPlanetEyecandy, true);
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVRelic"));
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 2);
+	trUnitSetVariation(1*trQuestVarGet("QVRelic"), 1);
+	xAddDatabaseBlock(dPlanetEyecandy, true);
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVHero"));
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 2);
+	//EYECANDY PLANET 3
+	FloatingUnit("Rock Overgrown Big", x*2+36, 8, z*2+10, 0, 2,2,2);
+	xAddDatabaseBlock(dPlanetEyecandy, true);
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVRelic"));
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 1);
+	xAddDatabaseBlock(dPlanetEyecandy, true);
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVHero"));
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 1);
+	trUnitSetVariation(1*trQuestVarGet("QVRelic"), 1);
+	//EYECANDY PLANET 4
+	FloatingUnitAnimIdle("Earth", x*2+48, 9, z*2+29, 0, 0.2,0.2,0.2);
+	xAddDatabaseBlock(dPlanetEyecandy, true);
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVRelic"));
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 4);
+	xAddDatabaseBlock(dPlanetEyecandy, true);
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVHero"));
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 4);
+	trQuestVarSet("tempH", 3.141593 * 180.0 / 180.0);
+	trQuestVarSet("tempT", 3.141593 * 90.0 / 180.0);
+	trQuestVarSet("tempSinH", xsSin(trQuestVarGet("tempH")));
+	trQuestVarSet("tempCosH", xsCos(trQuestVarGet("tempH")));
+	trQuestVarSet("tempSinT", xsSin(trQuestVarGet("tempT")));
+	trQuestVarSet("tempCosT", xsCos(trQuestVarGet("tempT")));
+	trUnitSelectClear();
+	trUnitSelectByQV("QVHero");
+	trSetUnitOrientation(xsVectorSet(trQuestVarGet("tempCosH"),0,trQuestVarGet("tempSinH")),xsVectorSet(trQuestVarGet("tempSinT")*trQuestVarGet("tempSinH"),
+			trQuestVarGet("tempCosT"),0.0-trQuestVarGet("tempSinT")*trQuestVarGet("tempCosH")),true);
+	//END
+}
+
 rule LoadMP
 inactive
 highFrequency
@@ -471,8 +553,7 @@ highFrequency
 			}
 		}
 	}*/
-	PaintAtlantisArea(20,20,80,40,"black");
-	trPaintTerrain(21,30,79,30, 0, 50, false);
+	PaintPlanets(20,20);
 	trQuestVarSet("StageSelector", trGetNextUnitScenarioNameNumber());
 	UnitCreate(1, "Athena", 40, 60, 90);
 	if(QuickStart == 1){
@@ -483,65 +564,6 @@ highFrequency
 	trOverlayText("Host, choose a stage", 8.0, 508, 70, 1000);
 	trLetterBox(false);
 	trUIFadeToColor(0,0,0,1500,0,false);
-	for(p = 1; <= 9){
-		int next = trGetNextUnitScenarioNameNumber();
-		int x = 0;
-		if (iModulo(2, p) == 0) { //if is divisble by 2
-			x = 20;
-		}
-		UnitCreate(0, "Outpost", 40+12*p, 50+x, 90);
-		xAddDatabaseBlock(dObelisks, true);
-		xSetInt(dObelisks, xObeliskName,next);
-		xSetInt(dObelisks, xObeliskStage, p);
-	}
-	
-	//EYECANDY PLANET 1
-	FloatingUnit("Rock Granite Big", 52, 8, 50, 0, 2,2,2);
-	xAddDatabaseBlock(dPlanetEyecandy, true);
-	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVRelic"));
-	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 1);
-	xAddDatabaseBlock(dPlanetEyecandy, true);
-	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVHero"));
-	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 1);
-	FloatingUnit("Fire Hades", 51, 8, 50, 0, 2,2,2);
-	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVRelic"));
-	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 1);
-	xAddDatabaseBlock(dPlanetEyecandy, true);
-	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVHero"));
-	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 1);
-	FloatingUnit("Ice Block", 53, 8, 50, 0, 2,2,2);
-	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVRelic"));
-	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 1);
-	xAddDatabaseBlock(dPlanetEyecandy, true);
-	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVHero"));
-	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 1);
-	//EYECANDY PLANET 2
-	FloatingUnit("Rock Sandstone Big", 64, 8, 70, 0, 2,2,2);
-	xAddDatabaseBlock(dPlanetEyecandy, true);
-	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVRelic"));
-	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 2);
-	xAddDatabaseBlock(dPlanetEyecandy, true);
-	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVHero"));
-	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 2);
-	//EYECANDY PLANET 4
-	FloatingUnitAnimIdle("Earth", 68, 9, 59, 0, 0.2,0.2,0.2);
-	xAddDatabaseBlock(dPlanetEyecandy, true);
-	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVRelic"));
-	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 3);
-	xAddDatabaseBlock(dPlanetEyecandy, true);
-	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVHero"));
-	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 3);
-	trQuestVarSet("tempH", 3.141593 * 180.0 / 180.0);
-	trQuestVarSet("tempT", 3.141593 * 90.0 / 180.0);
-	trQuestVarSet("tempSinH", xsSin(trQuestVarGet("tempH")));
-	trQuestVarSet("tempCosH", xsCos(trQuestVarGet("tempH")));
-	trQuestVarSet("tempSinT", xsSin(trQuestVarGet("tempT")));
-	trQuestVarSet("tempCosT", xsCos(trQuestVarGet("tempT")));
-	trUnitSelectClear();
-	trUnitSelectByQV("QVHero");
-	trSetUnitOrientation(xsVectorSet(trQuestVarGet("tempCosH"),0,trQuestVarGet("tempSinH")),xsVectorSet(trQuestVarGet("tempSinT")*trQuestVarGet("tempSinH"),
-			trQuestVarGet("tempCosT"),0.0-trQuestVarGet("tempSinT")*trQuestVarGet("tempCosH")),true);
-	//END
 	xsDisableSelf();
 	xsEnableRule("choose_stage");
 	uiZoomToProto("Athena");
@@ -554,7 +576,8 @@ highFrequency
 	xDatabaseNext(dObelisks);
 	int n = xGetInt(dObelisks, xObeliskName);
 	xUnitSelect(dObelisks,xObeliskName);
-	if (trCountUnitsInArea(""+n, 1, "Athena",5) == 1) {
+	if (trCountUnitsInArea(""+n, 1, "Athena",5) == 1){
+		//and is an obleisk
 		trQuestVarSet("Stage", xGetInt(dObelisks,xObeliskStage));
 		Stage = 1*trQuestVarGet("Stage");
 		//fire event build stage
@@ -572,12 +595,18 @@ highFrequency
 		//trForceNonCinematicModels(true);
 		//trLetterBox(true);
 		trUIFadeToColor(0,0,0,1000,0,true);
-		trSoundPlayFN("ui\thunder2.wav","1",-1,"","");
+		trSoundPlayFN("ageadvance.wav","1",-1,"","");
 		trOverlayText("Planet " + xGetInt(dObelisks, xObeliskStage) + ": " + stageName(Stage), 3.0, 520, 380, 800);
 	} else if (trUnitIsSelected()) {
 		uiClearSelection();
 		if (xGetInt(dObelisks, xObeliskStage) > 0 && xGetInt(dObelisks, xObeliskStage) <= 10) {
-			trShowImageDialog(stageIcon(xGetInt(dObelisks, xObeliskStage)), "Planet " + xGetInt(dObelisks, xObeliskStage) + ": " + stageName(xGetInt(dObelisks, xObeliskStage)));
+			int p = trCurrentPlayer();
+			if(1*trQuestVarGet("p"+p+"stage") >= xGetInt(dObelisks, xObeliskStage)-1){
+				trShowImageDialog(stageIcon(xGetInt(dObelisks, xObeliskStage)), "Planet " + xGetInt(dObelisks, xObeliskStage) + ": " + stageName(xGetInt(dObelisks, xObeliskStage)));
+			}
+			else{
+				trShowImageDialog(stageIcon(xGetInt(dObelisks, xObeliskStage)), "LOCKED");
+			}
 		}
 	}
 }
@@ -624,34 +653,39 @@ void saveAllData() {
 	if (p != cNumberNonGaiaPlayers) {
 		xSetPointer(dPlayerData, p);
 		//DATA SAVE SP
-		//SLOT 1, GOLD
+		//SLOT 0, STAGE
 		int savedatasp = 0;
+		savedatasp = xsMax(1*trQuestVarGet("p"+p+"stage"), Stage);
+		trSetCurrentScenarioUserData(0, savedatasp);
+		trChatSend(0, ""+savedatasp + " saved as stage");
+		//SLOT 1, GOLD
+		savedatasp = 0;
 		savedatasp = trPlayerResourceCount(p, "Gold");
 		trSetCurrentScenarioUserData(1, savedatasp);
-		trChatSend(0, ""+savedatasp + " saved as gold");
+		//trChatSend(0, ""+savedatasp + " saved as gold");
 		//SLOT 2, DRILL LEVEL
 		savedatasp = 1*xGetInt(dPlayerData, xDrillLevel);
 		trSetCurrentScenarioUserData(2, savedatasp); //drill level save
-		trChatSend(0, ""+savedatasp + " saved as drill level");
+		//trChatSend(0, ""+savedatasp + " saved as drill level");
 		//SLOT 3, HULL LEVEL
 		savedatasp = 1*xGetInt(dPlayerData, xHullLevel);
 		trSetCurrentScenarioUserData(3, savedatasp); //drill level save
-		trChatSend(0, ""+savedatasp + " saved as hull level");
+		//trChatSend(0, ""+savedatasp + " saved as hull level");
 		//SLOT 4, HULL LEVEL
 		savedatasp = 1*xGetInt(dPlayerData, xFuelLevel);
 		trSetCurrentScenarioUserData(4, savedatasp); //drill level save
-		trChatSend(0, ""+savedatasp + " saved as fuel level");
+		//trChatSend(0, ""+savedatasp + " saved as fuel level");
 		//SLOT 5, CARGO LEVEL
 		savedatasp = 1*xGetInt(dPlayerData, xCargoLevel);
 		trSetCurrentScenarioUserData(5, savedatasp); //drill level save
-		trChatSend(0, ""+savedatasp + " saved as cargo level");
+		//trChatSend(0, ""+savedatasp + " saved as cargo level");
 		//SLOT 6, ENGINE LEVEL
 		savedatasp = 1*xGetInt(dPlayerData, xEngineLevel);
 		trSetCurrentScenarioUserData(6, savedatasp); //drill level save
-		trChatSend(0, ""+savedatasp + " saved as engine level");
+		//trChatSend(0, ""+savedatasp + " saved as engine level");
 		//SLOT 7, RADIATOR LEVEL
 		savedatasp = 1*xGetInt(dPlayerData, xRadiatorLevel);
 		trSetCurrentScenarioUserData(7, savedatasp); //drill level save
-		trChatSend(0, ""+savedatasp + " saved as rad level");
+		//trChatSend(0, ""+savedatasp + " saved as rad level");
 	}
 }

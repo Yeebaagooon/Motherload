@@ -72,7 +72,12 @@ highFrequency
 			if(xGetInt(dPlayerData, xPlayerActive) == 1){
 				trQuestVarSet("P"+p+"Siphon", trGetNextUnitScenarioNameNumber());
 				//VECTOR IS 2X+1
-				UnitCreate(p, "Hero Greek Atalanta", 75+5*p, 180, 180);
+				if(Stage <= 2){
+					UnitCreate(p, "Hero Greek Atalanta", 75+5*p, 180, 180);
+				}
+				else{
+					UnitCreate(p, "Hero Greek Atalanta", 35+5*p, 168, 180);
+				}
 				yAddToDatabase("Siphon"+p+"", "P"+p+"Siphon");
 				trPlayerSetDiplomacy(0, p, "Enemy");
 				trUnitSelectClear();
@@ -125,6 +130,9 @@ highFrequency
 		if(Stage == 1){
 			startNPCDialog(2);
 		}
+		if(Stage == 2){
+			startNPCDialog(6);
+		}
 	}
 	xsEnableRule("FuelEconomy");
 	xsEnableRule("StageTimer");
@@ -141,6 +149,10 @@ highFrequency
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
 		}
 		if(Stage == 2){
+			StageTime = 480; //480
+			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
+		}
+		if(Stage == 3){
 			StageTime = 480; //480
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
 		}
@@ -227,7 +239,7 @@ void FuelBuy(int p = 0){
 						xSetFloat(dPlayerData, xFuel, xGetInt(dPlayerData, xFuelTank));
 						xSetInt(dPlayerData, xFuelCountdown, 0);
 					}
-					else if(Stage == 2){
+					else if(Stage != 1){
 						xSetFloat(dPlayerData, xFuel, xGetFloat(dPlayerData, xFuel)+1000*GetFuelPump(trVectorQuestVarGetX("P"+p+"Pos"),trVectorQuestVarGetZ("P"+p+"Pos")));
 						xSetInt(dPlayerData, xFuelCountdown, 0);
 						trPlayerGrantResources(p, "Gold", -1*FuelCost*GetFuelPump(trVectorQuestVarGetX("P"+p+"Pos"),trVectorQuestVarGetZ("P"+p+"Pos")));

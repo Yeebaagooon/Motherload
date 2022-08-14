@@ -1,9 +1,10 @@
 /* MINERALS */
-const int RELIC_NUMBER = 4;
+const int RELIC_NUMBER = 5;
 const int RELIC_IRON = 1;
 const int RELIC_BRONZE = 2;
 const int RELIC_SILVER = 3;
 const int RELIC_GOLD = 4;
+const int RELIC_PLATINUM = 5;
 
 string relicName(int relic = 0) {
 	string msg = "WTF That's not a relic!";
@@ -24,6 +25,10 @@ string relicName(int relic = 0) {
 		case RELIC_GOLD:
 		{
 			msg = "Gold";
+		}
+		case RELIC_PLATINUM:
+		{
+			msg = "Platinum";
 		}
 	}
 	return(msg);
@@ -49,8 +54,40 @@ int relicCost(int relic = 0) {
 		{
 			price = 5;
 		}
+		case RELIC_PLATINUM:
+		{
+			price = 7;
+		}
 	}
 	return(price);
+}
+
+string RelicColour(int relic = 0) {
+	string colour = "1,1,1";
+	switch(relic)
+	{
+		case RELIC_IRON:
+		{
+			colour = "0.22,0.25,0.23";
+		}
+		case RELIC_BRONZE:
+		{
+			colour = "0.69,0.55,0.34";
+		}
+		case RELIC_SILVER:
+		{
+			colour = "0.66,0.66,0.66";
+		}
+		case RELIC_GOLD:
+		{
+			colour = "0.83,0.68,0.21";
+		}
+		case RELIC_PLATINUM:
+		{
+			colour = "1,1,1";
+		}
+	}
+	return(colour);
 }
 
 string relicIcon(int relic = 0) {
@@ -72,6 +109,10 @@ string relicIcon(int relic = 0) {
 		case RELIC_GOLD:
 		{
 			icon = "icons\special n battle boar icon 64";
+		}
+		case RELIC_PLATINUM:
+		{
+			icon = "icons\hero g bellerophon icon 64";
 		}
 	}
 	return(icon);
@@ -97,6 +138,10 @@ int relicProto(int relic = 0) {
 		{
 			proto = kbGetProtoUnitID("Battle Boar");
 		}
+		case RELIC_PLATINUM:
+		{
+			proto = kbGetProtoUnitID("Hero Greek Bellerophon");
+		}
 	}
 	return(proto);
 }
@@ -119,6 +164,9 @@ void spawnRelicSpecific(vector v = vector (0,0,0), int val = 1){
 	trUnitSelectClear();
 	trUnitSelectByQV("TEMPRELIC");
 	trUnitChangeProtoUnit("Relic");
+	if(val == 0){
+		trChatSend(0, "ERROR AT" + v);
+	}
 	//trChatSend(0, "Free relics = "+xGetDatabaseCount(dFreeRelics)+"");
 }
 
@@ -163,7 +211,7 @@ void processFreeRelics(int count = 1) {
 					trUnitSetAnimationPath("1,0,1,1,0,0,0");
 					if (trCurrentPlayer() == p) {
 						//trChatSend(0, relicName(xGetInt(dFreeRelics, xRelicValue)) + " stored in cargo hold!");
-						ColouredChatToPlayer(p, "1,1,1", relicName(xGetInt(dFreeRelics, xRelicValue)) + " stored in cargo hold!");
+						ColouredChatToPlayer(p, RelicColour(xGetInt(dFreeRelics, xRelicValue)), relicName(xGetInt(dFreeRelics, xRelicValue)) + " stored in cargo hold!");
 						trSoundPlayFN("researchcomplete.wav","1",-1,"","");
 					}
 					/*
@@ -182,6 +230,7 @@ void processFreeRelics(int count = 1) {
 			}
 		} else if (trUnitIsSelected()) {
 			relicDescription(xGetInt(dFreeRelics, xRelicValue));
+			reselectMyself();
 		}
 	}
 }
@@ -246,9 +295,9 @@ inactive
 highFrequency
 {
 	//trChatSendToPlayer(0, GSeller, ""+1*trQuestVarGet("TEMPNumber")+"x "+relicName(1*trQuestVarGet("TEMPValue"))+" sold!");
-	for(r=1; <= RELIC_NUMBER) {
+	for(r=RELIC_NUMBER; >= 1) {
 		if(trQuestVarGet("P"+GSeller+"R"+r+"") > 0){
-			ColouredChatToPlayer(GSeller, "0,1,0", ""+1*trQuestVarGet("P"+GSeller+"R"+r+"")+"x "+relicName(r)+" sold!");
+			ColouredChatToPlayer(GSeller, RelicColour(r), ""+1*trQuestVarGet("P"+GSeller+"R"+r+"")+"x "+relicName(r)+" sold!");
 			trQuestVarSet("P"+GSeller+"R"+r+"", 0);
 		}
 	}
@@ -305,8 +354,8 @@ rule eternal_loops
 active
 highFrequency
 {
-	processFreeRelics(5);
-	processHeldRelics(5);
+	processFreeRelics(10);
+	processHeldRelics(10);
 	//trChatSend(0, "Free relics = "+xGetDatabaseCount(dFreeRelics)+"");
 	/* relics dropped */
 	/*
