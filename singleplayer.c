@@ -13,7 +13,7 @@ void LoadDataSP(int p = -1){
 	}
 	xSetPointer(dPlayerData, 1);
 	xSetInt(dPlayerData, xDrillLevel, loaddatasp);
-	trChatSend(0, ""+loaddatasp + " SP loaded as drill level");
+	//trChatSend(0, ""+loaddatasp + " SP loaded as drill level");
 	trQuestVarSet("CurrentDrillL", loaddatasp);
 	xSetInt(dPlayerData, xDrillLevel ,1*trQuestVarGet("CurrentDrillL"));
 	xSetFloat(dPlayerData, xDrillPower ,1*trQuestVarGet("DrillPowerL"+xGetInt(dPlayerData, xDrillLevel)+""));
@@ -25,7 +25,7 @@ void LoadDataSP(int p = -1){
 	}
 	xSetPointer(dPlayerData, 1);
 	xSetInt(dPlayerData, xHullLevel, loaddatasp);
-	trChatSend(0, ""+loaddatasp + " SP loaded as hull level");
+	//trChatSend(0, ""+loaddatasp + " SP loaded as hull level");
 	trQuestVarSet("CurrentHullL", loaddatasp);
 	xSetInt(dPlayerData, xHullLevel ,1*trQuestVarGet("CurrentHullL"));
 	xSetInt(dPlayerData, xHullHP ,1*trQuestVarGet("HullHPL"+xGetInt(dPlayerData, xHullLevel)+""));
@@ -39,7 +39,7 @@ void LoadDataSP(int p = -1){
 	
 	xSetPointer(dPlayerData, 1);
 	xSetInt(dPlayerData, xFuelLevel, loaddatasp);
-	trChatSend(0, ""+loaddatasp + " SP loaded as fuel tank level");
+	//trChatSend(0, ""+loaddatasp + " SP loaded as fuel tank level");
 	trQuestVarSet("CurrentFuelL", loaddatasp);
 	xSetInt(dPlayerData, xFuelLevel ,1*trQuestVarGet("CurrentFuelL"));
 	xSetInt(dPlayerData, xFuelTank ,1*trQuestVarGet("FuelCL"+xGetInt(dPlayerData, xFuelLevel)+""));
@@ -53,7 +53,7 @@ void LoadDataSP(int p = -1){
 	
 	xSetPointer(dPlayerData, 1);
 	xSetInt(dPlayerData, xCargoLevel, loaddatasp);
-	trChatSend(0, ""+loaddatasp + " SP loaded as cargo level");
+	//trChatSend(0, ""+loaddatasp + " SP loaded as cargo level");
 	trQuestVarSet("CurrentCargoL", loaddatasp);
 	xSetInt(dPlayerData, xCargoLevel ,1*trQuestVarGet("CurrentCargoL"));
 	xSetInt(dPlayerData, xCargoHold ,1*trQuestVarGet("CargoCL"+xGetInt(dPlayerData, xCargoLevel)+""));
@@ -67,7 +67,7 @@ void LoadDataSP(int p = -1){
 	
 	xSetPointer(dPlayerData, 1);
 	xSetInt(dPlayerData, xEngineLevel, loaddatasp);
-	trChatSend(0, ""+loaddatasp + " SP loaded as engine level");
+	//trChatSend(0, ""+loaddatasp + " SP loaded as engine level");
 	trQuestVarSet("CurrentEngineL", loaddatasp);
 	xSetInt(dPlayerData, xEngineLevel ,1*trQuestVarGet("CurrentEngineL"));
 	xSetInt(dPlayerData, xEnginePower ,1*trQuestVarGet("EngineCL"+xGetInt(dPlayerData, xEngineLevel)+""));
@@ -81,7 +81,7 @@ void LoadDataSP(int p = -1){
 	
 	xSetPointer(dPlayerData, 1);
 	xSetInt(dPlayerData, xRadiatorLevel, loaddatasp);
-	trChatSend(0, ""+loaddatasp + " SP loaded as radiator level");
+	//trChatSend(0, ""+loaddatasp + " SP loaded as radiator level");
 	trQuestVarSet("CurrentRadiatorL", loaddatasp);
 	xSetInt(dPlayerData, xRadiatorLevel ,1*trQuestVarGet("CurrentRadiatorL"));
 	xSetInt(dPlayerData, xRadiator ,1*trQuestVarGet("RadiatorCL"+xGetInt(dPlayerData, xRadiatorLevel)+""));
@@ -366,14 +366,6 @@ highFrequency
 	xSetInt(dSelectables, xSelectablesName, UnitObelisk6);
 	xSetInt(dSelectables, xSelectablesPrompt, 601);
 	
-	//Loadout chat
-	/*
-	xSetPointer(dPlayerData, 1);
-	trQuestVarSet("CurrentDrillL", xGetInt(dPlayerData, xDrillLevel));
-	trChatHistoryClear();
-	
-	trChatSend(0, "<u><color=1,1,1>Current Drill:</color></u>");
-	*/
 	trUnblockAllSounds();
 	LoadDataSP();
 	trUnitSetVariation(UnitFlag1,1*trQuestVarGet("CurrentDrillL")-1);
@@ -382,6 +374,11 @@ highFrequency
 	trUnitSetVariation(UnitFlag4,1*trQuestVarGet("CurrentCargoL")-1);
 	trUnitSetVariation(UnitFlag5,1*trQuestVarGet("CurrentEngineL")-1);
 	trUnitSetVariation(UnitFlag6,1*trQuestVarGet("CurrentRadiatorL")-1);
+	
+	trLetterBox(false);
+	trUIFadeToColor(0,0,0,1500,0,false);
+	uiZoomToProto("Pharaoh of Osiris XP");
+	uiClearSelection();
 }
 
 void UpgradeDrill(int p = -1){

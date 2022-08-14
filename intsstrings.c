@@ -1,6 +1,13 @@
+//--SUGGESTIONS
+/*
+*Highlight Earths for sexier bg effect
+*Auto sell
+*/
+
+
 //---Test controls
 int QuickStart = 0;
-bool OverrideSP = false;
+bool OverrideSP = true;
 
 //---
 int Stage = 0;

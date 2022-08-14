@@ -28,7 +28,7 @@ runImmediately
 	//trUIFadeToColor(0, 0, 0, 0, 10000, false);
 	trFadeOutAllSounds(0.1);
 	trFadeOutMusic(0.1);
-	
+	trUIFadeToColor(1,0,0,0,0,true);
 	trBlockAllSounds(true);
 	
 	//trSetFogAndBlackmap(false, false);
@@ -54,6 +54,7 @@ highFrequency
 		trPlayerGrantResources(p, "Gold", -10000.0);
 		trPlayerGrantResources(p, "Favor", -10000.0);
 		trPlayerKillAllGodPowers(p);
+		trLetterBox(true);
 		if(trCurrentPlayer() == p){
 			trSoundPlayFN("\Yeebaagooon\Motherload\Test sound.mp3", "1", 13, "","");
 		}
@@ -480,6 +481,8 @@ highFrequency
 	}
 	trCameraCut(vector(100.463554,153.803818,-59.088593), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
 	trOverlayText("Host, choose a stage", 8.0, 508, 70, 1000);
+	trLetterBox(false);
+	trUIFadeToColor(0,0,0,1500,0,false);
 	for(p = 1; <= 9){
 		int next = trGetNextUnitScenarioNameNumber();
 		int x = 0;

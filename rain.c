@@ -83,13 +83,12 @@ highFrequency
 				trQuestVarSet("P"+p+"MainSpy", trGetNextUnitScenarioNameNumber());
 				trTechInvokeGodPower(0, "spy", vector(0,0,0), vector(0,0,0));*/
 				//trDelayedRuleActivation("ChangeMainSpy1");
-				//trPaintTerrain(0,0,0,0,0,0, true);
 				trPlayerGrantResources(p, "Gold", 1*trQuestVarGet("p"+p+"goldGrant"));
 				xSetFloat(dPlayerData, xFuel, xGetInt(dPlayerData, xFuelTank));
 			}
-			trChatSend(0, "P"+p+"gold is " + 1*trQuestVarGet("p"+p+"goldGrant"));
-			trChatSend(0, "p"+p+"Drill level is " + xGetInt(dPlayerData, xDrillLevel));
-			trChatSend(0, "p"+p+"Rad level is " + xGetInt(dPlayerData, xRadiatorLevel));
+			//trChatSend(0, "P"+p+"gold is " + 1*trQuestVarGet("p"+p+"goldGrant"));
+			//trChatSend(0, "p"+p+"Drill level is " + xGetInt(dPlayerData, xDrillLevel));
+			//trChatSend(0, "p"+p+"Rad level is " + xGetInt(dPlayerData, xRadiatorLevel));
 		}
 		xsDisableSelf();
 		trDelayedRuleActivation("FadeOut");

@@ -178,7 +178,7 @@ int npcDiag(int npc = 0, int dialog = 0) {
 			{
 				case 1:
 				{
-					uiMessageBox("Welcome to Thule, we need you to dig some minerals out of this planet!");
+					uiMessageBox("Welcome to  " + stageName(Stage) + ", we need you to dig some minerals out of this planet!");
 				}
 				case 2:
 				{
@@ -191,7 +191,7 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				case 4:
 				{
 					trCameraCut(vector(62.953140,98.965134,111.442215), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
-					uiMessageBox("And drop them infront of the processing shop to sell them");
+					uiMessageBox("And bring them to the processing shop to sell them, no need to drop them.");
 				}
 				case 5:
 				{
@@ -217,7 +217,7 @@ int npcDiag(int npc = 0, int dialog = 0) {
 			{
 				case 1:
 				{
-					uiMessageBox("Drop garrisoned minerals on the 'sell' pad to sell them.");
+					uiMessageBox("Move to the sell pad to sell your minerals, no need to drop them.");
 					dialog = 0;
 				}
 			}
@@ -233,6 +233,29 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				case 2:
 				{
 					uiMessageBox("Since this is the first stage, fuel is free!");
+					dialog = 0;
+				}
+			}
+		}
+		case 5:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Move your vehicle over the green fuel bar to the right to refill your fuel tank.");
+				}
+				case 2:
+				{
+					uiMessageBox("You have to start paying for fuel now");
+				}
+				case 3:
+				{
+					uiMessageBox("Each flag gives 1000x the number on the flag as litres of fuel");
+				}
+				case 4:
+				{
+					uiMessageBox("The cost here on " + stageName(Stage) + " is still highly subsidised, only " + 1*FuelCost + " gold per 1000L");
 					dialog = 0;
 				}
 			}
