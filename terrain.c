@@ -355,6 +355,12 @@ highFrequency
 		trUnitSelectClear();
 		trUnitSelect(""+temp);
 		trSetSelectedScale(2,2,2);
+		//paint extra shop
+		PaintShopTerrain(45,89);
+		PaintAtlantisArea(43,91,45,93,"CityTileAtlantis");
+		PaintAtlantisArea(47,91,49,93,"UnderwaterRockF"); //UnderwaterRockF
+		PaintAtlantisArea(51,91,53,93,"UnderwaterIceC"); //UnderwaterIceC
+		trTechGodPower(1, "Audrey", 1); //temp
 	}
 	xsDisableSelf();
 }

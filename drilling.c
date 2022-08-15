@@ -1,3 +1,109 @@
+void MineSquare(int row = 0, int col = 0){
+	trPaintTerrain(col*4-3,row*4-3,col*4-1,row*4-1,5,3,false);
+}
+
+void RemoveBlack(int row = 0, int col = 0){
+	int rowmid = row*4-2;
+	int colmid = col*4-2;
+	//exploding DOWN
+	if((trGetTerrainSubType((colmid),(rowmid)+4) == 3) && (trGetTerrainType((colmid),(rowmid)+4) == 5)){
+		trPaintTerrain(col*4-3,row*4-3,col*4-1,row*4,5,3,false);
+		trUnitSelectByQV("R"+row+"C"+col+"WallX");
+		trUnitChangeProtoUnit("Meteor Impact Ground");
+		//correct wall but not top layer because terrain above isnt overworld
+	}
+	if((trGetTerrainSubType((colmid),(rowmid)+4) == OVERTERRAIN_SUBTYPE) && (trGetTerrainType((colmid),(rowmid)+4) == OVERTERRAIN_TYPE)){
+		trUnitSelectByQV("R"+row+"C"+col+"WallX");
+		trUnitChangeProtoUnit("Meteor Impact Ground");
+	}
+	//end
+}
+
+
+rule Audrey
+active
+highFrequency
+{
+	for(p = 1; <= cNumberNonGaiaPlayers){
+		if (trPlayerUnitCountSpecific(p, "Audrey") == 1) {
+			yFindLatestReverse("p"+p+"DragonObject", "Audrey", p);
+			trVectorSetUnitPos("BombVector"+p+"", "p"+p+"DragonObject", true);
+			trMutateSelected(kbGetProtoUnitID("Rocket"));
+			unitTransform("Audrey Base", "Meteor Impact Ground");
+			trTechGodPower(1,"Audrey",1);
+			trVectorSnapToGrid("BombVector"+p+"");
+			int Col = (trVectorQuestVarGetX("BombVector"+p+"") ) / 8 +1;
+			int Row = (trVectorQuestVarGetZ("BombVector"+p+"") ) / 8 +1;
+			trChatSend(0, "TRow" + Row);
+			trChatSend(0, "TCol" + Col);
+			trVectorSetUnitPos("SiphonPos"+p+"", "P"+p+"Siphon");
+			trVectorSnapToGrid("SiphonPos"+p+"");
+			int startCol = (trVectorQuestVarGetX("SiphonPos"+p+"") ) / 8 +1;
+			int startRow = (trVectorQuestVarGetZ("SiphonPos"+p+"") ) / 8 +1;
+			trChatSend(0, "SRow" + startRow);
+			trChatSend(0, "SCol" + startCol);
+			//VALIDITY CHECKS
+			if(Row > MaxRows){
+				trChatSendToPlayer(0, p, "<color=1,0,0>Cannot use dynamite here!</color>");
+				if(trCurrentPlayer() == p){
+					trSoundPlayFN("cantdothat.wav","1",-1,"","");
+				}
+				grantGodPowerNoRechargeNextPosition(p, "Audrey", 1);
+				break;
+			}
+			if((Row == startRow) && (Col == startCol)){
+				trChatSendToPlayer(0, p, "<color=1,0,0>Dynamite error - no direction. Use adjacent to your ship.</color>");
+				if(trCurrentPlayer() == p){
+					trSoundPlayFN("cantdothat.wav","1",-1,"","");
+				}
+				grantGodPowerNoRechargeNextPosition(p, "Audrey", 1);
+				break;
+			}
+			//Direction calculate
+			if(((xsMax(Row,startRow)-xsMin(Row,startRow) == 0) && (xsMax(Col,startCol)-xsMin(Col,startCol) == 1)) || ((xsMax(Row,startRow)-xsMin(Row,startRow) == 1) && (xsMax(Col,startCol)-xsMin(Col,startCol) == 0))){
+				trChatSend(0, "valid");
+				grantGodPowerNoRechargeNextPosition(p, "Audrey", 1);
+				if(Row-startRow == 0){
+					if((Col-startCol) == 1){
+						trChatSend(0, "right");
+						MineSquare(Row, Col);
+						MineSquare(Row, Col+1);
+					}
+					if((Col-startCol) == -1){
+						trChatSend(0, "left");
+						MineSquare(Row, Col);
+						MineSquare(Row, Col-1);
+					}
+				}
+				else if(Col-startCol == 0){
+					if((Row-startRow) == 1){
+						trChatSend(0, "up");
+						MineSquare(Row, Col);
+						MineSquare(Row+1, Col);
+					}
+					if((Row-startRow) == -1){
+						trChatSend(0, "down");
+						MineSquare(Row, Col);
+						MineSquare(Row-1, Col);
+						RemoveBlack(Row, Col);
+						RemoveBlack(Row-1, Col);
+					}
+				}
+				
+			}
+			else{
+				trChatSendToPlayer(0, p, "<color=1,0,0>Dynamite error - target too far. Use adjacent to your ship.</color>");
+				if(trCurrentPlayer() == p){
+					trSoundPlayFN("cantdothat.wav","1",-1,"","");
+				}
+				grantGodPowerNoRechargeNextPosition(p, "Audrey", 1);
+			}
+		}
+	}
+}
+
+
+
 rule lure
 inactive
 highFrequency

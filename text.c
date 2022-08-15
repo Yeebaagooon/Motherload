@@ -12,7 +12,7 @@ string stageName(int stage = 0) {
 		}
 		case 3:
 		{
-			name = "Verde";
+			name = "Viridis";
 		}
 		case 4:
 		{
