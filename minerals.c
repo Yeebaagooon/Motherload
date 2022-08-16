@@ -268,6 +268,7 @@ void processHeldRelics(int count = 1) {
 				if (trUnitIsOwnedBy(p)) {
 					dropper = p;
 					trUnitChangeProtoUnit("Rocket");
+					trUnitSelectClear();
 					spyEffect(1*trQuestVarGet("P"+dropper+"Siphon"), kbGetProtoUnitID("Automaton"), vector(0,0,0), vector(0,0,0), 18);
 					//trMutateSelected(kbGetProtoUnitID("Rocket"));
 					xUnitSelect(dHeldRelics, xRelicName);

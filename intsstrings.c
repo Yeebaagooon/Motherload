@@ -21,6 +21,7 @@ string MapName = "Motherload.xs";
 int MaxRows = 20;
 int MaxCols = 25;
 int GSeller = 0; //dont touch, does the player when selling minerals
+int GVortex = 0;
 vector GVectorSellPos = vector(5,3,180);
 int TERRAIN_TYPE = 2;
 int TERRAIN_SUBTYPE = 2;

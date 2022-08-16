@@ -40,6 +40,9 @@ runImmediately
 	xsDisableSelf();
 	xsSetContextPlayer(0);
 	map("q", "game", "uiSetSpecialPower(227) uiSpecialPowerAtPointer");
+	map("w", "game", "uiSetSpecialPower(407) uiSpecialPowerAtPointer");
+	map("e", "game", "uiSetSpecialPower(156) uiSpecialPowerAtPointer");
+	map("r", "game", "uiSetSpecialPower(234) uiSpecialPowerAtPointer");
 }
 
 rule START

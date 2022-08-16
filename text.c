@@ -287,6 +287,39 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				}
 			}
 		}
+		case 7:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Backup fuel tank. Contains 200L. Cost = 2");
+					dialog = 0;
+				}
+			}
+		}
+		case 8:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Dynamite. Instantly mines 2 squares in the same direction. Cost = 2");
+					dialog = 0;
+				}
+			}
+		}
+		case 9:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Emergency surface teleport. Cost = 20");
+					dialog = 0;
+				}
+			}
+		}
 		case 100:
 		{
 			switch(dialog)

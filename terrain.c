@@ -297,32 +297,10 @@ highFrequency
 		FuelCost = 4;
 		PaintSmelter(20,180);
 		PaintSellTerrain(15,89);
-		temp = trGetNextUnitScenarioNameNumber();
-		trArmyDispatch("0,0", "Dwarf", 1, 31,3,180, 90, true);
-		xAddDatabaseBlock(dSelectables, true);
-		xSetInt(dSelectables, xSelectablesName,temp);
-		xSetInt(dSelectables, xSelectablesPrompt, 3);
-		trUnitSelectClear();
-		trUnitSelect(""+temp);
-		trUnitChangeProtoUnit("Sign");
-		trUnitSetVariation(temp, 2);
-		trUnitSelectClear();
-		trUnitSelect(""+temp);
-		trUnitHighlight(1000, true);
+		SelectableSign(31, 180, 3);
 		PaintFuelTerrain(80,89);
 		//fuel full pump
-		temp = trGetNextUnitScenarioNameNumber();
-		trArmyDispatch("0,0", "Dwarf", 1, 167,3,181, 90, true);
-		xAddDatabaseBlock(dSelectables, true);
-		xSetInt(dSelectables, xSelectablesName,temp);
-		xSetInt(dSelectables, xSelectablesPrompt, 5);
-		trUnitSelectClear();
-		trUnitSelect(""+temp);
-		trUnitChangeProtoUnit("Sign");
-		trUnitSetVariation(temp, 2);
-		trUnitSelectClear();
-		trUnitSelect(""+temp);
-		trUnitHighlight(1000, false);
+		SelectableSign(167, 181, 5);
 		PaintAtlantisArea(88,87,90,89,"GrassA");
 		FSOneXMin = 176;
 		FSOneXMax = 182;
@@ -334,9 +312,6 @@ highFrequency
 		FSTwoZMin = 174;
 		FSTwoZMax = 182;
 		GVectorSellPos = vector(38,3,176);
-		trUnitSelectClear();
-		trUnitSelect(""+temp);
-		trUnitHighlight(1000, false);
 		temp = trGetNextUnitScenarioNameNumber();
 		trArmyDispatch("0,0", "Dwarf", 1, 179,3,181, 0, true);
 		trUnitSelectClear();
@@ -360,7 +335,15 @@ highFrequency
 		PaintAtlantisArea(43,91,45,93,"CityTileAtlantis");
 		PaintAtlantisArea(47,91,49,93,"UnderwaterRockF"); //UnderwaterRockF
 		PaintAtlantisArea(51,91,53,93,"UnderwaterIceC"); //UnderwaterIceC
+		SelectableSign(88, 181, 7);
+		SelectableSign(96, 181, 8);
+		SelectableSign(104, 181, 9);
 		trTechGodPower(1, "Audrey", 1); //temp
+		trTechGodPower(1, "Rain", 1); //temp
+		trTechGodPower(1, "Ragnorok", 1); //temp
+		xsEnableRule("Audrey");
+		xsEnableRule("Rain");
+		xsEnableRule("Ragnorok");
 	}
 	xsDisableSelf();
 }

@@ -58,9 +58,52 @@ void RemoveBlack(int row = 0, int col = 0){
 	trPaintTerrain(0,4*MaxRows+1,200,4*MaxRows+5,OVERTERRAIN_TYPE,OVERTERRAIN_SUBTYPE,false);
 }
 
+rule Rain
+inactive
+highFrequency
+{
+	for(p = 1; <= cNumberNonGaiaPlayers){
+		if(trCheckGPActive("Rain", p)){
+			if(trTime() > 1*trQuestVarGet("P"+p+"RainTime")){
+				trUnitSelectClear();
+				trUnitSelectByQV("P"+p+"Siphon");
+				trMutateSelected(kbGetUnitBaseTypeID(kbGetBlockID(""+1*trQuestVarGet("P"+p+"Siphon"))));
+				trUnitTeleport(190,0,190);
+				trQuestVarSet("P"+p+"RainTime", trTime()+2);
+				if(trCurrentPlayer() == p){
+					trOverlayText("Emergency surface teleport!", 4, -1,-1,-1);
+					uiZoomToProto("Hero Greek Atalanta");
+					trCameraCut(vector(157.841461,153.803818,55.919525), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
+				}
+			}
+		}
+	}
+}
+
+rule Ragnorok
+inactive
+highFrequency
+{
+	for(p = 1; <= cNumberNonGaiaPlayers){
+		if(trCheckGPActive("Ragnorok", p)){
+			if(trTime() > 1*trQuestVarGet("P"+p+"RagnorokTime")){
+				xSetPointer(dPlayerData, p);
+				spyEffect(1*trQuestVarGet("P"+p+"Siphon"), kbGetProtoUnitID("Mountain Giant"), vector(0,0,0), vector(0,0,0), 18);
+				xSetFloat(dPlayerData, xFuel, xGetFloat(dPlayerData, xFuel)+200);
+				trQuestVarSet("P"+p+"RagnorokTime", trTime()+2);
+				if(xGetFloat(dPlayerData, xFuel) > xGetInt(dPlayerData,xFuelTank)){
+					xSetFloat(dPlayerData, xFuel, xGetInt(dPlayerData, xFuelTank));
+				}
+				if(trCurrentPlayer() == p){
+					trOverlayText("Backup fuel tank used!", 4, -1,-1,-1);
+				}
+			}
+		}
+	}
+}
 
 rule Audrey
-active
+inactive
 highFrequency
 {
 	for(p = 1; <= cNumberNonGaiaPlayers){
@@ -68,8 +111,7 @@ highFrequency
 			yFindLatestReverse("p"+p+"DragonObject", "Audrey", p);
 			trVectorSetUnitPos("BombVector"+p+"", "p"+p+"DragonObject", true);
 			trMutateSelected(kbGetProtoUnitID("Rocket"));
-			unitTransform("Audrey Base", "Meteor Impact Ground");
-			trTechGodPower(1,"Audrey",1);
+			yFindLatestReverse("p"+p+"Effect", "Audrey Base", p);
 			trVectorSnapToGrid("BombVector"+p+"");
 			int Col = (trVectorQuestVarGetX("BombVector"+p+"") ) / 8 +1;
 			int Row = (trVectorQuestVarGetZ("BombVector"+p+"") ) / 8 +1;
@@ -100,7 +142,6 @@ highFrequency
 			}
 			//Direction calculate
 			if(((xsMax(Row,startRow)-xsMin(Row,startRow) == 0) && (xsMax(Col,startCol)-xsMin(Col,startCol) == 1)) || ((xsMax(Row,startRow)-xsMin(Row,startRow) == 1) && (xsMax(Col,startCol)-xsMin(Col,startCol) == 0))){
-				grantGodPowerNoRechargeNextPosition(p, "Audrey", 1);
 				if(Row-startRow == 0){
 					if((Col-startCol) == 1){
 						MineSquare(Row, Col);
@@ -108,6 +149,18 @@ highFrequency
 						RemoveBlack(Row, Col);
 						RemoveBlack(Row, Col+1);
 						RemoveBlack(Row, Col-1);
+						trUnitSelectClear();
+						trUnitSelectByQV("p"+p+"Effect");
+						trUnitChangeProtoUnit("Meteorite");
+						trUnitSelectClear();
+						trUnitSelectByQV("p"+p+"Effect");
+						trUnitOverrideAnimation(6,0,false,false,-1,-1);
+						trUnitSelectClear();
+						trUnitSelectByQV("p"+p+"Effect");
+						trSetSelectedScale(0,0,0);
+						trUnitSelectClear();
+						trUnitSelectByQV("p"+p+"Effect");
+						trSetSelectedUpVector(3,0,0);
 					}
 					if((Col-startCol) == -1){
 						MineSquare(Row, Col);
@@ -115,6 +168,18 @@ highFrequency
 						RemoveBlack(Row, Col);
 						RemoveBlack(Row, Col-1);
 						RemoveBlack(Row, Col+1);
+						trUnitSelectClear();
+						trUnitSelectByQV("p"+p+"Effect");
+						trUnitChangeProtoUnit("Meteorite");
+						trUnitSelectClear();
+						trUnitSelectByQV("p"+p+"Effect");
+						trUnitOverrideAnimation(6,0,false,false,-1,-1);
+						trUnitSelectClear();
+						trUnitSelectByQV("p"+p+"Effect");
+						trSetSelectedScale(0,0,0);
+						trUnitSelectClear();
+						trUnitSelectByQV("p"+p+"Effect");
+						trSetSelectedUpVector(-3,0,0);
 					}
 				}
 				else if(Col-startCol == 0){
@@ -124,6 +189,18 @@ highFrequency
 						RemoveBlack(Row, Col);
 						RemoveBlack(Row+1, Col);
 						RemoveBlack(Row-1, Col);
+						trUnitSelectClear();
+						trUnitSelectByQV("p"+p+"Effect");
+						trUnitChangeProtoUnit("Meteorite");
+						trUnitSelectClear();
+						trUnitSelectByQV("p"+p+"Effect");
+						trUnitOverrideAnimation(6,0,false,false,-1,-1);
+						trUnitSelectClear();
+						trUnitSelectByQV("p"+p+"Effect");
+						trSetSelectedScale(0,0,0);
+						trUnitSelectClear();
+						trUnitSelectByQV("p"+p+"Effect");
+						trSetSelectedUpVector(0,0,3);
 					}
 					if((Row-startRow) == -1){
 						MineSquare(Row, Col);
@@ -131,6 +208,18 @@ highFrequency
 						RemoveBlack(Row, Col);
 						RemoveBlack(Row-1, Col);
 						RemoveBlack(Row+1, Col);
+						trUnitSelectClear();
+						trUnitSelectByQV("p"+p+"Effect");
+						trUnitChangeProtoUnit("Meteorite");
+						trUnitSelectClear();
+						trUnitSelectByQV("p"+p+"Effect");
+						trUnitOverrideAnimation(6,0,false,false,-1,-1);
+						trUnitSelectClear();
+						trUnitSelectByQV("p"+p+"Effect");
+						trSetSelectedScale(0,0,0);
+						trUnitSelectClear();
+						trUnitSelectByQV("p"+p+"Effect");
+						trSetSelectedUpVector(0,0,-3);
 					}
 				}
 				break;

@@ -238,12 +238,14 @@ void FuelBuy(int p = 0){
 						ColouredChatToPlayer(p, "0,1,0", "Refuel complete.");
 						xSetFloat(dPlayerData, xFuel, xGetInt(dPlayerData, xFuelTank));
 						xSetInt(dPlayerData, xFuelCountdown, 0);
+						spyEffect(1*trQuestVarGet("P"+p+"Siphon"), kbGetProtoUnitID("Mountain Giant"), vector(0,0,0), vector(0,0,0), 18);
 					}
 					else if(Stage != 1){
 						xSetFloat(dPlayerData, xFuel, xGetFloat(dPlayerData, xFuel)+1000*GetFuelPump(trVectorQuestVarGetX("P"+p+"Pos"),trVectorQuestVarGetZ("P"+p+"Pos")));
 						xSetInt(dPlayerData, xFuelCountdown, 0);
 						trPlayerGrantResources(p, "Gold", -1*FuelCost*GetFuelPump(trVectorQuestVarGetX("P"+p+"Pos"),trVectorQuestVarGetZ("P"+p+"Pos")));
 						ColouredChatToPlayer(p, "0,1,0", "Refuel complete.");
+						spyEffect(1*trQuestVarGet("P"+p+"Siphon"), kbGetProtoUnitID("Mountain Giant"), vector(0,0,0), vector(0,0,0), 18);
 						if(xGetFloat(dPlayerData, xFuel) > xGetInt(dPlayerData,xFuelTank)){
 							xSetFloat(dPlayerData, xFuel, xGetInt(dPlayerData, xFuelTank));
 						}

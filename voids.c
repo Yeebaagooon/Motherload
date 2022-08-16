@@ -1467,3 +1467,18 @@ void trUnitSetVariation(int name = 0, int var = 0){
 	trUnitSelect(""+name);
 	trUnitSetAnimationPath(""+(var)+",0,0,0,0,0,0");
 }
+
+void SelectableSign(int x = 0, int z = 0, int prompt = 0){
+	int temp = trGetNextUnitScenarioNameNumber();
+	trArmyDispatch("0,0", "Dwarf", 1, x,3,z, 90, true);
+	xAddDatabaseBlock(dSelectables, true);
+	xSetInt(dSelectables, xSelectablesName,temp);
+	xSetInt(dSelectables, xSelectablesPrompt, prompt);
+	trUnitSelectClear();
+	trUnitSelect(""+temp);
+	trUnitChangeProtoUnit("Sign");
+	trUnitSetVariation(temp, 2);
+	trUnitSelectClear();
+	trUnitSelect(""+temp);
+	trUnitHighlight(1000, false);
+}
