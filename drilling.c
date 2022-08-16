@@ -5,18 +5,57 @@ void MineSquare(int row = 0, int col = 0){
 void RemoveBlack(int row = 0, int col = 0){
 	int rowmid = row*4-2;
 	int colmid = col*4-2;
-	//exploding DOWN
-	if((trGetTerrainSubType((colmid),(rowmid)+4) == 3) && (trGetTerrainType((colmid),(rowmid)+4) == 5)){
-		trPaintTerrain(col*4-3,row*4-3,col*4-1,row*4,5,3,false);
-		trUnitSelectByQV("R"+row+"C"+col+"WallX");
-		trUnitChangeProtoUnit("Meteor Impact Ground");
-		//correct wall but not top layer because terrain above isnt overworld
+	//Wall above
+	if(row <= MaxRows){
+		if((trGetTerrainSubType((colmid),(rowmid)+4) == 3) && (trGetTerrainType((colmid),(rowmid)+4) == 5)){
+			trUnitSelectClear();
+			trPaintTerrain(col*4-3,row*4-3,col*4-1,row*4,5,3,false);
+			trUnitSelectByQV("R"+row+"C"+col+"WallX");
+			trUnitChangeProtoUnit("Meteor Impact Ground");
+			trUnitSelectClear();
+			trUnitSelectByQV("R"+row+"C"+col+"WallX");
+			trUnitDestroy();
+			//correct wall but not top layer because terrain above isnt overworld
+		}
+		if((trGetTerrainSubType((colmid),(rowmid)+4) == OVERTERRAIN_SUBTYPE) && (trGetTerrainType((colmid),(rowmid)+4) == OVERTERRAIN_TYPE)){
+			trUnitSelectClear();
+			trUnitSelectByQV("R"+row+"C"+col+"WallX");
+			trUnitChangeProtoUnit("Meteor Impact Ground");
+			trUnitSelectClear();
+			trUnitSelectByQV("R"+row+"C"+col+"WallX");
+			trUnitDestroy();
+		}
+		//Wall below
+		if((trGetTerrainSubType((colmid),(rowmid)-4) == 3) && (trGetTerrainType((colmid),(rowmid)-4) == 5)){
+			trPaintTerrain(col*4-3,row*4-4,col*4-1,row*4-1,5,3,false);
+			trUnitSelectClear();
+			trUnitSelectByQV("R"+(row-1)+"C"+col+"WallX");
+			trUnitChangeProtoUnit("Meteor Impact Ground");
+			trUnitSelectClear();
+			trUnitSelectByQV("R"+(row-1)+"C"+col+"WallX");
+			trUnitDestroy();
+			//correct wall but not top layer because terrain above isnt overworld
+		}
+		if((trGetTerrainSubType((colmid)+4,(rowmid)) == 3) && (trGetTerrainType((colmid)+4,(rowmid)) == 5)){
+			trPaintTerrain(col*4-3,row*4-3,col*4,row*4-1,5,3,false);
+			trUnitSelectClear();
+			trUnitSelectByQV("R"+row+"C"+col+"WallY");
+			trUnitChangeProtoUnit("Meteor Impact Ground");
+			trUnitSelectClear();
+			trUnitSelectByQV("R"+row+"C"+col+"WallY");
+			trUnitDestroy();
+		}
+		if((trGetTerrainSubType((colmid)-4,(rowmid)) == 3) && (trGetTerrainType((colmid)-4,(rowmid)) == 5)){
+			trPaintTerrain(col*4-4,row*4-3,col*4-1,row*4-1,5,3,false);
+			trUnitSelectClear();
+			trUnitSelectByQV("R"+row+"C"+(col-1)+"WallY");
+			trUnitChangeProtoUnit("Meteor Impact Ground");
+			trUnitSelectClear();
+			trUnitSelectByQV("R"+row+"C"+(col-1)+"WallY");
+			trUnitDestroy();
+		}
 	}
-	if((trGetTerrainSubType((colmid),(rowmid)+4) == OVERTERRAIN_SUBTYPE) && (trGetTerrainType((colmid),(rowmid)+4) == OVERTERRAIN_TYPE)){
-		trUnitSelectByQV("R"+row+"C"+col+"WallX");
-		trUnitChangeProtoUnit("Meteor Impact Ground");
-	}
-	//end
+	trPaintTerrain(0,4*MaxRows+1,200,4*MaxRows+5,OVERTERRAIN_TYPE,OVERTERRAIN_SUBTYPE,false);
 }
 
 
@@ -34,14 +73,14 @@ highFrequency
 			trVectorSnapToGrid("BombVector"+p+"");
 			int Col = (trVectorQuestVarGetX("BombVector"+p+"") ) / 8 +1;
 			int Row = (trVectorQuestVarGetZ("BombVector"+p+"") ) / 8 +1;
-			trChatSend(0, "TRow" + Row);
-			trChatSend(0, "TCol" + Col);
+			//trChatSend(0, "TRow" + Row);
+			//trChatSend(0, "TCol" + Col);
 			trVectorSetUnitPos("SiphonPos"+p+"", "P"+p+"Siphon");
 			trVectorSnapToGrid("SiphonPos"+p+"");
 			int startCol = (trVectorQuestVarGetX("SiphonPos"+p+"") ) / 8 +1;
 			int startRow = (trVectorQuestVarGetZ("SiphonPos"+p+"") ) / 8 +1;
-			trChatSend(0, "SRow" + startRow);
-			trChatSend(0, "SCol" + startCol);
+			//trChatSend(0, "SRow" + startRow);
+			//trChatSend(0, "SCol" + startCol);
 			//VALIDITY CHECKS
 			if(Row > MaxRows){
 				trChatSendToPlayer(0, p, "<color=1,0,0>Cannot use dynamite here!</color>");
@@ -61,35 +100,40 @@ highFrequency
 			}
 			//Direction calculate
 			if(((xsMax(Row,startRow)-xsMin(Row,startRow) == 0) && (xsMax(Col,startCol)-xsMin(Col,startCol) == 1)) || ((xsMax(Row,startRow)-xsMin(Row,startRow) == 1) && (xsMax(Col,startCol)-xsMin(Col,startCol) == 0))){
-				trChatSend(0, "valid");
 				grantGodPowerNoRechargeNextPosition(p, "Audrey", 1);
 				if(Row-startRow == 0){
 					if((Col-startCol) == 1){
-						trChatSend(0, "right");
 						MineSquare(Row, Col);
 						MineSquare(Row, Col+1);
+						RemoveBlack(Row, Col);
+						RemoveBlack(Row, Col+1);
+						RemoveBlack(Row, Col-1);
 					}
 					if((Col-startCol) == -1){
-						trChatSend(0, "left");
 						MineSquare(Row, Col);
 						MineSquare(Row, Col-1);
+						RemoveBlack(Row, Col);
+						RemoveBlack(Row, Col-1);
+						RemoveBlack(Row, Col+1);
 					}
 				}
 				else if(Col-startCol == 0){
 					if((Row-startRow) == 1){
-						trChatSend(0, "up");
 						MineSquare(Row, Col);
 						MineSquare(Row+1, Col);
-					}
-					if((Row-startRow) == -1){
-						trChatSend(0, "down");
-						MineSquare(Row, Col);
-						MineSquare(Row-1, Col);
 						RemoveBlack(Row, Col);
+						RemoveBlack(Row+1, Col);
 						RemoveBlack(Row-1, Col);
 					}
+					if((Row-startRow) == -1){
+						MineSquare(Row, Col);
+						MineSquare(Row+1, Col);
+						RemoveBlack(Row, Col);
+						RemoveBlack(Row-1, Col);
+						RemoveBlack(Row+1, Col);
+					}
 				}
-				
+				break;
 			}
 			else{
 				trChatSendToPlayer(0, p, "<color=1,0,0>Dynamite error - target too far. Use adjacent to your ship.</color>");

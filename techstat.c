@@ -39,6 +39,7 @@ highFrequency
 	trModifyProtounit("Athena", 1, 1, 4);
 	for(p = 1; <= cNumberNonGaiaPlayers){
 		trModifyProtounit("Dwarf", p, 55, 4);
+		trModifyProtounit("Audrey", p, 55, 4);
 		trModifyProtounit("Armory", p, 55, 4);
 		trModifyProtounit("Animal Attractor", p, 2, -40);
 		trModifyProtounit("Animal Attractor", p, 55, 4);
