@@ -133,6 +133,9 @@ highFrequency
 		if(Stage == 2){
 			startNPCDialog(6);
 		}
+		if(Stage == 3){
+			startNPCDialog(10);
+		}
 	}
 	xsEnableRule("FuelEconomy");
 	xsEnableRule("StageTimer");
@@ -258,6 +261,49 @@ void FuelBuy(int p = 0){
 	}
 }
 
+rule ExtraShop
+inactive
+highFrequency
+{
+	if(trTime() > 1*trQuestVarGet("ShopTimer")){
+		for(p = 1; <= cNumberNonGaiaPlayers){
+			if((trVectorQuestVarGetZ("P"+p+"Pos") > 182) && (trVectorQuestVarGetZ("P"+p+"Pos") < 186)){
+				if((trVectorQuestVarGetX("P"+p+"Pos") > Shop1XMin*2) && (trVectorQuestVarGetX("P"+p+"Pos") < Shop1XMax*2)){
+					if (trPlayerResourceCount(p, "Gold") >= Shop1Cost) {
+						ColouredChatToPlayer(p, "1,0.5,0", "Emergency fuel tank purchased (<u>R</u>).");
+						grantGodPowerNoRechargeNextPosition(p, "Ragnorok", 1);
+						trPlayerGrantResources(p, "Gold", -1*Shop1Cost);
+					}
+					else{
+						ColouredChatToPlayer(p, "1,0,0", "You do not have enough gold to buy this item!");
+					}
+				}
+				if((trVectorQuestVarGetX("P"+p+"Pos") > Shop2XMin*2) && (trVectorQuestVarGetX("P"+p+"Pos") < Shop2XMax*2)){
+					if (trPlayerResourceCount(p, "Gold") >= Shop2Cost) {
+						ColouredChatToPlayer(p, "1,0.5,0", "Dynamite purchased (<u>W</u>).");
+						grantGodPowerNoRechargeNextPosition(p, "Audrey", 1);
+						trPlayerGrantResources(p, "Gold", -1*Shop2Cost);
+					}
+					else{
+						ColouredChatToPlayer(p, "1,0,0", "You do not have enough gold to buy this item!");
+					}
+				}
+				if((trVectorQuestVarGetX("P"+p+"Pos") > Shop3XMin*2) && (trVectorQuestVarGetX("P"+p+"Pos") < Shop3XMax*2)){
+					if (trPlayerResourceCount(p, "Gold") >= Shop3Cost) {
+						ColouredChatToPlayer(p, "1,0.5,0", "Emergency teleport purchased (<u>E</u>).");
+						grantGodPowerNoRechargeNextPosition(p, "Rain", 1);
+						trPlayerGrantResources(p, "Gold", -1*Shop3Cost);
+					}
+					else{
+						ColouredChatToPlayer(p, "1,0,0", "You do not have enough gold to buy this item!");
+					}
+				}
+			}
+			trQuestVarSet("ShopTimer", trTime()+1);
+		}
+	}
+}
+
 
 rule FuelEconomy
 inactive
@@ -296,7 +342,7 @@ highFrequency
 					trCounterAddTime("CDFuel", -40, -30, "<color={PlayerColor(3)}>Fuel:" + 1*xGetFloat(dPlayerData, xFuel) + " L", -1);
 					trCounterAddTime("CDDepth", -30, -20, "</color>Depth: " + 1*xGetInt(dPlayerData, xDepth) + " metres", -1);
 				}
-				else if(xGetFloat(dPlayerData, xFuel) < 150){
+				else if(xGetFloat(dPlayerData, xFuel) < 151){
 					trCounterAddTime("CDFuel", -40, -30, "<color={PlayerColor(2)}>Fuel:" + 1*xGetFloat(dPlayerData, xFuel) + " L", -1);
 					trCounterAddTime("CDDepth", -30, -20, "</color>Depth: " + 1*xGetInt(dPlayerData, xDepth) + " metres", -1);
 				}

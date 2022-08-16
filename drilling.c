@@ -130,6 +130,7 @@ highFrequency
 					trSoundPlayFN("cantdothat.wav","1",-1,"","");
 				}
 				grantGodPowerNoRechargeNextPosition(p, "Audrey", 1);
+				unitTransform("Audrey Base", "Rocket");
 				break;
 			}
 			if((Row == startRow) && (Col == startCol)){
@@ -138,6 +139,7 @@ highFrequency
 					trSoundPlayFN("cantdothat.wav","1",-1,"","");
 				}
 				grantGodPowerNoRechargeNextPosition(p, "Audrey", 1);
+				unitTransform("Audrey Base", "Rocket");
 				break;
 			}
 			//Direction calculate
@@ -152,6 +154,7 @@ highFrequency
 						trUnitSelectClear();
 						trUnitSelectByQV("p"+p+"Effect");
 						trUnitChangeProtoUnit("Meteorite");
+						//trMutateSelected(kbGetProtoUnitID("Meteorite"));
 						trUnitSelectClear();
 						trUnitSelectByQV("p"+p+"Effect");
 						trUnitOverrideAnimation(6,0,false,false,-1,-1);
@@ -171,6 +174,7 @@ highFrequency
 						trUnitSelectClear();
 						trUnitSelectByQV("p"+p+"Effect");
 						trUnitChangeProtoUnit("Meteorite");
+						//trMutateSelected(kbGetProtoUnitID("Meteorite"));
 						trUnitSelectClear();
 						trUnitSelectByQV("p"+p+"Effect");
 						trUnitOverrideAnimation(6,0,false,false,-1,-1);
@@ -192,6 +196,7 @@ highFrequency
 						trUnitSelectClear();
 						trUnitSelectByQV("p"+p+"Effect");
 						trUnitChangeProtoUnit("Meteorite");
+						//trMutateSelected(kbGetProtoUnitID("Meteorite"));
 						trUnitSelectClear();
 						trUnitSelectByQV("p"+p+"Effect");
 						trUnitOverrideAnimation(6,0,false,false,-1,-1);
@@ -211,6 +216,7 @@ highFrequency
 						trUnitSelectClear();
 						trUnitSelectByQV("p"+p+"Effect");
 						trUnitChangeProtoUnit("Meteorite");
+						//trMutateSelected(kbGetProtoUnitID("Meteorite"));
 						trUnitSelectClear();
 						trUnitSelectByQV("p"+p+"Effect");
 						trUnitOverrideAnimation(6,0,false,false,-1,-1);
@@ -230,6 +236,7 @@ highFrequency
 					trSoundPlayFN("cantdothat.wav","1",-1,"","");
 				}
 				grantGodPowerNoRechargeNextPosition(p, "Audrey", 1);
+				unitTransform("Audrey Base", "Rocket");
 			}
 		}
 	}

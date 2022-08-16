@@ -7,7 +7,7 @@
 
 //---Test controls
 int QuickStart = 0;
-bool OverrideSP = true;
+bool OverrideSP = false;
 bool OverrideStage = true;
 
 //---
@@ -38,6 +38,20 @@ float FSTwoXMin = 10;
 float FSTwoXMax = 0;
 float FSTwoZMin = 10;
 float FSTwoZMax = 0;
+
+//---
+int Shop1XMin = 0;
+int Shop1XMax = 0;
+int Shop1Item = 0;
+int Shop1Cost = 0;
+int Shop2XMin = 0;
+int Shop2XMax = 0;
+int Shop2Item = 0;
+int Shop2Cost = 0;
+int Shop3XMin = 0;
+int Shop3XMax = 0;
+int Shop3Item = 0;
+int Shop3Cost = 0;
 
 /* TERRAINS */
 const int SandC = 1;

@@ -332,15 +332,22 @@ highFrequency
 		trSetSelectedScale(2,2,2);
 		//paint extra shop
 		PaintShopTerrain(45,89);
-		PaintAtlantisArea(43,91,45,93,"CityTileAtlantis");
-		PaintAtlantisArea(47,91,49,93,"UnderwaterRockF"); //UnderwaterRockF
-		PaintAtlantisArea(51,91,53,93,"UnderwaterIceC"); //UnderwaterIceC
+		Shop1XMin = 43;
+		Shop1XMax = 45;
+		Shop1Cost = 2;
+		Shop2XMin = 47;
+		Shop2XMax = 49;
+		Shop2Cost = 2;
+		Shop3XMin = 51;
+		Shop3XMax = 53;
+		Shop3Cost = 20;
+		PaintAtlantisArea(Shop1XMin,91,Shop1XMax,93,"CityTileAtlantis");
+		PaintAtlantisArea(Shop2XMin,91,Shop2XMax,93,"UnderwaterRockF"); //UnderwaterRockF
+		PaintAtlantisArea(Shop3XMin,91,Shop3XMax,93,"UnderwaterIceC"); //UnderwaterIceC
+		xsEnableRule("ExtraShop");
 		SelectableSign(88, 181, 7);
 		SelectableSign(96, 181, 8);
 		SelectableSign(104, 181, 9);
-		trTechGodPower(1, "Audrey", 1); //temp
-		trTechGodPower(1, "Rain", 1); //temp
-		trTechGodPower(1, "Ragnorok", 1); //temp
 		xsEnableRule("Audrey");
 		xsEnableRule("Rain");
 		xsEnableRule("Ragnorok");

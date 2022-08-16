@@ -12,7 +12,7 @@ string stageName(int stage = 0) {
 		}
 		case 3:
 		{
-			name = "Viridis";
+			name = "Vegter";
 		}
 		case 4:
 		{
@@ -293,7 +293,7 @@ int npcDiag(int npc = 0, int dialog = 0) {
 			{
 				case 1:
 				{
-					uiMessageBox("Backup fuel tank. Contains 200L. Cost = 2");
+					uiMessageBox("Backup fuel tank. Contains 200L. Cost = " + Shop1Cost);
 					dialog = 0;
 				}
 			}
@@ -304,7 +304,11 @@ int npcDiag(int npc = 0, int dialog = 0) {
 			{
 				case 1:
 				{
-					uiMessageBox("Dynamite. Instantly mines 2 squares in the same direction. Cost = 2");
+					uiMessageBox("Dynamite. Instantly mines 2 squares in the same direction. Cost = " + Shop2Cost);
+				}
+				case 2:
+				{
+					uiMessageBox("Dynamite should be used like a drill, but press 'W' instead.");
 					dialog = 0;
 				}
 			}
@@ -315,7 +319,33 @@ int npcDiag(int npc = 0, int dialog = 0) {
 			{
 				case 1:
 				{
-					uiMessageBox("Emergency surface teleport. Cost = 20");
+					uiMessageBox("Emergency surface teleport. Cost = " + Shop3Cost);
+					dialog = 0;
+				}
+			}
+		}
+		case 10:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Welcome to  " + stageName(Stage) + ", more riches await us here!");
+				}
+				case 2:
+				{
+					trCameraCut(vector(96.952896,98.965134,111.240631), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
+					uiMessageBox("You now have access to an item shop.");
+				}
+				case 3:
+				{
+					uiMessageBox("Anything purchased here will not be saved, so it must be used here.");
+				}
+				case 4:
+				{
+					trCameraCut(vector(100.463554,153.803818,-59.088593), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
+					uiZoomToProto("Hero Greek Atalanta");
+					//uiMessageBox("Make 10 gold in 8 minutes to unlock the next planet.");
 					dialog = 0;
 				}
 			}
