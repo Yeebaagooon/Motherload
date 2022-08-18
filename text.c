@@ -12,7 +12,7 @@ string stageName(int stage = 0) {
 		}
 		case 3:
 		{
-			name = "Vegter";
+			name = "Valler";
 		}
 		case 4:
 		{
@@ -334,7 +334,7 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				}
 				case 2:
 				{
-					trCameraCut(vector(96.952896,98.965134,111.240631), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
+					trCameraCut(vector(96.952896,98.965134,89.240631), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
 					uiMessageBox("You now have access to an item shop.");
 				}
 				case 3:

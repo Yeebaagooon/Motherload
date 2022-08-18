@@ -230,6 +230,7 @@ highFrequency
 				}
 				break;
 			}
+			//maybe move a } up here?
 			else{
 				trChatSendToPlayer(0, p, "<color=1,0,0>Dynamite error - target too far. Use adjacent to your ship.</color>");
 				if(trCurrentPlayer() == p){

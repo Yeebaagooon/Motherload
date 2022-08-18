@@ -217,6 +217,10 @@ highFrequency
 		trUnitSelectClear();
 		trUnitSelect(""+temp);
 		trUnitHighlight(1000, false);
+		trSetSunPosition(0,90,true);
+		sunColor(255,255,255);
+		ambientColor(255,255,100);
+		terrainAmbient(255,255,255);
 	}
 	if(Stage == 2){
 		FuelCost = 2;
@@ -292,6 +296,9 @@ highFrequency
 		trUnitSelectClear();
 		trUnitSelect(""+temp);
 		trSetSelectedScale(2,2,2);
+		sunColor(255,255,255);
+		ambientColor(255,55,10);
+		terrainAmbient(255,155,5);
 	}
 	if(Stage == 3){
 		FuelCost = 4;
@@ -331,7 +338,7 @@ highFrequency
 		trUnitSelect(""+temp);
 		trSetSelectedScale(2,2,2);
 		//paint extra shop
-		PaintShopTerrain(45,89);
+		PaintShopTerrain(45,93);
 		Shop1XMin = 43;
 		Shop1XMax = 45;
 		Shop1Cost = 2;
@@ -341,16 +348,30 @@ highFrequency
 		Shop3XMin = 51;
 		Shop3XMax = 53;
 		Shop3Cost = 20;
-		PaintAtlantisArea(Shop1XMin,91,Shop1XMax,93,"CityTileAtlantis");
-		PaintAtlantisArea(Shop2XMin,91,Shop2XMax,93,"UnderwaterRockF"); //UnderwaterRockF
-		PaintAtlantisArea(Shop3XMin,91,Shop3XMax,93,"UnderwaterIceC"); //UnderwaterIceC
+		PaintAtlantisArea(Shop1XMin,95,Shop1XMax,97,"CityTileAtlantis");
+		PaintAtlantisArea(Shop2XMin,95,Shop2XMax,97,"UnderwaterRockF"); //UnderwaterRockF
+		PaintAtlantisArea(Shop3XMin,95,Shop3XMax,97,"UnderwaterIceC"); //UnderwaterIceC
 		xsEnableRule("ExtraShop");
-		SelectableSign(88, 181, 7);
-		SelectableSign(96, 181, 8);
-		SelectableSign(104, 181, 9);
+		SelectableSign(88, 197, 7);
+		SelectableSign(96, 197, 8);
+		SelectableSign(104, 197, 9);
 		xsEnableRule("Audrey");
 		xsEnableRule("Rain");
 		xsEnableRule("Ragnorok");
+		temp = trGetNextUnitScenarioNameNumber();
+		for(x=0; < 24){
+			trArmyDispatch("0,0", "Victory Marker", 1, x*15,3,196, 180, true);
+			trUnitSelectClear();
+			trUnitSelect(""+(temp+x));
+			trUnitChangeProtoUnit("UI Cloud Boarder");
+			trUnitSelectClear();
+			trUnitSelect(""+(temp+x));
+			trSetSelectedScale(1, -0.3, -0.5);
+			trUnitSelectClear();
+			trUnitSelect(""+(temp+x));
+			trSetSelectedUpVector(4,2,2);
+		}
+		trSetLighting("Dawn", 1.0);
 	}
 	xsDisableSelf();
 }

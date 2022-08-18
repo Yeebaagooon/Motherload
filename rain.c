@@ -267,7 +267,7 @@ highFrequency
 {
 	if(trTime() > 1*trQuestVarGet("ShopTimer")){
 		for(p = 1; <= cNumberNonGaiaPlayers){
-			if((trVectorQuestVarGetZ("P"+p+"Pos") > 182) && (trVectorQuestVarGetZ("P"+p+"Pos") < 186)){
+			if((trVectorQuestVarGetZ("P"+p+"Pos") > 190) && (trVectorQuestVarGetZ("P"+p+"Pos") < 196)){
 				if((trVectorQuestVarGetX("P"+p+"Pos") > Shop1XMin*2) && (trVectorQuestVarGetX("P"+p+"Pos") < Shop1XMax*2)){
 					if (trPlayerResourceCount(p, "Gold") >= Shop1Cost) {
 						ColouredChatToPlayer(p, "1,0.5,0", "Emergency fuel tank purchased (<u>R</u>).");
