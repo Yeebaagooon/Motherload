@@ -172,7 +172,12 @@ void spawnRelicSpecific(vector v = vector (0,0,0), int val = 1){
 
 void reselectMyself() {
 	uiClearSelection();
-	//int p = trCurrentPlayer();
+	int p = trCurrentPlayer();
+	trackInsert();
+	trackAddWaypoint();
+	trackAddWaypoint();
+	uiFindType(kbGetProtoUnitName(554));
+	trackPlay(1,999);
 	
 }
 

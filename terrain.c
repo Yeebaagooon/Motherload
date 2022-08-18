@@ -137,6 +137,45 @@ highFrequency
 						RockType(1*trQuestVarGet("Temp"));
 					}
 				}
+				if(Stage == 4){
+					if(row > 18){
+						trQuestVarSetFromRand("Temp",13,14,true);
+						RockType(1*trQuestVarGet("Temp"));
+					}
+					else if((row > 15) && (row <= 18 )){
+						trQuestVarSetFromRand("Temp",14,15,true);
+						RockType(1*trQuestVarGet("Temp"));
+					}
+					else if((row > 9) && (row <= 15 )){
+						trQuestVarSetFromRand("Lava",1,10,true);
+						trQuestVarSetFromRand("Temp",15,16,true);
+						if(1*trQuestVarGet("Lava") == 1){
+							RockType(18);
+						}
+						else{
+							RockType(1*trQuestVarGet("Temp"));
+						}
+					}
+					else if((row > 3) && (row <= 9 )){
+						trQuestVarSetFromRand("Temp",15,17,true);
+						trQuestVarSetFromRand("Lava",1,8,true);
+						if(1*trQuestVarGet("Lava") == 1){
+							RockType(18);
+						}
+						else{
+							RockType(1*trQuestVarGet("Temp"));
+						}
+					}
+					else{
+						trQuestVarSetFromRand("Lava",1,6,true);
+						if(1*trQuestVarGet("Lava") == 1){
+							RockType(18);
+						}
+						else{
+							RockType(17);
+						}
+					}
+				}
 				trPaintTerrain(4*col-1,4*row-1,4*col-3,4*row-3,TERRAIN_TYPE,TERRAIN_SUBTYPE,false);
 				trQuestVarSet("R"+row+"C"+col+"CentreY", row*4-2);
 				trQuestVarSet("R"+row+"C"+col+"CentreX", col*4-2);

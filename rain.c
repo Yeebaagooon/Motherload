@@ -159,6 +159,10 @@ highFrequency
 			StageTime = 480; //480
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
 		}
+		if(Stage == 4){
+			StageTime = 480; //480
+			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
+		}
 		xsDisableSelf();
 		xsEnableRule("StageEnd");
 	}

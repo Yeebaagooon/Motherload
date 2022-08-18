@@ -357,6 +357,14 @@ highFrequency
 			}
 			else if((startXPos == xPos) || (startZPos == zPos)){
 				//SUCCEESSFUL DRILL
+				
+				//STATUS EFFECTS
+				if((trGetTerrainSubType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
+							1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 7) && (trGetTerrainType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
+							1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 5)){
+					trChatSend(0, "LAVA");
+				}
+				//DRILLING
 				if(zPos > startZPos){
 					trQuestVarSet("P"+p+"Approach", 1);
 					/*trUnitSelectClear();

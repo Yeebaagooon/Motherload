@@ -452,7 +452,7 @@ highFrequency
 	//startNPCDialog(1);
 }
 
-void PaintPlanets(int x = 0, int z = 0){
+void PaintPlanets(int x = 0, int z = 0, int offsetearth = 0){
 	PaintAtlantisArea(x,z,x+60,z+20,"black");
 	trPaintTerrain(x+1,z+10,x+59,z+10, 0, 50, false);
 	for(p = 1; <= 9){
@@ -511,7 +511,12 @@ void PaintPlanets(int x = 0, int z = 0){
 	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 1);
 	trUnitSetVariation(1*trQuestVarGet("QVRelic"), 1);
 	//EYECANDY PLANET 4
-	FloatingUnitAnimIdle("Earth", x*2+48, 9, z*2+29, 0, 0.2,0.2,0.2);
+	if(offsetearth == 0){
+		FloatingUnitAnimIdle("Earth", x*2+48, 9, z*2+29, 0, 0.2,0.2,0.2);
+	}
+	if(offsetearth == 1){
+		FloatingUnitAnimIdle("Earth", x*2+28, 9, z*2+18, 0, 0.2,0.2,0.2);
+	}
 	xAddDatabaseBlock(dPlanetEyecandy, true);
 	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVRelic"));
 	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 4);
@@ -556,7 +561,7 @@ highFrequency
 			}
 		}
 	}*/
-	PaintPlanets(20,20);
+	PaintPlanets(20,20, 1);
 	trQuestVarSet("StageSelector", trGetNextUnitScenarioNameNumber());
 	UnitCreate(1, "Athena", 40, 60, 90);
 	if(QuickStart == 1){

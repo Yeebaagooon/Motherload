@@ -1,3 +1,23 @@
+/* TERRAINS */
+const int SandC = 1;
+const int DirtA = 2;
+const int SandDirt50 = 3;
+const int SavannahC = 4;
+const int SavannahD = 5;
+const int CliffEgyptianB = 6;
+const int CliffEgyptianA = 7;
+const int IceC = 8;
+const int Hades7 = 9;
+const int PlainDirt50 = 10;
+const int PlainDirt75 = 11;
+const int CliffPlainB = 12;
+const int CliffJungleB = 13;
+const int CliffJungleA = 14;
+const int CliffGreekA = 15;
+const int CliffA = 16;
+const int CliffPlainA = 17;
+const int Hades4Passable = 18;
+
 void RockType(int rock = 0) {
 	switch(rock)
 	//1-7 sandy
@@ -74,6 +94,26 @@ void RockType(int rock = 0) {
 			TERRAIN_TYPE = 2;
 			TERRAIN_SUBTYPE = 4;
 		}
+		case CliffGreekA:
+		{
+			TERRAIN_TYPE = 2;
+			TERRAIN_SUBTYPE = 1;
+		}
+		case CliffA:
+		{
+			TERRAIN_TYPE = 2;
+			TERRAIN_SUBTYPE = 0;
+		}
+		case CliffPlainA:
+		{
+			TERRAIN_TYPE = 2;
+			TERRAIN_SUBTYPE = 5;
+		}
+		case Hades4Passable:
+		{
+			TERRAIN_TYPE = 5;
+			TERRAIN_SUBTYPE = 7;
+		}
 	}
 }
 
@@ -129,6 +169,25 @@ int GetRockHardness(int rock = 0) {
 		{
 			return(150);
 		}
+		
+		case CliffA:
+		{
+			return(175);
+		}
+		case CliffGreekA:
+		{
+			return(200);
+		}
+		case Hades4Passable:
+		{
+			return(225);
+		}
+		case CliffPlainA:
+		{
+			return(250);
+		}
+		
+		
 		//Ice C
 		case IceC:
 		{
@@ -137,7 +196,7 @@ int GetRockHardness(int rock = 0) {
 		//Hades 7
 		case Hades7:
 		{
-			return(100);
+			return(800);
 		}
 	}
 }
@@ -176,6 +235,15 @@ int GetRockType(int t = 0, int st = 0){
 		}
 	}
 	else if(t == 2){
+		if(st == 0){
+			return(CliffA);
+		}
+		if(st == 1){
+			return(CliffGreekA);
+		}
+		if(st == 5){
+			return(CliffPlainA);
+		}
 		if(st == 2){
 			return(CliffEgyptianA);
 		}
@@ -189,6 +257,9 @@ int GetRockType(int t = 0, int st = 0){
 	else if(t == 5){
 		if(st == 2){
 			return(IceC);
+		}
+		if(st == 7){
+			return(Hades4Passable);
 		}
 	}
 }

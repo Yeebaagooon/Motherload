@@ -53,22 +53,6 @@ int Shop3XMax = 0;
 int Shop3Item = 0;
 int Shop3Cost = 0;
 
-/* TERRAINS */
-const int SandC = 1;
-const int DirtA = 2;
-const int SandDirt50 = 3;
-const int SavannahC = 4;
-const int SavannahD = 5;
-const int CliffEgyptianB = 6;
-const int CliffEgyptianA = 7;
-const int IceC = 8;
-const int Hades7 = 9;
-const int PlainDirt50 = 10;
-const int PlainDirt75 = 11;
-const int CliffPlainB = 12;
-const int CliffJungleB = 13;
-const int CliffJungleA = 14;
-
 /* TEMPORARY TEST VARS */
 //float P1DrillPower = 10;
 
