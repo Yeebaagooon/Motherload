@@ -362,7 +362,7 @@ highFrequency
 				if((trGetTerrainSubType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
 							1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 7) && (trGetTerrainType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
 							1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 5)){
-					trChatSend(0, "LAVA");
+					trQuestVarSet("StatusEffectP"+p+"", 1);
 				}
 				//DRILLING
 				if(zPos > startZPos){
@@ -594,9 +594,14 @@ void UngarrisonDrill(int p = 1){
 			if(unitDistanceToQVVector(xGetInt(dFreeRelics, xRelicName), "P"+p+"Pos", true) < 10){
 				xUnitSelect(dFreeRelics,xRelicName);
 				trImmediateUnitGarrison(""+(1*trQuestVarGet("P"+p+"Siphon"))+"");
-				break;
 			}
 		}
 	}
-	//var x = trQuestVarGet("p"+p+"drillTargetX") / 2 //VAR MAKES IT TRANSFER BETWEEN EFFECTS
+	//STATUS EFFECTS
+	if(1*trQuestVarGet("StatusEffectP"+p+"") == 1){
+		trUnitSelectByQV("P"+p+"Siphon", false);
+		trDamageUnit(200-xGetInt(dPlayerData, xRadiator));
+		trDamageUnit(10*xGetInt(dPlayerData, xDepth)/xGetInt(dPlayerData, xRadiator));
+		trQuestVarSet("StatusEffectP"+p+"", 0);
+	}
 }

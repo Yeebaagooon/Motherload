@@ -4,6 +4,8 @@ int dHeldRelics = 0;
 int dHiddenRelics = 0;
 int xRelicName = 0;
 int xRelicValue = 0;
+int xRelicTick = 50;
+int xRelicDamage = 0;
 int xOwner = 0;
 //int xRelicPrice = 0;
 int dPlayerData = 0;
@@ -53,12 +55,18 @@ highFrequency
 	dFreeRelics = xInitDatabase("FreeRelics"); //db name
 	xRelicName = xInitAddInt(dFreeRelics, "name"); //unit name
 	xRelicValue = xInitAddInt(dFreeRelics, "value", 1); //value of the relic, default to 1=iron
+	xRelicTick = xInitAddInt(dFreeRelics, "tick", 50);
+	xRelicDamage = xInitAddInt(dFreeRelics, "damage", 0);
 	dHeldRelics = xInitDatabase("HeldRelics"); //db name
 	xRelicName = xInitAddInt(dHeldRelics, "name"); //unit name
 	xRelicValue = xInitAddInt(dHeldRelics, "value", 1); //value of the relic, default to 1=iron
+	xRelicTick = xInitAddInt(dHeldRelics, "tick", 50);
+	xRelicDamage = xInitAddInt(dHeldRelics, "damage", 0);
 	dHiddenRelics = xInitDatabase("HiddenRelics"); //db name
 	xRelicName = xInitAddInt(dHiddenRelics, "name"); //unit name
 	xRelicValue = xInitAddInt(dHiddenRelics, "value", 1); //value of the relic, default to 1=iron
+	xRelicTick = xInitAddInt(dHiddenRelics, "tick", 50);
+	xRelicDamage = xInitAddInt(dHiddenRelics, "damage", 0);
 	xOwner = xInitAddInt(dHiddenRelics, "owner", 0); //value of the relic, default to 0
 	xsDisableSelf();
 	//Obelisk Stage DB

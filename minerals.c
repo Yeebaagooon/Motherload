@@ -1,10 +1,12 @@
-/* MINERALS */
-const int RELIC_NUMBER = 5;
+const int RELIC_NUMBER = 6;
 const int RELIC_IRON = 1;
 const int RELIC_BRONZE = 2;
 const int RELIC_SILVER = 3;
 const int RELIC_GOLD = 4;
 const int RELIC_PLATINUM = 5;
+const int RELIC_URANIUM = 6;
+
+const int URANIUM_DAMAGE = 1;
 
 string relicName(int relic = 0) {
 	string msg = "WTF That's not a relic!";
@@ -29,6 +31,10 @@ string relicName(int relic = 0) {
 		case RELIC_PLATINUM:
 		{
 			msg = "Platinum";
+		}
+		case RELIC_URANIUM:
+		{
+			msg = "Uranium";
 		}
 	}
 	return(msg);
@@ -58,6 +64,10 @@ int relicCost(int relic = 0) {
 		{
 			price = 7;
 		}
+		case RELIC_URANIUM:
+		{
+			price = 9;
+		}
 	}
 	return(price);
 }
@@ -85,6 +95,10 @@ string RelicColour(int relic = 0) {
 		case RELIC_PLATINUM:
 		{
 			colour = "1,1,1";
+		}
+		case RELIC_URANIUM:
+		{
+			colour = "0.08,0.84,0.2";
 		}
 	}
 	return(colour);
@@ -114,6 +128,10 @@ string relicIcon(int relic = 0) {
 		{
 			icon = "icons\hero g bellerophon icon 64";
 		}
+		case RELIC_URANIUM:
+		{
+			icon = "icons\special g medusa icon 64";
+		}
 	}
 	return(icon);
 }
@@ -142,6 +160,10 @@ int relicProto(int relic = 0) {
 		{
 			proto = kbGetProtoUnitID("Hero Greek Bellerophon");
 		}
+		case RELIC_URANIUM:
+		{
+			proto = kbGetProtoUnitID("Medusa");
+		}
 	}
 	return(proto);
 }
@@ -161,6 +183,13 @@ void spawnRelicSpecific(vector v = vector (0,0,0), int val = 1){
 	xAddDatabaseBlock(dFreeRelics, true);
 	xSetInt(dFreeRelics, xRelicName, 1*trQuestVarGet("TEMPRELIC"));
 	xSetInt(dFreeRelics, xRelicValue, val);
+	xSetInt(dFreeRelics, xRelicTick, (trTimeMS()+50));
+	if(xGetInt(dFreeRelics, xRelicValue) == RELIC_URANIUM){
+		xSetInt(dFreeRelics, xRelicDamage, 1);
+	}
+	else{
+		xSetInt(dFreeRelics, xRelicDamage, 0);
+	}
 	trUnitSelectClear();
 	trUnitSelectByQV("TEMPRELIC");
 	trUnitChangeProtoUnit("Relic");
@@ -228,6 +257,13 @@ void processFreeRelics(int count = 1) {
 					xAddDatabaseBlock(dHeldRelics, true);
 					xSetInt(dHeldRelics, xRelicName, 1*xGetInt(dFreeRelics, xRelicName));
 					xSetInt(dHeldRelics, xRelicValue, 1*xGetInt(dFreeRelics, xRelicValue));
+					xSetInt(dHeldRelics, xRelicTick, (trTimeMS()+50));
+					if(xGetInt(dFreeRelics, xRelicValue) == RELIC_URANIUM){
+						xSetInt(dHeldRelics, xRelicDamage, URANIUM_DAMAGE);
+					}
+					else{
+						xSetInt(dHeldRelics, xRelicDamage, 0);
+					}
 					xFreeDatabaseBlock(dFreeRelics);
 					break; //ends the loop
 				}
@@ -264,6 +300,13 @@ void processHeldRelics(int count = 1) {
 				xAddDatabaseBlock(dFreeRelics, true);
 				xSetInt(dFreeRelics, xRelicName, 1*xGetInt(dHeldRelics, xRelicName));
 				xSetInt(dFreeRelics, xRelicValue, 1*xGetInt(dHeldRelics, xRelicValue));
+				xSetInt(dFreeRelics, xRelicTick, (trTimeMS()+50));
+				if(xGetInt(dHeldRelics, xRelicValue) == RELIC_URANIUM){
+					xSetInt(dFreeRelics, xRelicDamage, 1);
+				}
+				else{
+					xSetInt(dFreeRelics, xRelicDamage, 0);
+				}
 				xFreeDatabaseBlock(dHeldRelics);
 				//break;
 			}
@@ -289,8 +332,17 @@ void processHeldRelics(int count = 1) {
 					xFreeDatabaseBlock(dHeldRelics);
 					trDelayedRuleActivation("SellMinerals");
 					reselectMyself();
-					//break;
+					break;
 				}
+			}
+		}
+		if(xGetInt(dHeldRelics, xRelicValue) == RELIC_URANIUM){
+			if(trTimeMS() > xGetInt(dHeldRelics, xRelicTick)){
+				for(p=1; < cNumberNonGaiaPlayers) {
+					trDamageUnitsInArea(p,"All",4, xGetInt(dHeldRelics, xRelicDamage));
+					trDamageUnit(-1*xGetInt(dHeldRelics, xRelicDamage));
+				}
+				xSetInt(dHeldRelics, xRelicTick,(trTimeMS()+50));
 			}
 		}
 	}
@@ -325,9 +377,10 @@ void HideRelics(int owner = 1) {
 			xAddDatabaseBlock(dHiddenRelics, true);
 			xSetInt(dHiddenRelics, xRelicName, 1*xGetInt(dHeldRelics, xRelicName));
 			xSetInt(dHiddenRelics, xRelicValue, 1*xGetInt(dHeldRelics, xRelicValue));
+			xSetInt(dHiddenRelics, xRelicTick, 1*xGetInt(dHeldRelics, xRelicTick));
+			xSetInt(dHiddenRelics, xRelicDamage, 1*xGetInt(dHeldRelics, xRelicDamage));
 			xSetInt(dHiddenRelics, xOwner, owner);
 			xFreeDatabaseBlock(dHeldRelics);
-			//trChatSend(0, ""+xGetDatabaseCount(dHiddenRelics));
 			//break;
 		}
 	}
@@ -350,6 +403,8 @@ void ReturnRelics(int owner = 1) {
 			xAddDatabaseBlock(dHeldRelics, true);
 			xSetInt(dHeldRelics, xRelicName, 1*xGetInt(dHiddenRelics, xRelicName));
 			xSetInt(dHeldRelics, xRelicValue, 1*xGetInt(dHiddenRelics, xRelicValue));
+			xSetInt(dHeldRelics, xRelicTick, 1*xGetInt(dHiddenRelics, xRelicTick));
+			xSetInt(dHeldRelics, xRelicDamage, 1*xGetInt(dHiddenRelics, xRelicDamage));
 			xFreeDatabaseBlock(dHiddenRelics);
 			//break;
 		}

@@ -136,6 +136,9 @@ highFrequency
 		if(Stage == 3){
 			startNPCDialog(10);
 		}
+		if(Stage == 4){
+			startNPCDialog(12);
+		}
 	}
 	xsEnableRule("FuelEconomy");
 	xsEnableRule("StageTimer");

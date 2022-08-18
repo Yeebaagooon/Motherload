@@ -350,6 +350,25 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				}
 			}
 		}
+		case 11:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Move your vehicle over the green fuel bar to the right to refill your fuel tank.");
+				}
+				case 2:
+				{
+					uiMessageBox("Each flag gives 1000x the number on the flag as litres of fuel");
+				}
+				case 3:
+				{
+					uiMessageBox("We've had to stop subsidies now, so fuel is a bit more expensive at " + 1*FuelCost + " gold per 1000L");
+					dialog = 0;
+				}
+			}
+		}
 		case 100:
 		{
 			switch(dialog)
@@ -365,6 +384,36 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				{
 					xSetPointer(dPlayerData, 1);
 					uiMessageBox("Current drill power = " + 1*xGetFloat(dPlayerData, xDrillPower) +  " m/s");
+					dialog = 0;
+				}
+			}
+		}
+		case 12:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Welcome to  " + stageName(Stage) + ", more riches await us here!");
+				}
+				case 2:
+				{
+					trCameraCut(vector(96.952896,98.965134,89.240631), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
+					uiMessageBox("Hull repair has been added to the shop.");
+				}
+				case 3:
+				{
+					uiMessageBox("With increasing riches come increasing dangers.");
+				}
+				case 4:
+				{
+					uiMessageBox("Be careful if you carry radioactive minerals.");
+				}
+				case 5:
+				{
+					trCameraCut(vector(100.463554,153.803818,-59.088593), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
+					uiZoomToProto("Hero Greek Atalanta");
+					//uiMessageBox("Make 10 gold in 8 minutes to unlock the next planet.");
 					dialog = 0;
 				}
 			}
