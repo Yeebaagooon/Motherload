@@ -429,6 +429,35 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				}
 			}
 		}
+		case 14:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Welcome to  " + stageName(Stage) + ", the first of the gas giants!");
+				}
+				case 2:
+				{
+					uiMessageBox("The intense pressure here has formed some wonderful gems.");
+				}
+				case 3:
+				{
+					uiMessageBox("We've also extended your permit to allow you to drill a bit deeper.");
+				}
+				case 4:
+				{
+					uiMessageBox("Watch out for escaping gas, and keep an eye on your hull and fuel.");
+				}
+				case 5:
+				{
+					trCameraCut(vector(100.463554,153.803818,-59.088593), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
+					uiZoomToProto("Hero Greek Atalanta");
+					//uiMessageBox("Make 10 gold in 8 minutes to unlock the next planet.");
+					dialog = 0;
+				}
+			}
+		}
 		case 101:
 		{
 			switch(dialog)

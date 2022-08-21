@@ -50,6 +50,8 @@ highFrequency
 		xSetPointer(dPlayerData, p);
 		modifyProtounitAbsolute("Hero Greek Atalanta", p, 5, xGetInt(dPlayerData, xCargoHold));
 		modifyProtounitAbsolute("Hero Greek Atalanta", p, 0, xGetInt(dPlayerData, xHullHP));
+		modifyProtounitAbsolute("Heka Shockwave SFX", p, 0, xGetInt(dPlayerData, xHullHP));
+		modifyProtounitAbsolute("Wadjet Spit", p, 0, xGetInt(dPlayerData, xHullHP));
 	}
 	xsDisableSelf();
 }

@@ -1,10 +1,13 @@
-const int RELIC_NUMBER = 6;
+const int RELIC_NUMBER = 9;
 const int RELIC_IRON = 1;
 const int RELIC_BRONZE = 2;
 const int RELIC_SILVER = 3;
 const int RELIC_GOLD = 4;
 const int RELIC_PLATINUM = 5;
 const int RELIC_URANIUM = 6;
+const int RELIC_RUBY = 7;
+const int RELIC_SAPPHIRE = 8;
+const int RELIC_DIAMOND = 9;
 
 const int URANIUM_DAMAGE = 1;
 
@@ -35,6 +38,18 @@ string relicName(int relic = 0) {
 		case RELIC_URANIUM:
 		{
 			msg = "Uranium";
+		}
+		case RELIC_RUBY:
+		{
+			msg = "Ruby";
+		}
+		case RELIC_SAPPHIRE:
+		{
+			msg = "Sapphire";
+		}
+		case RELIC_DIAMOND:
+		{
+			msg = "Diamond";
 		}
 	}
 	return(msg);
@@ -68,6 +83,18 @@ int relicCost(int relic = 0) {
 		{
 			price = 9;
 		}
+		case RELIC_RUBY:
+		{
+			price = 10;
+		}
+		case RELIC_SAPPHIRE:
+		{
+			price = 12;
+		}
+		case RELIC_DIAMOND:
+		{
+			price = 15;
+		}
 	}
 	return(price);
 }
@@ -99,6 +126,18 @@ string RelicColour(int relic = 0) {
 		case RELIC_URANIUM:
 		{
 			colour = "0.08,0.84,0.2";
+		}
+		case RELIC_RUBY:
+		{
+			colour = "0.68,0,0.11";
+		}
+		case RELIC_SAPPHIRE:
+		{
+			colour = "0,0.44,1";
+		}
+		case RELIC_DIAMOND:
+		{
+			colour = "1,1,1";
 		}
 	}
 	return(colour);
@@ -132,6 +171,18 @@ string relicIcon(int relic = 0) {
 		{
 			icon = "icons\special g medusa icon 64";
 		}
+		case RELIC_RUBY:
+		{
+			icon = "icons\special g manticore icon 64";
+		}
+		case RELIC_SAPPHIRE:
+		{
+			icon = "icons\special x servant icons 64";
+		}
+		case RELIC_DIAMOND:
+		{
+			icon = "icons\building lighthouse icon 64";
+		}
 	}
 	return(icon);
 }
@@ -163,6 +214,18 @@ int relicProto(int relic = 0) {
 		case RELIC_URANIUM:
 		{
 			proto = kbGetProtoUnitID("Medusa");
+		}
+		case RELIC_RUBY:
+		{
+			proto = kbGetProtoUnitID("Manticore");
+		}
+		case RELIC_SAPPHIRE:
+		{
+			proto = kbGetProtoUnitID("Servant");
+		}
+		case RELIC_DIAMOND:
+		{
+			proto = kbGetProtoUnitID("Lighthouse");
 		}
 	}
 	return(proto);
@@ -425,25 +488,35 @@ highFrequency
 			trVectorQuestVarSet("TempGas", xsVectorSet(8*xGetInt(dGasPocket, xGasCol)-4,3,8*xGetInt(dGasPocket, xGasRow)-4));
 			//trVectorQuestVarEcho("TempGas");
 			//trVectorQuestVarEcho("P1Pos");
-			if(distanceBetweenVectors(trVectorQuestVarGet("TempGas"),trVectorQuestVarGet("P1Pos")) < 8){
-				int temp = trGetNextUnitScenarioNameNumber();
-				trArmyDispatch("0,0", "Dwarf", 1, 1,1,1, 0, true);
-				trUnitSelectClear();
-				trUnitSelect(""+temp);
-				trUnitSelectClear();
-				trUnitSelect(""+temp);
-				trUnitTeleport(trVectorQuestVarGetX("TempGas"),trVectorQuestVarGetY("TempGas"),trVectorQuestVarGetZ("TempGas"));
-				trMutateSelected(kbGetProtoUnitID("Harpy"));
-				trUnitSelectClear();
-				trUnitSelect(""+temp);
-				trSetSelectedHeight(-10.0);
-				trUnitSelectClear();
-				trUnitSelect(""+temp);
-				trSetSelectedScale(0,0,0);
-				trUnitSelectClear();
-				trUnitSelect(""+temp);
-				trUnitOverrideAnimation(1,0,false,true,-1,-1);
-				xFreeDatabaseBlock(dGasPocket);
+			for(p = 1; <= cNumberNonGaiaPlayers){
+				if(trDistanceBetweenVectorsSquared("TempGas", "P"+p+"Pos") < 30){
+					int temp = trGetNextUnitScenarioNameNumber();
+					trArmyDispatch("0,0", "Dwarf", 1, 1,1,1, 0, true);
+					trUnitSelectClear();
+					trUnitSelect(""+temp);
+					trUnitSelectClear();
+					trUnitSelect(""+temp);
+					trUnitTeleport(trVectorQuestVarGetX("TempGas"),trVectorQuestVarGetY("TempGas"),trVectorQuestVarGetZ("TempGas"));
+					trMutateSelected(kbGetProtoUnitID("Harpy"));
+					trUnitSelectClear();
+					trUnitSelect(""+temp);
+					trSetSelectedHeight(-10.0);
+					trUnitSelectClear();
+					trUnitSelect(""+temp);
+					trSetSelectedScale(0,0,0);
+					trUnitSelectClear();
+					trUnitSelect(""+temp);
+					trUnitOverrideAnimation(1,0,false,true,-1,-1);
+					xFreeDatabaseBlock(dGasPocket);
+					trUnitSelectClear();
+					trUnitSelectByQV("P"+p+"Siphon");
+					trDamageUnit(400);
+					trChatSendToPlayer(0, p, "<color=1,0,0>You hit a gas pocket!</color>");
+					if(trCurrentPlayer() == p){
+						trSoundPlayFN("meteorbighit.wav","1",-1,"","");
+						trSoundPlayFN("uprootbirth.wav","1",-1,"","");
+					}
+				}
 			}
 		}
 		

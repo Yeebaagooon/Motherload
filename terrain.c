@@ -616,16 +616,17 @@ highFrequency
 		terrainAmbient(55,55,100);
 		xAddDatabaseBlock(dGasPocket, true);
 		xSetPointer(dGasPocket, 1);
-		xSetInt(dGasPocket, xGasCol, 1);
-		xSetInt(dGasPocket, xGasRow, 20);
-		xAddDatabaseBlock(dGasPocket, true);
-		xSetPointer(dGasPocket, 2);
-		xSetInt(dGasPocket, xGasCol, 2);
+		trQuestVarSetFromRand("temp", 1, 20);
+		xSetInt(dGasPocket, xGasCol, 1*trQuestVarGet("temp"));
 		xSetInt(dGasPocket, xGasRow, 19);
-		xAddDatabaseBlock(dGasPocket, true);
-		xSetPointer(dGasPocket, 3);
-		xSetInt(dGasPocket, xGasCol, 2);
-		xSetInt(dGasPocket, xGasRow, 20);
+		for(x=2; < 5*cNumberNonGaiaPlayers){
+			xAddDatabaseBlock(dGasPocket, true);
+			xSetPointer(dGasPocket, x);
+			trQuestVarSetFromRand("temp", 1, 20);
+			xSetInt(dGasPocket, xGasCol, 1*trQuestVarGet("temp"));
+			trQuestVarSetFromRand("temp", 1, 17);
+			xSetInt(dGasPocket, xGasRow, 1*trQuestVarGet("temp"));
+		}
 	}
 	xsDisableSelf();
 }
@@ -779,6 +780,42 @@ highFrequency
 					trQuestVarSetFromRand("Temp",1,6);
 					if(1*trQuestVarGet("Temp") == 3){
 						trQuestVarSetFromRand("Temp2",4,6);
+						spawnRelicSpecific(v,1*trQuestVarGet("Temp2"));
+					}
+				}
+			}
+			if(Stage == 5){
+				//iron first two rows
+				if(row == 18){
+					spawnRelicSpecific(v,3);
+				}
+				else if((row == 17)){
+					trQuestVarSetFromRand("Temp",1,12);
+					if(1*trQuestVarGet("Temp") == 1){
+						spawnRelicSpecific(v,5);
+					}
+					else if(1*trQuestVarGet("Temp") == 2){
+						spawnRelicSpecific(v,7);
+					}
+				}
+				else if((row > 10) && (row <= 16)){
+					trQuestVarSetFromRand("Temp",1,13);
+					trQuestVarSetFromRand("Temp2",4,7);
+					if(1*trQuestVarGet("Temp") <= cNumberNonGaiaPlayers){
+						spawnRelicSpecific(v,1*trQuestVarGet("Temp2"));
+					}
+				}
+				else if((row > 5) && (row <= 10)){
+					trQuestVarSetFromRand("Temp",1,9);
+					trQuestVarSetFromRand("Temp2",5,8);
+					if(1*trQuestVarGet("Temp") <= cNumberNonGaiaPlayers){
+						spawnRelicSpecific(v,1*trQuestVarGet("Temp2"));
+					}
+				}
+				else if(row <= 5){
+					trQuestVarSetFromRand("Temp",1,7);
+					if(1*trQuestVarGet("Temp") == 3){
+						trQuestVarSetFromRand("Temp2",6,9);
 						spawnRelicSpecific(v,1*trQuestVarGet("Temp2"));
 					}
 				}

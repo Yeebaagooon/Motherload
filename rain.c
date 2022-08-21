@@ -139,6 +139,9 @@ highFrequency
 		if(Stage == 4){
 			startNPCDialog(12);
 		}
+		if(Stage == 5){
+			startNPCDialog(14);
+		}
 	}
 	xsEnableRule("FuelEconomy");
 	xsEnableRule("StageTimer");
@@ -354,7 +357,12 @@ highFrequency
 				}
 				else{
 					FuelLoss(p);
-					xSetInt(dPlayerData, xDepth, (MaxRows*8-1*trVectorQuestVarGetZ("P"+p+"Pos"))*10-10);
+					if(Stage != 5){
+						xSetInt(dPlayerData, xDepth, (MaxRows*8-1*trVectorQuestVarGetZ("P"+p+"Pos"))*10-10);
+					}
+					else{
+						xSetInt(dPlayerData, xDepth, (MaxRows*8-1*trVectorQuestVarGetZ("P"+p+"Pos"))*15-15);
+					}
 				}
 			}
 			else{
