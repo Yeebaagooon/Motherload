@@ -1,4 +1,5 @@
-const int RELIC_NUMBER = 9;
+const int RELIC_NUMBER = 11;
+
 const int RELIC_IRON = 1;
 const int RELIC_BRONZE = 2;
 const int RELIC_SILVER = 3;
@@ -8,8 +9,12 @@ const int RELIC_URANIUM = 6;
 const int RELIC_RUBY = 7;
 const int RELIC_SAPPHIRE = 8;
 const int RELIC_DIAMOND = 9;
+const int RELIC_PROMETHIUM = 10;
+const int RELIC_EINSTEINIUM = 11;
 
 const int URANIUM_DAMAGE = 1;
+const int PROMETHIUM_DAMAGE = 2;
+const int EINSTEINIUM_DAMAGE = 3;
 
 string relicName(int relic = 0) {
 	string msg = "WTF That's not a relic!";
@@ -50,6 +55,14 @@ string relicName(int relic = 0) {
 		case RELIC_DIAMOND:
 		{
 			msg = "Diamond";
+		}
+		case RELIC_PROMETHIUM:
+		{
+			msg = "Promethium";
+		}
+		case RELIC_EINSTEINIUM:
+		{
+			msg = "Einsteinium";
 		}
 	}
 	return(msg);
@@ -95,6 +108,14 @@ int relicCost(int relic = 0) {
 		{
 			price = 15;
 		}
+		case RELIC_PROMETHIUM:
+		{
+			price = 25;
+		}
+		case RELIC_EINSTEINIUM:
+		{
+			price = 35;
+		}
 	}
 	return(price);
 }
@@ -138,6 +159,14 @@ string RelicColour(int relic = 0) {
 		case RELIC_DIAMOND:
 		{
 			colour = "1,1,1";
+		}
+		case RELIC_PROMETHIUM:
+		{
+			colour = "0.26,0.88,0.6";
+		}
+		case RELIC_EINSTEINIUM:
+		{
+			colour = "0.01,0.27,0.76";
 		}
 	}
 	return(colour);
@@ -183,6 +212,14 @@ string relicIcon(int relic = 0) {
 		{
 			icon = "icons\building lighthouse icon 64";
 		}
+		case RELIC_PROMETHIUM:
+		{
+			icon = "icons\special x promethean icons 64";
+		}
+		case RELIC_EINSTEINIUM:
+		{
+			icon = "icons\hero g physician icon";
+		}
 	}
 	return(icon);
 }
@@ -227,6 +264,14 @@ int relicProto(int relic = 0) {
 		{
 			proto = kbGetProtoUnitID("Lighthouse");
 		}
+		case RELIC_PROMETHIUM:
+		{
+			proto = kbGetProtoUnitID("Titan Prometheus");
+		}
+		case RELIC_EINSTEINIUM:
+		{
+			proto = kbGetProtoUnitID("Physician");
+		}
 	}
 	return(proto);
 }
@@ -249,6 +294,12 @@ void spawnRelicSpecific(vector v = vector (0,0,0), int val = 1){
 	xSetInt(dFreeRelics, xRelicTick, (trTimeMS()+50));
 	if(xGetInt(dFreeRelics, xRelicValue) == RELIC_URANIUM){
 		xSetInt(dFreeRelics, xRelicDamage, URANIUM_DAMAGE);
+	}
+	else if(xGetInt(dFreeRelics, xRelicValue) == RELIC_PROMETHIUM){
+		xSetInt(dFreeRelics, xRelicDamage, PROMETHIUM_DAMAGE);
+	}
+	else if(xGetInt(dFreeRelics, xRelicValue) == RELIC_EINSTEINIUM){
+		xSetInt(dFreeRelics, xRelicDamage, EINSTEINIUM_DAMAGE);
 	}
 	else{
 		xSetInt(dFreeRelics, xRelicDamage, 0);
@@ -324,6 +375,12 @@ void processFreeRelics(int count = 1) {
 					if(xGetInt(dFreeRelics, xRelicValue) == RELIC_URANIUM){
 						xSetInt(dHeldRelics, xRelicDamage, URANIUM_DAMAGE);
 					}
+					else if(xGetInt(dFreeRelics, xRelicValue) == RELIC_PROMETHIUM){
+						xSetInt(dHeldRelics, xRelicDamage, PROMETHIUM_DAMAGE);
+					}
+					else if(xGetInt(dFreeRelics, xRelicValue) == RELIC_EINSTEINIUM){
+						xSetInt(dHeldRelics, xRelicDamage, EINSTEINIUM_DAMAGE);
+					}
 					else{
 						xSetInt(dHeldRelics, xRelicDamage, 0);
 					}
@@ -367,6 +424,12 @@ void processHeldRelics(int count = 1) {
 				if(xGetInt(dHeldRelics, xRelicValue) == RELIC_URANIUM){
 					xSetInt(dFreeRelics, xRelicDamage, 1);
 				}
+				else if(xGetInt(dFreeRelics, xRelicValue) == RELIC_PROMETHIUM){
+					xSetInt(dHeldRelics, xRelicDamage, PROMETHIUM_DAMAGE);
+				}
+				else if(xGetInt(dFreeRelics, xRelicValue) == RELIC_EINSTEINIUM){
+					xSetInt(dHeldRelics, xRelicDamage, EINSTEINIUM_DAMAGE);
+				}
 				else{
 					xSetInt(dFreeRelics, xRelicDamage, 0);
 				}
@@ -399,7 +462,7 @@ void processHeldRelics(int count = 1) {
 				}
 			}
 		}
-		if(xGetInt(dHeldRelics, xRelicValue) == RELIC_URANIUM){
+		if(xGetInt(dHeldRelics, xRelicValue) == RELIC_URANIUM || xGetInt(dHeldRelics, xRelicValue) == RELIC_PROMETHIUM || xGetInt(dHeldRelics, xRelicValue) == RELIC_EINSTEINIUM){
 			if(trTimeMS() > xGetInt(dHeldRelics, xRelicTick)){
 				for(p=1; < cNumberNonGaiaPlayers) {
 					trDamageUnitsInArea(p,"All",4, xGetInt(dHeldRelics, xRelicDamage));

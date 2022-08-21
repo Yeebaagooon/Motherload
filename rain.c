@@ -243,6 +243,12 @@ int GetHullShop(float x = 0){
 	else if((x > Hull2XMin*2) && (x < Hull2XMax*2)){
 		return(2);
 	}
+	else if((x > Hull3XMin*2) && (x < Hull3XMax*2)){
+		return(3);
+	}
+	else if((x > Hull4XMin*2) && (x < Hull4XMax*2)){
+		return(4);
+	}
 	else{
 		return(0);
 	}
@@ -310,7 +316,12 @@ highFrequency
 				}
 				if((trVectorQuestVarGetX("P"+p+"Pos") > Shop2XMin*2) && (trVectorQuestVarGetX("P"+p+"Pos") < Shop2XMax*2)){
 					if (trPlayerResourceCount(p, "Gold") >= Shop2Cost) {
-						ColouredChatToPlayer(p, "1,0.5,0", "Dynamite purchased (<u>W</u>).");
+						if(Stage != 6){
+							ColouredChatToPlayer(p, "1,0.5,0", "Dynamite purchased (<u>W</u>).");
+						}
+						else if(Stage == 6){
+							ColouredChatToPlayer(p, "1,0.5,0", "Plastic explosive purchased (<u>W</u>).");
+						}
 						grantGodPowerNoRechargeNextPosition(p, "Audrey", 1);
 						trPlayerGrantResources(p, "Gold", -1*Shop2Cost);
 					}

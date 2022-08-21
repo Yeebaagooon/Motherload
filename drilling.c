@@ -1,5 +1,30 @@
 void MineSquare(int row = 0, int col = 0){
 	trPaintTerrain(col*4-3,row*4-3,col*4-1,row*4-1,5,3,false);
+	//Blow up gas pocket
+	for (x= xGetDatabaseCount(dGasPocket); > 0) {
+		xDatabaseNext(dGasPocket);
+		if((xGetInt(dGasPocket, xGasCol) == col) && (xGetInt(dGasPocket, xGasRow) == row)){
+			trVectorQuestVarSet("TempGas", xsVectorSet(8*xGetInt(dGasPocket, xGasCol)-4,3,8*xGetInt(dGasPocket, xGasRow)-4));
+			int temp = trGetNextUnitScenarioNameNumber();
+			trArmyDispatch("0,0", "Dwarf", 1, 1,1,1, 0, true);
+			trUnitSelectClear();
+			trUnitSelect(""+temp);
+			trUnitSelectClear();
+			trUnitSelect(""+temp);
+			trUnitTeleport(trVectorQuestVarGetX("TempGas"),trVectorQuestVarGetY("TempGas"),trVectorQuestVarGetZ("TempGas"));
+			trMutateSelected(kbGetProtoUnitID("Harpy"));
+			trUnitSelectClear();
+			trUnitSelect(""+temp);
+			trSetSelectedHeight(-10.0);
+			trUnitSelectClear();
+			trUnitSelect(""+temp);
+			trSetSelectedScale(0,0,0);
+			trUnitSelectClear();
+			trUnitSelect(""+temp);
+			trUnitOverrideAnimation(1,0,false,true,-1,-1);
+			xFreeDatabaseBlock(dGasPocket);
+		}
+	}
 }
 
 void RemoveBlack(int row = 0, int col = 0){
@@ -68,12 +93,12 @@ highFrequency
 				trUnitSelectClear();
 				trUnitSelectByQV("P"+p+"Siphon");
 				trMutateSelected(kbGetUnitBaseTypeID(kbGetBlockID(""+1*trQuestVarGet("P"+p+"Siphon"))));
-				trUnitTeleport(190,0,190);
+				trUnitTeleport(150,0,190);
 				trQuestVarSet("P"+p+"RainTime", trTime()+2);
 				if(trCurrentPlayer() == p){
 					trOverlayText("Emergency surface teleport!", 4, -1,-1,-1);
 					uiZoomToProto("Hero Greek Atalanta");
-					trCameraCut(vector(157.841461,153.803818,55.919525), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
+					trCameraCut(vector(107.841461,153.803818,55.919525), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
 				}
 			}
 		}
@@ -230,7 +255,6 @@ highFrequency
 				}
 				break;
 			}
-			//maybe move a } up here?
 			else{
 				trChatSendToPlayer(0, p, "<color=1,0,0>Dynamite error - target too far. Use adjacent to your ship.</color>");
 				if(trCurrentPlayer() == p){
@@ -243,6 +267,61 @@ highFrequency
 	}
 }
 
+rule AudreyL2
+inactive
+highFrequency
+{
+	for(p = 1; <= cNumberNonGaiaPlayers){
+		if (trPlayerUnitCountSpecific(p, "Audrey") == 1) {
+			yFindLatestReverse("p"+p+"DragonObject", "Audrey", p);
+			trVectorSetUnitPos("BombVector"+p+"", "p"+p+"DragonObject", true);
+			trMutateSelected(kbGetProtoUnitID("Rocket"));
+			unitTransform("Audrey Base", "Rocket");
+			trVectorSetUnitPos("SiphonPos"+p+"", "P"+p+"Siphon");
+			trVectorSnapToGrid("SiphonPos"+p+"");
+			int Col = (trVectorQuestVarGetX("SiphonPos"+p+"") ) / 8 +1;
+			int Row = (trVectorQuestVarGetZ("SiphonPos"+p+"") ) / 8 +1;
+			if(Row <= MaxRows){
+				if(Row < MaxRows){MineSquare(Row+1, Col+1);
+					MineSquare(Row+1, Col);
+					MineSquare(Row+1, Col-1);
+				}
+				MineSquare(Row, Col+1);
+				MineSquare(Row, Col-1);
+				MineSquare(Row-1, Col+1);
+				MineSquare(Row-1, Col);
+				MineSquare(Row-1, Col-1);
+				if(Row < MaxRows){RemoveBlack(Row+1, Col+1);
+					RemoveBlack(Row+1, Col);
+					RemoveBlack(Row+1, Col-1);
+				}
+				RemoveBlack(Row, Col+1);
+				RemoveBlack(Row, Col-1);
+				RemoveBlack(Row-1, Col+1);
+				RemoveBlack(Row-1, Col);
+				RemoveBlack(Row-1, Col-1);
+				int temp = trGetNextUnitScenarioNameNumber();
+				trArmyDispatch("0,0","Dwarf",1,trVectorQuestVarGetX("P"+p+"Pos"),0,trVectorQuestVarGetZ("P"+p+"Pos"),0,true);
+				trArmySelect("0,0");
+				trUnitChangeProtoUnit("Spy Eye");
+				trUnitSelectClear();
+				trUnitSelect(""+temp, true);
+				trMutateSelected(kbGetProtoUnitID("Hades Door"));
+				trSetSelectedScale(0,0,0);
+				trUnitOverrideAnimation(25,0,false,false,-1);
+				trUnitSetAnimationPath("3,0,0,0,0,0,0");
+				trSetUnitOrientation(vector(0,1,0),vector(1,0,0),true);
+			}
+			else{
+				trChatSendToPlayer(0, p, "<color=1,0,0>Plastic explosive error - can't use on the surface.</color>");
+				if(trCurrentPlayer() == p){
+					trSoundPlayFN("cantdothat.wav","1",-1,"","");
+				}
+				grantGodPowerNoRechargeNextPosition(p, "Audrey", 1);
+			}
+		}
+	}
+}
 
 
 rule lure

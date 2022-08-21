@@ -42,6 +42,10 @@ float Hull1XMin = 10;
 float Hull1XMax = 0;
 float Hull2XMin = 10;
 float Hull2XMax = 0;
+float Hull3XMin = 10;
+float Hull3XMax = 0;
+float Hull4XMin = 10;
+float Hull4XMax = 0;
 
 //---
 int Shop1XMin = 0;

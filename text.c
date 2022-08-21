@@ -474,6 +474,37 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				}
 			}
 		}
+		case 16:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("This planet is toxic, we can't stay here too long!");
+				}
+				case 2:
+				{
+					uiMessageBox("There is an abundance of rare radioactive minerals.");
+				}
+				case 3:
+				{
+					trCameraCut(vector(96.952896,98.965134,89.240631), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
+					uiMessageBox("We upgraded and changed the shop to help out a bit!");
+					dialog = 0;
+				}
+			}
+		}
+		case 17:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Plastic explosive. Instantly mines all squares around you. Cost = " + Shop2Cost);
+					dialog = 0;
+				}
+			}
+		}
 		case 101:
 		{
 			switch(dialog)
