@@ -52,6 +52,10 @@ int Shop3XMin = 0;
 int Shop3XMax = 0;
 int Shop3Item = 0;
 int Shop3Cost = 0;
+int Shop4XMin = 0;
+int Shop4XMax = 0;
+int Shop4Item = 0;
+int Shop4Cost = 0;
 
 /* TEMPORARY TEST VARS */
 //float P1DrillPower = 10;

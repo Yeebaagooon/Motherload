@@ -30,6 +30,8 @@ runImmediately
 	trFadeOutMusic(0.1);
 	trUIFadeToColor(1,0,0,0,0,true);
 	trBlockAllSounds(true);
+	xsDisableRule("BasicVC1");
+	xsDisableRule("BasicVC2");
 	
 	//trSetFogAndBlackmap(false, false);
 	%
@@ -533,6 +535,46 @@ void PaintPlanets(int x = 0, int z = 0, int offsetearth = 0){
 	trUnitSelectByQV("QVHero");
 	trSetUnitOrientation(xsVectorSet(trQuestVarGet("tempCosH"),0,trQuestVarGet("tempSinH")),xsVectorSet(trQuestVarGet("tempSinT")*trQuestVarGet("tempSinH"),
 			trQuestVarGet("tempCosT"),0.0-trQuestVarGet("tempSinT")*trQuestVarGet("tempCosH")),true);
+	//EYECANDY PLANET 5
+	if(offsetearth == 0){
+		FloatingUnitAnimIdle("Implode Sphere", x*2+60, 10, z*2+10, 0, 3,3,3);
+	}
+	if(offsetearth == 1){
+		FloatingUnitAnimIdle("Implode Sphere", x*2+40, 10, z*2, 0, 3,3,3);
+	}
+	//FloatingUnit("Implode Sphere", x*2+60, 8, z*2+10, 0, 2,2,2);
+	xAddDatabaseBlock(dPlanetEyecandy, true);
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVRelic"));
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 5);
+	xAddDatabaseBlock(dPlanetEyecandy, true);
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVHero"));
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 5);
+	if(offsetearth == 0){
+		FloatingUnitAnimIdle("Gaia Forest effect", x*2+60, 9, z*2+10, 0, 1,1,1);
+	}
+	if(offsetearth == 1){
+		FloatingUnitAnimIdle("Gaia Forest effect", x*2+40, 9, z*2, 0, 1,1,1);
+	}
+	//FloatingUnit("Gaia Forest effect", x*2+60, 8, z*2+10, 0, 1,1,1);
+	xAddDatabaseBlock(dPlanetEyecandy, true);
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVRelic"));
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 5);
+	xAddDatabaseBlock(dPlanetEyecandy, true);
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVHero"));
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 5);
+	if(offsetearth == 0){
+		FloatingUnitAnimIdle("Valkyrie", x*2+60, 10, z*2+10, 0, 0,0,0);
+	}
+	if(offsetearth == 1){
+		FloatingUnitAnimIdle("Valkyrie", x*2+40, 10, z*2, 0, 0,0,0);
+	}
+	//FloatingUnit("Gaia Forest effect", x*2+60, 8, z*2+10, 0, 1,1,1);
+	xAddDatabaseBlock(dPlanetEyecandy, true);
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVRelic"));
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 5);
+	xAddDatabaseBlock(dPlanetEyecandy, true);
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVHero"));
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 5);
 	//END
 }
 
@@ -629,6 +671,8 @@ highFrequency
 			xDatabaseNext(dPlanetEyecandy);
 			xUnitSelect(dPlanetEyecandy,xPlanetEyecandyName);
 			trUnitDestroy();
+			xsEnableRule("BasicVC1");
+			xsEnableRule("BasicVC2");
 		}
 		aiPlanDestroy(dPlanetEyecandy);
 		/*int limit = trGetNextUnitScenarioNameNumber()-1;

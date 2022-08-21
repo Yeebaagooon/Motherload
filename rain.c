@@ -166,6 +166,10 @@ highFrequency
 			StageTime = 480; //480
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
 		}
+		if(Stage == 5){
+			StageTime = 480; //480
+			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
+		}
 		xsDisableSelf();
 		xsEnableRule("StageEnd");
 	}
@@ -300,6 +304,25 @@ highFrequency
 						ColouredChatToPlayer(p, "1,0.5,0", "Emergency teleport purchased (<u>E</u>).");
 						grantGodPowerNoRechargeNextPosition(p, "Rain", 1);
 						trPlayerGrantResources(p, "Gold", -1*Shop3Cost);
+					}
+					else{
+						ColouredChatToPlayer(p, "1,0,0", "You do not have enough gold to buy this item!");
+					}
+				}
+				if((trVectorQuestVarGetX("P"+p+"Pos") > Shop4XMin*2) && (trVectorQuestVarGetX("P"+p+"Pos") < Shop4XMax*2)){
+					if (trPlayerResourceCount(p, "Gold") >= Shop4Cost) {
+						trUnitSelectClear();
+						trUnitSelectByQV("P"+p+"Siphon");
+						if(trUnitPercentDamaged() != 0){
+							ColouredChatToPlayer(p, "1,0.5,0", "250hp hull repaired.");
+							trPlayerGrantResources(p, "Gold", -1*Shop4Cost);
+							trUnitSelectClear();
+							trUnitSelectByQV("P"+p+"Siphon");
+							trDamageUnit(-250);
+						}
+						else{
+							ColouredChatToPlayer(p, "1,0,0", "You are at full health.");
+						}
 					}
 					else{
 						ColouredChatToPlayer(p, "1,0,0", "You do not have enough gold to buy this item!");

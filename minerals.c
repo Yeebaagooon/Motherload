@@ -185,7 +185,7 @@ void spawnRelicSpecific(vector v = vector (0,0,0), int val = 1){
 	xSetInt(dFreeRelics, xRelicValue, val);
 	xSetInt(dFreeRelics, xRelicTick, (trTimeMS()+50));
 	if(xGetInt(dFreeRelics, xRelicValue) == RELIC_URANIUM){
-		xSetInt(dFreeRelics, xRelicDamage, 1);
+		xSetInt(dFreeRelics, xRelicDamage, URANIUM_DAMAGE);
 	}
 	else{
 		xSetInt(dFreeRelics, xRelicDamage, 0);
@@ -417,6 +417,38 @@ highFrequency
 {
 	processFreeRelics(10);
 	processHeldRelics(10);
+	
+	if(trTime() > 1*trQuestVarGet("TimeSeconds")){
+		trQuestVarModify("TimeSeconds", "+", 1);
+		for (x= xGetDatabaseCount(dGasPocket); > 0) {
+			xDatabaseNext(dGasPocket);
+			trVectorQuestVarSet("TempGas", xsVectorSet(8*xGetInt(dGasPocket, xGasCol)-4,3,8*xGetInt(dGasPocket, xGasRow)-4));
+			//trVectorQuestVarEcho("TempGas");
+			//trVectorQuestVarEcho("P1Pos");
+			if(distanceBetweenVectors(trVectorQuestVarGet("TempGas"),trVectorQuestVarGet("P1Pos")) < 8){
+				int temp = trGetNextUnitScenarioNameNumber();
+				trArmyDispatch("0,0", "Dwarf", 1, 1,1,1, 0, true);
+				trUnitSelectClear();
+				trUnitSelect(""+temp);
+				trUnitSelectClear();
+				trUnitSelect(""+temp);
+				trUnitTeleport(trVectorQuestVarGetX("TempGas"),trVectorQuestVarGetY("TempGas"),trVectorQuestVarGetZ("TempGas"));
+				trMutateSelected(kbGetProtoUnitID("Harpy"));
+				trUnitSelectClear();
+				trUnitSelect(""+temp);
+				trSetSelectedHeight(-10.0);
+				trUnitSelectClear();
+				trUnitSelect(""+temp);
+				trSetSelectedScale(0,0,0);
+				trUnitSelectClear();
+				trUnitSelect(""+temp);
+				trUnitOverrideAnimation(1,0,false,true,-1,-1);
+				xFreeDatabaseBlock(dGasPocket);
+			}
+		}
+		
+	}
+	
 	//trChatSend(0, "Free relics = "+xGetDatabaseCount(dFreeRelics)+"");
 	/* relics dropped */
 	/*

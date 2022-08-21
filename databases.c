@@ -38,6 +38,10 @@ int dSelectables = 0;
 int xSelectablesName = 0;
 int xSelectablesPrompt = 0;
 
+int dGasPocket = 0;
+int xGasCol = 0;
+int xGasRow = 0;
+
 int spysearch = 0;
 int spyreset = 0;
 int spyProto = 0;
@@ -92,6 +96,11 @@ highFrequency
 	xFuel = xInitAddFloat(dPlayerData, "fuel", 1000);
 	xDepth = xInitAddInt(dPlayerData, "depth", 0);
 	
+	//GasPockets
+	dGasPocket = xInitDatabase("GasPocket");
+	xGasRow = xInitAddInt(dGasPocket, "gasrow", 0);
+	xGasCol = xInitAddInt(dGasPocket, "gascol", 0);
+	
 	//LEVELS -- all set to 0 at start as for new players and then data read will update them
 	xDrillLevel = xInitAddInt(dPlayerData, "Drill level", 1);
 	xHullLevel = xInitAddInt(dPlayerData, "Hull level", 1);
@@ -111,9 +120,9 @@ rule fill_database
 inactive
 highFrequency
 {
-	for(p=1; < 7) {
+	for(p=1; < cNumberNonGaiaPlayers) {
 		xAddDatabaseBlock(dPlayerData, true);
-		xSetPointer(dPlayerData, 1);
+		xSetPointer(dPlayerData, p);
 		xSetFloat(dPlayerData, xDrillPower, 10);
 		//Sets the drill power for that player (1)
 	}
