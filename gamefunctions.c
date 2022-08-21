@@ -17,6 +17,14 @@ const int CliffGreekA = 15;
 const int CliffA = 16;
 const int CliffPlainA = 17;
 const int Hades4Passable = 18;
+const int ShorelinePlainB = 19;
+const int ShorelineNorwegianB = 20;
+const int UnderwaterRockC = 21;
+const int UnderwaterRockB = 22;
+const int UnderwaterRockD = 23;
+const int UnderwaterRockE = 24;
+const int UnderwaterRockF = 25;
+const int Hades5 = 26;
 
 void RockType(int rock = 0) {
 	switch(rock)
@@ -114,6 +122,48 @@ void RockType(int rock = 0) {
 			TERRAIN_TYPE = 5;
 			TERRAIN_SUBTYPE = 7;
 		}
+		
+		case ShorelinePlainB:
+		{
+			TERRAIN_TYPE = 4;
+			TERRAIN_SUBTYPE = 25;
+		}
+		case ShorelineNorwegianB:
+		{
+			TERRAIN_TYPE = 4;
+			TERRAIN_SUBTYPE = 8;
+		}
+		case UnderwaterRockC:
+		{
+			TERRAIN_TYPE = 3;
+			TERRAIN_SUBTYPE = 2;
+		}
+		case UnderwaterRockB:
+		{
+			TERRAIN_TYPE = 3;
+			TERRAIN_SUBTYPE = 1;
+		}
+		case UnderwaterRockD:
+		{
+			TERRAIN_TYPE = 3;
+			TERRAIN_SUBTYPE = 3;
+		}
+		case UnderwaterRockE:
+		{
+			TERRAIN_TYPE = 3;
+			TERRAIN_SUBTYPE = 4;
+		}
+		case UnderwaterRockF:
+		{
+			TERRAIN_TYPE = 3;
+			TERRAIN_SUBTYPE = 5;
+		}
+		case Hades5:
+		{
+			TERRAIN_TYPE = 2;
+			TERRAIN_SUBTYPE = 8;
+		}
+		
 	}
 }
 
@@ -169,7 +219,6 @@ int GetRockHardness(int rock = 0) {
 		{
 			return(150);
 		}
-		
 		case CliffA:
 		{
 			return(175);
@@ -185,6 +234,38 @@ int GetRockHardness(int rock = 0) {
 		case CliffPlainA:
 		{
 			return(250);
+		}
+		case ShorelinePlainB:
+		{
+			return(275);
+		}
+		case ShorelineNorwegianB:
+		{
+			return(300);
+		}
+		case UnderwaterRockC:
+		{
+			return(350);
+		}
+		case UnderwaterRockB:
+		{
+			return(375);
+		}
+		case UnderwaterRockD:
+		{
+			return(400);
+		}
+		case UnderwaterRockE:
+		{
+			return(450);
+		}
+		case UnderwaterRockF:
+		{
+			return(500);
+		}
+		case Hades5:
+		{
+			return(300);
 		}
 		
 		
@@ -250,8 +331,36 @@ int GetRockType(int t = 0, int st = 0){
 		if(st == 4){
 			return(CliffJungleA);
 		}
+		if(st == 8){
+			return(Hades5);
+		}
 		if(st == 10){
 			return(Hades7); //lava
+		}
+	}
+	else if(t == 3){
+		if(st == 1){
+			return(UnderwaterRockB);
+		}
+		if(st == 2){
+			return(UnderwaterRockC);
+		}
+		if(st == 3){
+			return(UnderwaterRockD);
+		}
+		if(st == 4){
+			return(UnderwaterRockE);
+		}
+		if(st == 5){
+			return(UnderwaterRockF);
+		}
+	}
+	else if(t == 4){
+		if(st == 8){
+			return(ShorelineNorwegianB);
+		}
+		if(st == 25){
+			return(ShorelinePlainB);
 		}
 	}
 	else if(t == 5){

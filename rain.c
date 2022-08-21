@@ -170,7 +170,11 @@ highFrequency
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
 		}
 		if(Stage == 5){
-			StageTime = 480; //480
+			StageTime = 500; //480
+			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
+		}
+		if(Stage == 6){
+			StageTime = 420; //480
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
 		}
 		xsDisableSelf();
@@ -226,6 +230,18 @@ int GetFuelPump(float x = 0, float z = 0){
 		if((z > FSTwoZMin) && (z < FSTwoZMax)){
 			return(2);
 		}return(0);
+	}
+	else{
+		return(0);
+	}
+}
+
+int GetHullShop(float x = 0){
+	if((x > Hull1XMin*2) && (x < Hull1XMax*2)){
+		return(1);
+	}
+	else if((x > Hull2XMin*2) && (x < Hull2XMax*2)){
+		return(2);
 	}
 	else{
 		return(0);
@@ -329,6 +345,27 @@ highFrequency
 					}
 					else{
 						ColouredChatToPlayer(p, "1,0,0", "You do not have enough gold to buy this item!");
+					}
+				}
+				if((trVectorQuestVarGetX("P"+p+"Pos") > Hull1XMin*2) && (trVectorQuestVarGetX("P"+p+"Pos") < 200)){
+					if(GetHullShop(trVectorQuestVarGetX("P"+p+"Pos")) != 0){
+						if (trPlayerResourceCount(p, "Gold") >= HullCost*GetHullShop(trVectorQuestVarGetX("P"+p+"Pos"))) {
+							trUnitSelectClear();
+							trUnitSelectByQV("P"+p+"Siphon");
+							if(trUnitPercentDamaged() != 0){
+								ColouredChatToPlayer(p, "1,0.5,0", ""+250*GetHullShop(trVectorQuestVarGetX("P"+p+"Pos"))+"" + " hp hull repaired.");
+								trPlayerGrantResources(p, "Gold", -1*HullCost*GetHullShop(trVectorQuestVarGetX("P"+p+"Pos")));
+								trUnitSelectClear();
+								trUnitSelectByQV("P"+p+"Siphon");
+								trDamageUnit(-250*GetHullShop(trVectorQuestVarGetX("P"+p+"Pos")));
+							}
+							else{
+								ColouredChatToPlayer(p, "1,0,0", "You are at full health.");
+							}
+						}
+						else{
+							ColouredChatToPlayer(p, "1,0,0", "You do not have enough gold to buy this item!");
+						}
 					}
 				}
 			}

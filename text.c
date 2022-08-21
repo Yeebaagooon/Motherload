@@ -24,7 +24,7 @@ string stageName(int stage = 0) {
 		}
 		case 6:
 		{
-			name = "Planet 6 name";
+			name = "Curie";
 		}
 		case 7:
 		{
@@ -66,11 +66,11 @@ string stageIcon(int stage = 0) {
 			}
 			case 3:
 			{
-				img = "icons/improvement landlord spirit icon";
+				img = "icons\improvement landlord spirit icon";
 			}
 			case 4:
 			{
-				img = "icons/improvement lord of the river icon";
+				img = "icons\improvement lord of the river icon";
 			}
 			case 5:
 			{
@@ -78,7 +78,7 @@ string stageIcon(int stage = 0) {
 			}
 			case 6:
 			{
-				img = "icons\building siege workshop icon 64";
+				img = "icons\improvement life drain icon";
 			}
 			case 7:
 			{
@@ -443,7 +443,8 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				}
 				case 3:
 				{
-					uiMessageBox("We've also extended your permit to allow you to drill a bit deeper.");
+					trCameraCut(vector(146.952896,98.965134,111.240631), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
+					uiMessageBox("The hull repair mechanic is now the same as refuelling.");
 				}
 				case 4:
 				{
@@ -454,6 +455,21 @@ int npcDiag(int npc = 0, int dialog = 0) {
 					trCameraCut(vector(100.463554,153.803818,-59.088593), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
 					uiZoomToProto("Hero Greek Atalanta");
 					//uiMessageBox("Make 10 gold in 8 minutes to unlock the next planet.");
+					dialog = 0;
+				}
+			}
+		}
+		case 15:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Hull repair. Cost = " + HullCost + " per 250hp");
+				}
+				case 2:
+				{
+					uiMessageBox("Each flag will repair 250hp x the value stated.");
 					dialog = 0;
 				}
 			}

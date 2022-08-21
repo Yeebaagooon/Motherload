@@ -38,6 +38,10 @@ float FSTwoXMin = 10;
 float FSTwoXMax = 0;
 float FSTwoZMin = 10;
 float FSTwoZMax = 0;
+float Hull1XMin = 10;
+float Hull1XMax = 0;
+float Hull2XMin = 10;
+float Hull2XMax = 0;
 
 //---
 int Shop1XMin = 0;
@@ -56,6 +60,7 @@ int Shop4XMin = 0;
 int Shop4XMax = 0;
 int Shop4Item = 0;
 int Shop4Cost = 0;
+int HullCost = 0;
 
 /* TEMPORARY TEST VARS */
 //float P1DrillPower = 10;

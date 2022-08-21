@@ -27,6 +27,11 @@ void GroundType(int rock = 0) {
 			OVERTERRAIN_TYPE = 4;
 			OVERTERRAIN_SUBTYPE = 15;
 		}
+		case 6:
+		{
+			OVERTERRAIN_TYPE = 2;
+			OVERTERRAIN_SUBTYPE = 6;
+		}
 	}
 }
 
@@ -216,6 +221,48 @@ highFrequency
 						}
 						else{
 							RockType(17);
+						}
+					}
+				}
+				if(Stage == 6){
+					if(row > 18){
+						RockType(19);
+					}
+					else if((row > 15) && (row <= 18 )){
+						trQuestVarSetFromRand("Temp",19,21,true);
+						RockType(1*trQuestVarGet("Temp"));
+					}
+					else if((row > 9) && (row <= 15 )){
+						trQuestVarSetFromRand("Lava",1,10,true);
+						trQuestVarSetFromRand("Temp",20,23,true);
+						if(1*trQuestVarGet("Lava") == 1){
+							RockType(18);
+						}
+						else{
+							RockType(1*trQuestVarGet("Temp"));
+						}
+					}
+					else if((row > 3) && (row <= 9 )){
+						trQuestVarSetFromRand("Temp",21,24,true);
+						trQuestVarSetFromRand("Lava",1,8,true);
+						if(1*trQuestVarGet("Lava") == 1){
+							RockType(26);
+						}
+						else{
+							RockType(1*trQuestVarGet("Temp"));
+						}
+					}
+					else if(row == 2){
+						RockType(26);
+					}
+					else{
+						trQuestVarSetFromRand("Temp",22,25,true);
+						trQuestVarSetFromRand("Lava",1,6,true);
+						if(1*trQuestVarGet("Lava") == 1){
+							RockType(26);
+						}
+						else{
+							RockType(1*trQuestVarGet("Temp"));
 						}
 					}
 				}
@@ -540,6 +587,34 @@ highFrequency
 		PaintSmelter(20,180);
 		PaintSellTerrain(15,89);
 		SelectableSign(31, 180, 3);
+		PaintHullTerrain(80,97);
+		Hull1XMin = 88;
+		Hull1XMax = 90;
+		Hull2XMin = 91;
+		Hull2XMax = 93;
+		HullCost = 2;
+		PaintAtlantisArea(Hull1XMin,95,Hull1XMax,97,"GrassA");
+		PaintAtlantisArea(Hull2XMin,95,Hull2XMax,97,"GrassB");
+		SelectableSign(167, 197, 15);
+		temp = trGetNextUnitScenarioNameNumber();
+		trArmyDispatch("0,0", "Dwarf", 1, 179,3,196, 0, true);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitChangeProtoUnit("Flag Numbered");
+		trUnitSetVariation(temp, 0);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trSetSelectedScale(2,2,2);
+		temp = trGetNextUnitScenarioNameNumber();
+		trArmyDispatch("0,0", "Dwarf", 1, 185,3,196, 0, true);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitChangeProtoUnit("Flag Numbered");
+		trUnitSetVariation(temp, 1);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trSetSelectedScale(2,2,2);
+		
 		PaintFuelTerrain(80,89);
 		//fuel full pump
 		SelectableSign(167, 181, 11);
@@ -583,18 +658,13 @@ highFrequency
 		Shop3XMin = 51;
 		Shop3XMax = 53;
 		Shop3Cost = 25;
-		Shop4XMin = 55;
-		Shop4XMax = 57;
-		Shop4Cost = 2;
 		PaintAtlantisArea(Shop1XMin,95,Shop1XMax,97,"CityTileAtlantis");
 		PaintAtlantisArea(Shop2XMin,95,Shop2XMax,97,"UnderwaterRockF"); //UnderwaterRockF
 		PaintAtlantisArea(Shop3XMin,95,Shop3XMax,97,"UnderwaterIceC"); //UnderwaterIceC
-		PaintAtlantisArea(Shop4XMin,95,Shop4XMax,97,"CityTileWaterPool");
 		xsEnableRule("ExtraShop");
 		SelectableSign(88, 197, 7);
 		SelectableSign(96, 197, 8);
 		SelectableSign(104, 197, 9);
-		SelectableSign(112, 197, 13);
 		xsEnableRule("Audrey");
 		xsEnableRule("Rain");
 		xsEnableRule("Ragnorok");
