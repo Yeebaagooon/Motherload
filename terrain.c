@@ -32,7 +32,7 @@ void GroundType(int rock = 0) {
 			OVERTERRAIN_TYPE = 2;
 			OVERTERRAIN_SUBTYPE = 6;
 		}
-				case 7:
+		case 7:
 		{
 			OVERTERRAIN_TYPE = 4;
 			OVERTERRAIN_SUBTYPE = 36;

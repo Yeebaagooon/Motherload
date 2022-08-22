@@ -2,12 +2,12 @@ rule TimesUp
 inactive
 highFrequency
 {
-	saveAllData();
 	xsDisableSelf();
 	xsDisableRule("CheckResigns");
 	xsDisableRule("FuelEconomy");
 	trSetFogAndBlackmap(false, false);
 	trLetterBox(true);
+	saveAllData();
 	for(p = 1; < cNumberNonGaiaPlayers){
 		trUnitSelectByQV("P"+p+"Siphon");
 		trUnitChangeProtoUnit("Hero Death");
