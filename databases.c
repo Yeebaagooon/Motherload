@@ -42,6 +42,10 @@ int dGasPocket = 0;
 int xGasCol = 0;
 int xGasRow = 0;
 
+int dDestroyMe = 0;
+int xDestroyName = 0;
+int xDestroyTime = 0;
+
 int spysearch = 0;
 int spyreset = 0;
 int spyProto = 0;
@@ -100,6 +104,10 @@ highFrequency
 	dGasPocket = xInitDatabase("GasPocket");
 	xGasRow = xInitAddInt(dGasPocket, "gasrow", 0);
 	xGasCol = xInitAddInt(dGasPocket, "gascol", 0);
+	
+	dDestroyMe = xInitDatabase("Destroy");
+	xDestroyName = xInitAddInt(dDestroyMe, "unitname");
+	xDestroyTime = xInitAddInt(dDestroyMe, "timetodie", 1500);
 	
 	//LEVELS -- all set to 0 at start as for new players and then data read will update them
 	xDrillLevel = xInitAddInt(dPlayerData, "Drill level", 1);

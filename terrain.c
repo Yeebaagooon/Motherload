@@ -617,7 +617,7 @@ highFrequency
 		
 		PaintFuelTerrain(80,89);
 		//fuel full pump
-		SelectableSign(167, 181, 11);
+		SelectableSign(167, 181, 18);
 		PaintAtlantisArea(88,87,90,89,"GrassA");
 		FSOneXMin = 176;
 		FSOneXMax = 182;
@@ -757,7 +757,7 @@ highFrequency
 		
 		PaintFuelTerrain(80,89);
 		//fuel full pump
-		SelectableSign(167, 181, 11);
+		SelectableSign(167, 181, 18);
 		PaintAtlantisArea(88,87,90,89,"GrassA");
 		FSOneXMin = 176;
 		FSOneXMax = 182;

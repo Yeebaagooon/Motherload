@@ -87,6 +87,9 @@ highFrequency
 	trQuestVarSet("DrillCostL4", 60);
 	trQuestVarSet("DrillPowerL4", 47);
 	trStringQuestVarSet("DrillL4", "Titanium Drill");
+	trQuestVarSet("DrillCostL5", 100);
+	trQuestVarSet("DrillPowerL5", 70);
+	trStringQuestVarSet("DrillL5", "Osmium Drill");
 	
 	//HULL UPGRADES
 	trQuestVarSet("HullCostL2", 10);
@@ -100,6 +103,9 @@ highFrequency
 	trQuestVarSet("HullCostL4", 100);
 	trQuestVarSet("HullHPL4", 1000);
 	trStringQuestVarSet("HullL4", "Titanium hull");
+	trQuestVarSet("HullCostL5", 150);
+	trQuestVarSet("HullHPL5", 1500);
+	trStringQuestVarSet("HullL5", "Composite alloy hull");
 	
 	//Fuel UPGRADES
 	trQuestVarSet("FuelCostL2", 10);
@@ -113,6 +119,9 @@ highFrequency
 	trQuestVarSet("FuelCostL4", 80);
 	trQuestVarSet("FuelCL4", 2000);
 	trStringQuestVarSet("FuelL4", "Compression tank");
+	trQuestVarSet("FuelCostL5", 100);
+	trQuestVarSet("FuelCL5", 2500);
+	trStringQuestVarSet("FuelL5", "Crucible tank");
 	
 	//Cargo UPGRADES
 	trQuestVarSet("CargoCostL2", 10);
@@ -126,6 +135,9 @@ highFrequency
 	trQuestVarSet("CargoCostL4", 70);
 	trQuestVarSet("CargoCL4", 6);
 	trStringQuestVarSet("CargoL4", "Expanded Hold");
+	trQuestVarSet("CargoCostL5", 100);
+	trQuestVarSet("CargoCL5", 7);
+	trStringQuestVarSet("CargoL5", "Multi-Slot Hold");
 	
 	//Engine UPGRADES
 	trQuestVarSet("EngineCostL2", 10);
@@ -139,6 +151,9 @@ highFrequency
 	trQuestVarSet("EngineCostL4", 90);
 	trQuestVarSet("EngineCL4", 75);
 	trStringQuestVarSet("EngineL4", "Zebraforce engine");
+	trQuestVarSet("EngineCostL5", 110);
+	trQuestVarSet("EngineCL5", 110);
+	trStringQuestVarSet("EngineL5", "Crocodileslam engine");
 	
 	//Radiator UPGRADES
 	trQuestVarSet("RadiatorCostL2", 10);
@@ -152,4 +167,7 @@ highFrequency
 	trQuestVarSet("RadiatorCostL4", 80);
 	trQuestVarSet("RadiatorCL4", 30);
 	trStringQuestVarSet("RadiatorL4", "Vitality Radiator");
+	trQuestVarSet("RadiatorCostL5", 100);
+	trQuestVarSet("RadiatorCL5", 36);
+	trStringQuestVarSet("RadiatorL5", "Conduction Radiator");
 }

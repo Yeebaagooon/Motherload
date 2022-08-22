@@ -505,6 +505,21 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				}
 			}
 		}
+		case 18:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Each flag gives 1000x the number on the flag as litres of fuel");
+				}
+				case 2:
+				{
+					uiMessageBox("Fuel is " + 1*FuelCost + " gold per 1000L");
+					dialog = 0;
+				}
+			}
+		}
 		case 101:
 		{
 			switch(dialog)

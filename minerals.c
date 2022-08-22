@@ -546,6 +546,14 @@ highFrequency
 	
 	if(trTime() > 1*trQuestVarGet("TimeSeconds")){
 		trQuestVarModify("TimeSeconds", "+", 1);
+		for (x= xGetDatabaseCount(dDestroyMe); > 0) {
+			xDatabaseNext(dDestroyMe);
+			if(trTimeMS() > xGetInt(dDestroyMe, xDestroyTime)){
+				trUnitSelect(""+xGetInt(dDestroyMe, xDestroyName));
+				trUnitDestroy();
+				xFreeDatabaseBlock(dDestroyMe);
+			}
+		}
 		for (x= xGetDatabaseCount(dGasPocket); > 0) {
 			xDatabaseNext(dGasPocket);
 			trVectorQuestVarSet("TempGas", xsVectorSet(8*xGetInt(dGasPocket, xGasCol)-4,3,8*xGetInt(dGasPocket, xGasRow)-4));
@@ -571,6 +579,9 @@ highFrequency
 					trUnitSelect(""+temp);
 					trUnitOverrideAnimation(1,0,false,true,-1,-1);
 					xFreeDatabaseBlock(dGasPocket);
+					xAddDatabaseBlock(dDestroyMe, true);
+					xSetInt(dDestroyMe, xDestroyName, temp);
+					xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+2000);
 					trUnitSelectClear();
 					trUnitSelectByQV("P"+p+"Siphon");
 					trDamageUnit(400);

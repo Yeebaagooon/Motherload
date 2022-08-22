@@ -1,5 +1,6 @@
 void MineSquare(int row = 0, int col = 0){
 	trPaintTerrain(col*4-3,row*4-3,col*4-1,row*4-1,5,3,false);
+	trArmyDispatch("0,0", "Revealer", 1, col*8-4, 1, row*8-4, 180, true);
 	//Blow up gas pocket
 	for (x= xGetDatabaseCount(dGasPocket); > 0) {
 		xDatabaseNext(dGasPocket);
@@ -23,6 +24,10 @@ void MineSquare(int row = 0, int col = 0){
 			trUnitSelect(""+temp);
 			trUnitOverrideAnimation(1,0,false,true,-1,-1);
 			xFreeDatabaseBlock(dGasPocket);
+			trUnitSelectClear();
+			xAddDatabaseBlock(dDestroyMe);
+			xSetInt(dDestroyMe, xDestroyName, temp);
+			xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+1500);
 		}
 	}
 }
@@ -311,6 +316,10 @@ highFrequency
 				trUnitOverrideAnimation(25,0,false,false,-1);
 				trUnitSetAnimationPath("3,0,0,0,0,0,0");
 				trSetUnitOrientation(vector(0,1,0),vector(1,0,0),true);
+				trUnitSelectClear();
+				xAddDatabaseBlock(dDestroyMe);
+				xSetInt(dDestroyMe, xDestroyName, temp);
+				xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+1500);
 			}
 			else{
 				trChatSendToPlayer(0, p, "<color=1,0,0>Plastic explosive error - can't use on the surface.</color>");
