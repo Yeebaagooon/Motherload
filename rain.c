@@ -88,6 +88,7 @@ highFrequency
 				trQuestVarSet("P"+p+"MainSpy", trGetNextUnitScenarioNameNumber());
 				trTechInvokeGodPower(0, "spy", vector(0,0,0), vector(0,0,0));*/
 				//trDelayedRuleActivation("ChangeMainSpy1");
+				xSetInt(dPlayerData, xGold, 1*trQuestVarGet("p"+p+"goldGrant"));
 				trPlayerGrantResources(p, "Gold", 1*trQuestVarGet("p"+p+"goldGrant"));
 				xSetFloat(dPlayerData, xFuel, xGetInt(dPlayerData, xFuelTank));
 			}
@@ -282,7 +283,7 @@ void FuelBuy(int p = 0){
 					else if(Stage != 1){
 						xSetFloat(dPlayerData, xFuel, xGetFloat(dPlayerData, xFuel)+1000*GetFuelPump(trVectorQuestVarGetX("P"+p+"Pos"),trVectorQuestVarGetZ("P"+p+"Pos")));
 						xSetInt(dPlayerData, xFuelCountdown, 0);
-						trPlayerGrantResources(p, "Gold", -1*FuelCost*GetFuelPump(trVectorQuestVarGetX("P"+p+"Pos"),trVectorQuestVarGetZ("P"+p+"Pos")));
+						xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*FuelCost*GetFuelPump(trVectorQuestVarGetX("P"+p+"Pos"),trVectorQuestVarGetZ("P"+p+"Pos")));
 						ColouredChatToPlayer(p, "0,1,0", "Refuel complete.");
 						spyEffect(1*trQuestVarGet("P"+p+"Siphon"), kbGetProtoUnitID("Mountain Giant"), vector(0,0,0), vector(0,0,0), 18);
 						if(xGetFloat(dPlayerData, xFuel) > xGetInt(dPlayerData,xFuelTank)){
@@ -303,12 +304,13 @@ highFrequency
 {
 	if(trTime() > 1*trQuestVarGet("ShopTimer")){
 		for(p = 1; <= cNumberNonGaiaPlayers){
+			xSetPointer(dPlayerData, p);
 			if((trVectorQuestVarGetZ("P"+p+"Pos") > 190) && (trVectorQuestVarGetZ("P"+p+"Pos") < 196)){
 				if((trVectorQuestVarGetX("P"+p+"Pos") > Shop1XMin*2) && (trVectorQuestVarGetX("P"+p+"Pos") < Shop1XMax*2)){
 					if (trPlayerResourceCount(p, "Gold") >= Shop1Cost) {
 						ColouredChatToPlayer(p, "1,0.5,0", "Emergency fuel tank purchased (<u>R</u>).");
 						grantGodPowerNoRechargeNextPosition(p, "Ragnorok", 1);
-						trPlayerGrantResources(p, "Gold", -1*Shop1Cost);
+						xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*Shop1Cost);
 					}
 					else{
 						ColouredChatToPlayer(p, "1,0,0", "You do not have enough gold to buy this item!");
@@ -323,7 +325,7 @@ highFrequency
 							ColouredChatToPlayer(p, "1,0.5,0", "Plastic explosive purchased (<u>W</u>).");
 						}
 						grantGodPowerNoRechargeNextPosition(p, "Audrey", 1);
-						trPlayerGrantResources(p, "Gold", -1*Shop2Cost);
+						xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*Shop2Cost);
 					}
 					else{
 						ColouredChatToPlayer(p, "1,0,0", "You do not have enough gold to buy this item!");
@@ -333,7 +335,7 @@ highFrequency
 					if (trPlayerResourceCount(p, "Gold") >= Shop3Cost) {
 						ColouredChatToPlayer(p, "1,0.5,0", "Emergency teleport purchased (<u>E</u>).");
 						grantGodPowerNoRechargeNextPosition(p, "Rain", 1);
-						trPlayerGrantResources(p, "Gold", -1*Shop3Cost);
+						xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*Shop3Cost);
 					}
 					else{
 						ColouredChatToPlayer(p, "1,0,0", "You do not have enough gold to buy this item!");
@@ -345,7 +347,7 @@ highFrequency
 						trUnitSelectByQV("P"+p+"Siphon");
 						if(trUnitPercentDamaged() != 0){
 							ColouredChatToPlayer(p, "1,0.5,0", "250hp hull repaired.");
-							trPlayerGrantResources(p, "Gold", -1*Shop4Cost);
+							xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*Shop4Cost);
 							trUnitSelectClear();
 							trUnitSelectByQV("P"+p+"Siphon");
 							trDamageUnit(-250);
@@ -365,7 +367,7 @@ highFrequency
 							trUnitSelectByQV("P"+p+"Siphon");
 							if(trUnitPercentDamaged() != 0){
 								ColouredChatToPlayer(p, "1,0.5,0", ""+250*GetHullShop(trVectorQuestVarGetX("P"+p+"Pos"))+"" + " hp hull repaired.");
-								trPlayerGrantResources(p, "Gold", -1*HullCost*GetHullShop(trVectorQuestVarGetX("P"+p+"Pos")));
+								xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*HullCost*GetHullShop(trVectorQuestVarGetX("P"+p+"Pos")));
 								trUnitSelectClear();
 								trUnitSelectByQV("P"+p+"Siphon");
 								trDamageUnit(-250*GetHullShop(trVectorQuestVarGetX("P"+p+"Pos")));

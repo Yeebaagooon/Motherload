@@ -446,7 +446,8 @@ void processHeldRelics(int count = 1) {
 					spyEffect(1*trQuestVarGet("P"+dropper+"Siphon"), kbGetProtoUnitID("Automaton"), vector(0,0,0), vector(0,0,0), 18);
 					//trMutateSelected(kbGetProtoUnitID("Rocket"));
 					xUnitSelect(dHeldRelics, xRelicName);
-					trPlayerGrantResources(dropper, "Gold", 1*relicCost(1*xGetInt(dHeldRelics, xRelicValue)));
+					xSetPointer(dPlayerData, p);
+					xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)+1*relicCost(1*xGetInt(dHeldRelics, xRelicValue)));
 					if (trCurrentPlayer() == dropper) {
 						//trChatSend(0, relicName(xGetInt(dHeldRelics, xRelicValue)) + " sold!");
 						trQuestVarModify("P"+dropper+"R"+1*xGetInt(dHeldRelics, xRelicValue)+"", "+", 1);
@@ -543,6 +544,13 @@ highFrequency
 {
 	processFreeRelics(10);
 	processHeldRelics(10);
+	for(p=1; < cNumberNonGaiaPlayers) {
+		xSetPointer(dPlayerData, p);
+		if(trPlayerResourceCount(p, "Gold") != xGetInt(dPlayerData, xGold)){
+			trPlayerGrantResources(p, "Gold", -1000000);
+			trPlayerGrantResources(p, "Gold", xGetInt(dPlayerData, xGold));
+		}
+	}
 	
 	if(trTime() > 1*trQuestVarGet("TimeSeconds")){
 		trQuestVarModify("TimeSeconds", "+", 1);

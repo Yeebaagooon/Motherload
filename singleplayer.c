@@ -10,6 +10,7 @@ void LoadDataSP(int p = -1){
 	loaddatasp = 0;
 	loaddatasp = trGetScenarioUserData(1);
 	trPlayerGrantResources(1, "Gold", loaddatasp);
+	xSetInt(dPlayerData, xGold, loaddatasp);
 	loaddatasp = 0;
 	//SLOT 2, DRILL LEVEL
 	loaddatasp = trGetScenarioUserData(2);

@@ -28,7 +28,7 @@ string stageName(int stage = 0) {
 		}
 		case 7:
 		{
-			name = "Planet 7 name";
+			name = "Riddel";
 		}
 		case 8:
 		{
