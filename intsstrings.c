@@ -79,16 +79,16 @@ highFrequency
 	trQuestVarSet("DrillCostL2", 10);
 	trQuestVarSet("DrillCostL3", 30);
 	trQuestVarSet("DrillPowerL1", 10);
-	trQuestVarSet("DrillPowerL2", 18);
-	trQuestVarSet("DrillPowerL3", 30);
+	trQuestVarSet("DrillPowerL2", 25);
+	trQuestVarSet("DrillPowerL3", 47);
 	trStringQuestVarSet("DrillL1", "Iron Drill");
 	trStringQuestVarSet("DrillL2", "Steel Drill");
 	trStringQuestVarSet("DrillL3", "Aluminium Drill");
-	trQuestVarSet("DrillCostL4", 60);
+	trQuestVarSet("DrillCostL4", 70);
 	trQuestVarSet("DrillPowerL4", 47);
 	trStringQuestVarSet("DrillL4", "Titanium Drill");
 	trQuestVarSet("DrillCostL5", 100);
-	trQuestVarSet("DrillPowerL5", 70);
+	trQuestVarSet("DrillPowerL5", 110);
 	trStringQuestVarSet("DrillL5", "Osmium Drill");
 	
 	//HULL UPGRADES
@@ -104,7 +104,7 @@ highFrequency
 	trQuestVarSet("HullHPL4", 1000);
 	trStringQuestVarSet("HullL4", "Titanium hull");
 	trQuestVarSet("HullCostL5", 150);
-	trQuestVarSet("HullHPL5", 1500);
+	trQuestVarSet("HullHPL5", 1750);
 	trStringQuestVarSet("HullL5", "Composite alloy hull");
 	
 	//Fuel UPGRADES
@@ -115,7 +115,7 @@ highFrequency
 	trQuestVarSet("FuelCL3", 1500);
 	trStringQuestVarSet("FuelL1", "Standard tank");
 	trStringQuestVarSet("FuelL2", "Injector tank");
-	trStringQuestVarSet("FuelL3", "Vaccum tank");
+	trStringQuestVarSet("FuelL3", "Vacuum tank");
 	trQuestVarSet("FuelCostL4", 80);
 	trQuestVarSet("FuelCL4", 2000);
 	trStringQuestVarSet("FuelL4", "Compression tank");
@@ -168,6 +168,6 @@ highFrequency
 	trQuestVarSet("RadiatorCL4", 30);
 	trStringQuestVarSet("RadiatorL4", "Vitality Radiator");
 	trQuestVarSet("RadiatorCostL5", 100);
-	trQuestVarSet("RadiatorCL5", 36);
+	trQuestVarSet("RadiatorCL5", 40);
 	trStringQuestVarSet("RadiatorL5", "Conduction Radiator");
 }

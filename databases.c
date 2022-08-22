@@ -33,6 +33,7 @@ int xFuelLevel = 1;
 int xCargoLevel = 1;
 int xEngineLevel = 1;
 int xRadiatorLevel = 1;
+int xGold = 0;
 
 int dSelectables = 0;
 int xSelectablesName = 0;
@@ -99,6 +100,7 @@ highFrequency
 	xFuelTank = xInitAddInt(dPlayerData, "fueltank", 1000);
 	xFuel = xInitAddFloat(dPlayerData, "fuel", 1000);
 	xDepth = xInitAddInt(dPlayerData, "depth", 0);
+	xGold = xInitAddInt(dPlayerData, "gold", 0);
 	
 	//GasPockets
 	dGasPocket = xInitDatabase("GasPocket");
