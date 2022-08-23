@@ -38,6 +38,13 @@ highFrequency
 	trModifyProtounit("Wadjet Spit", 0, 8, -1000);
 	trModifyProtounit("Athena", 1, 1, 4);
 	trModifyProtounit("Meteorite", 0, 8, 4);
+	xsDisableSelf();
+}
+
+rule PlayerStats
+inactive
+highFrequency
+{
 	for(p = 1; <= cNumberNonGaiaPlayers){
 		trModifyProtounit("Dwarf", p, 55, 4);
 		trModifyProtounit("Audrey", p, 55, 4);

@@ -14,8 +14,6 @@ bool OverrideStage = true;
 int Stage = 0;
 int StageTime = 0;
 int savedata = 0;
-int loadProgress = 0;
-int currentdata = 0;
 string MapVersion = "Test Version";
 string MapName = "Motherload.xs";
 int MaxRows = 20;
@@ -69,6 +67,70 @@ int HullCost = 0;
 /* TEMPORARY TEST VARS */
 //float P1DrillPower = 10;
 
+//---PLAYER DATA
+int dPlayerData = 0;
+float xDrillPower = 0;
+int xHullHP = 0;
+int xEnginePower = 0;
+int xRadiator = 0;
+int xCargoHold = 3;
+int xFuelTank = 1000;
+float xFuel = 0;
+int xDepth = 0;
+int xFuelCountdown = 0;
+int xFuelCountdownTime = 0;
+int xFuelActivationTime = 0;
+int dObelisks = 0;
+int xObeliskName = 0;
+int xObeliskStage = 0;
+int dPlanetEyecandy = 0;
+int xPlanetEyecandyName = 0;
+int xPlanetEyecandyStage = 0;
+int xPlayerActive = 0;
+int xDrillLevel = 1;
+int xHullLevel = 1;
+int xFuelLevel = 1;
+int xCargoLevel = 1;
+int xEngineLevel = 1;
+int xRadiatorLevel = 1;
+int xGold = 0;
+int xGoldStart = 0;
+int xStageUnlocked = 0;
+int xStageStatus = 0;
+
+rule setup_first_databases
+active
+highFrequency
+{
+	dPlayerData = xInitDatabase("playerData");
+	xDrillPower = xInitAddFloat(dPlayerData, "drillpower", 10);
+	xHullHP = xInitAddInt(dPlayerData, "hullhp", 100);
+	xEnginePower = xInitAddInt(dPlayerData, "enginepower", 10);
+	xRadiator = xInitAddInt(dPlayerData, "radiator", 10);
+	xCargoHold = xInitAddInt(dPlayerData, "cargohold", 2);
+	xFuelTank = xInitAddInt(dPlayerData, "fueltank", 1000);
+	xFuel = xInitAddFloat(dPlayerData, "fuel", 1000);
+	xDepth = xInitAddInt(dPlayerData, "depth", 0);
+	xGold = xInitAddInt(dPlayerData, "gold", 0);
+	xGoldStart = xInitAddInt(dPlayerData, "goldstart", 0);
+	xStageUnlocked = xInitAddInt(dPlayerData, "stage", 0);
+	xStageStatus = xInitAddInt(dPlayerData, "stagestatus", 0);
+	//LEVELS -- all set to 0 at start as for new players and then data read will update them
+	xDrillLevel = xInitAddInt(dPlayerData, "Drill level", 1);
+	xHullLevel = xInitAddInt(dPlayerData, "Hull level", 1);
+	xFuelLevel = xInitAddInt(dPlayerData, "Fuel level", 1);
+	xCargoLevel = xInitAddInt(dPlayerData, "Cargo level", 1);
+	xEngineLevel = xInitAddInt(dPlayerData, "Engine level", 1);
+	xRadiatorLevel = xInitAddInt(dPlayerData, "Radiator level", 1);
+	xFuelCountdown = xInitAddInt(dPlayerData, "fuel countdown boolean", 0);
+	xFuelCountdownTime = xInitAddInt(dPlayerData, "fuel countdown time", 3);
+	xFuelActivationTime = xInitAddInt(dPlayerData, "fuel activation time", 10000);
+	xPlayerActive = xInitAddInt(dPlayerData, "is player alive", 1);
+	xsDisableSelf();
+	for(p=1; <= cNumberNonGaiaPlayers) {
+		xAddDatabaseBlock(dPlayerData, true);
+	}
+}
 
 rule CostofLevels
 active

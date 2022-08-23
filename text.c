@@ -120,6 +120,7 @@ int npcDiag(int npc = 0, int dialog = 0) {
 	dialog = dialog + 1;
 	string extra = "";
 	string yesPrompt = "";
+	int p = trCurrentPlayer();
 	switch(npc)
 	{
 		/*
@@ -207,7 +208,10 @@ int npcDiag(int npc = 0, int dialog = 0) {
 					trCameraCut(vector(100.463554,153.803818,-59.088593), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
 					uiZoomToProto("Hero Greek Atalanta");
 					trMessageSetText("Click the flashing signs on type 'help' for further information.", 10000);
-					//uiMessageBox("Make 10 gold in 8 minutes to unlock the next planet.");
+					xSetPointer(dPlayerData, p);
+					if(xGetInt(dPlayerData, xStageUnlocked) == 0){
+						uiMessageBox("Make 10 gold in 8 minutes to unlock the next planet.");
+					}
 					dialog = 0;
 				}
 			}

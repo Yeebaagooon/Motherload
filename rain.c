@@ -25,7 +25,7 @@ highFrequency
 void CustomContent(int p = 0){
 	xsDisableSelf();
 	trQuestVarSet("CustomContent", 1);
-	trChatSend(0, "Custom Content enabled!");
+	ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Custom Content enabled!");
 }
 
 rule SPCineChoice
@@ -88,8 +88,13 @@ highFrequency
 				trQuestVarSet("P"+p+"MainSpy", trGetNextUnitScenarioNameNumber());
 				trTechInvokeGodPower(0, "spy", vector(0,0,0), vector(0,0,0));*/
 				//trDelayedRuleActivation("ChangeMainSpy1");
-				xSetInt(dPlayerData, xGold, 1*trQuestVarGet("p"+p+"goldGrant"));
-				trPlayerGrantResources(p, "Gold", 1*trQuestVarGet("p"+p+"goldGrant"));
+				xSetInt(dPlayerData, xGoldStart, xGetInt(dPlayerData, xGold));
+				xSetFloat(dPlayerData, xDrillPower ,1*trQuestVarGet("DrillPowerL"+xGetInt(dPlayerData, xDrillLevel)+""));
+				xSetInt(dPlayerData, xHullHP ,1*trQuestVarGet("HullHPL"+xGetInt(dPlayerData, xHullLevel)+""));
+				xSetInt(dPlayerData, xFuelTank ,1*trQuestVarGet("FuelCL"+xGetInt(dPlayerData, xFuelLevel)+""));
+				xSetInt(dPlayerData, xCargoHold ,1*trQuestVarGet("CargoCL"+xGetInt(dPlayerData, xCargoLevel)+""));
+				xSetInt(dPlayerData, xEnginePower ,1*trQuestVarGet("EngineCL"+xGetInt(dPlayerData, xEngineLevel)+""));
+				xSetInt(dPlayerData, xRadiator ,1*trQuestVarGet("RadiatorCL"+xGetInt(dPlayerData, xRadiatorLevel)+""));
 				xSetFloat(dPlayerData, xFuel, xGetInt(dPlayerData, xFuelTank));
 			}
 			//trChatSend(0, "P"+p+"gold is " + 1*trQuestVarGet("p"+p+"goldGrant"));
@@ -144,9 +149,12 @@ highFrequency
 			startNPCDialog(14);
 		}
 	}
+	xSetPointer(dPlayerData, 1);
+	//trChatSend(0, ""+xGetInt(dPlayerData, xDrillLevel));
 	xsEnableRule("FuelEconomy");
 	xsEnableRule("StageTimer");
-	xsEnableRule("CheckResigns");
+	//xsEnableRule("CheckResigns");
+	xsEnableRule("PlayerStats");
 }
 
 rule StageTimer

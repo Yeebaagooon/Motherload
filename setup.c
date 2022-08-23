@@ -12,12 +12,6 @@ for(x = 1; <= 9){
 }
 
 */
-const int TOTAL_LOAD = 13;
-
-void showLoadProgress() {
-	trSoundPlayFN("default","1",-1,"Loading Data:"+100 * loadProgress / TOTAL_LOAD,"icons\god power reverse time icons 64");
-}
-
 
 rule Initialise
 active
@@ -77,46 +71,6 @@ highFrequency
 		trQuestVarSet("PlayerID2", trQuestVarGet("PlayerID2")+1);}
 	trQuestVarSet("PlayerID", trQuestVarGet("PlayerID")+1);}
 	
-	//SWRODSMEN DEPLOY
-	int DeployXX = 20;
-	if(aiIsMultiplayer() == false){
-		if(OverrideSP == false){
-			trDelayedRuleActivation("load1");
-		}
-		else if(OverrideSP == true){
-			for(p=1; < cNumberNonGaiaPlayers) {
-				trModifyProtounit("Swordsman Hero", p, 6, -100);
-				trModifyProtounit("Swordsman Hero", p, 16, 9999999999999999999.0);
-				trModifyProtounit("Swordsman Hero", p, 17, 9999999999999999999.0);
-				trModifyProtounit("Swordsman Hero", p, 18, 9999999999999999999.0);
-				trModifyProtounit("Swordsman Hero", p, 19, 9999999999999999999.0);
-				trModifyProtounit("Swordsman Hero", p, 16, -9999999999999999999.0);
-				trModifyProtounit("Swordsman Hero", p, 17, -9999999999999999999.0);
-				trModifyProtounit("Swordsman Hero", p, 18, -9999999999999999999.0);
-				trModifyProtounit("Swordsman Hero", p, 19, -9999999999999999999.0);
-				trArmyDispatch(""+p+",0","Swordsman", 10, DeployXX,0,10,0,true);
-				DeployXX = DeployXX + 20;
-			}
-			xsEnableRule("data_load_01_ready");
-		}
-	}
-	else if(aiIsMultiplayer() == true){
-		for(p=1; < cNumberNonGaiaPlayers) {
-			trModifyProtounit("Swordsman Hero", p, 6, -100);
-			trModifyProtounit("Swordsman Hero", p, 16, 9999999999999999999.0);
-			trModifyProtounit("Swordsman Hero", p, 17, 9999999999999999999.0);
-			trModifyProtounit("Swordsman Hero", p, 18, 9999999999999999999.0);
-			trModifyProtounit("Swordsman Hero", p, 19, 9999999999999999999.0);
-			trModifyProtounit("Swordsman Hero", p, 16, -9999999999999999999.0);
-			trModifyProtounit("Swordsman Hero", p, 17, -9999999999999999999.0);
-			trModifyProtounit("Swordsman Hero", p, 18, -9999999999999999999.0);
-			trModifyProtounit("Swordsman Hero", p, 19, -9999999999999999999.0);
-			trArmyDispatch(""+p+",0","Swordsman", 10, DeployXX,0,10,0,true);
-			DeployXX = DeployXX + 20;
-		}
-		xsEnableRule("data_load_01_ready");
-	}
-	
 	
 	//start fade to black
 	//trUIFadeToColor(1,0,0,0,0,true);
@@ -134,244 +88,173 @@ highFrequency
 	gadgetUnreal("ShowImageBox-CloseButton");
 	pause(0);
 	*/
+	xsEnableRule("setup_data");
 	characterDialog("Initialising map", " ", "icons\special e son of osiris icon 64");
 	xsDisableSelf();
 }
 
-rule data_load_01_ready
-highFrequency
-inactive
-{
-	int swordsmen = 0;
-	int total = 10 * (cNumberNonGaiaPlayers - 1);
-	for(p=1; < cNumberNonGaiaPlayers) {
-		swordsmen = swordsmen + trPlayerUnitCountSpecific(p, "Swordsman");
-	}
-	if (swordsmen == total) {
-		savedata = trGetScenarioUserData(0);
-		if (savedata < 0) {
-			savedata = 0;
-		}
-		currentdata = iModulo(10, savedata);
-		savedata = savedata / 10;
-		
-		xsEnableRule("data_load_01_load_data");
-		xsEnableRule("data_load_02_detect_data");
-		//	xsEnableRule("data_load_emergency_exit");
-		xsDisableSelf();
-	}
-}
-
 /*
-ASYNC
+README
+
+A slot can hold an integer value up to 1 billion. Make sure you're not using up all this space.
+To calculate how much space you are using in a slot, multiply together all the various sizes of
+data that are stored in that slot.
+
+In Age of Mythology, we have 16 slots to work with, numbered 0-15.
+
+Make sure that there are no units at the start of the map. If you want to do any
+map initialization suff, make sure it is done in or after the NEXT_TRIGGER_NAME trigger.
+This is to ensure that the unit names are contiguous and starting from 0, which is
+important for the data load algorithm.
+
+Also make sure that the bottom corner of the map is passable terrain at the very start. (It can be changed after data loading is done)
+
+Also, using this will modify the cost of swordsman hero to 0 and also make swordsmen flying units.
+Be wary of this side effect. You can modify it back to what you want later.
+
+There are two functions you can use to add data:
+
+////////////////////
+// addSavedDataDB //
+////////////////////
+Use this when you want to save the data in a database containing player info. This data
+will be synced with other players at the start of the map.
+
+NOTE: The database must be large enough to have an entry for each player. When data is
+loaded, it will be stored at the database <destDB> at the variable <destVar> at the index <p>,
+where p is the player. Also, the database must be declared BEFORE this function is ever
+called. You can do so by initializing the database in a highFrequency trigger that is
+active at the very start before this trigger is run.
+
+addSavedDataDB(<DB name>, <Var name>, <slot number>, <data range>);
+
+Example: addSavedDataDB(dPlayerData, xPlayerHealth, 3, 10);
+This will tell the game to keep track of the xPlayerHealth value for each player in the dPlayerData database.
+Its value ranges from 0-9 and it is stored in slot 3.
+
+////////////////////
+// addLocalDataQV //
+////////////////////
+Use this when you want to save the data in a quest var but LOCAL. This is important because
+this data is NOT transferred to other players whatsoever, and is completely local to the player.
+
+addLocalDataQV(<QV name>, <slot number>, <data range>);
+
+Example: addLocalDataQV("cow", 0, 10);
+This will tell the game to keep track of the QV "cow". Its value is limited to the range 0-9 and it is stored in slot 0.
+
+
+
+///////////////
+// IMPORTANT //
+///////////////
+DO NOT MIX LOCAL AND SAVE DATA! This is very important! Each slot must contain either local data or data that is transferred
+to other players, but never both!
 */
-rule data_load_01_load_data
-highFrequency
+
+rule setup_data
 inactive
+highFrequency
 {
-	trLetterBox(false);
-	trBlockAllSounds(true);
-	if (currentdata >= 10) {
-		trSoundPlayFN("cantdothat.wav","1",-1,"Invalid code at " + loadProgress + "!","");
-	}
-	trUnitSelectClear();
-	trUnitSelectByID(currentdata + 10 * (trCurrentPlayer() - 1));
-	for(i=10; >0) {
-		if (trUnitIsSelected() == false) {
-			uiFindType("Swordsman");
-		} else {
-			break;
-		}
-	}
-	uiTransformSelectedUnit("Swordsman Hero");
-	trForceNonCinematicModels(true);
+	NEXT_TRIGGER_NAME = "load1"; // the next trigger to run after data load is complete
+	/*
+	Add data to slots here
 	
-	//trLetterBox(true);
+	EXAMPLE
+	name | slot | maximum value
+	addSavedDataQV("cow", 1, 10);
+	addSavedDataDB(dPlayerData, xPlayerGold, 0, 1000);
+	*/
 	
-	showLoadProgress();
+	/*
+	Slot 0
+	Total size: 1
+	*/
+	addSavedDataDB(dPlayerData, xStageUnlocked , 0, 10);
+	addSavedDataDB(dPlayerData, xStageStatus , 0, 4);
+	//addLocalDataQV("example", 0, 1000); // the QV "example" can have an integer value from 0-999. It is stored in the first slot
+	
+	/*
+	Slot 1
+	Total size: 1000
+	*/
+	addSavedDataDB(dPlayerData, xGold, 1, 100000);
+	/*
+	Slot 2
+	Total size: 1,000,000
+	*/
+	addSavedDataDB(dPlayerData, xDrillLevel, 2, 7);
+	
+	/*
+	Slot 3
+	Total size: 1000
+	*/
+	addSavedDataDB(dPlayerData, xHullLevel, 3, 7);
+	
+	/*
+	Slot 4
+	Total size: 0
+	*/
+	addSavedDataDB(dPlayerData, xFuelLevel, 4, 7);
+	
+	/*
+	Slot 5
+	Total size: 0
+	*/
+	addSavedDataDB(dPlayerData, xCargoLevel, 5, 7);
+	
+	/*
+	Slot 6
+	Total size: 0
+	*/
+	addSavedDataDB(dPlayerData, xEngineLevel, 6, 7);
+	
+	/*
+	Slot 7
+	Total size: 0
+	*/
+	addSavedDataDB(dPlayerData, xRadiatorLevel, 7, 7);
+	
+	/*
+	Slot 8
+	Total size: 0
+	*/
+	
+	/*
+	Slot 9
+	Total size: 0
+	*/
+	
+	/*
+	Slot 10
+	Total size: 0
+	*/
+	
+	/*
+	Slot 11
+	Total size: 0
+	*/
+	
+	/*
+	Slot 12
+	Total size: 0
+	*/
+	
+	/*
+	Slot 13
+	Total size: 0
+	*/
+	
+	/*
+	Slot 14
+	Total size: 0
+	*/
+	
+	/*
+	Slot 15
+	Total size: 0
+	*/
 	xsDisableSelf();
-}
-
-/*
-SYNC
-*/
-rule data_load_02_detect_data
-highFrequency
-inactive
-{
-	int swordsmen = 0;
-	for(p=1; < cNumberNonGaiaPlayers) {
-		swordsmen = swordsmen + trPlayerUnitCountSpecific(p, "Swordsman Hero");
-	}
-	if (swordsmen == cNumberNonGaiaPlayers - 1) { //why was this 2
-		for(p=1; < cNumberNonGaiaPlayers) {
-			if (xSetPointer(dPlayerData, p) == false) {
-				debugLog("Cannot set pointer for " + aiPlanGetName(dPlayerData) + " to: " + p);
-				//debugLog("database size is " + aiPlanGetNumberUserVariableValues(dPlayerData,xDirtyBit));
-				debugLog("Progress: " + loadProgress + " context: " + xsGetContextPlayer());
-			}
-			swordsmen = 10 * (p - 1);
-			// Check which swordsman is a hero and use his ID to figure out the number
-			for(x=0; < 10) {
-				if (kbGetUnitBaseTypeID(x + swordsmen) == kbGetProtoUnitID("Swordsman Hero")) {
-					/* read the data */
-					if (loadProgress == 0) {
-						trQuestVarSet("p"+p+"stage", x);
-						if(OverrideStage == true){
-							trQuestVarSet("p1stage", 9);
-						}
-					} else if (loadProgress < 7) {
-						// Gold
-						trQuestVarSet("p"+p+"goldGrant", trQuestVarGet("p"+p+"goldGrant") + x * xsPow(10, loadProgress - 1));
-					} else if (loadProgress == 7) {
-						xSetInt(dPlayerData, xDrillLevel, 1*xsMax(1, x));
-						xSetFloat(dPlayerData, xDrillPower, 1*trQuestVarGet("DrillPowerL"+xGetInt(dPlayerData, xDrillLevel)+""));
-					} else if (loadProgress == 8) {
-						xSetInt(dPlayerData, xHullLevel, 1*xsMax(1, x));
-						xSetInt(dPlayerData, xHullHP, 1*trQuestVarGet("HullHPL"+xGetInt(dPlayerData, xHullLevel)+""));
-					} else if (loadProgress == 9) {
-						xSetInt(dPlayerData, xFuelLevel, 1*xsMax(1, x));
-						xSetInt(dPlayerData, xFuelTank, 1*trQuestVarGet("FuelCL"+xGetInt(dPlayerData, xFuelLevel)+""));
-					} else if (loadProgress == 10) {
-						xSetInt(dPlayerData, xCargoLevel, 1*xsMax(1, x));
-						xSetInt(dPlayerData, xCargoHold, 1*trQuestVarGet("CargoCL"+xGetInt(dPlayerData, xCargoLevel)+""));
-					} else if (loadProgress == 11) {
-						xSetInt(dPlayerData, xEngineLevel, 1*xsMax(1, x));
-						xSetInt(dPlayerData, xEnginePower, 1*trQuestVarGet("EngineCL"+xGetInt(dPlayerData, xEngineLevel)+""));
-					} else if (loadProgress == 12) {
-						xSetInt(dPlayerData, xRadiatorLevel, 1*xsMax(1, x));
-						xSetInt(dPlayerData, xRadiator, 1*trQuestVarGet("RadiatorCL"+xGetInt(dPlayerData, xRadiatorLevel)+""));
-					}
-					if (p  == 1) {
-						//debugLog("digit is " + x);
-					}
-					
-					trUnitSelectClear();
-					trUnitSelectByID(x + swordsmen);
-					trMutateSelected(kbGetProtoUnitID("Swordsman"));
-					break;
-				}
-			}
-		}
-		
-		
-		loadProgress = loadProgress + 1;
-		showLoadProgress();
-		
-		
-		if (loadProgress == TOTAL_LOAD) {
-			xsDisableSelf();
-			xsEnableRule("data_load_03_done");
-		} else {
-			/* prepare the next data */
-			xsEnableRule("data_load_01_load_data");
-			switch(loadProgress)
-			{
-				case 1: // done reading slot 0.
-				{
-					savedata = trGetScenarioUserData(1);
-				}
-				case 7: // done reading slot 1.
-				{
-					savedata = trGetScenarioUserData(2);
-				}
-				case 8: // done reading slot 2.
-				{
-					savedata = trGetScenarioUserData(3);
-				}
-				case 9: // done reading slot 3.
-				{
-					savedata = trGetScenarioUserData(4);
-				}
-				case 10: // done reading slot 4.
-				{
-					savedata = trGetScenarioUserData(5);
-				}
-				case 11: // done reading slot 5.
-				{
-					savedata = trGetScenarioUserData(6);
-				}
-				case 12: // done reading slot 6.
-				{
-					savedata = trGetScenarioUserData(7);
-				}
-			}
-			if (savedata < 0) {
-				savedata = 0;
-			}
-			
-			currentdata = iModulo(10, savedata);
-			savedata = savedata / 10;
-		}
-	}
-}
-
-
-rule data_load_03_done
-highFrequency
-inactive
-{
-	/*
-	Destroy swordsmen
-	*/
-	for(x=0; < trQuestVarGet("temp")) {
-		trUnitSelectClear();
-		trUnitSelectByID(x);
-		trUnitDestroy();
-	}
-	/*
-	Deploy victory markers to avoid defeats
-	modify class hold capacity
-	*/
-	for(p=1; < cNumberNonGaiaPlayers) {
-		
-		trForbidProtounit(p, "Swordsman Hero");
-		trArmyDispatch(""+p+",0","Victory Marker",1,1,0,1,0,true);
-		trUnblockAllSounds();
-		trSoundPlayFN("favordump.wav","1",-1,"Done!","icons\god power reverse time icons 64");
-		xsDisableSelf();
-		xsEnableRule("load1");
-		unitTransform("Swordsman", "Rocket");
-		unitTransform("Swordsman Hero", "Rocket");
-	}
-}
-
-rule data_load_emergency_exit
-highFrequency
-inactive
-{
-	if (trTime() > cActivationTime + 5) {
-		xsDisableSelf();
-		if (loadProgress == 0) {
-			int x = 0;
-			for(p=1; < cNumberNonGaiaPlayers) {
-				x = x + trPlayerUnitCountSpecific(p, "Swordsman Hero");
-			}
-			if (x <= 1) {
-				trSoundPlayFN("default","1",-1,
-					"Zenophobia: Hmm, looks like AoM has sent everyone into singleplayer. Returning you to main menu now.",
-					"icons\infantry g hoplite icon 64");
-				if (trCurrentPlayer() == 1) {
-					xsEnableRule("data_load_emergency_exit_01");
-				} else {
-					xsEnableRule("data_load_emergency_exit_02");
-				}
-			}
-		}
-	}
-}
-
-rule data_load_emergency_exit_01
-highFrequency
-inactive
-{
-	if (trTime() > cActivationTime + 5) {
-		xsDisableSelf();
-		xsEnableRule("data_load_emergency_exit_02");
-		trSoundPlayFN("default","1",-1,
-			"Zenophobia:Host, make sure all spots are filled with humans and the last player is a CPU.",
-			"icons\infantry g hoplite icon 64");
-	}
 }
 
 rule data_load_emergency_exit_02
@@ -452,6 +335,27 @@ highFrequency
 	gadgetReal("ShowImageBox-BordersRightTop");
 	gadgetReal("ShowImageBox-CloseButton");
 	//startNPCDialog(1);
+	for(p = 1; <= cNumberNonGaiaPlayers){
+		xSetPointer(dPlayerData, p);
+		if(xGetInt(dPlayerData, xDrillLevel) == 0){
+			xSetInt(dPlayerData, xDrillLevel, 1);
+		}
+		if(xGetInt(dPlayerData, xHullLevel) == 0){
+			xSetInt(dPlayerData, xHullLevel, 1);
+		}
+		if(xGetInt(dPlayerData, xFuelLevel) == 0){
+			xSetInt(dPlayerData, xFuelLevel, 1);
+		}
+		if(xGetInt(dPlayerData, xCargoLevel) == 0){
+			xSetInt(dPlayerData, xCargoLevel, 1);
+		}
+		if(xGetInt(dPlayerData, xEngineLevel) == 0){
+			xSetInt(dPlayerData, xEngineLevel, 1);
+		}
+		if(xGetInt(dPlayerData, xRadiatorLevel) == 0){
+			xSetInt(dPlayerData, xRadiatorLevel, 1);
+		}
+	}
 }
 
 void PaintPlanets(int x = 0, int z = 0, int offsetearth = 0){
@@ -518,7 +422,8 @@ void PaintPlanets(int x = 0, int z = 0, int offsetearth = 0){
 		if (iModulo(2, p) == 0) { //if is divisble by 2
 			offset = 20;
 		}
-		if(1*trQuestVarGet("p1stage") > xGetInt(dObelisks, xObeliskStage)-1){
+		xSetPointer(dPlayerData, 1);
+		if(xGetInt(dPlayerData, xStageUnlocked) > xGetInt(dObelisks, xObeliskStage)-1){
 			UnitCreate(0, "Outpost", x*2+12*p, z*2+10+offset, 90);
 		}
 		else{
@@ -568,12 +473,7 @@ void PaintPlanets(int x = 0, int z = 0, int offsetearth = 0){
 	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 1);
 	trUnitSetVariation(1*trQuestVarGet("QVRelic"), 1);
 	//EYECANDY PLANET 4
-	if(offsetearth == 0){
-		FloatingUnitAnimIdle("Earth", x*2+48, 9, z*2+29, 0, 0.2,0.2,0.2);
-	}
-	if(offsetearth == 1){
-		FloatingUnitAnimIdle("Earth", x*2+28, 9, z*2+18, 0, 0.2,0.2,0.2);
-	}
+	FloatingUnitAnimIdle("Earth", x*2+48, 9, z*2+29, 0, 0.2,0.2,0.2);
 	xAddDatabaseBlock(dPlanetEyecandy, true);
 	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVRelic"));
 	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 4);
@@ -591,12 +491,7 @@ void PaintPlanets(int x = 0, int z = 0, int offsetearth = 0){
 	trSetUnitOrientation(xsVectorSet(trQuestVarGet("tempCosH"),0,trQuestVarGet("tempSinH")),xsVectorSet(trQuestVarGet("tempSinT")*trQuestVarGet("tempSinH"),
 			trQuestVarGet("tempCosT"),0.0-trQuestVarGet("tempSinT")*trQuestVarGet("tempCosH")),true);
 	//EYECANDY PLANET 5
-	if(offsetearth == 0){
-		FloatingUnitAnimIdle("Implode Sphere", x*2+60, 10, z*2+10, 0, 3,3,3);
-	}
-	if(offsetearth == 1){
-		FloatingUnitAnimIdle("Implode Sphere", x*2+40, 10, z*2, 0, 3,3,3);
-	}
+	FloatingUnitAnimIdle("Implode Sphere", x*2+60, 10, z*2+10, 0, 3,3,3);
 	//FloatingUnit("Implode Sphere", x*2+60, 8, z*2+10, 0, 2,2,2);
 	xAddDatabaseBlock(dPlanetEyecandy, true);
 	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVRelic"));
@@ -604,12 +499,7 @@ void PaintPlanets(int x = 0, int z = 0, int offsetearth = 0){
 	xAddDatabaseBlock(dPlanetEyecandy, true);
 	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVHero"));
 	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 5);
-	if(offsetearth == 0){
-		FloatingUnitAnimIdle("Gaia Forest effect", x*2+60, 9, z*2+10, 0, 1,1,1);
-	}
-	if(offsetearth == 1){
-		FloatingUnitAnimIdle("Gaia Forest effect", x*2+40, 9, z*2, 0, 1,1,1);
-	}
+	FloatingUnitAnimIdle("Gaia Forest effect", x*2+60, 9, z*2+10, 0, 1,1,1);
 	//FloatingUnit("Gaia Forest effect", x*2+60, 8, z*2+10, 0, 1,1,1);
 	xAddDatabaseBlock(dPlanetEyecandy, true);
 	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVRelic"));
@@ -617,12 +507,7 @@ void PaintPlanets(int x = 0, int z = 0, int offsetearth = 0){
 	xAddDatabaseBlock(dPlanetEyecandy, true);
 	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVHero"));
 	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 5);
-	if(offsetearth == 0){
-		FloatingUnitAnimIdle("Valkyrie", x*2+60, 10, z*2+10, 0, 0,0,0);
-	}
-	if(offsetearth == 1){
-		FloatingUnitAnimIdle("Valkyrie", x*2+40, 10, z*2, 0, 0,0,0);
-	}
+	FloatingUnitAnimIdle("Valkyrie", x*2+60, 10, z*2+10, 0, 0,0,0);
 	//FloatingUnit("Gaia Forest effect", x*2+60, 8, z*2+10, 0, 1,1,1);
 	xAddDatabaseBlock(dPlanetEyecandy, true);
 	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVRelic"));
@@ -734,14 +619,11 @@ highFrequency
 		trOverlayText("Planet " + xGetInt(dObelisks, xObeliskStage) + ": " + stageName(Stage), 3.0, 520, 380, 800);
 	} else if (trUnitIsSelected()) {
 		uiClearSelection();
-		if (xGetInt(dObelisks, xObeliskStage) > 0 && xGetInt(dObelisks, xObeliskStage) <= 10) {
-			int p = trCurrentPlayer();
-			if(1*trQuestVarGet("p"+p+"stage") >= xGetInt(dObelisks, xObeliskStage)-1){
-				trShowImageDialog(stageIcon(xGetInt(dObelisks, xObeliskStage)), "Planet " + xGetInt(dObelisks, xObeliskStage) + ": " + stageName(xGetInt(dObelisks, xObeliskStage)));
-			}
-			else{
-				trShowImageDialog(stageIcon(xGetInt(dObelisks, xObeliskStage)), "LOCKED");
-			}
+		if(xGetInt(dPlayerData, xStageUnlocked) >= xGetInt(dObelisks, xObeliskStage)-1){
+			trShowImageDialog(stageIcon(xGetInt(dObelisks, xObeliskStage)), "Planet " + xGetInt(dObelisks, xObeliskStage) + ": " + stageName(xGetInt(dObelisks, xObeliskStage)));
+		}
+		else{
+			trShowImageDialog(stageIcon(xGetInt(dObelisks, xObeliskStage)), "LOCKED");
 		}
 	}
 }
@@ -784,7 +666,7 @@ xsEnableRule("TEMPdeployP1");
 xsEnableRule("squarespaint");
 */
 
-void saveAllData() {
+/*void saveAllDataOLD() {
 	xsSetContextPlayer(0);
 	int p = trCurrentPlayer();
 	if (p != cNumberNonGaiaPlayers) {
@@ -825,4 +707,4 @@ void saveAllData() {
 		trSetCurrentScenarioUserData(7, savedatasp); //drill level save
 		//trChatSend(0, ""+savedatasp + " saved as rad level");
 	}
-}
+}*/

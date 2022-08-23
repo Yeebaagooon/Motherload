@@ -1,99 +1,3 @@
-void LoadDataSP(int p = -1){
-	xsSetContextPlayer(0);
-	//SLOT 0, STAGE
-	xSetPointer(dPlayerData, 1);
-	int loaddatasp = 0;
-	loaddatasp = trGetScenarioUserData(0);
-	trQuestVarSet("p1stage", loaddatasp);
-	//SLOT 1, GOLD
-	xSetPointer(dPlayerData, 1);
-	loaddatasp = 0;
-	loaddatasp = trGetScenarioUserData(1);
-	trPlayerGrantResources(1, "Gold", loaddatasp);
-	xSetInt(dPlayerData, xGold, loaddatasp);
-	loaddatasp = 0;
-	//SLOT 2, DRILL LEVEL
-	loaddatasp = trGetScenarioUserData(2);
-	if(loaddatasp <= 0){
-		loaddatasp = 1;
-	}
-	xSetPointer(dPlayerData, 1);
-	xSetInt(dPlayerData, xDrillLevel, loaddatasp);
-	//trChatSend(0, ""+loaddatasp + " SP loaded as drill level");
-	trQuestVarSet("CurrentDrillL", loaddatasp);
-	xSetInt(dPlayerData, xDrillLevel ,1*trQuestVarGet("CurrentDrillL"));
-	xSetFloat(dPlayerData, xDrillPower ,1*trQuestVarGet("DrillPowerL"+xGetInt(dPlayerData, xDrillLevel)+""));
-	
-	//SLOT 3, HULL LEVEL
-	loaddatasp = trGetScenarioUserData(3);
-	if(loaddatasp <= 0){
-		loaddatasp = 1;
-	}
-	xSetPointer(dPlayerData, 1);
-	xSetInt(dPlayerData, xHullLevel, loaddatasp);
-	//trChatSend(0, ""+loaddatasp + " SP loaded as hull level");
-	trQuestVarSet("CurrentHullL", loaddatasp);
-	xSetInt(dPlayerData, xHullLevel ,1*trQuestVarGet("CurrentHullL"));
-	xSetInt(dPlayerData, xHullHP ,1*trQuestVarGet("HullHPL"+xGetInt(dPlayerData, xHullLevel)+""));
-	
-	//SLOT 4, FUEL LEVEL
-	loaddatasp = trGetScenarioUserData(4);
-	if(loaddatasp <= 0){
-		loaddatasp = 1;
-	}
-	
-	
-	xSetPointer(dPlayerData, 1);
-	xSetInt(dPlayerData, xFuelLevel, loaddatasp);
-	//trChatSend(0, ""+loaddatasp + " SP loaded as fuel tank level");
-	trQuestVarSet("CurrentFuelL", loaddatasp);
-	xSetInt(dPlayerData, xFuelLevel ,1*trQuestVarGet("CurrentFuelL"));
-	xSetInt(dPlayerData, xFuelTank ,1*trQuestVarGet("FuelCL"+xGetInt(dPlayerData, xFuelLevel)+""));
-	
-	//SLOT 5, Cargo LEVEL
-	loaddatasp = trGetScenarioUserData(5);
-	if(loaddatasp <= 0){
-		loaddatasp = 1;
-	}
-	
-	
-	xSetPointer(dPlayerData, 1);
-	xSetInt(dPlayerData, xCargoLevel, loaddatasp);
-	//trChatSend(0, ""+loaddatasp + " SP loaded as cargo level");
-	trQuestVarSet("CurrentCargoL", loaddatasp);
-	xSetInt(dPlayerData, xCargoLevel ,1*trQuestVarGet("CurrentCargoL"));
-	xSetInt(dPlayerData, xCargoHold ,1*trQuestVarGet("CargoCL"+xGetInt(dPlayerData, xCargoLevel)+""));
-	
-	//SLOT 6, Engine LEVEL
-	loaddatasp = trGetScenarioUserData(6);
-	if(loaddatasp <= 0){
-		loaddatasp = 1;
-	}
-	
-	
-	xSetPointer(dPlayerData, 1);
-	xSetInt(dPlayerData, xEngineLevel, loaddatasp);
-	//trChatSend(0, ""+loaddatasp + " SP loaded as engine level");
-	trQuestVarSet("CurrentEngineL", loaddatasp);
-	xSetInt(dPlayerData, xEngineLevel ,1*trQuestVarGet("CurrentEngineL"));
-	xSetInt(dPlayerData, xEnginePower ,1*trQuestVarGet("EngineCL"+xGetInt(dPlayerData, xEngineLevel)+""));
-	
-	//SLOT 7, Engine LEVEL
-	loaddatasp = trGetScenarioUserData(7);
-	if(loaddatasp <= 0){
-		loaddatasp = 1;
-	}
-	
-	
-	xSetPointer(dPlayerData, 1);
-	xSetInt(dPlayerData, xRadiatorLevel, loaddatasp);
-	//trChatSend(0, ""+loaddatasp + " SP loaded as radiator level");
-	trQuestVarSet("CurrentRadiatorL", loaddatasp);
-	xSetInt(dPlayerData, xRadiatorLevel ,1*trQuestVarGet("CurrentRadiatorL"));
-	xSetInt(dPlayerData, xRadiator ,1*trQuestVarGet("RadiatorCL"+xGetInt(dPlayerData, xRadiatorLevel)+""));
-}
-
-
 rule LoadSP
 inactive
 highFrequency
@@ -373,7 +277,42 @@ highFrequency
 	xSetInt(dSelectables, xSelectablesPrompt, 601);
 	
 	trUnblockAllSounds();
-	LoadDataSP();
+	//LoadDataSP();
+	xsSetContextPlayer(0);
+	xSetPointer(dPlayerData, 1);
+	if(xGetInt(dPlayerData, xDrillLevel) == 0){
+		xSetInt(dPlayerData, xDrillLevel, 1);
+	}
+	if(xGetInt(dPlayerData, xHullLevel) == 0){
+		xSetInt(dPlayerData, xHullLevel, 1);
+	}
+	if(xGetInt(dPlayerData, xFuelLevel) == 0){
+		xSetInt(dPlayerData, xFuelLevel, 1);
+	}
+	if(xGetInt(dPlayerData, xCargoLevel) == 0){
+		xSetInt(dPlayerData, xCargoLevel, 1);
+	}
+	if(xGetInt(dPlayerData, xEngineLevel) == 0){
+		xSetInt(dPlayerData, xEngineLevel, 1);
+	}
+	if(xGetInt(dPlayerData, xRadiatorLevel) == 0){
+		xSetInt(dPlayerData, xRadiatorLevel, 1);
+	}
+	trQuestVarSet("CurrentDrillL", xGetInt(dPlayerData, xDrillLevel));
+	xSetFloat(dPlayerData, xDrillPower ,1*trQuestVarGet("DrillPowerL"+xGetInt(dPlayerData, xDrillLevel)+""));
+	trQuestVarSet("CurrentHullL", xGetInt(dPlayerData, xHullLevel));
+	xSetInt(dPlayerData, xHullHP ,1*trQuestVarGet("HullHPL"+xGetInt(dPlayerData, xHullLevel)+""));
+	trQuestVarSet("CurrentFuelL", xGetInt(dPlayerData, xFuelLevel));
+	xSetInt(dPlayerData, xFuelLevel ,1*trQuestVarGet("CurrentFuelL"));
+	xSetInt(dPlayerData, xFuelTank ,1*trQuestVarGet("FuelCL"+xGetInt(dPlayerData, xFuelLevel)+""));
+	trQuestVarSet("CurrentCargoL", xGetInt(dPlayerData, xCargoLevel));
+	xSetInt(dPlayerData, xCargoHold ,1*trQuestVarGet("CargoCL"+xGetInt(dPlayerData, xCargoLevel)+""));
+	trQuestVarSet("CurrentEngineL", xGetInt(dPlayerData, xEngineLevel));
+	xSetInt(dPlayerData, xEnginePower ,1*trQuestVarGet("EngineCL"+xGetInt(dPlayerData, xEngineLevel)+""));
+	trQuestVarSet("CurrentRadiatorL", xGetInt(dPlayerData, xRadiatorLevel));
+	xSetInt(dPlayerData, xRadiator ,1*trQuestVarGet("RadiatorCL"+xGetInt(dPlayerData, xRadiatorLevel)+""));
+	
+	
 	trUnitSetVariation(UnitFlag1,1*trQuestVarGet("CurrentDrillL")-1);
 	trUnitSetVariation(UnitFlag2,1*trQuestVarGet("CurrentHullL")-1);
 	trUnitSetVariation(UnitFlag3,1*trQuestVarGet("CurrentFuelL")-1);
@@ -514,6 +453,9 @@ inactive
 highFrequency
 {
 	if((trTime()-cActivationTime) >= 1){
+		if(OverrideStage == true){
+			trSetCurrentScenarioUserData(0,9);
+		}
 		xsDisableSelf();
 		trEndGame();
 		trModeEnter("Pregame");
