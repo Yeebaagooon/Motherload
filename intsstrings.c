@@ -7,7 +7,7 @@
 
 //---Test controls
 int QuickStart = 0;
-bool OverrideSP = false;
+bool OverrideSP = true;
 bool OverrideStage = true;
 
 //---
@@ -94,7 +94,9 @@ int xCargoLevel = 1;
 int xEngineLevel = 1;
 int xRadiatorLevel = 1;
 int xGold = 0;
+int xGoldStart = 0;
 int xStageUnlocked = 0;
+int xStageStatus = 0;
 
 rule setup_first_databases
 active
@@ -110,7 +112,9 @@ highFrequency
 	xFuel = xInitAddFloat(dPlayerData, "fuel", 1000);
 	xDepth = xInitAddInt(dPlayerData, "depth", 0);
 	xGold = xInitAddInt(dPlayerData, "gold", 0);
+	xGoldStart = xInitAddInt(dPlayerData, "goldstart", 0);
 	xStageUnlocked = xInitAddInt(dPlayerData, "stage", 0);
+	xStageStatus = xInitAddInt(dPlayerData, "stagestatus", 0);
 	//LEVELS -- all set to 0 at start as for new players and then data read will update them
 	xDrillLevel = xInitAddInt(dPlayerData, "Drill level", 1);
 	xHullLevel = xInitAddInt(dPlayerData, "Hull level", 1);
@@ -123,7 +127,7 @@ highFrequency
 	xFuelActivationTime = xInitAddInt(dPlayerData, "fuel activation time", 10000);
 	xPlayerActive = xInitAddInt(dPlayerData, "is player alive", 1);
 	xsDisableSelf();
-	for(p=1; < cNumberNonGaiaPlayers) {
+	for(p=1; <= cNumberNonGaiaPlayers) {
 		xAddDatabaseBlock(dPlayerData, true);
 	}
 }

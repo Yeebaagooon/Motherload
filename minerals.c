@@ -544,11 +544,13 @@ highFrequency
 {
 	processFreeRelics(10);
 	processHeldRelics(10);
-	for(p=1; < cNumberNonGaiaPlayers) {
-		xSetPointer(dPlayerData, p);
-		if(trPlayerResourceCount(p, "Gold") != xGetInt(dPlayerData, xGold)){
-			trPlayerGrantResources(p, "Gold", -1000000);
-			trPlayerGrantResources(p, "Gold", xGetInt(dPlayerData, xGold));
+	if((Stage != 0) || (aiIsMultiplayer() == false)){
+		for(p=1; < cNumberNonGaiaPlayers) {
+			xSetPointer(dPlayerData, p);
+			if(trPlayerResourceCount(p, "Gold") != xGetInt(dPlayerData, xGold)){
+				trPlayerGrantResources(p, "Gold", -1000000);
+				trPlayerGrantResources(p, "Gold", xGetInt(dPlayerData, xGold));
+			}
 		}
 	}
 	

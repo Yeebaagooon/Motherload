@@ -280,6 +280,24 @@ highFrequency
 	//LoadDataSP();
 	xsSetContextPlayer(0);
 	xSetPointer(dPlayerData, 1);
+	if(xGetInt(dPlayerData, xDrillLevel) == 0){
+		xSetInt(dPlayerData, xDrillLevel, 1);
+	}
+	if(xGetInt(dPlayerData, xHullLevel) == 0){
+		xSetInt(dPlayerData, xHullLevel, 1);
+	}
+	if(xGetInt(dPlayerData, xFuelLevel) == 0){
+		xSetInt(dPlayerData, xFuelLevel, 1);
+	}
+	if(xGetInt(dPlayerData, xCargoLevel) == 0){
+		xSetInt(dPlayerData, xCargoLevel, 1);
+	}
+	if(xGetInt(dPlayerData, xEngineLevel) == 0){
+		xSetInt(dPlayerData, xEngineLevel, 1);
+	}
+	if(xGetInt(dPlayerData, xRadiatorLevel) == 0){
+		xSetInt(dPlayerData, xRadiatorLevel, 1);
+	}
 	trQuestVarSet("CurrentDrillL", xGetInt(dPlayerData, xDrillLevel));
 	xSetFloat(dPlayerData, xDrillPower ,1*trQuestVarGet("DrillPowerL"+xGetInt(dPlayerData, xDrillLevel)+""));
 	trQuestVarSet("CurrentHullL", xGetInt(dPlayerData, xHullLevel));

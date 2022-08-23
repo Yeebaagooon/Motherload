@@ -171,6 +171,7 @@ highFrequency
 	Total size: 1
 	*/
 	addSavedDataDB(dPlayerData, xStageUnlocked , 0, 10);
+	addSavedDataDB(dPlayerData, xStageStatus , 0, 4);
 	//addLocalDataQV("example", 0, 1000); // the QV "example" can have an integer value from 0-999. It is stored in the first slot
 	
 	/*
@@ -334,6 +335,27 @@ highFrequency
 	gadgetReal("ShowImageBox-BordersRightTop");
 	gadgetReal("ShowImageBox-CloseButton");
 	//startNPCDialog(1);
+	for(p = 1; <= cNumberNonGaiaPlayers){
+		xSetPointer(dPlayerData, p);
+		if(xGetInt(dPlayerData, xDrillLevel) == 0){
+			xSetInt(dPlayerData, xDrillLevel, 1);
+		}
+		if(xGetInt(dPlayerData, xHullLevel) == 0){
+			xSetInt(dPlayerData, xHullLevel, 1);
+		}
+		if(xGetInt(dPlayerData, xFuelLevel) == 0){
+			xSetInt(dPlayerData, xFuelLevel, 1);
+		}
+		if(xGetInt(dPlayerData, xCargoLevel) == 0){
+			xSetInt(dPlayerData, xCargoLevel, 1);
+		}
+		if(xGetInt(dPlayerData, xEngineLevel) == 0){
+			xSetInt(dPlayerData, xEngineLevel, 1);
+		}
+		if(xGetInt(dPlayerData, xRadiatorLevel) == 0){
+			xSetInt(dPlayerData, xRadiatorLevel, 1);
+		}
+	}
 }
 
 void PaintPlanets(int x = 0, int z = 0, int offsetearth = 0){
@@ -400,6 +422,7 @@ void PaintPlanets(int x = 0, int z = 0, int offsetearth = 0){
 		if (iModulo(2, p) == 0) { //if is divisble by 2
 			offset = 20;
 		}
+		xSetPointer(dPlayerData, 1);
 		if(xGetInt(dPlayerData, xStageUnlocked) > xGetInt(dObelisks, xObeliskStage)-1){
 			UnitCreate(0, "Outpost", x*2+12*p, z*2+10+offset, 90);
 		}
