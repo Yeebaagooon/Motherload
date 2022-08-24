@@ -50,6 +50,25 @@ highFrequency
 					trShowImageDialog(stageIcon(Stage+1), "Next planet unlocked - " + stageName(Stage+1));
 				}
 			}
+			//Upgrade requirements for Stage 2
+			if(Stage == 2){
+				if((xGetInt(dPlayerData, xStageStatus) == 0) || (xGetInt(dPlayerData, xDrillLevel) == 1)){
+					if((xGetInt(dPlayerData, xStageStatus) == 0) && (xGetInt(dPlayerData, xDrillLevel) == 1)){
+						characterDialog("You did not meet the requirements to progress.", "You needed to sell a gold mineral and upgrade your drill to level 2 (in singleplayer).", "icons\special e son of osiris icon 64");
+					}
+					if((xGetInt(dPlayerData, xStageStatus) == 0) && (xGetInt(dPlayerData, xDrillLevel) > 1)){
+						characterDialog("You did not meet the requirements to progress.", "You needed to sell a gold mineral.", "icons\special e son of osiris icon 64");
+					}
+					if((xGetInt(dPlayerData, xStageStatus) == 1) && (xGetInt(dPlayerData, xDrillLevel) == 1)){
+						characterDialog("You did not meet the requirements to progress.", "You need to upgrade your drill to level 2 (in singleplayer).", "icons\special e son of osiris icon 64");
+					}
+				}
+				else{
+					xSetInt(dPlayerData, xStageUnlocked, xGetInt(dPlayerData, xStageUnlocked) + 1);
+					xSetInt(dPlayerData, xStageStatus, 0);
+					trShowImageDialog(stageIcon(Stage+1), "Next planet unlocked - " + stageName(Stage+1));
+				}
+			}
 		} else if (xGetInt(dPlayerData, xStageUnlocked) < Stage-1) {
 			trShowImageDialog(stageIcon(Stage+1), "You must beat previous planets to unlock this one.");
 			trSoundPlayFN("cantdothat.wav","1",-1,"","");

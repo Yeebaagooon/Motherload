@@ -327,6 +327,9 @@ highFrequency
 	
 	PaintPlanets(8,35);
 	xsEnableRule("choose_stage");
+	if((xGetInt(dPlayerData, xStageUnlocked) == 1) && (xGetInt(dPlayerData, xStageStatus) == 1)){
+		xsEnableRule("SPUnlock3");
+	}
 }
 
 void UpgradeDrill(int p = -1){
@@ -459,5 +462,18 @@ highFrequency
 		xsDisableSelf();
 		trEndGame();
 		trModeEnter("Pregame");
+	}
+}
+
+rule SPUnlock3
+inactive
+highFrequency
+{
+	xSetPointer(dPlayerData, 1);
+	if(xGetInt(dPlayerData, xDrillLevel) > 1){
+		trChatSend(0, "UNLOCK STAGE 3");
+		xSetInt(dPlayerData, xStageUnlocked, xGetInt(dPlayerData, xStageUnlocked) + 1);
+		xSetInt(dPlayerData, xStageStatus, 0);
+		xsDisableSelf();
 	}
 }

@@ -484,6 +484,15 @@ highFrequency
 		if(trQuestVarGet("P"+GSeller+"R"+r+"") > 0){
 			ColouredChatToPlayer(GSeller, RelicColour(r), ""+1*trQuestVarGet("P"+GSeller+"R"+r+"")+"x "+relicName(r)+" sold!");
 			trQuestVarSet("P"+GSeller+"R"+r+"", 0);
+			//Stage unlock conditions
+			xSetPointer(dPlayerData, GSeller);
+			//Stage 2
+			if((xGetInt(dPlayerData, xStageUnlocked) == 1) && (xGetInt(dPlayerData, xStageStatus) == 0) && (r == RELIC_GOLD)){
+				xSetInt(dPlayerData, xStageStatus, 1);
+				if (trCurrentPlayer() == GSeller) {
+					trChatSend(0, "You sold a gold");
+				}
+			}
 		}
 	}
 	xsDisableSelf();

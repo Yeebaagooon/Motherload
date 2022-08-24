@@ -163,11 +163,11 @@ highFrequency
 {
 	if((trTime()-cActivationTime) >= 20){ //60
 		if(Stage == 1){
-			StageTime = 480; //480
+			StageTime = 60; //480
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
 		}
 		if(Stage == 2){
-			StageTime = 480; //480
+			StageTime = 60; //480
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
 		}
 		if(Stage == 3){
