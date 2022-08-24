@@ -12,6 +12,20 @@ const int RELIC_DIAMOND = 9;
 const int RELIC_PROMETHIUM = 10;
 const int RELIC_EINSTEINIUM = 11;
 
+/*
+Obsidian, 12, 20
+Amethyst
+
+
+Plutonium
+
+Antimatter
+Hydrogen Ice
+
+
+Yeebium 100
+
+*/
 const int URANIUM_DAMAGE = 1;
 const int PROMETHIUM_DAMAGE = 2;
 const int EINSTEINIUM_DAMAGE = 3;
@@ -490,7 +504,7 @@ highFrequency
 			if((xGetInt(dPlayerData, xStageUnlocked) == 1) && (xGetInt(dPlayerData, xStageStatus) == 0) && (r == RELIC_GOLD)){
 				xSetInt(dPlayerData, xStageStatus, 1);
 				if (trCurrentPlayer() == GSeller) {
-					trChatSend(0, "You sold a gold");
+					ColouredIconChat("1,0.5,0", "icons/star", "Progression goal achieved.");
 				}
 			}
 		}

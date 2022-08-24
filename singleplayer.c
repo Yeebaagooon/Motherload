@@ -330,11 +330,17 @@ highFrequency
 	if((xGetInt(dPlayerData, xStageUnlocked) == 1) && (xGetInt(dPlayerData, xStageStatus) == 1)){
 		xsEnableRule("SPUnlock3");
 	}
+	if((xGetInt(dPlayerData, xStageUnlocked) == 2) && (xGetInt(dPlayerData, xStageStatus) == 1)){
+		xsEnableRule("SPUnlock4");
+	}
+	if((xGetInt(dPlayerData, xStageUnlocked) == 3) && (xGetInt(dPlayerData, xStageStatus) == 1)){
+		xsEnableRule("SPUnlock5");
+	}
 }
 
 void UpgradeDrill(int p = -1){
 	xsSetContextPlayer(0);
-	trPlayerGrantResources(1, "Gold", -1*trQuestVarGet("goldCost"));
+	xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*trQuestVarGet("goldCost"));
 	xSetPointer(dPlayerData, 1);
 	int DrillLevelDummy = xGetInt(dPlayerData, xDrillLevel);
 	xSetInt(dPlayerData, xDrillLevel, DrillLevelDummy+1);
@@ -351,7 +357,7 @@ void UpgradeDrill(int p = -1){
 
 void UpgradeHull(int p = -1){
 	xsSetContextPlayer(0);
-	trPlayerGrantResources(1, "Gold", -1*trQuestVarGet("goldCost"));
+	xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*trQuestVarGet("goldCost"));
 	xSetPointer(dPlayerData, 1);
 	int HullLevelDummy = xGetInt(dPlayerData, xHullLevel);
 	xSetInt(dPlayerData, xHullLevel, HullLevelDummy+1);
@@ -368,7 +374,7 @@ void UpgradeHull(int p = -1){
 
 void UpgradeFuel(int p = -1){
 	xsSetContextPlayer(0);
-	trPlayerGrantResources(1, "Gold", -1*trQuestVarGet("goldCost"));
+	xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*trQuestVarGet("goldCost"));
 	xSetPointer(dPlayerData, 1);
 	int FuelLevelDummy = xGetInt(dPlayerData, xFuelLevel);
 	xSetInt(dPlayerData, xFuelLevel, FuelLevelDummy+1);
@@ -385,7 +391,7 @@ void UpgradeFuel(int p = -1){
 
 void UpgradeCargo(int p = -1){
 	xsSetContextPlayer(0);
-	trPlayerGrantResources(1, "Gold", -1*trQuestVarGet("goldCost"));
+	xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*trQuestVarGet("goldCost"));
 	xSetPointer(dPlayerData, 1);
 	int CargoLevelDummy = xGetInt(dPlayerData, xCargoLevel);
 	xSetInt(dPlayerData, xCargoLevel, CargoLevelDummy+1);
@@ -402,7 +408,7 @@ void UpgradeCargo(int p = -1){
 
 void UpgradeEngine(int p = -1){
 	xsSetContextPlayer(0);
-	trPlayerGrantResources(1, "Gold", -1*trQuestVarGet("goldCost"));
+	xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*trQuestVarGet("goldCost"));
 	xSetPointer(dPlayerData, 1);
 	int EngineLevelDummy = xGetInt(dPlayerData, xEngineLevel);
 	xSetInt(dPlayerData, xEngineLevel, EngineLevelDummy+1);
@@ -419,7 +425,7 @@ void UpgradeEngine(int p = -1){
 
 void UpgradeRadiator(int p = -1){
 	xsSetContextPlayer(0);
-	trPlayerGrantResources(1, "Gold", -1*trQuestVarGet("goldCost"));
+	xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*trQuestVarGet("goldCost"));
 	xSetPointer(dPlayerData, 1);
 	int RadiatorLevelDummy = xGetInt(dPlayerData, xRadiatorLevel);
 	xSetInt(dPlayerData, xRadiatorLevel, RadiatorLevelDummy+1);
@@ -471,9 +477,35 @@ highFrequency
 {
 	xSetPointer(dPlayerData, 1);
 	if(xGetInt(dPlayerData, xDrillLevel) > 1){
-		trChatSend(0, "UNLOCK STAGE 3");
 		xSetInt(dPlayerData, xStageUnlocked, xGetInt(dPlayerData, xStageUnlocked) + 1);
 		xSetInt(dPlayerData, xStageStatus, 0);
+		trShowImageDialog(stageIcon(3), "Next planet unlocked - " + stageName(3));
+		xsDisableSelf();
+	}
+}
+
+rule SPUnlock4
+inactive
+highFrequency
+{
+	xSetPointer(dPlayerData, 1);
+	if(xGetInt(dPlayerData, xHullLevel) > 2){
+		xSetInt(dPlayerData, xStageUnlocked, xGetInt(dPlayerData, xStageUnlocked) + 1);
+		xSetInt(dPlayerData, xStageStatus, 0);
+		trShowImageDialog(stageIcon(4), "Next planet unlocked - " + stageName(4));
+		xsDisableSelf();
+	}
+}
+
+rule SPUnlock5
+inactive
+highFrequency
+{
+	xSetPointer(dPlayerData, 1);
+	if((xGetInt(dPlayerData, xDrillLevel) >= 3) && (xGetInt(dPlayerData, xHullLevel) >= 3) && (xGetInt(dPlayerData, xFuelLevel) >= 3) && (xGetInt(dPlayerData, xEngineLevel) >= 3) && (xGetInt(dPlayerData, xCargoLevel) >= 3) && (xGetInt(dPlayerData, xRadiatorLevel) >= 3)){
+		xSetInt(dPlayerData, xStageUnlocked, xGetInt(dPlayerData, xStageUnlocked) + 1);
+		xSetInt(dPlayerData, xStageStatus, 0);
+		trShowImageDialog(stageIcon(5), "Next planet unlocked - " + stageName(5));
 		xsDisableSelf();
 	}
 }

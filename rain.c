@@ -163,27 +163,33 @@ highFrequency
 {
 	if((trTime()-cActivationTime) >= 20){ //60
 		if(Stage == 1){
-			StageTime = 60; //480
+			StageTime = 480; //480
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
 		}
 		if(Stage == 2){
-			StageTime = 60; //480
+			StageTime = 480; //480
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
 		}
 		if(Stage == 3){
 			StageTime = 480; //480
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
+			//spawnRelicSpecific(vector(180,0,100), 10);
 		}
 		if(Stage == 4){
 			StageTime = 480; //480
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
 		}
 		if(Stage == 5){
-			StageTime = 500; //480
+			StageTime = 100; //480
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
+			grantGodPowerNoRechargeNextPosition(1, "Audrey", 100);
 		}
 		if(Stage == 6){
-			StageTime = 420; //480
+			StageTime = 420; //420
+			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
+		}
+		if(Stage == 7){
+			StageTime = 480; //480
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
 		}
 		xsDisableSelf();
@@ -457,6 +463,12 @@ highFrequency
 			trUnitSelectByQV("P"+p+"Siphon");
 			trUnitDestroy();
 			xSetInt(dPlayerData, xPlayerActive, 0);
+		}
+		if((xGetInt(dPlayerData, xStageUnlocked) == 4) && (xGetInt(dPlayerData, xStageStatus) == 0) && (xGetInt(dPlayerData, xDepth) >= 2000)){
+			xSetInt(dPlayerData, xStageStatus, 1);
+			if (trCurrentPlayer() == p) {
+				ColouredIconChat("1,0.5,0", "icons/star", "Progression goal achieved.");
+			}
 		}
 	}
 }
