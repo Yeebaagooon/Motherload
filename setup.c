@@ -544,6 +544,46 @@ void PaintPlanets(int x = 0, int z = 0, int offsetearth = 0){
 	xAddDatabaseBlock(dPlanetEyecandy, true);
 	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVHero"));
 	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 6);
+	//EYECANDY PLANET 8
+	FloatingUnit("Ice Block", x*2+96, 9, z*2+30, 0, 4,4,4);
+	xAddDatabaseBlock(dPlanetEyecandy, true);
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVRelic"));
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 8);
+	xAddDatabaseBlock(dPlanetEyecandy, true);
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVHero"));
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 8);
+	trUnitSetVariation(1*trQuestVarGet("QVRelic"), 0);
+	FloatingUnit("Ice Block", x*2+96, 10, z*2+30, 0, 4,-4,4);
+	xAddDatabaseBlock(dPlanetEyecandy, true);
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVRelic"));
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 8);
+	xAddDatabaseBlock(dPlanetEyecandy, true);
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVHero"));
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 8);
+	trUnitSetVariation(1*trQuestVarGet("QVRelic"), 0);
+	FloatingUnit("Ice Block", x*2+96, 9, z*2+30, 0, 3,3,3);
+	xAddDatabaseBlock(dPlanetEyecandy, true);
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVRelic"));
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 8);
+	xAddDatabaseBlock(dPlanetEyecandy, true);
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVHero"));
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 8);
+	trUnitSetVariation(1*trQuestVarGet("QVRelic"), 0);
+	FloatingUnit("Ice Block", x*2+96, 10, z*2+30, 0, 3,-3,3);
+	xAddDatabaseBlock(dPlanetEyecandy, true);
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVRelic"));
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 8);
+	xAddDatabaseBlock(dPlanetEyecandy, true);
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVHero"));
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 8);
+	trUnitSetVariation(1*trQuestVarGet("QVRelic"), 0);
+	FloatingUnit("Frost Giant", x*2+96, 9, z*2+30, 0, 0,0,0);
+	xAddDatabaseBlock(dPlanetEyecandy, true);
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVRelic"));
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 8);
+	xAddDatabaseBlock(dPlanetEyecandy, true);
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVHero"));
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 8);
 	
 	//END
 }

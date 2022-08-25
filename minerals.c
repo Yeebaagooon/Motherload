@@ -1,4 +1,4 @@
-const int RELIC_NUMBER = 11;
+const int RELIC_NUMBER = 14;
 
 const int RELIC_IRON = 1;
 const int RELIC_BRONZE = 2;
@@ -11,6 +11,10 @@ const int RELIC_SAPPHIRE = 8;
 const int RELIC_DIAMOND = 9;
 const int RELIC_PROMETHIUM = 10;
 const int RELIC_EINSTEINIUM = 11;
+const int RELIC_EMERALD = 12;
+const int RELIC_AMETHYST = 13;
+const int RELIC_OBSIDIAN = 14;
+
 
 /*
 Obsidian, 12, 20
@@ -78,6 +82,18 @@ string relicName(int relic = 0) {
 		{
 			msg = "Einsteinium";
 		}
+		case RELIC_EMERALD:
+		{
+			msg = "Emerald";
+		}
+		case RELIC_AMETHYST:
+		{
+			msg = "Amethyst";
+		}
+		case RELIC_OBSIDIAN:
+		{
+			msg = "Obsidian";
+		}
 	}
 	return(msg);
 }
@@ -129,6 +145,18 @@ int relicCost(int relic = 0) {
 		case RELIC_EINSTEINIUM:
 		{
 			price = 35;
+		}
+		case RELIC_EMERALD:
+		{
+			price = 20;
+		}
+		case RELIC_AMETHYST:
+		{
+			price = 25;
+		}
+		case RELIC_OBSIDIAN:
+		{
+			price = 40;
 		}
 	}
 	return(price);
@@ -182,6 +210,18 @@ string RelicColour(int relic = 0) {
 		{
 			colour = "0.01,0.27,0.76";
 		}
+		case RELIC_EMERALD:
+		{
+			colour = "0.01,0.47,0.09";
+		}
+		case RELIC_AMETHYST:
+		{
+			colour = "0.38,0.04,0.38";
+		}
+		case RELIC_OBSIDIAN:
+		{
+			colour = "0.01,0.01,0.01";
+		}
 	}
 	return(colour);
 }
@@ -234,6 +274,18 @@ string relicIcon(int relic = 0) {
 		{
 			icon = "icons\hero g physician icon";
 		}
+		case RELIC_EMERALD:
+		{
+			icon = "icons\special x argus icons 64";
+		}
+		case RELIC_AMETHYST:
+		{
+			icon = "icons\special x lampades icons 64";
+		}
+		case RELIC_OBSIDIAN:
+		{
+			icon = "icons\scenario c danzhu icon";
+		}
 	}
 	return(icon);
 }
@@ -285,6 +337,18 @@ int relicProto(int relic = 0) {
 		case RELIC_EINSTEINIUM:
 		{
 			proto = kbGetProtoUnitID("Physician");
+		}
+		case RELIC_EMERALD:
+		{
+			proto = kbGetProtoUnitID("Argus");
+		}
+		case RELIC_AMETHYST:
+		{
+			proto = kbGetProtoUnitID("Lampades");
+		}
+		case RELIC_OBSIDIAN:
+		{
+			proto = kbGetProtoUnitID("Danzhu");
 		}
 	}
 	return(proto);
@@ -502,6 +566,20 @@ highFrequency
 			xSetPointer(dPlayerData, GSeller);
 			//Stage 2
 			if((xGetInt(dPlayerData, xStageUnlocked) == 1) && (xGetInt(dPlayerData, xStageStatus) == 0) && (r == RELIC_GOLD)){
+				xSetInt(dPlayerData, xStageStatus, 1);
+				if (trCurrentPlayer() == GSeller) {
+					ColouredIconChat("1,0.5,0", "icons/star", "Progression goal achieved.");
+				}
+			}
+			//Stage 6
+			if((xGetInt(dPlayerData, xStageUnlocked) == 5) && (xGetInt(dPlayerData, xStageStatus) == 0) && (r == RELIC_DIAMOND)){
+				xSetInt(dPlayerData, xStageStatus, 1);
+				if (trCurrentPlayer() == GSeller) {
+					ColouredIconChat("1,0.5,0", "icons/star", "Progression goal achieved.");
+				}
+			}
+			//Stage 7
+			if((xGetInt(dPlayerData, xStageUnlocked) == 6) && (xGetInt(dPlayerData, xStageStatus) == 0) && (r == RELIC_OBSIDIAN)){
 				xSetInt(dPlayerData, xStageStatus, 1);
 				if (trCurrentPlayer() == GSeller) {
 					ColouredIconChat("1,0.5,0", "icons/star", "Progression goal achieved.");

@@ -36,6 +36,10 @@ float FSTwoXMin = 10;
 float FSTwoXMax = 0;
 float FSTwoZMin = 10;
 float FSTwoZMax = 0;
+float FSThreeXMin = 10;
+float FSThreeXMax = 0;
+float FSThreeZMin = 10;
+float FSThreeZMax = 0;
 float Hull1XMin = 10;
 float Hull1XMax = 0;
 float Hull2XMin = 10;
@@ -147,11 +151,14 @@ highFrequency
 	trStringQuestVarSet("DrillL2", "Steel Drill");
 	trStringQuestVarSet("DrillL3", "Aluminium Drill");
 	trQuestVarSet("DrillCostL4", 70);
-	trQuestVarSet("DrillPowerL4", 47);
+	trQuestVarSet("DrillPowerL4", 70);
 	trStringQuestVarSet("DrillL4", "Titanium Drill");
-	trQuestVarSet("DrillCostL5", 100);
+	trQuestVarSet("DrillCostL5", 125);
 	trQuestVarSet("DrillPowerL5", 110);
 	trStringQuestVarSet("DrillL5", "Osmium Drill");
+	trQuestVarSet("DrillCostL6", 250);
+	trQuestVarSet("DrillPowerL6", 200);
+	trStringQuestVarSet("DrillL6", "Diamond Drill");
 	
 	//HULL UPGRADES
 	trQuestVarSet("HullCostL2", 10);
@@ -167,7 +174,10 @@ highFrequency
 	trStringQuestVarSet("HullL4", "Titanium hull");
 	trQuestVarSet("HullCostL5", 150);
 	trQuestVarSet("HullHPL5", 1750);
-	trStringQuestVarSet("HullL5", "Composite alloy hull");
+	trStringQuestVarSet("HullL5", "Carbon fibre hull");
+	trQuestVarSet("HullCostL6", 300);
+	trQuestVarSet("HullHPL6", 3000);
+	trStringQuestVarSet("HullL6", "Shield hull");
 	
 	//Fuel UPGRADES
 	trQuestVarSet("FuelCostL2", 10);
@@ -184,6 +194,9 @@ highFrequency
 	trQuestVarSet("FuelCostL5", 100);
 	trQuestVarSet("FuelCL5", 2500);
 	trStringQuestVarSet("FuelL5", "Crucible tank");
+	trQuestVarSet("FuelCostL6", 300);
+	trQuestVarSet("FuelCL6", 4000);
+	trStringQuestVarSet("FuelL6", "Juggernaut tank");
 	
 	//Cargo UPGRADES
 	trQuestVarSet("CargoCostL2", 10);
@@ -194,12 +207,15 @@ highFrequency
 	trStringQuestVarSet("CargoL1", "Micro hold");
 	trStringQuestVarSet("CargoL2", "Standard hold");
 	trStringQuestVarSet("CargoL3", "Medium Hold");
-	trQuestVarSet("CargoCostL4", 70);
+	trQuestVarSet("CargoCostL4", 100);
 	trQuestVarSet("CargoCL4", 6);
 	trStringQuestVarSet("CargoL4", "Expanded Hold");
-	trQuestVarSet("CargoCostL5", 100);
+	trQuestVarSet("CargoCostL5", 150);
 	trQuestVarSet("CargoCL5", 7);
 	trStringQuestVarSet("CargoL5", "Multi-Slot Hold");
+	trQuestVarSet("CargoCostL6", 200);
+	trQuestVarSet("CargoCL6", 8);
+	trStringQuestVarSet("CargoL6", "Tetris Hold");
 	
 	//Engine UPGRADES
 	trQuestVarSet("EngineCostL2", 10);
@@ -216,6 +232,9 @@ highFrequency
 	trQuestVarSet("EngineCostL5", 110);
 	trQuestVarSet("EngineCL5", 110);
 	trStringQuestVarSet("EngineL5", "Crocodileslam engine");
+	trQuestVarSet("EngineCostL6", 250);
+	trQuestVarSet("EngineCL6", 150);
+	trStringQuestVarSet("EngineL6", "Tyrannosauruschomp engine");
 	
 	//Radiator UPGRADES
 	trQuestVarSet("RadiatorCostL2", 10);
@@ -232,4 +251,7 @@ highFrequency
 	trQuestVarSet("RadiatorCostL5", 100);
 	trQuestVarSet("RadiatorCL5", 40);
 	trStringQuestVarSet("RadiatorL5", "Conduction Radiator");
+	trQuestVarSet("RadiatorCostL6", 100);
+	trQuestVarSet("RadiatorCL6", 47);
+	trStringQuestVarSet("RadiatorL6", "Convection Radiator");
 }

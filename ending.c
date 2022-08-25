@@ -37,6 +37,9 @@ inactive
 highFrequency
 {
 	if((trTime()-cActivationTime) >= 3){
+		if(OverrideSP == true){
+			pause(0);
+		}
 		int p = trCurrentPlayer();
 		xSetPointer(dPlayerData, p);
 		if (xGetInt(dPlayerData, xStageUnlocked) == Stage-1) {
@@ -113,11 +116,49 @@ highFrequency
 					}
 				}
 			}
+			if(Stage == 6){
+				if(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart) < 200){
+					characterDialog("You did not meet the requirements to progress.", "You needed to make 200 gold profit.", "icons\special e son of osiris icon 64");
+				}
+				else{
+					if((xGetInt(dPlayerData, xStageStatus) == 0) || (xGetInt(dPlayerData, xDrillLevel) < 5)){
+						if((xGetInt(dPlayerData, xStageStatus) == 0) && (xGetInt(dPlayerData, xDrillLevel) < 5)){
+							characterDialog("You did not meet the requirements to progress.", "You needed to sell a diamond and upgrade your drill to level 5.", "icons\special e son of osiris icon 64");
+						}
+						if((xGetInt(dPlayerData, xStageStatus) == 0) && (xGetInt(dPlayerData, xDrillLevel) >= 5)){
+							characterDialog("You did not meet the requirements to progress.", "You needed to sell a diamond mineral.", "icons\special e son of osiris icon 64");
+						}
+						if((xGetInt(dPlayerData, xStageStatus) == 1) && (xGetInt(dPlayerData, xDrillLevel) < 5)){
+							characterDialog("You do not meet the requirements to progress.", "You need to upgrade your drill to level 5 (in singleplayer).", "icons\special e son of osiris icon 64");
+						}
+					}
+					else{
+						xSetInt(dPlayerData, xStageUnlocked, xGetInt(dPlayerData, xStageUnlocked) + 1);
+						trShowImageDialog(stageIcon(Stage+1), "Next planet unlocked - " + stageName(Stage+1));
+						xSetInt(dPlayerData, xStageStatus, 0);
+					}
+				}
+			}
+			if(Stage == 7){
+				if(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart) < 150){
+					characterDialog("You did not meet the requirements to progress.", "You needed to make 150 gold profit.", "icons\special e son of osiris icon 64");
+				}
+				else{
+					if(xGetInt(dPlayerData, xStageStatus) == 0){
+						characterDialog("You did not meet the requirements to progress.", "You need to sell obsidian.", "icons\special e son of osiris icon 64");
+					}
+					else{
+						xSetInt(dPlayerData, xStageUnlocked, xGetInt(dPlayerData, xStageUnlocked) + 1);
+						trShowImageDialog(stageIcon(Stage+1), "Next planet unlocked - " + stageName(Stage+1));
+						xSetInt(dPlayerData, xStageStatus, 0);
+					}
+				}
+			}
 		} else if (xGetInt(dPlayerData, xStageUnlocked) < Stage-1) {
 			trShowImageDialog(stageIcon(Stage+1), "You must beat previous planets to unlock this one.");
 			trSoundPlayFN("cantdothat.wav","1",-1,"","");
 		} else {
-			trShowImageDialog(stageIcon(Stage+1), "You already have unlocked the next planet.");
+			trShowImageDialog(stageIcon(Stage+1), "You have already unlocked the next planet.");
 		}
 		gadgetUnreal("ShowImageBox-BordersTop");
 		gadgetUnreal("ShowImageBox-BordersBottom");

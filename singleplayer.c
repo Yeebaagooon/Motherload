@@ -336,6 +336,9 @@ highFrequency
 	if((xGetInt(dPlayerData, xStageUnlocked) == 3) && (xGetInt(dPlayerData, xStageStatus) == 1)){
 		xsEnableRule("SPUnlock5");
 	}
+	if((xGetInt(dPlayerData, xStageUnlocked) == 4) && (xGetInt(dPlayerData, xStageStatus) == 1)){
+		xsEnableRule("SPUnlock6");
+	}
 }
 
 void UpgradeDrill(int p = -1){
@@ -503,6 +506,19 @@ highFrequency
 {
 	xSetPointer(dPlayerData, 1);
 	if((xGetInt(dPlayerData, xDrillLevel) >= 3) && (xGetInt(dPlayerData, xHullLevel) >= 3) && (xGetInt(dPlayerData, xFuelLevel) >= 3) && (xGetInt(dPlayerData, xEngineLevel) >= 3) && (xGetInt(dPlayerData, xCargoLevel) >= 3) && (xGetInt(dPlayerData, xRadiatorLevel) >= 3)){
+		xSetInt(dPlayerData, xStageUnlocked, xGetInt(dPlayerData, xStageUnlocked) + 1);
+		xSetInt(dPlayerData, xStageStatus, 0);
+		trShowImageDialog(stageIcon(5), "Next planet unlocked - " + stageName(5));
+		xsDisableSelf();
+	}
+}
+
+rule SPUnlock6
+inactive
+highFrequency
+{
+	xSetPointer(dPlayerData, 1);
+	if(xGetInt(dPlayerData, xDrillLevel) >= 5){
 		xSetInt(dPlayerData, xStageUnlocked, xGetInt(dPlayerData, xStageUnlocked) + 1);
 		xSetInt(dPlayerData, xStageStatus, 0);
 		trShowImageDialog(stageIcon(5), "Next planet unlocked - " + stageName(5));

@@ -6,7 +6,7 @@ const int SavannahC = 4;
 const int SavannahD = 5;
 const int CliffEgyptianB = 6;
 const int CliffEgyptianA = 7;
-const int IceC = 8;
+
 const int Hades7 = 9;
 const int PlainDirt50 = 10;
 const int PlainDirt75 = 11;
@@ -25,6 +25,16 @@ const int UnderwaterRockD = 23;
 const int UnderwaterRockE = 24;
 const int UnderwaterRockF = 25;
 const int Hades5 = 26;
+const int ShorelineAtlanticC = 27;
+const int ShorelineAtlanticB = 28;
+const int ShorelineAtlanticA = 29;
+const int IceA = 30;
+const int IceB = 31;
+const int IceC = 32;
+const int UnderwaterIceA = 33;
+const int UnderwaterIceB = 34;
+const int UnderwaterIceC = 35;
+
 
 void RockType(int rock = 0) {
 	switch(rock)
@@ -164,6 +174,49 @@ void RockType(int rock = 0) {
 			TERRAIN_SUBTYPE = 8;
 		}
 		
+		case ShorelineAtlanticA:
+		{
+			TERRAIN_TYPE = 4;
+			TERRAIN_SUBTYPE = 14;
+		}
+		case ShorelineAtlanticB:
+		{
+			TERRAIN_TYPE = 4;
+			TERRAIN_SUBTYPE = 15;
+		}
+		case ShorelineAtlanticC:
+		{
+			TERRAIN_TYPE = 4;
+			TERRAIN_SUBTYPE = 16;
+		}
+		
+		case IceA:
+		{
+			TERRAIN_TYPE = 5;
+			TERRAIN_SUBTYPE = 0;
+		}
+		case IceB:
+		{
+			TERRAIN_TYPE = 5;
+			TERRAIN_SUBTYPE = 1;
+		}
+		
+		case UnderwaterIceA:
+		{
+			TERRAIN_TYPE = 3;
+			TERRAIN_SUBTYPE = 6;
+		}
+		case UnderwaterIceB:
+		{
+			TERRAIN_TYPE = 3;
+			TERRAIN_SUBTYPE = 7;
+		}
+		case UnderwaterIceC:
+		{
+			TERRAIN_TYPE = 3;
+			TERRAIN_SUBTYPE = 8;
+		}
+		
 	}
 }
 
@@ -268,11 +321,44 @@ int GetRockHardness(int rock = 0) {
 			return(300);
 		}
 		
+		case ShorelineAtlanticA:
+		{
+			return(450);
+		}
+		case ShorelineAtlanticB:
+		{
+			return(500);
+		}
+		case ShorelineAtlanticC:
+		{
+			return(550);
+		}
+		case IceA:
+		{
+			return(700);
+		}
+		case IceB:
+		{
+			return(800);
+		}
+		case UnderwaterIceA:
+		{
+			return(1200);
+		}
+		case UnderwaterIceB:
+		{
+			return(1500);
+		}
+		case UnderwaterIceC:
+		{
+			return(2000);
+		}
+		
 		
 		//Ice C
 		case IceC:
 		{
-			return(2000);
+			return(1000);
 		}
 		//Hades 7
 		case Hades7:
@@ -354,10 +440,28 @@ int GetRockType(int t = 0, int st = 0){
 		if(st == 5){
 			return(UnderwaterRockF);
 		}
+		if(st == 6){
+			return(UnderwaterIceA);
+		}
+		if(st == 7){
+			return(UnderwaterIceB);
+		}
+		if(st == 8){
+			return(UnderwaterIceC);
+		}
 	}
 	else if(t == 4){
 		if(st == 8){
 			return(ShorelineNorwegianB);
+		}
+		if(st == 14){
+			return(ShorelineAtlanticA);
+		}
+		if(st == 15){
+			return(ShorelineAtlanticB);
+		}
+		if(st == 16){
+			return(ShorelineAtlanticC);
 		}
 		if(st == 25){
 			return(ShorelinePlainB);
@@ -366,6 +470,12 @@ int GetRockType(int t = 0, int st = 0){
 	else if(t == 5){
 		if(st == 2){
 			return(IceC);
+		}
+		if(st == 1){
+			return(IceB);
+		}
+		if(st == 0){
+			return(IceA);
 		}
 		if(st == 7){
 			return(Hades4Passable);

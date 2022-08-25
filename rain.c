@@ -148,6 +148,15 @@ highFrequency
 		if(Stage == 5){
 			startNPCDialog(14);
 		}
+		if(Stage == 6){
+			startNPCDialog(16);
+		}
+		if(Stage == 7){
+			startNPCDialog(19);
+		}
+		if(Stage == 8){
+			startNPCDialog(20);
+		}
 	}
 	xSetPointer(dPlayerData, 1);
 	//trChatSend(0, ""+xGetInt(dPlayerData, xDrillLevel));
@@ -180,9 +189,8 @@ highFrequency
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
 		}
 		if(Stage == 5){
-			StageTime = 100; //480
+			StageTime = 480; //480
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
-			grantGodPowerNoRechargeNextPosition(1, "Audrey", 100);
 		}
 		if(Stage == 6){
 			StageTime = 420; //420
@@ -190,6 +198,10 @@ highFrequency
 		}
 		if(Stage == 7){
 			StageTime = 480; //480
+			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
+		}
+		if(Stage == 8){
+			StageTime = 540; //540
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
 		}
 		xsDisableSelf();
@@ -246,23 +258,58 @@ int GetFuelPump(float x = 0, float z = 0){
 			return(2);
 		}return(0);
 	}
+	else if((x > FSThreeXMin) && (x < FSThreeXMax)){
+		if((z > FSThreeZMin) && (z < FSThreeZMax)){
+			return(3);
+		}return(0);
+	}
 	else{
 		return(0);
 	}
 }
 
 int GetHullShop(float x = 0){
-	if((x > Hull1XMin*2) && (x < Hull1XMax*2)){
-		return(1);
+	if(Stage < 7){
+		if((x > Hull1XMin*2) && (x < Hull1XMax*2)){
+			return(1);
+		}
+		else if((x > Hull2XMin*2) && (x < Hull2XMax*2)){
+			return(2);
+		}
+		else if((x > Hull3XMin*2) && (x < Hull3XMax*2)){
+			return(3);
+		}
+		else if((x > Hull4XMin*2) && (x < Hull4XMax*2)){
+			return(4);
+		}
 	}
-	else if((x > Hull2XMin*2) && (x < Hull2XMax*2)){
-		return(2);
+	if(Stage == 7){
+		if((x > Hull1XMin*2) && (x < Hull1XMax*2)){
+			return(1);
+		}
+		else if((x > Hull2XMin*2) && (x < Hull2XMax*2)){
+			return(2);
+		}
+		else if((x > Hull3XMin*2) && (x < Hull3XMax*2)){
+			return(4);
+		}
+		else if((x > Hull4XMin*2) && (x < Hull4XMax*2)){
+			return(8);
+		}
 	}
-	else if((x > Hull3XMin*2) && (x < Hull3XMax*2)){
-		return(3);
-	}
-	else if((x > Hull4XMin*2) && (x < Hull4XMax*2)){
-		return(4);
+	if(Stage == 8){
+		if((x > Hull1XMin*2) && (x < Hull1XMax*2)){
+			return(2);
+		}
+		else if((x > Hull2XMin*2) && (x < Hull2XMax*2)){
+			return(4);
+		}
+		else if((x > Hull3XMin*2) && (x < Hull3XMax*2)){
+			return(8);
+		}
+		else if((x > Hull4XMin*2) && (x < Hull4XMax*2)){
+			return(10);
+		}
 	}
 	else{
 		return(0);
@@ -332,10 +379,10 @@ highFrequency
 				}
 				if((trVectorQuestVarGetX("P"+p+"Pos") > Shop2XMin*2) && (trVectorQuestVarGetX("P"+p+"Pos") < Shop2XMax*2)){
 					if (trPlayerResourceCount(p, "Gold") >= Shop2Cost) {
-						if(Stage != 6){
+						if(Stage < 6){
 							ColouredChatToPlayer(p, "1,0.5,0", "Dynamite purchased (<u>W</u>).");
 						}
-						else if(Stage == 6){
+						else if(Stage >= 6){
 							ColouredChatToPlayer(p, "1,0.5,0", "Plastic explosive purchased (<u>W</u>).");
 						}
 						grantGodPowerNoRechargeNextPosition(p, "Audrey", 1);

@@ -28,7 +28,7 @@ string stageName(int stage = 0) {
 		}
 		case 7:
 		{
-			name = "Riddel";
+			name = "Ryatt";
 		}
 		case 8:
 		{
@@ -506,6 +506,15 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				{
 					trCameraCut(vector(96.952896,98.965134,89.240631), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
 					uiMessageBox("We upgraded and changed the shop to help out a bit!");
+				}
+				case 4:
+				{
+					trCameraCut(vector(100.463554,153.803818,-59.088593), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
+					uiZoomToProto("Hero Greek Atalanta");
+					xSetPointer(dPlayerData, p);
+					if(xGetInt(dPlayerData, xStageUnlocked) == 5){
+						uiMessageBox("To unlock the next planet - you need drill level 5 and selling a diamond with 200 profit.");
+					}
 					dialog = 0;
 				}
 			}
@@ -532,6 +541,58 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				case 2:
 				{
 					uiMessageBox("Fuel is " + 1*FuelCost + " gold per 1000L");
+					dialog = 0;
+				}
+			}
+		}
+		case 19:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("The last of the gas giants!");
+				}
+				case 2:
+				{
+					uiMessageBox("Our scans indicate some rare gems at great depths.");
+				}
+				case 3:
+				{
+					trCameraCut(vector(100.463554,153.803818,-59.088593), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
+					uiZoomToProto("Hero Greek Atalanta");
+					xSetPointer(dPlayerData, p);
+					if(xGetInt(dPlayerData, xStageUnlocked) == 6){
+						uiMessageBox("To unlock the next planet - sell a lump of obsidian with 150 profit.");
+					}
+					dialog = 0;
+				}
+			}
+		}
+		case 20:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("It sure is chilly here!");
+				}
+				case 2:
+				{
+					uiMessageBox("This glistening planet has a diamond crust.");
+				}
+				case 3:
+				{
+					uiMessageBox("This, along with millions of years of gravitationally compacted ice means you'll need a strong drill.");
+				}
+				case 4:
+				{
+					trCameraCut(vector(100.463554,153.803818,-59.088593), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
+					uiZoomToProto("Hero Greek Atalanta");
+					xSetPointer(dPlayerData, p);
+					if(xGetInt(dPlayerData, xStageUnlocked) == 6){
+						uiMessageBox("To unlock the next planet - sell a lump of obsidian with 150 profit.");
+					}
 					dialog = 0;
 				}
 			}
