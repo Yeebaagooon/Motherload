@@ -27,6 +27,9 @@ int OVERTERRAIN_TYPE = 5;
 int OVERTERRAIN_SUBTYPE = 4;
 int CheckTime = 1;
 
+int MineT = 5;
+int MineST = 3;
+
 float FuelCost = 0;
 float FSOneXMin = 10;
 float FSOneXMax = 0;

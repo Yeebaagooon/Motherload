@@ -1,5 +1,5 @@
 void MineSquare(int row = 0, int col = 0){
-	trPaintTerrain(col*4-3,row*4-3,col*4-1,row*4-1,5,3,false);
+	trPaintTerrain(col*4-3,row*4-3,col*4-1,row*4-1,MineT, MineST,false);
 	trArmyDispatch("0,0", "Revealer", 1, col*8-4, 1, row*8-4, 180, true);
 	//Blow up gas pocket
 	for (x= xGetDatabaseCount(dGasPocket); > 0) {
@@ -37,9 +37,9 @@ void RemoveBlack(int row = 0, int col = 0){
 	int colmid = col*4-2;
 	//Wall above
 	if(row <= MaxRows){
-		if((trGetTerrainSubType((colmid),(rowmid)+4) == 3) && (trGetTerrainType((colmid),(rowmid)+4) == 5)){
+		if((trGetTerrainSubType((colmid),(rowmid)+4) == MineST) && (trGetTerrainType((colmid),(rowmid)+4) == MineT)){
 			trUnitSelectClear();
-			trPaintTerrain(col*4-3,row*4-3,col*4-1,row*4,5,3,false);
+			trPaintTerrain(col*4-3,row*4-3,col*4-1,row*4,MineT, MineST,false);
 			trUnitSelectByQV("R"+row+"C"+col+"WallX");
 			trUnitChangeProtoUnit("Meteor Impact Ground");
 			trUnitSelectClear();
@@ -56,8 +56,8 @@ void RemoveBlack(int row = 0, int col = 0){
 			trUnitDestroy();
 		}
 		//Wall below
-		if((trGetTerrainSubType((colmid),(rowmid)-4) == 3) && (trGetTerrainType((colmid),(rowmid)-4) == 5)){
-			trPaintTerrain(col*4-3,row*4-4,col*4-1,row*4-1,5,3,false);
+		if((trGetTerrainSubType((colmid),(rowmid)-4) == MineST) && (trGetTerrainType((colmid),(rowmid)-4) == MineT)){
+			trPaintTerrain(col*4-3,row*4-4,col*4-1,row*4-1,MineT, MineST,false);
 			trUnitSelectClear();
 			trUnitSelectByQV("R"+(row-1)+"C"+col+"WallX");
 			trUnitChangeProtoUnit("Meteor Impact Ground");
@@ -66,8 +66,8 @@ void RemoveBlack(int row = 0, int col = 0){
 			trUnitDestroy();
 			//correct wall but not top layer because terrain above isnt overworld
 		}
-		if((trGetTerrainSubType((colmid)+4,(rowmid)) == 3) && (trGetTerrainType((colmid)+4,(rowmid)) == 5)){
-			trPaintTerrain(col*4-3,row*4-3,col*4,row*4-1,5,3,false);
+		if((trGetTerrainSubType((colmid)+4,(rowmid)) == MineST) && (trGetTerrainType((colmid)+4,(rowmid)) == MineT)){
+			trPaintTerrain(col*4-3,row*4-3,col*4,row*4-1,MineT, MineST,false);
 			trUnitSelectClear();
 			trUnitSelectByQV("R"+row+"C"+col+"WallY");
 			trUnitChangeProtoUnit("Meteor Impact Ground");
@@ -75,8 +75,8 @@ void RemoveBlack(int row = 0, int col = 0){
 			trUnitSelectByQV("R"+row+"C"+col+"WallY");
 			trUnitDestroy();
 		}
-		if((trGetTerrainSubType((colmid)-4,(rowmid)) == 3) && (trGetTerrainType((colmid)-4,(rowmid)) == 5)){
-			trPaintTerrain(col*4-4,row*4-3,col*4-1,row*4-1,5,3,false);
+		if((trGetTerrainSubType((colmid)-4,(rowmid)) == MineST) && (trGetTerrainType((colmid)-4,(rowmid)) == MineT)){
+			trPaintTerrain(col*4-4,row*4-3,col*4-1,row*4-1,MineT, MineST,false);
 			trUnitSelectClear();
 			trUnitSelectByQV("R"+row+"C"+(col-1)+"WallY");
 			trUnitChangeProtoUnit("Meteor Impact Ground");
@@ -408,8 +408,8 @@ highFrequency
 				}
 			}
 			if((trGetTerrainSubType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
-						1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 3) && (trGetTerrainType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
-						1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 5)){
+						1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == MineST) && (trGetTerrainType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
+						1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == MineT)){
 				trChatSendToPlayer(0, p, "<color=1,0,0>This spot has already been drilled!</color>");
 				if(trCurrentPlayer() == p){
 					trSoundPlayFN("cantdothat.wav","1",-1,"","");
@@ -573,66 +573,66 @@ void UngarrisonDrill(int p = 1){
 	//BUG** If terrain updates the vectors don't update for position and the unit dies on 2nd attempt
 	//RESOLVED** unit must have valid ungarrison position but change fixes this anyway
 	trPaintTerrain(1*trQuestVarGet("P"+p+"DrillTargetX")/2-3,1*trQuestVarGet("P"+p+"DrillTargetZ")/2-3,
-		1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1,5,3,false);
+		1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1,MineT, MineST,false);
 	//This paints the black area around the square depending on entry point
 	/*
 	if(1*trQuestVarGet("P"+p+"Approach") == 1){
 		trPaintTerrain(1*trQuestVarGet("P"+p+"DrillTargetX")/2-3,1*trQuestVarGet("P"+p+"DrillTargetZ")/2-4,
-			1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1,5,3,false);
+			1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1,MineT, MineST,false);
 	}
 	else if(1*trQuestVarGet("P"+p+"Approach") == 2){
 		trPaintTerrain(1*trQuestVarGet("P"+p+"DrillTargetX")/2-3,1*trQuestVarGet("P"+p+"DrillTargetZ")/2-3,
-			1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,1*trQuestVarGet("P"+p+"DrillTargetZ")/2,5,3,false);
+			1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,1*trQuestVarGet("P"+p+"DrillTargetZ")/2,MineT, MineST,false);
 	}
 	else if(1*trQuestVarGet("P"+p+"Approach") == 3){
 		trPaintTerrain(1*trQuestVarGet("P"+p+"DrillTargetX")/2-3,1*trQuestVarGet("P"+p+"DrillTargetZ")/2-3,
-			1*trQuestVarGet("P"+p+"DrillTargetX")/2,1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1,5,3,false);
+			1*trQuestVarGet("P"+p+"DrillTargetX")/2,1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1,MineT, MineST,false);
 	}
 	else if(1*trQuestVarGet("P"+p+"Approach") == 4){
 		trPaintTerrain(1*trQuestVarGet("P"+p+"DrillTargetX")/2-4,1*trQuestVarGet("P"+p+"DrillTargetZ")/2-3,
-			1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1,5,3,false);
+			1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1,MineT, MineST,false);
 	}
 	*/
 	//IMPROVED - this checked and removes any connecting walls after a drill
 	//upwards
 	//paint from up
 	if((trGetTerrainSubType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
-				1*trQuestVarGet("P"+p+"DrillTargetZ")/2+3) == 3) && (trGetTerrainType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
-				1*trQuestVarGet("P"+p+"DrillTargetZ")/2+3) == 5)){
+				1*trQuestVarGet("P"+p+"DrillTargetZ")/2+3) == MineST) && (trGetTerrainType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
+				1*trQuestVarGet("P"+p+"DrillTargetZ")/2+3) == MineT)){
 		trPaintTerrain(1*trQuestVarGet("P"+p+"DrillTargetX")/2-3,1*trQuestVarGet("P"+p+"DrillTargetZ")/2+1,
-			1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,1*trQuestVarGet("P"+p+"DrillTargetZ")/2,5,3,false);
+			1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,1*trQuestVarGet("P"+p+"DrillTargetZ")/2,MineT, MineST,false);
 		if((trGetTerrainSubType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
-					1*trQuestVarGet("P"+p+"DrillTargetZ")/2-5) == 3) && (trGetTerrainType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
-					1*trQuestVarGet("P"+p+"DrillTargetZ")/2-5) == 5)){
+					1*trQuestVarGet("P"+p+"DrillTargetZ")/2-5) == MineST) && (trGetTerrainType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
+					1*trQuestVarGet("P"+p+"DrillTargetZ")/2-5) == MineT)){
 		}
 	}
 	if((trGetTerrainSubType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
-				1*trQuestVarGet("P"+p+"DrillTargetZ")/2-5) == 3) && (trGetTerrainType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
-				1*trQuestVarGet("P"+p+"DrillTargetZ")/2-5) == 5)){
+				1*trQuestVarGet("P"+p+"DrillTargetZ")/2-5) == MineST) && (trGetTerrainType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
+				1*trQuestVarGet("P"+p+"DrillTargetZ")/2-5) == MineT)){
 		trPaintTerrain(1*trQuestVarGet("P"+p+"DrillTargetX")/2-3,1*trQuestVarGet("P"+p+"DrillTargetZ")/2-4,
-			1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1,5,3,false);
+			1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1,MineT, MineST,false);
 	}
 	
 	//paint from left
 	if((trGetTerrainSubType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-5,
-				1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 3) && (trGetTerrainType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-5,
-				1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 5)){
+				1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == MineST) && (trGetTerrainType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-5,
+				1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == MineT)){
 		trPaintTerrain(1*trQuestVarGet("P"+p+"DrillTargetX")/2-4,1*trQuestVarGet("P"+p+"DrillTargetZ")/2-3,
-			1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1,5,3,false);
+			1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1,MineT, MineST,false);
 	}
 	//paint from right
 	if((trGetTerrainSubType(1*trQuestVarGet("P"+p+"DrillTargetX")/2+3,
-				1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 3) && (trGetTerrainType(1*trQuestVarGet("P"+p+"DrillTargetX")/2+3,
-				1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 5)){
+				1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == MineST) && (trGetTerrainType(1*trQuestVarGet("P"+p+"DrillTargetX")/2+3,
+				1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == MineT)){
 		trPaintTerrain(1*trQuestVarGet("P"+p+"DrillTargetX")/2-3,1*trQuestVarGet("P"+p+"DrillTargetZ")/2-3,
-			1*trQuestVarGet("P"+p+"DrillTargetX")/2,1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1,5,3,false);
+			1*trQuestVarGet("P"+p+"DrillTargetX")/2,1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1,MineT, MineST,false);
 	}
 	//wall destruction post drilling
 	zPos = 1*((trQuestVarGet("P"+p+"DrillTargetZ")-1)/8);
 	xPos = 1*((trQuestVarGet("P"+p+"DrillTargetX")-1)/8);
 	//trPaintTerrain((xPos)*4-2,(zPos)*4-2,(xPos)*4-2,(zPos)*4-2,2,2, false);
-	if((trGetTerrainSubType((xPos)*4-2,(zPos)*4+2) == 3) && (trGetTerrainType((xPos)*4-2,
-				(zPos)*4+2) == 5)){
+	if((trGetTerrainSubType((xPos)*4-2,(zPos)*4+2) == MineST) && (trGetTerrainType((xPos)*4-2,
+				(zPos)*4+2) == MineT)){
 		//trChatSend(0, "X = "+xPos+" Z = "+zPos+"");
 		trUnitSelectByQV("R"+zPos+"C"+xPos+"WallX");
 		trUnitChangeProtoUnit("Heka Shockwave SFX");
@@ -650,19 +650,19 @@ void UngarrisonDrill(int p = 1){
 		trUnitSelectByQV("R"+zPos+"C"+xPos+"WallX");
 		trUnitChangeProtoUnit("Heka Shockwave SFX");
 	}
-	if((trGetTerrainSubType((xPos)*4-2,(zPos)*4-6) == 3) && (trGetTerrainType((xPos)*4-2,
-				(zPos)*4-6) == 5)){
+	if((trGetTerrainSubType((xPos)*4-2,(zPos)*4-6) == MineST) && (trGetTerrainType((xPos)*4-2,
+				(zPos)*4-6) == MineT)){
 		trUnitSelectByQV("R"+(zPos-1)+"C"+xPos+"WallX");
 		trUnitChangeProtoUnit("Heka Shockwave SFX");
 	}
 	
-	if((trGetTerrainSubType((xPos)*4+2,(zPos)*4-2) == 3) && (trGetTerrainType((xPos)*4+2,
-				(zPos)*4-2) == 5)){
+	if((trGetTerrainSubType((xPos)*4+2,(zPos)*4-2) == MineST) && (trGetTerrainType((xPos)*4+2,
+				(zPos)*4-2) == MineT)){
 		trUnitSelectByQV("R"+zPos+"C"+xPos+"WallY");
 		trUnitChangeProtoUnit("Heka Shockwave SFX");
 	}
-	if((trGetTerrainSubType((xPos)*4-6,(zPos)*4-2) == 3) && (trGetTerrainType((xPos)*4-6,
-				(zPos)*4-2) == 5)){
+	if((trGetTerrainSubType((xPos)*4-6,(zPos)*4-2) == MineST) && (trGetTerrainType((xPos)*4-6,
+				(zPos)*4-2) == MineT)){
 		trUnitSelectByQV("R"+zPos+"C"+(xPos-1)+"WallY");
 		trUnitChangeProtoUnit("Heka Shockwave SFX");
 	}

@@ -361,7 +361,7 @@ highFrequency
 			1*trQuestVarGet("R4C3CentreY"),2,2,false);
 		*/
 		xsDisableSelf();
-		trPaintTerrain(0,80,100,80,5,3,false);
+		trPaintTerrain(0,80,100,80,MineT,MineST,false);
 		xsEnableRule("PaintLoot");
 		xsEnableRule("PainSmeltShop");
 		xsEnableRule("Selectables");
@@ -508,6 +508,8 @@ highFrequency
 		terrainAmbient(255,155,5);
 	}
 	if(Stage == 3){
+		MineT = 0;
+		MineST = 14;
 		FuelCost = 4;
 		PaintSmelter(20,180);
 		PaintSellTerrain(15,89);
@@ -581,6 +583,8 @@ highFrequency
 		trSetLighting("Dawn", 1.0);
 	}
 	if(Stage == 4){
+		MineT = 0;
+		MineST = 10;
 		FuelCost = 8;
 		PaintSmelter(20,180);
 		PaintSellTerrain(15,89);
@@ -777,6 +781,8 @@ highFrequency
 		}
 	}
 	if(Stage == 6){
+		MineT = 0;
+		MineST = 4;
 		FuelCost = 12;
 		PaintSmelter(20,180);
 		PaintSellTerrain(15,89);
@@ -912,6 +918,8 @@ highFrequency
 		}
 	}
 	if(Stage == 7){
+		MineT = 0;
+		MineST = 87;
 		FuelCost = 15;
 		PaintSmelter(20,180);
 		PaintSellTerrain(15,89);
@@ -1069,6 +1077,8 @@ highFrequency
 		}
 	}
 	if(Stage == 8){
+		MineT = 0;
+		MineST = 53;
 		FuelCost = 20;
 		PaintSmelter(20,180);
 		PaintSellTerrain(15,89);
