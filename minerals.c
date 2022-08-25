@@ -1,4 +1,4 @@
-const int RELIC_NUMBER = 14;
+const int RELIC_NUMBER = 21;
 
 const int RELIC_IRON = 1;
 const int RELIC_BRONZE = 2;
@@ -14,6 +14,13 @@ const int RELIC_EINSTEINIUM = 11;
 const int RELIC_EMERALD = 12;
 const int RELIC_AMETHYST = 13;
 const int RELIC_OBSIDIAN = 14;
+const int RELIC_TOPAZ = 15; //nemean lion
+const int RELIC_ICE = 16;
+const int RELIC_QUARTZ = 17; //vermillion bird
+const int RELIC_OPAL = 18; //qilin
+const int RELIC_HYDROGEN = 19; //fire giant
+const int RELIC_ANTIMATTER = 20;
+const int RELIC_YEEBIUM = 21;
 
 
 /*
@@ -24,7 +31,6 @@ Amethyst
 Plutonium
 
 Antimatter
-Hydrogen Ice
 
 
 Yeebium 100
@@ -33,6 +39,8 @@ Yeebium 100
 const int URANIUM_DAMAGE = 1;
 const int PROMETHIUM_DAMAGE = 2;
 const int EINSTEINIUM_DAMAGE = 3;
+const int HYDROGEN_DAMAGE = 4;
+const int ANTIMATTER_DAMAGE = 10;
 
 string relicName(int relic = 0) {
 	string msg = "WTF That's not a relic!";
@@ -93,6 +101,34 @@ string relicName(int relic = 0) {
 		case RELIC_OBSIDIAN:
 		{
 			msg = "Obsidian";
+		}
+		case RELIC_TOPAZ:
+		{
+			msg = "Topaz";
+		}
+		case RELIC_ICE:
+		{
+			msg = "Ice Core";
+		}
+		case RELIC_QUARTZ:
+		{
+			msg = "Quartz";
+		}
+		case RELIC_OPAL:
+		{
+			msg = "Opal";
+		}
+		case RELIC_HYDROGEN:
+		{
+			msg = "Hydrogen Ice";
+		}
+		case RELIC_ANTIMATTER:
+		{
+			msg = "Antimatter";
+		}
+		case RELIC_YEEBIUM:
+		{
+			msg = "Yeebium";
 		}
 	}
 	return(msg);
@@ -158,6 +194,34 @@ int relicCost(int relic = 0) {
 		{
 			price = 40;
 		}
+		case RELIC_TOPAZ:
+		{
+			price = 45;
+		}
+		case RELIC_ICE:
+		{
+			price = 50;
+		}
+		case RELIC_QUARTZ:
+		{
+			price = 60;
+		}
+		case RELIC_OPAL:
+		{
+			price = 75;
+		}
+		case RELIC_HYDROGEN:
+		{
+			price = 100;
+		}
+		case RELIC_ANTIMATTER:
+		{
+			price = 400;
+		}
+		case RELIC_YEEBIUM:
+		{
+			price = 1000;
+		}
 	}
 	return(price);
 }
@@ -221,6 +285,34 @@ string RelicColour(int relic = 0) {
 		case RELIC_OBSIDIAN:
 		{
 			colour = "0.01,0.01,0.01";
+		}
+		case RELIC_TOPAZ:
+		{
+			colour = "0.38,0.04,0.38";
+		}
+		case RELIC_ICE:
+		{
+			colour = "0.38,0.04,0.38";
+		}
+		case RELIC_QUARTZ:
+		{
+			colour = "0.38,0.04,0.38";
+		}
+		case RELIC_OPAL:
+		{
+			colour = "0.38,0.04,0.38";
+		}
+		case RELIC_HYDROGEN:
+		{
+			colour = "0.38,0.04,0.38";
+		}
+		case RELIC_ANTIMATTER:
+		{
+			colour = "0.38,0.04,0.38";
+		}
+		case RELIC_YEEBIUM:
+		{
+			colour = "1,0.47,0";
 		}
 	}
 	return(colour);
@@ -286,6 +378,34 @@ string relicIcon(int relic = 0) {
 		{
 			icon = "icons\scenario c danzhu icon";
 		}
+		case RELIC_TOPAZ:
+		{
+			icon = "icons\scenario g memean lion icon 64";
+		}
+		case RELIC_ICE:
+		{
+			icon = "icons\special n frost giant icon 64";
+		}
+		case RELIC_QUARTZ:
+		{
+			icon = "icons\special c vermilion bird icon";
+		}
+		case RELIC_OPAL:
+		{
+			icon = "icons\special c qilin icon";
+		}
+		case RELIC_HYDROGEN:
+		{
+			icon = "icons\special n fire giant icon 64";
+		}
+		case RELIC_ANTIMATTER:
+		{
+			icon = "icons\icon building wonder 64";
+		}
+		case RELIC_YEEBIUM:
+		{
+			icon = "icons\special e son of osiris icon 64";
+		}
 	}
 	return(icon);
 }
@@ -350,6 +470,34 @@ int relicProto(int relic = 0) {
 		{
 			proto = kbGetProtoUnitID("Danzhu");
 		}
+		case RELIC_TOPAZ:
+		{
+			proto = kbGetProtoUnitID("Nemean Lion");
+		}
+		case RELIC_ICE:
+		{
+			proto = kbGetProtoUnitID("Frost Giant");
+		}
+		case RELIC_QUARTZ:
+		{
+			proto = kbGetProtoUnitID("Vermilion Bird");
+		}
+		case RELIC_OPAL:
+		{
+			proto = kbGetProtoUnitID("Qilin");
+		}
+		case RELIC_HYDROGEN:
+		{
+			proto = kbGetProtoUnitID("Fire Giant");
+		}
+		case RELIC_ANTIMATTER:
+		{
+			proto = kbGetProtoUnitID("Wonder SPC");
+		}
+		case RELIC_YEEBIUM:
+		{
+			proto = kbGetProtoUnitID("Pharaoh of Osiris");
+		}
 	}
 	return(proto);
 }
@@ -378,6 +526,12 @@ void spawnRelicSpecific(vector v = vector (0,0,0), int val = 1){
 	}
 	else if(xGetInt(dFreeRelics, xRelicValue) == RELIC_EINSTEINIUM){
 		xSetInt(dFreeRelics, xRelicDamage, EINSTEINIUM_DAMAGE);
+	}
+	else if(xGetInt(dFreeRelics, xRelicValue) == RELIC_HYDROGEN){
+		xSetInt(dFreeRelics, xRelicDamage, HYDROGEN_DAMAGE);
+	}
+	else if(xGetInt(dFreeRelics, xRelicValue) == RELIC_ANTIMATTER){
+		xSetInt(dFreeRelics, xRelicDamage, ANTIMATTER_DAMAGE);
 	}
 	else{
 		xSetInt(dFreeRelics, xRelicDamage, 0);
@@ -459,6 +613,13 @@ void processFreeRelics(int count = 1) {
 					else if(xGetInt(dFreeRelics, xRelicValue) == RELIC_EINSTEINIUM){
 						xSetInt(dHeldRelics, xRelicDamage, EINSTEINIUM_DAMAGE);
 					}
+					else if(xGetInt(dFreeRelics, xRelicValue) == RELIC_HYDROGEN){
+						xSetInt(dHeldRelics, xRelicDamage, HYDROGEN_DAMAGE);
+					}
+					else if(xGetInt(dFreeRelics, xRelicValue) == RELIC_ANTIMATTER){
+						xSetInt(dHeldRelics, xRelicDamage, ANTIMATTER_DAMAGE);
+					}
+					
 					else{
 						xSetInt(dHeldRelics, xRelicDamage, 0);
 					}
@@ -507,6 +668,12 @@ void processHeldRelics(int count = 1) {
 				}
 				else if(xGetInt(dFreeRelics, xRelicValue) == RELIC_EINSTEINIUM){
 					xSetInt(dHeldRelics, xRelicDamage, EINSTEINIUM_DAMAGE);
+				}
+				else if(xGetInt(dFreeRelics, xRelicValue) == RELIC_HYDROGEN){
+					xSetInt(dHeldRelics, xRelicDamage, HYDROGEN_DAMAGE);
+				}
+				else if(xGetInt(dFreeRelics, xRelicValue) == RELIC_ANTIMATTER){
+					xSetInt(dHeldRelics, xRelicDamage, ANTIMATTER_DAMAGE);
 				}
 				else{
 					xSetInt(dFreeRelics, xRelicDamage, 0);

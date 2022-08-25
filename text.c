@@ -591,7 +591,7 @@ int npcDiag(int npc = 0, int dialog = 0) {
 					uiZoomToProto("Hero Greek Atalanta");
 					xSetPointer(dPlayerData, p);
 					if(xGetInt(dPlayerData, xStageUnlocked) == 6){
-						uiMessageBox("To unlock the next planet - sell a lump of obsidian with 150 profit.");
+						uiMessageBox("To unlock the next planet - sell x with 500 profit and upgrade all stats to at least level 6.");
 					}
 					dialog = 0;
 				}

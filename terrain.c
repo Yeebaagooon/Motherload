@@ -361,7 +361,6 @@ highFrequency
 			1*trQuestVarGet("R4C3CentreY"),2,2,false);
 		*/
 		xsDisableSelf();
-		trPaintTerrain(0,80,100,80,MineT,MineST,false);
 		xsEnableRule("PaintLoot");
 		xsEnableRule("PainSmeltShop");
 		xsEnableRule("Selectables");
@@ -1226,6 +1225,7 @@ highFrequency
 		}
 	}
 	xsDisableSelf();
+	trPaintTerrain(0,80,100,80,MineT,MineST,false);
 }
 
 rule PaintLoot
