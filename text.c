@@ -28,15 +28,15 @@ string stageName(int stage = 0) {
 		}
 		case 7:
 		{
-			name = "Ryatt";
+			name = "Ryloth";
 		}
 		case 8:
 		{
-			name = "Planet 8 name";
+			name = "Triton";
 		}
 		case 9:
 		{
-			name = "Planet 9 name";
+			name = "Sedna";
 		}
 		case 10:
 		{
@@ -74,7 +74,7 @@ string stageIcon(int stage = 0) {
 			}
 			case 5:
 			{
-				img = "ui\ui map river styx 256x256";
+				img = "ui\ui map boarder highlight 128x128";
 			}
 			case 6:
 			{
@@ -82,15 +82,15 @@ string stageIcon(int stage = 0) {
 			}
 			case 7:
 			{
-				img = "icons\improvement poseidons secret icons 64";
+				img = "icons\improvement slings of the sun icon 64";
 			}
 			case 8:
 			{
-				img = "icons\improvement safe passage icons 64";
+				img = "icons\improvement champion slinger icon 64";
 			}
 			case 9:
 			{
-				img = "ui\ui map erebus 256x256";
+				img = "icons\improvement focus icons 64";
 			}
 			case 10:
 			{
@@ -609,7 +609,7 @@ int npcDiag(int npc = 0, int dialog = 0) {
 					trQuestVarSet("goldCost", 1*trQuestVarGet("DrillCostL"+1*trQuestVarGet("NextDrillL")+""));
 					yesPrompt = "Yes (" + 1*trQuestVarGet("goldCost") + " gold )";
 					string DrillUp = trStringQuestVarGet("DrillL"+1*trQuestVarGet("NextDrillL")+"");
-					if(trPlayerResourceCount(1, "Gold") < 1*trQuestVarGet("goldCost")){
+					if(xGetInt(dPlayerData, xGold) < 1*trQuestVarGet("goldCost")){
 						uiMessageBox("You do not have enough gold to upgrade your drill! (" + 1*trQuestVarGet("goldCost") + ")");
 						dialog = 0;
 						trChatHistoryClear();
@@ -618,7 +618,7 @@ int npcDiag(int npc = 0, int dialog = 0) {
 						trChatSend(0, "<u><color=1,1,1>Upgraded Drill:</color></u>");
 						trChatSend(0, DrillUp + " "+1*trQuestVarGet("DrillPowerL"+1*trQuestVarGet("NextDrillL")+"")+" m/s");
 					}
-					else if(trPlayerResourceCount(1, "Gold") >= 1*trQuestVarGet("goldCost")){
+					else if(xGetInt(dPlayerData, xGold) >= 1*trQuestVarGet("goldCost")){
 						if (xGetInt(dPlayerData, xDrillLevel) < 8) {
 							trShowChoiceDialog("Increase drill to level " + 1*trQuestVarGet("NextDrillL") + "?",
 								yesPrompt, 17, "No", -1);
@@ -663,7 +663,7 @@ int npcDiag(int npc = 0, int dialog = 0) {
 					trQuestVarSet("goldCost", 1*trQuestVarGet("HullCostL"+1*trQuestVarGet("NextHullL")+""));
 					yesPrompt = "Yes (" + 1*trQuestVarGet("goldCost") + " gold )";
 					string HullUp = trStringQuestVarGet("HullL"+1*trQuestVarGet("NextHullL")+"");
-					if(trPlayerResourceCount(1, "Gold") < 1*trQuestVarGet("goldCost")){
+					if(xGetInt(dPlayerData, xGold) < 1*trQuestVarGet("goldCost")){
 						uiMessageBox("You do not have enough gold to upgrade your hull! (" + 1*trQuestVarGet("goldCost") + ")");
 						dialog = 0;
 						trChatHistoryClear();
@@ -672,7 +672,7 @@ int npcDiag(int npc = 0, int dialog = 0) {
 						trChatSend(0, "<u><color=1,1,1>Upgraded Hull:</color></u>");
 						trChatSend(0, HullUp + " "+1*trQuestVarGet("HullHPL"+1*trQuestVarGet("NextHullL")+"")+" hp");
 					}
-					else if(trPlayerResourceCount(1, "Gold") >= 1*trQuestVarGet("goldCost")){
+					else if(xGetInt(dPlayerData, xGold) >= 1*trQuestVarGet("goldCost")){
 						if (xGetInt(dPlayerData, xHullLevel) < 8) {
 							trShowChoiceDialog("Increase hull to level " + 1*trQuestVarGet("NextHullL") + "?",
 								yesPrompt, 18, "No", -1);
@@ -716,7 +716,7 @@ int npcDiag(int npc = 0, int dialog = 0) {
 					trQuestVarSet("goldCost", 1*trQuestVarGet("FuelCostL"+1*trQuestVarGet("NextFuelL")+""));
 					yesPrompt = "Yes (" + 1*trQuestVarGet("goldCost") + " gold )";
 					string FuelUp = trStringQuestVarGet("FuelL"+1*trQuestVarGet("NextFuelL")+"");
-					if(trPlayerResourceCount(1, "Gold") < 1*trQuestVarGet("goldCost")){
+					if(xGetInt(dPlayerData, xGold) < 1*trQuestVarGet("goldCost")){
 						uiMessageBox("You do not have enough gold to upgrade your Fuel! (" + 1*trQuestVarGet("goldCost") + ")");
 						dialog = 0;
 						trChatHistoryClear();
@@ -725,7 +725,7 @@ int npcDiag(int npc = 0, int dialog = 0) {
 						trChatSend(0, "<u><color=1,1,1>Upgraded Fuel:</color></u>");
 						trChatSend(0, FuelUp + " "+1*trQuestVarGet("FuelCL"+1*trQuestVarGet("NextFuelL")+"")+" L");
 					}
-					else if(trPlayerResourceCount(1, "Gold") >= 1*trQuestVarGet("goldCost")){
+					else if(xGetInt(dPlayerData, xGold) >= 1*trQuestVarGet("goldCost")){
 						if (xGetInt(dPlayerData, xFuelLevel) < 8) {
 							trShowChoiceDialog("Increase Fuel to level " + 1*trQuestVarGet("NextFuelL") + "?",
 								yesPrompt, 19, "No", -1);
@@ -769,7 +769,7 @@ int npcDiag(int npc = 0, int dialog = 0) {
 					trQuestVarSet("goldCost", 1*trQuestVarGet("CargoCostL"+1*trQuestVarGet("NextCargoL")+""));
 					yesPrompt = "Yes (" + 1*trQuestVarGet("goldCost") + " gold )";
 					string CargoUp = trStringQuestVarGet("CargoL"+1*trQuestVarGet("NextCargoL")+"");
-					if(trPlayerResourceCount(1, "Gold") < 1*trQuestVarGet("goldCost")){
+					if(xGetInt(dPlayerData, xGold) < 1*trQuestVarGet("goldCost")){
 						uiMessageBox("You do not have enough gold to upgrade your cargo hold! (" + 1*trQuestVarGet("goldCost") + ")");
 						dialog = 0;
 						trChatHistoryClear();
@@ -778,7 +778,7 @@ int npcDiag(int npc = 0, int dialog = 0) {
 						trChatSend(0, "<u><color=1,1,1>Upgraded cargo hold:</color></u>");
 						trChatSend(0, CargoUp + " "+1*trQuestVarGet("CargoCL"+1*trQuestVarGet("NextCargoL")+"")+" minerals");
 					}
-					else if(trPlayerResourceCount(1, "Gold") >= 1*trQuestVarGet("goldCost")){
+					else if(xGetInt(dPlayerData, xGold) >= 1*trQuestVarGet("goldCost")){
 						if (xGetInt(dPlayerData, xCargoLevel) < 8) {
 							trShowChoiceDialog("Increase Cargo to level " + 1*trQuestVarGet("NextCargoL") + "?",
 								yesPrompt, 20, "No", -1);
@@ -822,7 +822,7 @@ int npcDiag(int npc = 0, int dialog = 0) {
 					trQuestVarSet("goldCost", 1*trQuestVarGet("EngineCostL"+1*trQuestVarGet("NextEngineL")+""));
 					yesPrompt = "Yes (" + 1*trQuestVarGet("goldCost") + " gold )";
 					string EngineUp = trStringQuestVarGet("EngineL"+1*trQuestVarGet("NextEngineL")+"");
-					if(trPlayerResourceCount(1, "Gold") < 1*trQuestVarGet("goldCost")){
+					if(xGetInt(dPlayerData, xGold) < 1*trQuestVarGet("goldCost")){
 						uiMessageBox("You do not have enough gold to upgrade your engine! (" + 1*trQuestVarGet("goldCost") + ")");
 						dialog = 0;
 						trChatHistoryClear();
@@ -831,7 +831,7 @@ int npcDiag(int npc = 0, int dialog = 0) {
 						trChatSend(0, "<u><color=1,1,1>Upgraded Engine:</color></u>");
 						trChatSend(0, EngineUp + " "+1*trQuestVarGet("EngineCL"+1*trQuestVarGet("NextEngineL")+"")+" kW");
 					}
-					else if(trPlayerResourceCount(1, "Gold") >= 1*trQuestVarGet("goldCost")){
+					else if(xGetInt(dPlayerData, xGold) >= 1*trQuestVarGet("goldCost")){
 						if (xGetInt(dPlayerData, xEngineLevel) < 8) {
 							trShowChoiceDialog("Increase engine to level " + 1*trQuestVarGet("NextEngineL") + "?",
 								yesPrompt, 21, "No", -1);
@@ -875,7 +875,7 @@ int npcDiag(int npc = 0, int dialog = 0) {
 					trQuestVarSet("goldCost", 1*trQuestVarGet("RadiatorCostL"+1*trQuestVarGet("NextRadiatorL")+""));
 					yesPrompt = "Yes (" + 1*trQuestVarGet("goldCost") + " gold )";
 					string RadiatorUp = trStringQuestVarGet("RadiatorL"+1*trQuestVarGet("NextRadiatorL")+"");
-					if(trPlayerResourceCount(1, "Gold") < 1*trQuestVarGet("goldCost")){
+					if(xGetInt(dPlayerData, xGold) < 1*trQuestVarGet("goldCost")){
 						uiMessageBox("You do not have enough gold to upgrade your Radiator! (" + 1*trQuestVarGet("goldCost") + ")");
 						dialog = 0;
 						trChatHistoryClear();
@@ -884,7 +884,7 @@ int npcDiag(int npc = 0, int dialog = 0) {
 						trChatSend(0, "<u><color=1,1,1>Upgraded Radiator:</color></u>");
 						trChatSend(0, RadiatorUp + " "+1*trQuestVarGet("RadiatorCL"+1*trQuestVarGet("NextRadiatorL")+"")+" percent efficient");
 					}
-					else if(trPlayerResourceCount(1, "Gold") >= 1*trQuestVarGet("goldCost")){
+					else if(xGetInt(dPlayerData, xGold) >= 1*trQuestVarGet("goldCost")){
 						if (xGetInt(dPlayerData, xRadiatorLevel) < 8) {
 							trShowChoiceDialog("Increase Radiator to level " + 1*trQuestVarGet("NextRadiatorL") + "?",
 								yesPrompt, 22, "No", -1);

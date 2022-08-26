@@ -319,7 +319,7 @@ highFrequency
 	trUnitSetVariation(UnitFlag4,1*trQuestVarGet("CurrentCargoL")-1);
 	trUnitSetVariation(UnitFlag5,1*trQuestVarGet("CurrentEngineL")-1);
 	trUnitSetVariation(UnitFlag6,1*trQuestVarGet("CurrentRadiatorL")-1);
-	
+	xsEnableRule("eternal_loops");
 	trLetterBox(false);
 	trUIFadeToColor(0,0,0,1500,0,false);
 	uiZoomToProto("Pharaoh of Osiris XP");

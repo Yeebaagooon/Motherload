@@ -14,11 +14,11 @@ const int RELIC_EINSTEINIUM = 11;
 const int RELIC_EMERALD = 12;
 const int RELIC_AMETHYST = 13;
 const int RELIC_OBSIDIAN = 14;
-const int RELIC_TOPAZ = 15; //nemean lion
+const int RELIC_TOPAZ = 15;
 const int RELIC_ICE = 16;
-const int RELIC_QUARTZ = 17; //vermillion bird
-const int RELIC_OPAL = 18; //qilin
-const int RELIC_HYDROGEN = 19; //fire giant
+const int RELIC_QUARTZ = 17;
+const int RELIC_OPAL = 18;
+const int RELIC_HYDROGEN = 19;
 const int RELIC_ANTIMATTER = 20;
 const int RELIC_YEEBIUM = 21;
 
@@ -288,27 +288,27 @@ string RelicColour(int relic = 0) {
 		}
 		case RELIC_TOPAZ:
 		{
-			colour = "0.38,0.04,0.38";
+			colour = "0.98,0.89,0.23";
 		}
 		case RELIC_ICE:
 		{
-			colour = "0.38,0.04,0.38";
+			colour = "0.65,0.79,0.87";
 		}
 		case RELIC_QUARTZ:
 		{
-			colour = "0.38,0.04,0.38";
+			colour = "0.95,0.76,0.8";
 		}
 		case RELIC_OPAL:
 		{
-			colour = "0.38,0.04,0.38";
+			colour = "0.47,0.04,0";
 		}
 		case RELIC_HYDROGEN:
 		{
-			colour = "0.38,0.04,0.38";
+			colour = "0.64,0.56,0.87";
 		}
 		case RELIC_ANTIMATTER:
 		{
-			colour = "0.38,0.04,0.38";
+			colour = "0.91,0.89,0.81";
 		}
 		case RELIC_YEEBIUM:
 		{
@@ -380,7 +380,7 @@ string relicIcon(int relic = 0) {
 		}
 		case RELIC_TOPAZ:
 		{
-			icon = "icons\scenario g memean lion icon 64";
+			icon = "icons\special g nemean lion icon 64";
 		}
 		case RELIC_ICE:
 		{
@@ -545,35 +545,17 @@ void spawnRelicSpecific(vector v = vector (0,0,0), int val = 1){
 	//trChatSend(0, "Free relics = "+xGetDatabaseCount(dFreeRelics)+"");
 }
 
-void reselectMyself() {
-	uiClearSelection();
-	int p = trCurrentPlayer();
-	trackInsert();
-	trackAddWaypoint();
-	trackAddWaypoint();
-	uiFindType(kbGetProtoUnitName(554));
-	trackPlay(1,999);
+void reselectMyself(int p = 0) {
+	if(trCurrentPlayer() == p){
+		uiClearSelection();
+		trackInsert();
+		trackAddWaypoint();
+		trackAddWaypoint();
+		uiFindType(kbGetProtoUnitName(554));
+		trackPlay(1,999);
+	}
 	
 }
-
-/*
-void processFreeRelicsOLD(int count = 1) {
-	float amt = 0;
-	int db = 0;
-	vector pos = vector(0,0,0);
-	for (x=xsMin(count, xGetDatabaseCount(dFreeRelics)); > 0) {
-		amt = 0;
-		xDatabaseNext(dFreeRelics);
-		xUnitSelect(dFreeRelics, xRelicName);
-		//STARRED CODE HERE AND BELOW ELSEIF
-		if(trUnitIsSelected()) {
-			//trShowImageDialog(relicIcon(xGetInt(dFreeRelics, xRelicValue)), relicName(xGetInt(dFreeRelics, xRelicValue)));
-			relicDescription(xGetInt(dFreeRelics, xRelicValue));
-			reselectMyself();
-		}
-	}
-}
-*/
 
 void processFreeRelics(int count = 1) {
 	float amt = 0;
@@ -630,7 +612,7 @@ void processFreeRelics(int count = 1) {
 			}
 		} else if (trUnitIsSelected()) {
 			relicDescription(xGetInt(dFreeRelics, xRelicValue));
-			reselectMyself();
+			reselectMyself(1*trCurrentPlayer());
 		}
 	}
 }
@@ -695,23 +677,23 @@ void processHeldRelics(int count = 1) {
 					xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)+1*relicCost(1*xGetInt(dHeldRelics, xRelicValue)));
 					if (trCurrentPlayer() == dropper) {
 						//trChatSend(0, relicName(xGetInt(dHeldRelics, xRelicValue)) + " sold!");
-						trQuestVarModify("P"+dropper+"R"+1*xGetInt(dHeldRelics, xRelicValue)+"", "+", 1);
 						trSoundPlayFN("favordump.wav","1",-1,"","");
 					}
 					GSeller = dropper;
+					trQuestVarModify("P"+dropper+"R"+1*xGetInt(dHeldRelics, xRelicValue)+"", "+", 1);
 					trQuestVarSet("TEMPValue", 1*xGetInt(dHeldRelics, xRelicValue));
 					trQuestVarModify("TEMPNumber", "+", 1);
 					xFreeDatabaseBlock(dHeldRelics);
 					trDelayedRuleActivation("SellMinerals");
-					reselectMyself();
+					reselectMyself(GSeller);
 					break;
 				}
 			}
 		}
-		if(xGetInt(dHeldRelics, xRelicValue) == RELIC_URANIUM || xGetInt(dHeldRelics, xRelicValue) == RELIC_PROMETHIUM || xGetInt(dHeldRelics, xRelicValue) == RELIC_EINSTEINIUM){
+		if(xGetInt(dHeldRelics, xRelicValue) == RELIC_URANIUM || xGetInt(dHeldRelics, xRelicValue) == RELIC_PROMETHIUM || xGetInt(dHeldRelics, xRelicValue) == RELIC_EINSTEINIUM || xGetInt(dHeldRelics, xRelicValue) == RELIC_HYDROGEN || xGetInt(dHeldRelics, xRelicValue) == RELIC_ANTIMATTER){
 			if(trTimeMS() > xGetInt(dHeldRelics, xRelicTick)){
 				for(p=1; < cNumberNonGaiaPlayers) {
-					trDamageUnitsInArea(p,"All",4, xGetInt(dHeldRelics, xRelicDamage));
+					trDamageUnitsInArea(p,"Hero Greek Atalanta",4, xGetInt(dHeldRelics, xRelicDamage));
 					trDamageUnit(-1*xGetInt(dHeldRelics, xRelicDamage));
 				}
 				xSetInt(dHeldRelics, xRelicTick,(trTimeMS()+50));
@@ -824,6 +806,10 @@ highFrequency
 	
 	if(trTime() > 1*trQuestVarGet("TimeSeconds")){
 		trQuestVarModify("TimeSeconds", "+", 1);
+		//debug destroymedb not destroying because not in db???
+		/*trChatHistoryClear();
+		trChatSend(0, ""+xGetDatabaseCount(dDestroyMe));
+		trChatSend(0, ""+xGetInt(dDestroyMe, xDestroyTime));*/
 		for (x= xGetDatabaseCount(dDestroyMe); > 0) {
 			xDatabaseNext(dDestroyMe);
 			if(trTimeMS() > xGetInt(dDestroyMe, xDestroyTime)){

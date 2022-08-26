@@ -162,7 +162,7 @@ highFrequency
 	//trChatSend(0, ""+xGetInt(dPlayerData, xDrillLevel));
 	xsEnableRule("FuelEconomy");
 	xsEnableRule("StageTimer");
-	//xsEnableRule("CheckResigns");
+	xsEnableRule("CheckResigns");
 	xsEnableRule("PlayerStats");
 }
 
@@ -203,6 +203,7 @@ highFrequency
 		if(Stage == 8){
 			StageTime = 540; //540
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
+			grantGodPowerNoRechargeNextPosition(1, "Audrey", 100);
 		}
 		xsDisableSelf();
 		xsEnableRule("StageEnd");
@@ -233,6 +234,7 @@ highFrequency
 					trPlayerKillAllBuildings(p);
 					trSetPlayerDefeated(p);
 					xSetInt(dPlayerData, xPlayerActive, 0);
+					trPlayerKillAllGodPowers(p);
 				}
 				if(xGetInt(dPlayerData, xPlayerActive) == 1){
 					if(kbIsPlayerResigned(p) == true){
@@ -240,6 +242,18 @@ highFrequency
 						trPlayerKillAllBuildings(p);
 						trSetPlayerDefeated(p);
 						xSetInt(dPlayerData, xPlayerActive, 0);
+						trPlayerKillAllGodPowers(p);
+					}
+				}
+				if(xGetInt(dPlayerData, xPlayerActive) == 1){
+					trUnitSelectClear();
+					trUnitSelectByQV("P"+p+"Siphon");
+					if(trUnitDead()==true){
+						trPlayerKillAllUnits(p);
+						trPlayerKillAllBuildings(p);
+						trSetPlayerDefeated(p);
+						xSetInt(dPlayerData, xPlayerActive, 0);
+						trPlayerKillAllGodPowers(p);
 					}
 				}
 			}
@@ -366,72 +380,53 @@ highFrequency
 	if(trTime() > 1*trQuestVarGet("ShopTimer")){
 		for(p = 1; <= cNumberNonGaiaPlayers){
 			xSetPointer(dPlayerData, p);
-			if((trVectorQuestVarGetZ("P"+p+"Pos") > 190) && (trVectorQuestVarGetZ("P"+p+"Pos") < 196)){
-				if((trVectorQuestVarGetX("P"+p+"Pos") > Shop1XMin*2) && (trVectorQuestVarGetX("P"+p+"Pos") < Shop1XMax*2)){
-					if (trPlayerResourceCount(p, "Gold") >= Shop1Cost) {
-						ColouredChatToPlayer(p, "1,0.5,0", "Emergency fuel tank purchased (<u>R</u>).");
-						grantGodPowerNoRechargeNextPosition(p, "Ragnorok", 1);
-						xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*Shop1Cost);
-					}
-					else{
-						ColouredChatToPlayer(p, "1,0,0", "You do not have enough gold to buy this item!");
-					}
-				}
-				if((trVectorQuestVarGetX("P"+p+"Pos") > Shop2XMin*2) && (trVectorQuestVarGetX("P"+p+"Pos") < Shop2XMax*2)){
-					if (trPlayerResourceCount(p, "Gold") >= Shop2Cost) {
-						if(Stage < 6){
-							ColouredChatToPlayer(p, "1,0.5,0", "Dynamite purchased (<u>W</u>).");
-						}
-						else if(Stage >= 6){
-							ColouredChatToPlayer(p, "1,0.5,0", "Plastic explosive purchased (<u>W</u>).");
-						}
-						grantGodPowerNoRechargeNextPosition(p, "Audrey", 1);
-						xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*Shop2Cost);
-					}
-					else{
-						ColouredChatToPlayer(p, "1,0,0", "You do not have enough gold to buy this item!");
-					}
-				}
-				if((trVectorQuestVarGetX("P"+p+"Pos") > Shop3XMin*2) && (trVectorQuestVarGetX("P"+p+"Pos") < Shop3XMax*2)){
-					if (trPlayerResourceCount(p, "Gold") >= Shop3Cost) {
-						ColouredChatToPlayer(p, "1,0.5,0", "Emergency teleport purchased (<u>E</u>).");
-						grantGodPowerNoRechargeNextPosition(p, "Rain", 1);
-						xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*Shop3Cost);
-					}
-					else{
-						ColouredChatToPlayer(p, "1,0,0", "You do not have enough gold to buy this item!");
-					}
-				}
-				if((trVectorQuestVarGetX("P"+p+"Pos") > Shop4XMin*2) && (trVectorQuestVarGetX("P"+p+"Pos") < Shop4XMax*2)){
-					if (trPlayerResourceCount(p, "Gold") >= Shop4Cost) {
-						trUnitSelectClear();
-						trUnitSelectByQV("P"+p+"Siphon");
-						if(trUnitPercentDamaged() != 0){
-							ColouredChatToPlayer(p, "1,0.5,0", "250hp hull repaired.");
-							xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*Shop4Cost);
-							trUnitSelectClear();
-							trUnitSelectByQV("P"+p+"Siphon");
-							trDamageUnit(-250);
+			if(xGetInt(dPlayerData, xPlayerActive) == 1){
+				if((trVectorQuestVarGetZ("P"+p+"Pos") > 190) && (trVectorQuestVarGetZ("P"+p+"Pos") < 196)){
+					if((trVectorQuestVarGetX("P"+p+"Pos") > Shop1XMin*2) && (trVectorQuestVarGetX("P"+p+"Pos") < Shop1XMax*2)){
+						if (trPlayerResourceCount(p, "Gold") >= Shop1Cost) {
+							ColouredChatToPlayer(p, "1,0.5,0", "Emergency fuel tank purchased (<u>R</u>).");
+							grantGodPowerNoRechargeNextPosition(p, "Ragnorok", 1);
+							xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*Shop1Cost);
 						}
 						else{
-							ColouredChatToPlayer(p, "1,0,0", "You are at full health.");
+							ColouredChatToPlayer(p, "1,0,0", "You do not have enough gold to buy this item!");
 						}
 					}
-					else{
-						ColouredChatToPlayer(p, "1,0,0", "You do not have enough gold to buy this item!");
+					if((trVectorQuestVarGetX("P"+p+"Pos") > Shop2XMin*2) && (trVectorQuestVarGetX("P"+p+"Pos") < Shop2XMax*2)){
+						if (trPlayerResourceCount(p, "Gold") >= Shop2Cost) {
+							if(Stage < 6){
+								ColouredChatToPlayer(p, "1,0.5,0", "Dynamite purchased (<u>W</u>).");
+							}
+							else if(Stage >= 6){
+								ColouredChatToPlayer(p, "1,0.5,0", "Plastic explosive purchased (<u>W</u>).");
+							}
+							grantGodPowerNoRechargeNextPosition(p, "Audrey", 1);
+							xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*Shop2Cost);
+						}
+						else{
+							ColouredChatToPlayer(p, "1,0,0", "You do not have enough gold to buy this item!");
+						}
 					}
-				}
-				if((trVectorQuestVarGetX("P"+p+"Pos") > Hull1XMin*2) && (trVectorQuestVarGetX("P"+p+"Pos") < 200)){
-					if(GetHullShop(trVectorQuestVarGetX("P"+p+"Pos")) != 0){
-						if (trPlayerResourceCount(p, "Gold") >= HullCost*GetHullShop(trVectorQuestVarGetX("P"+p+"Pos"))) {
+					if((trVectorQuestVarGetX("P"+p+"Pos") > Shop3XMin*2) && (trVectorQuestVarGetX("P"+p+"Pos") < Shop3XMax*2)){
+						if (trPlayerResourceCount(p, "Gold") >= Shop3Cost) {
+							ColouredChatToPlayer(p, "1,0.5,0", "Emergency teleport purchased (<u>E</u>).");
+							grantGodPowerNoRechargeNextPosition(p, "Rain", 1);
+							xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*Shop3Cost);
+						}
+						else{
+							ColouredChatToPlayer(p, "1,0,0", "You do not have enough gold to buy this item!");
+						}
+					}
+					if((trVectorQuestVarGetX("P"+p+"Pos") > Shop4XMin*2) && (trVectorQuestVarGetX("P"+p+"Pos") < Shop4XMax*2)){
+						if (trPlayerResourceCount(p, "Gold") >= Shop4Cost) {
 							trUnitSelectClear();
 							trUnitSelectByQV("P"+p+"Siphon");
 							if(trUnitPercentDamaged() != 0){
-								ColouredChatToPlayer(p, "1,0.5,0", ""+250*GetHullShop(trVectorQuestVarGetX("P"+p+"Pos"))+"" + " hp hull repaired.");
-								xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*HullCost*GetHullShop(trVectorQuestVarGetX("P"+p+"Pos")));
+								ColouredChatToPlayer(p, "1,0.5,0", "250hp hull repaired.");
+								xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*Shop4Cost);
 								trUnitSelectClear();
 								trUnitSelectByQV("P"+p+"Siphon");
-								trDamageUnit(-250*GetHullShop(trVectorQuestVarGetX("P"+p+"Pos")));
+								trDamageUnit(-250);
 							}
 							else{
 								ColouredChatToPlayer(p, "1,0,0", "You are at full health.");
@@ -441,9 +436,30 @@ highFrequency
 							ColouredChatToPlayer(p, "1,0,0", "You do not have enough gold to buy this item!");
 						}
 					}
+					if((trVectorQuestVarGetX("P"+p+"Pos") > Hull1XMin*2) && (trVectorQuestVarGetX("P"+p+"Pos") < 200)){
+						if(GetHullShop(trVectorQuestVarGetX("P"+p+"Pos")) != 0){
+							if (trPlayerResourceCount(p, "Gold") >= HullCost*GetHullShop(trVectorQuestVarGetX("P"+p+"Pos"))) {
+								trUnitSelectClear();
+								trUnitSelectByQV("P"+p+"Siphon");
+								if(trUnitPercentDamaged() != 0){
+									ColouredChatToPlayer(p, "1,0.5,0", ""+250*GetHullShop(trVectorQuestVarGetX("P"+p+"Pos"))+"" + " hp hull repaired.");
+									xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*HullCost*GetHullShop(trVectorQuestVarGetX("P"+p+"Pos")));
+									trUnitSelectClear();
+									trUnitSelectByQV("P"+p+"Siphon");
+									trDamageUnit(-250*GetHullShop(trVectorQuestVarGetX("P"+p+"Pos")));
+								}
+								else{
+									ColouredChatToPlayer(p, "1,0,0", "You are at full health.");
+								}
+							}
+							else{
+								ColouredChatToPlayer(p, "1,0,0", "You do not have enough gold to buy this item!");
+							}
+						}
+					}
 				}
+				trQuestVarSet("ShopTimer", trTime()+1);
 			}
-			trQuestVarSet("ShopTimer", trTime()+1);
 		}
 	}
 }

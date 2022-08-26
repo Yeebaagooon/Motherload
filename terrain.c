@@ -1499,7 +1499,9 @@ highFrequency
 			if(Stage == 8){
 				//iron first two rows
 				if(row == 18){
-					spawnRelicSpecific(v,9);
+					//spawnRelicSpecific(v,9);
+					int lol = 22-col;
+					spawnRelicSpecific(v,lol);
 				}
 				/*else if((row > 10) && (row <= 17)){
 					trQuestVarSetFromRand("Temp",1,20);

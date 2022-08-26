@@ -25,7 +25,8 @@ void MineSquare(int row = 0, int col = 0){
 			trUnitOverrideAnimation(1,0,false,true,-1,-1);
 			xFreeDatabaseBlock(dGasPocket);
 			trUnitSelectClear();
-			xAddDatabaseBlock(dDestroyMe);
+			trUnitSelect(""+temp);
+			xAddDatabaseBlock(dDestroyMe, true);
 			xSetInt(dDestroyMe, xDestroyName, temp);
 			xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+1500);
 		}
@@ -317,6 +318,7 @@ highFrequency
 				trUnitSetAnimationPath("3,0,0,0,0,0,0");
 				trSetUnitOrientation(vector(0,1,0),vector(1,0,0),true);
 				trUnitSelectClear();
+				//trUnitSelect(""+temp, true);
 				xAddDatabaseBlock(dDestroyMe);
 				xSetInt(dDestroyMe, xDestroyName, temp);
 				xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+1500);
