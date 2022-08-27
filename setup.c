@@ -620,13 +620,27 @@ highFrequency
 		trUnitSelectByQV("StageSelector");
 		trUnitMoveToPoint(52,3,50,-1,false);
 	}
-	trCameraCut(vector(100.463554,153.803818,-59.088593), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
 	trOverlayText("Host, choose a stage", 8.0, 508, 70, 1000);
 	trLetterBox(false);
 	trUIFadeToColor(0,0,0,1500,0,false);
 	xsDisableSelf();
 	xsEnableRule("choose_stage");
-	uiZoomToProto("Athena");
+	trCameraCut(vector(97.212753,163.322815,-63.585068), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619730,0.784813), vector(0.999997,-0.000000,-0.002398));
+	if(trCurrentPlayer() == 1){
+		trCameraCut(vector(100.463554,153.803818,-59.088593), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
+		uiZoomToProto("Athena");
+	}
+	/*
+	//CREATE CAMERA TRACK
+	createCameraTrack(10000);
+	trCameraCut(vector(100.463554,153.803818,-59.088593), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
+	addCameraTrackWaypoint();
+	trCameraCut(vector(100.463554,103.803818,-59.088593), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
+	addCameraTrackWaypoint();
+	trCameraCut(vector(100.463554,103.803818,-9.088593), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
+	addCameraTrackWaypoint();
+	playCameraTrack();
+	*/
 }
 
 rule choose_stage

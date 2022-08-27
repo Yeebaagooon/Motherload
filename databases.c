@@ -21,6 +21,9 @@ int dDestroyMe = 0;
 int xDestroyName = 0;
 int xDestroyTime = 0;
 
+int dSpace = 0;
+int xSpaceName = 0;
+
 int spysearch = 0;
 int spyreset = 0;
 int spyProto = 0;
@@ -64,6 +67,9 @@ highFrequency
 	dPlanetEyecandy = xInitDatabase("PlanetEyecandy");
 	xPlanetEyecandyName = xInitAddInt(dPlanetEyecandy, "name"); //unit name
 	xPlanetEyecandyStage = xInitAddInt(dPlanetEyecandy, "stage");
+	
+	dSpace = xInitDatabase("SpaceEyecandy");
+	xSpaceName = xInitAddInt(dSpace, "name"); //unit name
 	
 	//GasPockets
 	dGasPocket = xInitDatabase("GasPocket");

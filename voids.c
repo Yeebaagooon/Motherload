@@ -1511,3 +1511,24 @@ void SelectableSign(int x = 0, int z = 0, int prompt = 0){
 	trUnitSelect(""+temp);
 	trUnitHighlight(1000, false);
 }
+
+bool cameraFirstWaypoint = true;
+int cameraTrackTime = 0;
+
+void createCameraTrack(int timeMS = 0){
+	cameraFirstWaypoint = true;
+	cameraTrackTime = timeMS;
+	trackInsert();
+	trackPlay(cameraTrackTime, -1);
+}
+void addCameraTrackWaypoint(){
+	if(cameraFirstWaypoint){
+		cameraFirstWaypoint = false;
+	} else {
+		trackAddWaypoint();
+	}
+	trackEditWaypoint();
+}
+void playCameraTrack(int eventId = -1){
+	trackPlay(cameraTrackTime, eventId);
+}

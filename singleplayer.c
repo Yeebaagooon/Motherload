@@ -1,20 +1,8 @@
-rule LoadSP
-inactive
-highFrequency
-{
-	trBlockAllSounds();
-	trSetFogAndBlackmap(false, false);
-	xsDisableSelf();
-	//xsEnableRule("SPCineChoice");
+void PaintSP(){
 	PaintAtlantisArea(0,0,68,31,"NorseRoadA");
 	PaintAtlantisArea(32,12,36,16,"BlackRock"); // main sq
 	PaintAtlantisArea(32,23,36,27,"black"); // boon sq
 	PaintAtlantisArea(32,1,36,5,"black"); // exit sq
-	UnitCreate(0, "Fire Siphon", 68, 28, 180); //main siphon
-	UnitCreate(1, "Pharaoh of Osiris XP", 68, 20, 180); //Player Unit
-	trQuestVarSet("ExitTunnel", trGetNextUnitScenarioNameNumber());
-	UnitCreate(1, "Tunnel", 68, 7, 180); //exit unit
-	UnitCreate(0, "Outpost", 68, 51, 180); //boon unit
 	//TERRAIN initial 6 legs
 	//LEFT LEGS
 	trPaintTerrain(34,7,34,10,0,74,false); //vertical strip main to exit
@@ -79,7 +67,22 @@ highFrequency
 		trPaintTerrain(49,y*5+4,49,y*5+4,0,77,false);
 		PaintAtlantisArea(51,y*5+3,63,y*5+5, "GrassA"); // square
 	}
-	
+}
+
+rule LoadSP
+inactive
+highFrequency
+{
+	trBlockAllSounds();
+	trSetFogAndBlackmap(false, false);
+	xsDisableSelf();
+	//xsEnableRule("SPCineChoice");
+	PaintSP();
+	UnitCreate(0, "Fire Siphon", 68, 28, 180); //main siphon
+	UnitCreate(1, "Pharaoh of Osiris XP", 68, 20, 180); //Player Unit
+	trQuestVarSet("ExitTunnel", trGetNextUnitScenarioNameNumber());
+	UnitCreate(1, "Tunnel", 68, 7, 180); //exit unit
+	UnitCreate(0, "Outpost", 68, 51, 180); //boon unit
 	//UNITS for the 6 boxes and flags
 	int UnitBox1 = trGetNextUnitScenarioNameNumber();
 	UnitCreate(0, "Victory Marker", 46, 38, 90); //drill unit
@@ -339,6 +342,9 @@ highFrequency
 	if((xGetInt(dPlayerData, xStageUnlocked) == 4) && (xGetInt(dPlayerData, xStageStatus) == 1)){
 		xsEnableRule("SPUnlock6");
 	}
+	
+	//xsEnableRule("CineSetup");
+	xsEnableRule("Cine_10");
 }
 
 void UpgradeDrill(int p = -1){
