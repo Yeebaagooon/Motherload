@@ -430,11 +430,16 @@ void PaintPlanets(int x = 0, int z = 0, int offsetearth = 0){
 			offset = 20;
 		}
 		xSetPointer(dPlayerData, 1);
-		if(xGetInt(dPlayerData, xStageUnlocked) > xGetInt(dObelisks, xObeliskStage)-1){
-			UnitCreate(0, "Outpost", x*2+12*p, z*2+10+offset, 90);
+		if(aiIsMultiplayer() == true){
+			if(xGetInt(dPlayerData, xStageUnlocked) > xGetInt(dObelisks, xObeliskStage)-1){
+				UnitCreate(0, "Outpost", x*2+12*p, z*2+10+offset, 90);
+			}
+			else{
+				UnitCreate(0, "Victory Marker", x*2+12*p, z*2+10+offset, 90);
+			}
 		}
 		else{
-			UnitCreate(0, "Victory Marker", x*2+12*p, z*2+10+offset, 90);
+			UnitCreate(0, "Outpost", x*2+12*p, z*2+10+offset, 90);
 		}
 		xAddDatabaseBlock(dObelisks, true);
 		xSetInt(dObelisks, xObeliskName,next);

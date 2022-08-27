@@ -814,7 +814,7 @@ highFrequency
 		if(trTimeMS() > xGetInt(dDestroyMe, xDestroyTime)){
 			xUnitSelect(dDestroyMe, xDestroyName);
 			trUnitDestroy();
-			trChatSend(0, "<color=1,0,0>"+xGetInt(dDestroyMe, xDestroyName));
+			//trChatSend(0, "<color=1,0,0>"+xGetInt(dDestroyMe, xDestroyName));
 			xFreeDatabaseBlock(dDestroyMe);
 		}
 	}

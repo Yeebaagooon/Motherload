@@ -360,7 +360,7 @@ highFrequency
 				xSetInt(dDestroyMe, xDestroyName, temp);
 				xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+1500);
 				//trChatSend(0, ""+xGetDatabaseCount(dDestroyMe));
-				trChatSend(0, "<color=0,1,0>"+xGetInt(dDestroyMe, xDestroyName));
+				//trChatSend(0, "<color=0,1,0>"+xGetInt(dDestroyMe, xDestroyName));
 			}
 			else{
 				trChatSendToPlayer(0, p, "<color=1,0,0>Plastic explosive error - can't use on the surface.</color>");

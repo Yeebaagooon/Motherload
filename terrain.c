@@ -1058,16 +1058,17 @@ highFrequency
 		sunColor(57,47,222);
 		ambientColor(17,15,211);
 		terrainAmbient(55,55,200);
-		for(x=1; < 10){
-			xAddDatabaseBlock(dGasPocket, true);
+		//Somehow this explodes on surface
+		/*for(x=1; < 10){
+			xAddDatabaseBlock(dGasPocket);
 			xSetPointer(dGasPocket, x);
-			trQuestVarSetFromRand("temp", 1, 20);
+			trQuestVarSetFromRand("temp", 1, 19);
 			xSetInt(dGasPocket, xGasCol, 1*trQuestVarGet("temp"));
-			trQuestVarSetFromRand("temp", 18, 20);
+			trQuestVarSetFromRand("temp", 18, 19);
 			xSetInt(dGasPocket, xGasRow, 1*trQuestVarGet("temp"));
-		}
+		}*/
 		for(x=1; < 40){
-			xAddDatabaseBlock(dGasPocket, true);
+			xAddDatabaseBlock(dGasPocket);
 			xSetPointer(dGasPocket, x);
 			trQuestVarSetFromRand("temp", 1, 20);
 			xSetInt(dGasPocket, xGasCol, 1*trQuestVarGet("temp"));
