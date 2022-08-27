@@ -804,121 +804,120 @@ highFrequency
 		}
 	}
 	
-	if(trTime() > 1*trQuestVarGet("TimeSeconds")){
-		trQuestVarModify("TimeSeconds", "+", 1);
-		//debug destroymedb not destroying because not in db???
-		/*trChatHistoryClear();
-		trChatSend(0, ""+xGetDatabaseCount(dDestroyMe));
-		trChatSend(0, ""+xGetInt(dDestroyMe, xDestroyTime));*/
-		for (x= xGetDatabaseCount(dDestroyMe); > 0) {
-			xDatabaseNext(dDestroyMe);
-			if(trTimeMS() > xGetInt(dDestroyMe, xDestroyTime)){
-				trUnitSelect(""+xGetInt(dDestroyMe, xDestroyName));
-				trUnitDestroy();
-				xFreeDatabaseBlock(dDestroyMe);
-			}
+	
+	//debug destroymedb not destroying because not in db???
+	/*trChatHistoryClear();
+	trChatSend(0, ""+xGetDatabaseCount(dDestroyMe));
+	trChatSend(0, ""+xGetInt(dDestroyMe, xDestroyTime));*/
+	for (x= xGetDatabaseCount(dDestroyMe); > 0) {
+		xDatabaseNext(dDestroyMe);
+		if(trTimeMS() > xGetInt(dDestroyMe, xDestroyTime)){
+			xUnitSelect(dDestroyMe, xDestroyName);
+			trUnitDestroy();
+			trChatSend(0, "<color=1,0,0>"+xGetInt(dDestroyMe, xDestroyName));
+			xFreeDatabaseBlock(dDestroyMe);
 		}
-		for (x= xGetDatabaseCount(dGasPocket); > 0) {
-			xDatabaseNext(dGasPocket);
-			trVectorQuestVarSet("TempGas", xsVectorSet(8*xGetInt(dGasPocket, xGasCol)-4,3,8*xGetInt(dGasPocket, xGasRow)-4));
-			//trVectorQuestVarEcho("TempGas");
-			//trVectorQuestVarEcho("P1Pos");
-			for(p = 1; <= cNumberNonGaiaPlayers){
-				if(trDistanceBetweenVectorsSquared("TempGas", "P"+p+"Pos") < 30){
-					int temp = trGetNextUnitScenarioNameNumber();
-					trArmyDispatch("0,0", "Dwarf", 1, 1,1,1, 0, true);
-					trUnitSelectClear();
-					trUnitSelect(""+temp);
-					trUnitSelectClear();
-					trUnitSelect(""+temp);
-					trUnitTeleport(trVectorQuestVarGetX("TempGas"),trVectorQuestVarGetY("TempGas"),trVectorQuestVarGetZ("TempGas"));
-					trMutateSelected(kbGetProtoUnitID("Harpy"));
-					trUnitSelectClear();
-					trUnitSelect(""+temp);
-					trSetSelectedHeight(-10.0);
-					trUnitSelectClear();
-					trUnitSelect(""+temp);
-					trSetSelectedScale(0,0,0);
-					trUnitSelectClear();
-					trUnitSelect(""+temp);
-					trUnitOverrideAnimation(1,0,false,true,-1,-1);
-					xFreeDatabaseBlock(dGasPocket);
-					xAddDatabaseBlock(dDestroyMe, true);
-					xSetInt(dDestroyMe, xDestroyName, temp);
-					xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+2000);
-					trUnitSelectClear();
-					trUnitSelectByQV("P"+p+"Siphon");
-					trDamageUnit(400);
-					trChatSendToPlayer(0, p, "<color=1,0,0>You hit a gas pocket!</color>");
-					if(trCurrentPlayer() == p){
-						trSoundPlayFN("meteorbighit.wav","1",-1,"","");
-						trSoundPlayFN("uprootbirth.wav","1",-1,"","");
-					}
+	}
+	for (x= xGetDatabaseCount(dGasPocket); > 0) {
+		xDatabaseNext(dGasPocket);
+		trVectorQuestVarSet("TempGas", xsVectorSet(8*xGetInt(dGasPocket, xGasCol)-4,3,8*xGetInt(dGasPocket, xGasRow)-4));
+		//trVectorQuestVarEcho("TempGas");
+		//trVectorQuestVarEcho("P1Pos");
+		for(p = 1; <= cNumberNonGaiaPlayers){
+			if(trDistanceBetweenVectorsSquared("TempGas", "P"+p+"Pos") < 30){
+				int temp = trGetNextUnitScenarioNameNumber();
+				trArmyDispatch("0,0", "Dwarf", 1, 1,1,1, 0, true);
+				trUnitSelectClear();
+				trUnitSelect(""+temp);
+				trUnitSelectClear();
+				trUnitSelect(""+temp);
+				trUnitTeleport(trVectorQuestVarGetX("TempGas"),trVectorQuestVarGetY("TempGas"),trVectorQuestVarGetZ("TempGas"));
+				trMutateSelected(kbGetProtoUnitID("Harpy"));
+				trUnitSelectClear();
+				trUnitSelect(""+temp);
+				trSetSelectedHeight(-10.0);
+				trUnitSelectClear();
+				trUnitSelect(""+temp);
+				trSetSelectedScale(0,0,0);
+				trUnitSelectClear();
+				trUnitSelect(""+temp);
+				trUnitOverrideAnimation(1,0,false,true,-1,-1);
+				xFreeDatabaseBlock(dGasPocket);
+				xAddDatabaseBlock(dDestroyMe, true);
+				xSetInt(dDestroyMe, xDestroyName, temp);
+				xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+2000);
+				trUnitSelectClear();
+				trUnitSelectByQV("P"+p+"Siphon");
+				trDamageUnit(400);
+				trChatSendToPlayer(0, p, "<color=1,0,0>You hit a gas pocket!</color>");
+				if(trCurrentPlayer() == p){
+					trSoundPlayFN("meteorbighit.wav","1",-1,"","");
+					trSoundPlayFN("uprootbirth.wav","1",-1,"","");
 				}
 			}
 		}
-		
 	}
 	
-	//trChatSend(0, "Free relics = "+xGetDatabaseCount(dFreeRelics)+"");
-	/* relics dropped */
-	/*
-	trQuestVarSet("relicPlayer", 1 + trQuestVarGet("relicPlayer"));
-	if (trQuestVarGet("relicPlayer") >= cNumberNonGaiaPlayers) {
-		trQuestVarSet("relicPlayer", 1);
-	}
-	p = trQuestVarGet("relicPlayer");
-	xSetPointer(dPlayerData, p);
-	if (xGetBool(dPlayerData, xPlayerResigned) == false) {
-		xUnitSelect(dPlayerData, xPlayerUnit);
-		if (trUnitAlive() && xGetInt(dPlayerData, xPlayerDead) <= 0) {
-			pos = kbGetBlockPosition(""+xGetInt(dPlayerData,xPlayerUnit), true);
-			db = getRelicsDB(p);
-			for(x=xGetDatabaseCount(db); >0) {
-				xDatabaseNext(db);
-				xUnitSelect(db, xUnitName);
-				if (trUnitGetIsContained("Unit") == false) {
-					if (xGetInt(db, xRelicType) < KEY_RELICS) {
-						relicReturned = false;
-						if ((xGetInt(db, xRelicType) == RELIC_TRANSPORTER_TICKET) && Multiplayer) {
-							trUnitDestroy();
-							if (trCurrentPlayer() == p) {
-								uiMessageBox("Relic Transporter Ticket unequipped. Return to singleplayer if you want to equip it again.");
-							}
-						} else if (distanceBetweenVectors(pos, trVectorQuestVarGet("relicTransporterGuyPos")) < 36) {
-							relicReturned = true;
-							if (trPlayerUnitCountSpecific(p, "Villager Atlantean Hero") == 0) {
-								if (trPlayerResourceCount(p, "gold") >= 100) {
-									trPlayerGrantResources(p, "gold", -100);
-									trQuestVarSet("p"+p+"transporterPurchased", 1);
-									spawnPlayerUnit(p, kbGetProtoUnitID("Villager Atlantean Hero"), pos);
-									if (trCurrentPlayer() == p) {
-										trChatSend(0, "A Relic Transporter has been hired!");
-										trSoundPlayFN("favordump.wav","1",-1,"","");
-										trSoundPlayFN("villagercreate.wav","1",-1,"","");
-									}
-								}
-							}
-							
-							
-							if (relicReturned == false) {
-								id = kbGetBlockID(""+xGetInt(db, xUnitName));
+}
+
+//trChatSend(0, "Free relics = "+xGetDatabaseCount(dFreeRelics)+"");
+/* relics dropped */
+/*
+trQuestVarSet("relicPlayer", 1 + trQuestVarGet("relicPlayer"));
+if (trQuestVarGet("relicPlayer") >= cNumberNonGaiaPlayers) {
+	trQuestVarSet("relicPlayer", 1);
+}
+p = trQuestVarGet("relicPlayer");
+xSetPointer(dPlayerData, p);
+if (xGetBool(dPlayerData, xPlayerResigned) == false) {
+	xUnitSelect(dPlayerData, xPlayerUnit);
+	if (trUnitAlive() && xGetInt(dPlayerData, xPlayerDead) <= 0) {
+		pos = kbGetBlockPosition(""+xGetInt(dPlayerData,xPlayerUnit), true);
+		db = getRelicsDB(p);
+		for(x=xGetDatabaseCount(db); >0) {
+			xDatabaseNext(db);
+			xUnitSelect(db, xUnitName);
+			if (trUnitGetIsContained("Unit") == false) {
+				if (xGetInt(db, xRelicType) < KEY_RELICS) {
+					relicReturned = false;
+					if ((xGetInt(db, xRelicType) == RELIC_TRANSPORTER_TICKET) && Multiplayer) {
+						trUnitDestroy();
+						if (trCurrentPlayer() == p) {
+							uiMessageBox("Relic Transporter Ticket unequipped. Return to singleplayer if you want to equip it again.");
+						}
+					} else if (distanceBetweenVectors(pos, trVectorQuestVarGet("relicTransporterGuyPos")) < 36) {
+						relicReturned = true;
+						if (trPlayerUnitCountSpecific(p, "Villager Atlantean Hero") == 0) {
+							if (trPlayerResourceCount(p, "gold") >= 100) {
+								trPlayerGrantResources(p, "gold", -100);
+								trQuestVarSet("p"+p+"transporterPurchased", 1);
+								spawnPlayerUnit(p, kbGetProtoUnitID("Villager Atlantean Hero"), pos);
 								if (trCurrentPlayer() == p) {
-									trSoundPlayFN("backtowork.wav","1",-1,"","");
-									trChatSend(0, relicName(xGetInt(db, xRelicType)) + " dropped.");
+									trChatSend(0, "A Relic Transporter has been hired!");
+									trSoundPlayFN("favordump.wav","1",-1,"","");
+									trSoundPlayFN("villagercreate.wav","1",-1,"","");
 								}
-								if (kbGetUnitBaseTypeID(id) == relicProto(xGetInt(db, xRelicType))) {
-									trUnitChangeProtoUnit("Relic");
-									xAddDatabaseBlock(dFreeRelics, true);
-									xSetInt(dFreeRelics, xUnitName, xGetInt(db, xUnitName));
-									xSetInt(dFreeRelics, xRelicType, xGetInt(db, xRelicType));
-								}
-								xFreeDatabaseBlock(db);
 							}
+						}
+						
+						
+						if (relicReturned == false) {
+							id = kbGetBlockID(""+xGetInt(db, xUnitName));
+							if (trCurrentPlayer() == p) {
+								trSoundPlayFN("backtowork.wav","1",-1,"","");
+								trChatSend(0, relicName(xGetInt(db, xRelicType)) + " dropped.");
+							}
+							if (kbGetUnitBaseTypeID(id) == relicProto(xGetInt(db, xRelicType))) {
+								trUnitChangeProtoUnit("Relic");
+								xAddDatabaseBlock(dFreeRelics, true);
+								xSetInt(dFreeRelics, xUnitName, xGetInt(db, xUnitName));
+								xSetInt(dFreeRelics, xRelicType, xGetInt(db, xRelicType));
+							}
+							xFreeDatabaseBlock(db);
 						}
 					}
 				}
 			}
 		}
-	}*/
-}
+	}
+}*/

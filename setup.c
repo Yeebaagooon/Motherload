@@ -219,11 +219,15 @@ highFrequency
 	Slot 8
 	Total size: 0
 	*/
+	addLocalDataQV("CineStatus", 8, 10);
 	
 	/*
 	Slot 9
 	Total size: 0
 	*/
+	for(x=0; <= 15) {
+		addSavedDataDB(dPlayerData, xBonus+x, 9, 3);
+	}
 	
 	/*
 	Slot 10

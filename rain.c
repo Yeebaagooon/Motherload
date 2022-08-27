@@ -19,6 +19,7 @@ highFrequency
 	trEventSetHandler(20, "UpgradeCargo");
 	trEventSetHandler(21, "UpgradeEngine");
 	trEventSetHandler(22, "UpgradeRadiator");
+	trEventSetHandler(23, "UpgradeRadiator");
 	xsDisableSelf();
 }
 
@@ -32,7 +33,7 @@ rule SPCineChoice
 inactive
 highFrequency
 {
-	if((trTime()-cActivationTime) >= 1){
+	if((trTime()-cActivationTime) >= 2){
 		xsDisableSelf();
 		trShowChoiceDialog("Play opening cinematic?", "Yes", 15, "No", 16);
 	}
@@ -40,10 +41,17 @@ highFrequency
 
 void SPCineYes(int p = 0){
 	trChatSend(0, "Yes cine");
+	xsEnableRule("CineSetup");
 }
 
 void SPCineNo(int p = 0){
-	trChatSend(0, "No cine");
+	if(1*trQuestVarGet("CineStatus") == 0){
+		trChatSend(0, "The introduction cinematic explains gameplay essentials.");
+		trChatSend(0, "Watching at a later time is strongly recommended.");
+		/*	if(CinematicObelisk == 0){
+			SPCineOption();
+		}*/
+	}
 }
 
 rule Selectables
@@ -397,8 +405,11 @@ highFrequency
 							if(Stage < 6){
 								ColouredChatToPlayer(p, "1,0.5,0", "Dynamite purchased (<u>W</u>).");
 							}
-							else if(Stage >= 6){
+							else if((Stage >= 6) && (Stage <= 7)){
 								ColouredChatToPlayer(p, "1,0.5,0", "Plastic explosive purchased (<u>W</u>).");
+							}
+							else if(Stage >= 8){
+								ColouredChatToPlayer(p, "1,0.5,0", "Nuclear explosive purchased (<u>W</u>).");
 							}
 							grantGodPowerNoRechargeNextPosition(p, "Audrey", 1);
 							xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*Shop2Cost);

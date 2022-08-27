@@ -1532,3 +1532,16 @@ void addCameraTrackWaypoint(){
 void playCameraTrack(int eventId = -1){
 	trackPlay(cameraTrackTime, eventId);
 }
+
+void SPCineOption(){
+	CinematicObelisk = trGetNextUnitScenarioNameNumber();
+	UnitCreate(1, "Victory Marker", 2, 2, 0);
+	trUnitSelectClear();
+	trUnitSelect(""+CinematicObelisk);
+	trUnitChangeProtoUnit("Outpost");
+	trUnitSelectClear();
+	xAddDatabaseBlock(dSelectables, true);
+	xSetInt(dSelectables, xSelectablesName, 1*CinematicObelisk);
+	xSetInt(dSelectables, xSelectablesPrompt, 99);
+	FloatingUnitAnimIdle("Camera", 2, 12, 2, 180, 1,1,1);
+}

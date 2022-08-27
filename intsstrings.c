@@ -105,6 +105,10 @@ int xGoldStart = 0;
 int xStageUnlocked = 0;
 int xStageStatus = 0;
 
+int xBonus = 0;
+
+int CinematicObelisk = 0;
+
 rule setup_first_databases
 active
 highFrequency
@@ -133,6 +137,11 @@ highFrequency
 	xFuelCountdownTime = xInitAddInt(dPlayerData, "fuel countdown time", 3);
 	xFuelActivationTime = xInitAddInt(dPlayerData, "fuel activation time", 10000);
 	xPlayerActive = xInitAddInt(dPlayerData, "is player alive", 1);
+	xBonus = xInitAddInt(dPlayerData, "bonus number", 0);
+	for(x=1; <= 18) {
+		xInitAddInt(dPlayerData, "bonus number"+x, 0);
+		//""+xGetInt(dPlayerData, xBonus+5);
+	}
 	xsDisableSelf();
 	for(p=1; <= cNumberNonGaiaPlayers) {
 		xAddDatabaseBlock(dPlayerData, true);

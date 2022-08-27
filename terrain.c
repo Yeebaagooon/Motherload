@@ -1187,7 +1187,7 @@ highFrequency
 		Shop1Cost = 5;
 		Shop2XMin = 47;
 		Shop2XMax = 49;
-		Shop2Cost = 25;
+		Shop2Cost = 125;
 		Shop3XMin = 51;
 		Shop3XMax = 53;
 		Shop3Cost = 40;
@@ -1196,7 +1196,7 @@ highFrequency
 		PaintAtlantisArea(Shop3XMin,95,Shop3XMax,97,"UnderwaterIceC"); //UnderwaterIceC
 		xsEnableRule("ExtraShop");
 		SelectableSign(88, 197, 7);
-		SelectableSign(96, 197, 17);
+		SelectableSign(96, 197, 21);
 		SelectableSign(104, 197, 9);
 		xsEnableRule("AudreyL2");
 		xsEnableRule("Rain");

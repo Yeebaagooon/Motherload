@@ -288,7 +288,8 @@ highFrequency
 			int Col = (trVectorQuestVarGetX("SiphonPos"+p+"") ) / 8 +1;
 			int Row = (trVectorQuestVarGetZ("SiphonPos"+p+"") ) / 8 +1;
 			if(Row <= MaxRows){
-				if(Row < MaxRows){MineSquare(Row+1, Col+1);
+				if(Row < MaxRows){
+					MineSquare(Row+1, Col+1);
 					MineSquare(Row+1, Col);
 					MineSquare(Row+1, Col-1);
 				}
@@ -306,6 +307,42 @@ highFrequency
 				RemoveBlack(Row-1, Col+1);
 				RemoveBlack(Row-1, Col);
 				RemoveBlack(Row-1, Col-1);
+				if(Stage == 8){
+					if(Row < MaxRows-1){
+						MineSquare(Row+2, Col+2);
+						MineSquare(Row+2, Col+1);
+						MineSquare(Row+2, Col);
+						MineSquare(Row+2, Col-1);
+						MineSquare(Row+2, Col-2);
+					}
+					MineSquare(Row+1, Col+2);
+					MineSquare(Row+1, Col-2);
+					MineSquare(Row, Col+2);
+					MineSquare(Row, Col-2);
+					MineSquare(Row-1, Col+2);
+					MineSquare(Row-1, Col-2);
+					MineSquare(Row-2, Col+2);
+					MineSquare(Row-2, Col+1);
+					MineSquare(Row-2, Col);
+					MineSquare(Row-2, Col-1);
+					MineSquare(Row-2, Col-2);
+					RemoveBlack(Row+2, Col+2);
+					RemoveBlack(Row+2, Col+1);
+					RemoveBlack(Row+2, Col);
+					RemoveBlack(Row+2, Col-1);
+					RemoveBlack(Row+2, Col-2);
+					RemoveBlack(Row+1, Col+2);
+					RemoveBlack(Row+1, Col-2);
+					RemoveBlack(Row, Col+2);
+					RemoveBlack(Row, Col-2);
+					RemoveBlack(Row-1, Col+2);
+					RemoveBlack(Row-1, Col-2);
+					RemoveBlack(Row-2, Col+2);
+					RemoveBlack(Row-2, Col+1);
+					RemoveBlack(Row-2, Col);
+					RemoveBlack(Row-2, Col-1);
+					RemoveBlack(Row-2, Col-2);
+				}
 				int temp = trGetNextUnitScenarioNameNumber();
 				trArmyDispatch("0,0","Dwarf",1,trVectorQuestVarGetX("P"+p+"Pos"),0,trVectorQuestVarGetZ("P"+p+"Pos"),0,true);
 				trArmySelect("0,0");
@@ -319,9 +356,11 @@ highFrequency
 				trSetUnitOrientation(vector(0,1,0),vector(1,0,0),true);
 				trUnitSelectClear();
 				//trUnitSelect(""+temp, true);
-				xAddDatabaseBlock(dDestroyMe);
+				xAddDatabaseBlock(dDestroyMe, true);
 				xSetInt(dDestroyMe, xDestroyName, temp);
 				xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+1500);
+				//trChatSend(0, ""+xGetDatabaseCount(dDestroyMe));
+				trChatSend(0, "<color=0,1,0>"+xGetInt(dDestroyMe, xDestroyName));
 			}
 			else{
 				trChatSendToPlayer(0, p, "<color=1,0,0>Plastic explosive error - can't use on the surface.</color>");

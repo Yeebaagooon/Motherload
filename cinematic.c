@@ -19,73 +19,71 @@ rule CineSetup
 inactive
 highFrequency
 {
-	if((trTime()-cActivationTime) >= 2){
-		xsDisableSelf();
-		trLetterBox(true);
-		trUIFadeToColor(0,0,0,1,1,true);
-		trQuestVarSet("StarUnit", trGetNextUnitScenarioNameNumber());
-		trArmyDispatch("1,0", "Victory Marker", 1, 1,0,199,0,false);
-		//PaintAtlantisArea(0,79,20,99,"black");
-		trUnitSelectByQV("StarUnit");
-		trUnitChangeProtoUnit("Priest");
-		trUnitSelectByQV("StarUnit");
-		trSetSelectedScale(-0.01,1,-0.01);
-		spyEffect(1*trQuestVarGet("StarUnit"), kbGetProtoUnitID("Tower Mirror"), vector(0,0,0),vector(0,0,0));
-		spyEffect(1*trQuestVarGet("StarUnit"), kbGetProtoUnitID("Tower Mirror"), vector(0,0,0),vector(0,0,0));
-		spyEffect(1*trQuestVarGet("StarUnit"), kbGetProtoUnitID("Tower Mirror"), vector(0,0,0),vector(0,0,0));
-		spyEffect(1*trQuestVarGet("StarUnit"), kbGetProtoUnitID("Tower Mirror"), vector(0,0,0),vector(0,0,0));
-		spyEffect(1*trQuestVarGet("StarUnit"), kbGetProtoUnitID("Implode Sphere Effect"), vector(0,0,0),vector(0,0,0), 18);
-		xsEnableRule("Cine_01");
-		trModifyProtounit("Priest", 1, 55, 4);
-		trSetFogAndBlackmap(false, false);
+	xsDisableSelf();
+	trLetterBox(true);
+	trUIFadeToColor(0,0,0,1,1,true);
+	trQuestVarSet("StarUnit", trGetNextUnitScenarioNameNumber());
+	trArmyDispatch("1,0", "Victory Marker", 1, 1,0,199,0,false);
+	//PaintAtlantisArea(0,79,20,99,"black");
+	trUnitSelectByQV("StarUnit");
+	trUnitChangeProtoUnit("Priest");
+	trUnitSelectByQV("StarUnit");
+	trSetSelectedScale(-0.01,1,-0.01);
+	spyEffect(1*trQuestVarGet("StarUnit"), kbGetProtoUnitID("Tower Mirror"), vector(0,0,0),vector(0,0,0));
+	spyEffect(1*trQuestVarGet("StarUnit"), kbGetProtoUnitID("Tower Mirror"), vector(0,0,0),vector(0,0,0));
+	spyEffect(1*trQuestVarGet("StarUnit"), kbGetProtoUnitID("Tower Mirror"), vector(0,0,0),vector(0,0,0));
+	spyEffect(1*trQuestVarGet("StarUnit"), kbGetProtoUnitID("Tower Mirror"), vector(0,0,0),vector(0,0,0));
+	spyEffect(1*trQuestVarGet("StarUnit"), kbGetProtoUnitID("Implode Sphere Effect"), vector(0,0,0),vector(0,0,0), 18);
+	xsEnableRule("Cine_01");
+	trModifyProtounit("Priest", 1, 55, 4);
+	trSetFogAndBlackmap(false, false);
+	xAddDatabaseBlock(dSpace, true);
+	xSetInt(dSpace, xSpaceName,1*trQuestVarGet("StarUnit"));
+	for(n=1 ; <= 150){
+		trQuestVarSetFromRand("TempX", 0, 60, false);
+		trQuestVarSetFromRand("TempZ", 140, 199, false);
+		trQuestVarSet("TempUnit", trGetNextUnitScenarioNameNumber());
+		trArmyDispatch("0,0", "Victory Marker", 1, 1*trQuestVarGet("TempX"),0,1*trQuestVarGet("TempZ"),0,false);
+		trUnitSelectByQV("TempUnit");
+		trUnitChangeProtoUnit("Armor Glow Small");
 		xAddDatabaseBlock(dSpace, true);
-		xSetInt(dSpace, xSpaceName,1*trQuestVarGet("StarUnit"));
-		for(n=1 ; <= 150){
-			trQuestVarSetFromRand("TempX", 0, 60, false);
-			trQuestVarSetFromRand("TempZ", 140, 199, false);
-			trQuestVarSet("TempUnit", trGetNextUnitScenarioNameNumber());
-			trArmyDispatch("0,0", "Victory Marker", 1, 1*trQuestVarGet("TempX"),0,1*trQuestVarGet("TempZ"),0,false);
-			trUnitSelectByQV("TempUnit");
-			trUnitChangeProtoUnit("Armor Glow Small");
-			xAddDatabaseBlock(dSpace, true);
-			xSetInt(dSpace, xSpaceName,1*trQuestVarGet("TempUnit"));
-		}
-		for(n=1 ; <= 20){
-			trQuestVarSetFromRand("TempX", 0, 60, false);
-			trQuestVarSetFromRand("TempZ", 140, 199, false);
-			trQuestVarSet("TempUnit", trGetNextUnitScenarioNameNumber());
-			trArmyDispatch("1,0", "Victory Marker", 1, 1*trQuestVarGet("TempX"),0,1*trQuestVarGet("TempZ"),0,false);
-			trUnitSelectByQV("TempUnit");
-			trUnitChangeProtoUnit("Relic");
-			trUnitSelectByQV("TempUnit");
-			trSetSelectedScale(0,0,0);
-			xAddDatabaseBlock(dSpace, true);
-			xSetInt(dSpace, xSpaceName,1*trQuestVarGet("TempUnit"));
-		}
-		for(n=1 ; <= 20){
-			trQuestVarSetFromRand("TempX", 0, 60, false);
-			trQuestVarSetFromRand("TempZ", 140, 199, false);
-			trQuestVarSet("TempUnit", trGetNextUnitScenarioNameNumber());
-			trArmyDispatch("1,0", "Victory Marker", 1, 1*trQuestVarGet("TempX"),0,1*trQuestVarGet("TempZ"),0,false);
-			trUnitSelectByQV("TempUnit");
-			trUnitChangeProtoUnit("Lampades");
-			trUnitSelectByQV("TempUnit");
-			trSetSelectedScale(0,0,0);
-			xAddDatabaseBlock(dSpace, true);
-			xSetInt(dSpace, xSpaceName,1*trQuestVarGet("TempUnit"));
-		}
-		for(n=1 ; <= 4){
-			trQuestVarSetFromRand("TempX", 0, 60, false);
-			trQuestVarSetFromRand("TempZ", 140, 199, false);
-			trQuestVarSet("TempUnit", trGetNextUnitScenarioNameNumber());
-			trArmyDispatch("1,0", "Victory Marker", 1, 1*trQuestVarGet("TempX"),0,1*trQuestVarGet("TempZ"),0,false);
-			trUnitSelectByQV("TempUnit");
-			trUnitChangeProtoUnit("Plenty Vault");
-			trUnitSelectByQV("TempUnit");
-			trSetSelectedScale(0,0,0);
-			xAddDatabaseBlock(dSpace, true);
-			xSetInt(dSpace, xSpaceName,1*trQuestVarGet("TempUnit"));
-		}
+		xSetInt(dSpace, xSpaceName,1*trQuestVarGet("TempUnit"));
+	}
+	for(n=1 ; <= 20){
+		trQuestVarSetFromRand("TempX", 0, 60, false);
+		trQuestVarSetFromRand("TempZ", 140, 199, false);
+		trQuestVarSet("TempUnit", trGetNextUnitScenarioNameNumber());
+		trArmyDispatch("1,0", "Victory Marker", 1, 1*trQuestVarGet("TempX"),0,1*trQuestVarGet("TempZ"),0,false);
+		trUnitSelectByQV("TempUnit");
+		trUnitChangeProtoUnit("Relic");
+		trUnitSelectByQV("TempUnit");
+		trSetSelectedScale(0,0,0);
+		xAddDatabaseBlock(dSpace, true);
+		xSetInt(dSpace, xSpaceName,1*trQuestVarGet("TempUnit"));
+	}
+	for(n=1 ; <= 20){
+		trQuestVarSetFromRand("TempX", 0, 60, false);
+		trQuestVarSetFromRand("TempZ", 140, 199, false);
+		trQuestVarSet("TempUnit", trGetNextUnitScenarioNameNumber());
+		trArmyDispatch("1,0", "Victory Marker", 1, 1*trQuestVarGet("TempX"),0,1*trQuestVarGet("TempZ"),0,false);
+		trUnitSelectByQV("TempUnit");
+		trUnitChangeProtoUnit("Lampades");
+		trUnitSelectByQV("TempUnit");
+		trSetSelectedScale(0,0,0);
+		xAddDatabaseBlock(dSpace, true);
+		xSetInt(dSpace, xSpaceName,1*trQuestVarGet("TempUnit"));
+	}
+	for(n=1 ; <= 4){
+		trQuestVarSetFromRand("TempX", 0, 60, false);
+		trQuestVarSetFromRand("TempZ", 140, 199, false);
+		trQuestVarSet("TempUnit", trGetNextUnitScenarioNameNumber());
+		trArmyDispatch("1,0", "Victory Marker", 1, 1*trQuestVarGet("TempX"),0,1*trQuestVarGet("TempZ"),0,false);
+		trUnitSelectByQV("TempUnit");
+		trUnitChangeProtoUnit("Plenty Vault");
+		trUnitSelectByQV("TempUnit");
+		trSetSelectedScale(0,0,0);
+		xAddDatabaseBlock(dSpace, true);
+		xSetInt(dSpace, xSpaceName,1*trQuestVarGet("TempUnit"));
 	}
 }
 
@@ -106,6 +104,7 @@ highFrequency
 		trUIFadeToColor(0,0,0,1000,1,false);
 		xsEnableRule("Cine_02");
 		characterDialog("Yeebaagooon", "Space. The final frontier.", "icons\special e son of osiris icon 64");
+		playSound("cinematics\35_out\music2.mp3");
 	}
 }
 
@@ -182,9 +181,8 @@ highFrequency
 		for(x=xGetDatabaseCount(dObelisks); >0) {
 			xDatabaseNext(dObelisks);
 			xUnitSelect(dObelisks,xObeliskName);
-			trUnitDestroy();
+			trUnitChangeProtoUnit("Cinematic Block");
 		}
-		aiPlanDestroy(dObelisks);
 		unitTransform("Implode Sphere Effect", "Rocket");
 		unitTransform("Tower Mirror", "Rocket");
 	}
@@ -198,6 +196,7 @@ highFrequency
 		xsDisableSelf();
 		characterDialog("Yeebaagooon", "Behold, the nine planets in this system.", "icons\special e son of osiris icon 64");
 		xsEnableRule("Cine_08");
+		playSound("cinematics\22_out\music (wussy mix).mp3");
 	}
 }
 
@@ -220,6 +219,8 @@ highFrequency
 		xsDisableSelf();
 		characterDialog("Yeebaagooon", "And for this part I'll hand you over to your supervisor.", "icons\special e son of osiris icon 64");
 		xsEnableRule("Cine_10");
+		trFadeOutMusic(8);
+		trFadeOutAllSounds(8);
 	}
 }
 
@@ -303,6 +304,7 @@ highFrequency
 		trUnitSelectClear();
 		trUnitSelectByQV("MrNatas");
 		trUnitOverrideAnimation(25,0,false,false,-1,0);
+		playSound("cinematics\23_out\music 1.mp3");
 	}
 }
 
@@ -368,6 +370,8 @@ highFrequency
 		addCameraTrackWaypoint();
 		playCameraTrack();
 		trUIFadeToColor(255,255,255,2000,1500,true);
+		trFadeOutMusic(8);
+		trFadeOutAllSounds(8);
 	}
 }
 
@@ -416,6 +420,7 @@ highFrequency
 		trUnitChangeProtoUnit("Fire Siphon");
 		PaintSmelter(20,180);
 		PaintSellTerrain(15,89);
+		playSound("xpack\xcinematics\12_a\musicdown.mp3");
 		
 		//36.55, 3.00, 157.29
 	}
@@ -531,7 +536,7 @@ highFrequency
 	if((trTime()-cActivationTime) >= 4){
 		xsDisableSelf();
 		characterDialog("Mr Natas", "You can refuel on the surface at the fuel shop.", "icons\scenario g gargarensis icon 64");
-		xsEnableRule("Cine_Off");
+		xsEnableRule("Cine_27");
 		trPaintTerrain(0,0,200,200,3,15,false);
 		PaintFuelTerrain(15,89);
 		SelectableSign(37, 181, 18);
@@ -542,22 +547,229 @@ highFrequency
 	}
 }
 
-
-rule Cine_Off
+rule Cine_27
 inactive
 highFrequency
 {
 	if((trTime()-cActivationTime) >= 4){
 		xsDisableSelf();
-		trLetterBox(false);
-		trUIFadeToColor(255,255,255,1,1,false);
-		createCameraTrack(6);
-		trCameraCut(vector(97.212753,163.322815,-63.585068), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619730,0.784813), vector(0.999997,-0.000000,-0.002398));
+		characterDialog("Mr Natas", "You will be extracted after a set time, and can unlock the right to mine other planets based on your performance.", "icons\scenario g gargarensis icon 64");
+		trPaintTerrain(0,0,200,200,3,15,false);
+		trUnitSelectByQV("TempSiphon");
+		trUnitChangeProtoUnit("Hero Death");
+		xsEnableRule("Cine_28");
+	}
+}
+
+rule Cine_28
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 5){
+		xsDisableSelf();
+		characterDialog("Mr Natas", "Launch this map in singleplayer to upgrade your ship.", "icons\scenario g gargarensis icon 64");
+		PaintSP();
+		trCameraCut(vector(70.313728,125.462654,-71.500542), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619730,0.784813), vector(0.999997,-0.000000,-0.002398));
+		xsEnableRule("Cine_29");
+		playSound("cinematics\26_in\music.mp3");
+	}
+}
+
+rule Cine_29
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 4){
+		xsDisableSelf();
+		characterDialog("Mr Natas", "Click the obelisks to upgrade certain aspects such as your engine or fuel tank.", "icons\scenario g gargarensis icon 64");
+		xsEnableRule("Cine_30");
+		for(x=xGetDatabaseCount(dSelectables); >0) {
+			xDatabaseNext(dSelectables);
+			xUnitSelect(dSelectables,xSelectablesName);
+			trUnitHighlight(4, true);
+		}
+	}
+}
+
+rule Cine_30
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 4){
+		xsDisableSelf();
+		characterDialog("Mr Natas", "And then garrison Yeeb in the underworld passage to save.", "icons\scenario g gargarensis icon 64");
+		xsEnableRule("Cine_31");
+		trUnitSelectClear();
+		trUnitSelectByQV("ExitTunnel");
+		trUnitHighlight(4, true);
+		trUnitSelectClear();
+		trUnitSelectByQV("ExitYeeb");
+		trUnitHighlight(4, true);
+	}
+}
+
+rule Cine_31
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 4){
+		xsDisableSelf();
+		createCameraTrack(4500);
+		trCameraCut(vector(184.909134,14.763709,182.640610), vector(0.002345,-0.209853,0.977730), vector(0.000503,0.977733,0.209853), vector(0.999997,-0.000000,-0.002398));
 		addCameraTrackWaypoint();
-		trCameraCut(vector(97.212753,163.322815,-63.585068), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619730,0.784813), vector(0.999997,-0.000000,-0.002398));
+		trCameraCut(vector(181.387436,17.402742,156.046768), vector(0.002357,-0.184338,0.982860), vector(0.000442,0.982863,0.184337), vector(0.999997,-0.000000,-0.002398));
+		addCameraTrackWaypoint();
+		trCameraCut(vector(178.336853,23.402742,128.643524), vector(0.002322,-0.249727,0.968314), vector(0.000599,0.968316,0.249726), vector(0.999997,-0.000000,-0.002398));
 		addCameraTrackWaypoint();
 		playCameraTrack();
+		xsEnableRule("Cine_32");
+		characterDialog(" ", " ", " ");
+	}
+}
+
+rule Cine_32
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 1){
+		xsDisableSelf();
+		characterDialog("Mr Natas", "That concludes the portion of my life I am forced to waste talking to you.", "icons\scenario g gargarensis icon 64");
+		xsEnableRule("Cine_33");
+		trUnitSelectClear();
+		trUnitSelectByQV("MrNatas");
+		trUnitOverrideAnimation(25,11,false,false,-1,0);
+	}
+}
+
+rule Cine_33
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 4){
+		xsDisableSelf();
+		characterDialog("Mr Natas", "Although I'm also expected to give you encouragement and bounties for completing menial objectives.", "icons\scenario g gargarensis icon 64");
+		xsEnableRule("Cine_34");
+		trUnitSelectClear();
+		trUnitSelectByQV("MrNatas");
+		trUnitOverrideAnimation(25,15,false,false,-1,0);
+	}
+}
+
+rule Cine_34
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 5){
+		xsDisableSelf();
+		characterDialog("Mr Natas", "Regretfully, I will remain contractually in touch.", "icons\scenario g gargarensis icon 64");
+		trUIFadeToColor(0,0,0,2000,2500,true);
+		xsEnableRule("Cine_35");
+	}
+}
+
+rule Cine_35
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 5){
+		xsDisableSelf();
+		characterDialog(" ", " ", " ");
+		if(1*trQuestVarGet("CineStatus") == 0){
+			xsEnableRule("Cine_36");
+		}
+		if(1*trQuestVarGet("CineStatus") != 0){
+			xsEnableRule("Cine_Off");
+			characterDialog("You already have the cine watch reward.", "", "");
+		}
+	}
+}
+
+rule Cine_36
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 1){
+		xsDisableSelf();
+		characterDialog("A reward.", "", "");
+		xsEnableRule("Cine_Off");
+	}
+}
+
+
+rule Cine_Off
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 2){
+		if(1*trQuestVarGet("CineStatus") == 0){
+			trQuestVarSet("CineStatus", 1);
+		}
+		xsDisableSelf();
+		trUnitSelectClear();
+		trUnitSelectByQV("MrNatas");
+		trUnitDestroy();
+		trLetterBox(false);
+		trUIFadeToColor(0,0,0,1300,1,false);
+		createCameraTrack(6);
+		trCameraCut(vector(70.313728,125.462654,-71.500542), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619730,0.784813), vector(0.999997,-0.000000,-0.002398));
+		addCameraTrackWaypoint();
+		trCameraCut(vector(70.313728,125.462654,-71.500542), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619730,0.784813), vector(0.999997,-0.000000,-0.002398));
+		addCameraTrackWaypoint();
+		playCameraTrack();
+		trPaintTerrain(0,0,200,200,5,4,false);
 		PaintSP();
+		PaintAtlantisArea(8,35,8+60,35+20,"black");
+		trPaintTerrain(8+1,35+10,8+59,35+10, 0, 50, false);
+		for(x=xGetDatabaseCount(dObelisks); >0) {
+			xDatabaseNext(dObelisks);
+			xUnitSelect(dObelisks,xObeliskName);
+			trUnitChangeProtoUnit("Outpost");
+		}
+		trBlockAllSounds();
+		int temp = trGetNextUnitScenarioNameNumber();
+		trArmyDispatch("0,0","Dwarf",1,8*2+84,0,35*2+10,90,true);
+		trArmySelect("0,0");
+		trUnitChangeProtoUnit("Spy Eye");
+		trUnitSelectClear();
+		trUnitSelect(""+temp, true);
+		trMutateSelected(kbGetProtoUnitID("Hades Door"));
+		trSetSelectedScale(0,0,0);
+		trUnitOverrideAnimation(25,0,false,false,-1);
+		trUnitSetAnimationPath("3,0,0,0,0,0,0");
+		trSetUnitOrientation(vector(-1,-1,-1),vector(0,0,0),true);
+		xAddDatabaseBlock(dPlanetEyecandy, true);
+		xSetInt(dPlanetEyecandy, xPlanetEyecandyName,temp);
+		xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 7);
+		temp = trGetNextUnitScenarioNameNumber();
+		trArmyDispatch("0,0","Dwarf",1,8*2+84,0,35*2+10,180,true);
+		trArmySelect("0,0");
+		trUnitChangeProtoUnit("Spy Eye");
+		trUnitSelectClear();
+		trUnitSelect(""+temp, true);
+		trMutateSelected(kbGetProtoUnitID("Hades Door"));
+		trSetSelectedScale(0,0,0);
+		trUnitOverrideAnimation(25,0,false,false,-1);
+		trUnitSetAnimationPath("3,0,0,0,0,0,0");
+		trSetUnitOrientation(vector(-1,-1,-1),vector(0,0,0),true);
+		xAddDatabaseBlock(dPlanetEyecandy, true);
+		xSetInt(dPlanetEyecandy, xPlanetEyecandyName,temp);
+		xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 7);
+		temp = trGetNextUnitScenarioNameNumber();
+		trArmyDispatch("0,0","Dwarf",1,8*2+84,0,35*2+10,270,true);
+		trArmySelect("0,0");
+		trUnitChangeProtoUnit("Spy Eye");
+		trUnitSelectClear();
+		trUnitSelect(""+temp, true);
+		trMutateSelected(kbGetProtoUnitID("Hades Door"));
+		trSetSelectedScale(0,0,0);
+		trUnitOverrideAnimation(25,0,false,false,-1);
+		trUnitSetAnimationPath("3,0,0,0,0,0,0");
+		trSetUnitOrientation(vector(-1,-1,-1),vector(0,0,0),true);
+		xAddDatabaseBlock(dPlanetEyecandy, true);
+		xSetInt(dPlanetEyecandy, xPlanetEyecandyName,temp);
+		xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 7);
+		trUnitSetVariation(trQuestVarGet("QVRelic"), 0);
+		trUnblockAllSounds();
 	}
 }
 

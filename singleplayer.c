@@ -3,6 +3,14 @@ void PaintSP(){
 	PaintAtlantisArea(32,12,36,16,"BlackRock"); // main sq
 	PaintAtlantisArea(32,23,36,27,"black"); // boon sq
 	PaintAtlantisArea(32,1,36,5,"black"); // exit sq
+	
+	PaintAtlantisArea(33,28,35,30,"black"); //bonus central
+	for(x=1 ; <= 9){
+		PaintAtlantisArea(33-x*3,28,35-x*3,30,"black");
+	}
+	for(x=1 ; <= 9){
+		PaintAtlantisArea(33+x*3,28,35+x*3,30,"black");
+	}
 	//TERRAIN initial 6 legs
 	//LEFT LEGS
 	trPaintTerrain(34,7,34,10,0,74,false); //vertical strip main to exit
@@ -79,6 +87,7 @@ highFrequency
 	//xsEnableRule("SPCineChoice");
 	PaintSP();
 	UnitCreate(0, "Fire Siphon", 68, 28, 180); //main siphon
+	trQuestVarSet("ExitYeeb", trGetNextUnitScenarioNameNumber());
 	UnitCreate(1, "Pharaoh of Osiris XP", 68, 20, 180); //Player Unit
 	trQuestVarSet("ExitTunnel", trGetNextUnitScenarioNameNumber());
 	UnitCreate(1, "Tunnel", 68, 7, 180); //exit unit
@@ -343,8 +352,13 @@ highFrequency
 		xsEnableRule("SPUnlock6");
 	}
 	
-	//xsEnableRule("CineSetup");
-	xsEnableRule("Cine_10");
+	if(1*trQuestVarGet("CineStatus") == 0){
+		xsEnableRule("SPCineChoice");
+	}
+	else{
+		SPCineOption();
+	}
+	
 }
 
 void UpgradeDrill(int p = -1){

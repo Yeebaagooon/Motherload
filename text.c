@@ -597,6 +597,26 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				}
 			}
 		}
+		case 21:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Nuclear explosive. Instantly mines 2 squares around you. Cost = " + Shop2Cost);
+					dialog = 0;
+				}
+			}
+		}
+		case 99:
+		{
+			switch(dialog){
+				case 1:
+				{
+					trShowChoiceDialog("Watch introduction cinematic?", "Yes", 15, "No", 16);
+				}
+			}
+		}
 		case 101:
 		{
 			switch(dialog)
