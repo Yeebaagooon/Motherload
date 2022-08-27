@@ -106,6 +106,7 @@ int xStageUnlocked = 0;
 int xStageStatus = 0;
 
 int xBonus = 0;
+int xRelicCollected = 0;
 
 int CinematicObelisk = 0;
 
@@ -138,8 +139,13 @@ highFrequency
 	xFuelActivationTime = xInitAddInt(dPlayerData, "fuel activation time", 10000);
 	xPlayerActive = xInitAddInt(dPlayerData, "is player alive", 1);
 	xBonus = xInitAddInt(dPlayerData, "bonus number", 0);
-	for(x=1; <= 18) {
+	for(x=1; <= 21) {
 		xInitAddInt(dPlayerData, "bonus number"+x, 0);
+		//""+xGetInt(dPlayerData, xBonus+5);
+	}
+	xRelicCollected = xInitAddInt(dPlayerData, "relic number", 0);
+	for(x=1; <= 21) {
+		xInitAddInt(dPlayerData, "relic number"+x, 0);
 		//""+xGetInt(dPlayerData, xBonus+5);
 	}
 	xsDisableSelf();

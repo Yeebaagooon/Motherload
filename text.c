@@ -921,6 +921,38 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				}
 			}
 		}
+		case 701:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Allows you to hold +1 extra mineral.");
+				}
+				case 2:
+				{
+					trShowChoiceDialog("Equip?",
+						"Yes", 23, "No", -1);
+					dialog = 0;
+				}
+			}
+		}
+		case 702:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Allows you to hold +100L extra fuel.");
+				}
+				case 2:
+				{
+					trShowChoiceDialog("Equip?",
+						"Yes", 24, "No", -1);
+					dialog = 0;
+				}
+			}
+		}
 	}
 	return(dialog);
 }

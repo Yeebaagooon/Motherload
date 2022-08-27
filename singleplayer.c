@@ -5,12 +5,13 @@ void PaintSP(){
 	PaintAtlantisArea(32,1,36,5,"black"); // exit sq
 	
 	PaintAtlantisArea(33,28,35,30,"black"); //bonus central
-	for(x=1 ; <= 9){
+	for(x=1 ; <= 10){
 		PaintAtlantisArea(33-x*3,28,35-x*3,30,"black");
 	}
-	for(x=1 ; <= 9){
+	for(x=1 ; <= 10){
 		PaintAtlantisArea(33+x*3,28,35+x*3,30,"black");
 	}
+	
 	//TERRAIN initial 6 legs
 	//LEFT LEGS
 	trPaintTerrain(34,7,34,10,0,74,false); //vertical strip main to exit
@@ -91,6 +92,7 @@ highFrequency
 	UnitCreate(1, "Pharaoh of Osiris XP", 68, 20, 180); //Player Unit
 	trQuestVarSet("ExitTunnel", trGetNextUnitScenarioNameNumber());
 	UnitCreate(1, "Tunnel", 68, 7, 180); //exit unit
+	trQuestVarSet("BonusUnit", trGetNextUnitScenarioNameNumber());
 	UnitCreate(0, "Outpost", 68, 51, 180); //boon unit
 	//UNITS for the 6 boxes and flags
 	int UnitBox1 = trGetNextUnitScenarioNameNumber();
@@ -358,6 +360,20 @@ highFrequency
 	else{
 		SPCineOption();
 	}
+	
+	//BONUS
+	for(x=1 ; <= 23){
+		trQuestVarSet("Bonus"+x, trGetNextUnitScenarioNameNumber());
+		trArmyDispatch("0,0", "Victory Marker", 1, x*6+2,3,58, 180, true);
+		trQuestVarSet("BonusEffect"+x, trGetNextUnitScenarioNameNumber());
+		trArmyDispatch("0,0", "Victory Marker", 1, x*6+2,3,58, 180, true);
+		trQuestVarSet("BonusEffects"+x, trGetNextUnitScenarioNameNumber());
+		trArmyDispatch("0,0", "Victory Marker", 1, x*6+2,3,58, 180, true);
+		/*trUnitSelectClear();
+		trUnitSelectByQV("Bonus"+x);
+		trUnitChangeProtoUnit("Outpost");*/
+	}
+	xsEnableRule("Bonus_Display");
 	
 }
 

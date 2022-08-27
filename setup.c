@@ -225,8 +225,11 @@ highFrequency
 	Slot 9
 	Total size: 0
 	*/
-	for(x=0; <= 15) {
+	for(x=0; <= 21) {
 		addSavedDataDB(dPlayerData, xBonus+x, 9, 3);
+	}
+	for(x=1; <= 21) {
+		addSavedDataDB(dPlayerData, xRelicCollected+x, 9, 2);
 	}
 	
 	/*
@@ -588,7 +591,28 @@ void PaintPlanets(int x = 0, int z = 0, int offsetearth = 0){
 	xAddDatabaseBlock(dPlanetEyecandy, true);
 	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVHero"));
 	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 8);
-	
+	//PLANET 9
+	FloatingUnitAnimIdle("Hades Door", x*2+108, 9, z*2+10.5, 0, 0.05,0.05,0.1);
+	xAddDatabaseBlock(dPlanetEyecandy, true);
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVRelic"));
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 9);
+	xAddDatabaseBlock(dPlanetEyecandy, true);
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVHero"));
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 9);
+	FloatingUnitAnimIdle("Hades Door", x*2+108, 9, z*2+9.5, 180, 0.05,0.05,0.1);
+	xAddDatabaseBlock(dPlanetEyecandy, true);
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVRelic"));
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 9);
+	xAddDatabaseBlock(dPlanetEyecandy, true);
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVHero"));
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 9);
+	FloatingUnitAnimIdle("Titan Kronos", x*2+108, 9, z*2+10, 0, 0,0,0);
+	xAddDatabaseBlock(dPlanetEyecandy, true);
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVRelic"));
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 9);
+	xAddDatabaseBlock(dPlanetEyecandy, true);
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVHero"));
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 9);
 	//END
 }
 

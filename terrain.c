@@ -1500,8 +1500,10 @@ highFrequency
 				//iron first two rows
 				if(row == 18){
 					//spawnRelicSpecific(v,9);
-					int lol = 22-col;
-					spawnRelicSpecific(v,lol);
+					trQuestVarSetFromRand("Temp",1,10);
+					if(1*trQuestVarGet("Temp") <= cNumberNonGaiaPlayers){
+						spawnRelicSpecific(v, 9);
+					}
 				}
 				/*else if((row > 10) && (row <= 17)){
 					trQuestVarSetFromRand("Temp",1,20);

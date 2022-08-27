@@ -679,7 +679,7 @@ highFrequency
 		}
 		if(1*trQuestVarGet("CineStatus") != 0){
 			xsEnableRule("Cine_Off");
-			characterDialog("You already have the cine watch reward.", "", "");
+			characterDialog("You already have the cine watch reward (+100L fuel).", "", "");
 		}
 	}
 }
@@ -690,7 +690,7 @@ highFrequency
 {
 	if((trTime()-cActivationTime) >= 1){
 		xsDisableSelf();
-		characterDialog("A reward.", "", "");
+		characterDialog("Reward gained", "+100L fuel - Select this from the bonus bar in singleplayer", "icons\improvement murder holes icon 64");
 		xsEnableRule("Cine_Off");
 	}
 }
@@ -769,7 +769,7 @@ highFrequency
 		xSetInt(dPlanetEyecandy, xPlanetEyecandyName,temp);
 		xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 7);
 		trUnitSetVariation(trQuestVarGet("QVRelic"), 0);
-		trUnblockAllSounds();
+		xsEnableRule("Bonus_Display");
 	}
 }
 

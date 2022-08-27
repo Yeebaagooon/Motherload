@@ -19,7 +19,10 @@ highFrequency
 	trEventSetHandler(20, "UpgradeCargo");
 	trEventSetHandler(21, "UpgradeEngine");
 	trEventSetHandler(22, "UpgradeRadiator");
-	trEventSetHandler(23, "UpgradeRadiator");
+	for(x = 1; <= 21){
+		trEventSetHandler(22+x, "Select_Bonus");
+	}
+	//RESERVED TO 43
 	xsDisableSelf();
 }
 
@@ -40,11 +43,14 @@ highFrequency
 }
 
 void SPCineYes(int p = 0){
+	xsSetContextPlayer(0);
 	trChatSend(0, "Yes cine");
 	xsEnableRule("CineSetup");
+	xsDisableSelf();
 }
 
 void SPCineNo(int p = 0){
+	xsSetContextPlayer(0);
 	if(1*trQuestVarGet("CineStatus") == 0){
 		trChatSend(0, "The introduction cinematic explains gameplay essentials.");
 		trChatSend(0, "Watching at a later time is strongly recommended.");
@@ -52,6 +58,7 @@ void SPCineNo(int p = 0){
 			SPCineOption();
 		}*/
 	}
+	xsDisableSelf();
 }
 
 rule Selectables
@@ -113,6 +120,7 @@ highFrequency
 		trDelayedRuleActivation("FadeOut");
 		unitTransform("Outpost", "Rocket");
 		trSetFogAndBlackmap(true, true);
+		xsEnableRule("BonusGo");
 		//trShowImageDialog(stageIcon(Stage), stageName(Stage));
 		/*
 		trQuestVarSet("P1EnginePower", 100);
