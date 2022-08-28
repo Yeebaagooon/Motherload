@@ -1,10 +1,146 @@
 void PaintSP(){
+	xsSetContextPlayer(0);
+	xSetPointer(dPlayerData, 1);
 	PaintAtlantisArea(0,0,68,31,"NorseRoadA");
 	PaintAtlantisArea(32,12,36,16,"BlackRock"); // main sq
 	PaintAtlantisArea(32,23,36,27,"black"); // boon sq
 	PaintAtlantisArea(32,1,36,5,"black"); // exit sq
 	
 	PaintAtlantisArea(33,28,35,30,"black"); //bonus central
+	PaintAtlantisArea(70,0,72,44,"MiningGround"); //relic warehouse
+	for(z=1 ; <= 21){
+		trQuestVarSet("RelicEffect"+z, trGetNextUnitScenarioNameNumber());
+		trArmyDispatch("0,0", "Victory Marker", 1, 142,3,4*z, 90, true);
+		if((z >= 20) || (z == RELIC_TOPAZ)){
+			trQuestVarSet("RelicEffectA"+z, trGetNextUnitScenarioNameNumber());
+			trArmyDispatch("0,0", "Victory Marker", 1, 142,3,4*z, 90, true);
+		}
+		if(xGetInt(dPlayerData, xRelicCollected+z) == 1){
+			spawnRelicSpecific(xsVectorSet(142,3,4*z), z);
+			trUnitSelectByQV("RelicEffect"+z);
+			trUnitChangeProtoUnit("Spy Eye");
+			trUnitSelectByQV("RelicEffect"+z);
+			if(z == RELIC_IRON){
+				trMutateSelected(kbGetProtoUnitID("Rock Limestone Sprite"));
+				trUnitSelectByQV("RelicEffect"+z);
+				trSetSelectedScale(2,2,2);
+			}
+			if(z == RELIC_BRONZE){
+				trMutateSelected(kbGetProtoUnitID("Rock Dirt Sprite"));
+				trUnitSelectByQV("RelicEffect"+z);
+				trSetSelectedScale(2,2,2);
+			}
+			if(z == RELIC_SILVER){
+				trMutateSelected(kbGetProtoUnitID("Rock Granite Sprite"));
+				trUnitSelectByQV("RelicEffect"+z);
+				trSetSelectedScale(2,2,2);
+			}
+			if(z == RELIC_GOLD){
+				trMutateSelected(kbGetProtoUnitID("Rock Sandstone Sprite"));
+				trUnitSelectByQV("RelicEffect"+z);
+				trSetSelectedScale(2,2,2);
+			}
+			if(z == RELIC_PLATINUM){
+				trMutateSelected(kbGetProtoUnitID("Ragnorok SFX"));
+			}
+			if(z == RELIC_URANIUM){
+				trMutateSelected(kbGetProtoUnitID("Medusa"));
+				trUnitSelectByQV("RelicEffect"+z);
+				trUnitOverrideAnimation(40,0,true,true,-1,0);
+				trUnitSelectByQV("RelicEffect"+z);
+				trSetSelectedScale(0.001,0.5,0);
+			}
+			if(z == RELIC_RUBY){
+				trMutateSelected(kbGetProtoUnitID("Einheriar Boost SFX"));
+			}
+			if(z == RELIC_SAPPHIRE){
+				trMutateSelected(kbGetProtoUnitID("Vortex Finish Linked"));
+			}
+			if(z == RELIC_DIAMOND){
+				trMutateSelected(kbGetProtoUnitID("Cyclops"));
+				trUnitSelectByQV("RelicEffect"+z);
+				trUnitOverrideAnimation(18,0,true,false,-1,0);
+				//trUnitSelectByQV("RelicEffect"+z);
+				//trSetSelectedScale(0.001,0.5,0);
+			}
+			if(z == RELIC_PROMETHIUM){
+				trMutateSelected(kbGetProtoUnitID("Poison SFX"));
+			}
+			if(z == RELIC_EINSTEINIUM){
+				trMutateSelected(kbGetProtoUnitID("Fire Giant"));
+				trSetSelectedScale(0,0,0);
+			}
+			if(z == RELIC_OBSIDIAN){
+				trMutateSelected(kbGetProtoUnitID("Smoke"));
+			}
+			if(z == RELIC_TOPAZ){
+				trMutateSelected(kbGetProtoUnitID("Hero Norse"));
+				trSetSelectedScale(0,0,0);
+				trUnitSelectClear();
+				trUnitSelectByQV("RelicEffectA"+z);
+				trUnitChangeProtoUnit("Spy Eye");
+				trUnitSelectByQV("RelicEffectA"+z);
+				trMutateSelected(kbGetProtoUnitID("Hero Norse"));
+				trSetSelectedScale(0,0,0);
+				trUnitSelectClear();
+			}
+			if(z == RELIC_QUARTZ){
+				trMutateSelected(kbGetProtoUnitID("Arkantosman"));
+				trSetSelectedScale(0,0,0);
+			}
+			if(z == RELIC_OPAL){
+				trMutateSelected(kbGetProtoUnitID("Flying Purple Hippo"));
+				trSetSelectedScale(0,0,0);
+				trUnitSelectByQV("RelicEffect"+z);
+				trUnitOverrideAnimation(15,0,true,false,-1,0);
+			}
+			if(z == RELIC_AMETHYST){
+				trMutateSelected(kbGetProtoUnitID("Pharaoh of Osiris XP"));
+				trSetSelectedScale(0.01,0.5,0);
+				trUnitSelectByQV("RelicEffect"+z);
+				trUnitOverrideAnimation(50,0,true,false,-1,0);
+			}
+			if(z == RELIC_EMERALD){
+				trMutateSelected(kbGetProtoUnitID("Acid Pool"));
+				trSetSelectedScale(0,0,0);
+			}
+			if(z == RELIC_ICE){
+				trMutateSelected(kbGetProtoUnitID("Frost Giant"));
+				trUnitSelectByQV("RelicEffect"+z);
+				trSetSelectedScale(0,0,0);
+			}
+			if(z == RELIC_HYDROGEN){
+				trMutateSelected(kbGetProtoUnitID("Lighthouse"));
+				trUnitSelectByQV("RelicEffect"+z);
+				trSetSelectedScale(0,0,0);
+			}
+			if(z == RELIC_ANTIMATTER){
+				trMutateSelected(kbGetProtoUnitID("Tower Mirror"));
+				trUnitSelectByQV("RelicEffect"+z);
+				trSetSelectedScale(0,0,0);
+				trUnitSelectClear();
+				trUnitSelectByQV("RelicEffectA"+z);
+				trUnitChangeProtoUnit("Spy Eye");
+				trUnitSelectByQV("RelicEffectA"+z);
+				trMutateSelected(kbGetProtoUnitID("Tower Mirror"));
+				trSetSelectedScale(0,0,0);
+				trUnitSelectClear();
+			}
+			if(z == RELIC_YEEBIUM){
+				trMutateSelected(kbGetProtoUnitID("Valkyrie"));
+				trUnitSelectByQV("RelicEffect"+z);
+				trSetSelectedScale(0,0,0);
+				trUnitSelectClear();
+				trUnitSelectByQV("RelicEffectA"+z);
+				trUnitChangeProtoUnit("Spy Eye");
+				trUnitSelectByQV("RelicEffectA"+z);
+				trMutateSelected(kbGetProtoUnitID("Valkyrie"));
+				trSetSelectedScale(0,0,0);
+				trUnitSelectClear();
+				trTechSetStatus(0, 91, 4);
+			}
+		}
+	}
 	for(x=1 ; <= 10){
 		PaintAtlantisArea(33-x*3,28,35-x*3,30,"black");
 	}

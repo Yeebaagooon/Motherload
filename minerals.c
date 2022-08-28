@@ -713,6 +713,9 @@ highFrequency
 			trQuestVarSet("P"+GSeller+"R"+r+"", 0);
 			//Stage unlock conditions
 			xSetPointer(dPlayerData, GSeller);
+			if(xGetInt(dPlayerData, xRelicCollected+r) == 0){
+				xSetInt(dPlayerData, xRelicCollected+r, 1);
+			}
 			//Stage 2
 			if((xGetInt(dPlayerData, xStageUnlocked) == 1) && (xGetInt(dPlayerData, xStageStatus) == 0) && (r == RELIC_GOLD)){
 				xSetInt(dPlayerData, xStageStatus, 1);
@@ -824,35 +827,37 @@ highFrequency
 		//trVectorQuestVarEcho("TempGas");
 		//trVectorQuestVarEcho("P1Pos");
 		for(p = 1; <= cNumberNonGaiaPlayers){
-			if(trDistanceBetweenVectorsSquared("TempGas", "P"+p+"Pos") < 30){
-				int temp = trGetNextUnitScenarioNameNumber();
-				trArmyDispatch("0,0", "Dwarf", 1, 1,1,1, 0, true);
-				trUnitSelectClear();
-				trUnitSelect(""+temp);
-				trUnitSelectClear();
-				trUnitSelect(""+temp);
-				trUnitTeleport(trVectorQuestVarGetX("TempGas"),trVectorQuestVarGetY("TempGas"),trVectorQuestVarGetZ("TempGas"));
-				trMutateSelected(kbGetProtoUnitID("Harpy"));
-				trUnitSelectClear();
-				trUnitSelect(""+temp);
-				trSetSelectedHeight(-10.0);
-				trUnitSelectClear();
-				trUnitSelect(""+temp);
-				trSetSelectedScale(0,0,0);
-				trUnitSelectClear();
-				trUnitSelect(""+temp);
-				trUnitOverrideAnimation(1,0,false,true,-1,-1);
-				xFreeDatabaseBlock(dGasPocket);
-				xAddDatabaseBlock(dDestroyMe, true);
-				xSetInt(dDestroyMe, xDestroyName, temp);
-				xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+2000);
-				trUnitSelectClear();
-				trUnitSelectByQV("P"+p+"Siphon");
-				trDamageUnit(400);
-				trChatSendToPlayer(0, p, "<color=1,0,0>You hit a gas pocket!</color>");
-				if(trCurrentPlayer() == p){
-					trSoundPlayFN("meteorbighit.wav","1",-1,"","");
-					trSoundPlayFN("uprootbirth.wav","1",-1,"","");
+			if(trQuestVarGet("P"+p+"Drilling") > 1){
+				if(trDistanceBetweenVectorsSquared("TempGas", "P"+p+"Pos") < 30){
+					int temp = trGetNextUnitScenarioNameNumber();
+					trArmyDispatch("0,0", "Dwarf", 1, 1,1,1, 0, true);
+					trUnitSelectClear();
+					trUnitSelect(""+temp);
+					trUnitSelectClear();
+					trUnitSelect(""+temp);
+					trUnitTeleport(trVectorQuestVarGetX("TempGas"),trVectorQuestVarGetY("TempGas"),trVectorQuestVarGetZ("TempGas"));
+					trMutateSelected(kbGetProtoUnitID("Harpy"));
+					trUnitSelectClear();
+					trUnitSelect(""+temp);
+					trSetSelectedHeight(-10.0);
+					trUnitSelectClear();
+					trUnitSelect(""+temp);
+					trSetSelectedScale(0,0,0);
+					trUnitSelectClear();
+					trUnitSelect(""+temp);
+					trUnitOverrideAnimation(1,0,false,true,-1,-1);
+					xFreeDatabaseBlock(dGasPocket);
+					xAddDatabaseBlock(dDestroyMe, true);
+					xSetInt(dDestroyMe, xDestroyName, temp);
+					xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+2000);
+					trUnitSelectClear();
+					trUnitSelectByQV("P"+p+"Siphon");
+					trDamageUnit(400);
+					trChatSendToPlayer(0, p, "<color=1,0,0>You hit a gas pocket!</color>");
+					if(trCurrentPlayer() == p){
+						trSoundPlayFN("meteorbighit.wav","1",-1,"","");
+						trSoundPlayFN("uprootbirth.wav","1",-1,"","");
+					}
 				}
 			}
 		}

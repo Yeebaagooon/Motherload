@@ -441,9 +441,11 @@ void PaintPlanets(int x = 0, int z = 0, int offsetearth = 0){
 		else{
 			UnitCreate(0, "Outpost", x*2+12*p, z*2+10+offset, 90);
 		}
-		xAddDatabaseBlock(dObelisks, true);
-		xSetInt(dObelisks, xObeliskName,next);
-		xSetInt(dObelisks, xObeliskStage, p);
+		if(xGetInt(dPlayerData, xStageUnlocked) > xGetInt(dObelisks, xObeliskStage)-1){
+			xAddDatabaseBlock(dObelisks, true);
+			xSetInt(dObelisks, xObeliskName,next);
+			xSetInt(dObelisks, xObeliskStage, p);
+		}
 	}
 	//EYECANDY PLANET 1
 	FloatingUnit("Rock Granite Big", x*2+12, 8, z*2+10, 0, 2,2,2);

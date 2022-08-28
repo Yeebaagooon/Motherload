@@ -188,36 +188,36 @@ highFrequency
 {
 	if((trTime()-cActivationTime) >= 20){ //60
 		if(Stage == 1){
-			StageTime = 480; //480
+			StageTime = StageTime+30; //480
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
 		}
 		if(Stage == 2){
-			StageTime = 480; //480
+			StageTime = StageTime+480; //480
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
 		}
 		if(Stage == 3){
-			StageTime = 480; //480
+			StageTime = StageTime+480; //480
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
 			//spawnRelicSpecific(vector(180,0,100), 10);
 		}
 		if(Stage == 4){
-			StageTime = 480; //480
+			StageTime = StageTime+480; //480
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
 		}
 		if(Stage == 5){
-			StageTime = 480; //480
+			StageTime = StageTime+480; //480
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
 		}
 		if(Stage == 6){
-			StageTime = 420; //420
+			StageTime = StageTime+420; //420
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
 		}
 		if(Stage == 7){
-			StageTime = 480; //480
+			StageTime = StageTime+480; //480
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
 		}
 		if(Stage == 8){
-			StageTime = 540; //540
+			StageTime = StageTime+540; //540
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
 			grantGodPowerNoRechargeNextPosition(1, "Audrey", 100);
 		}
@@ -503,11 +503,20 @@ highFrequency
 				}
 				else{
 					FuelLoss(p);
-					if(Stage != 5){
+					if(Stage < 5){
 						xSetInt(dPlayerData, xDepth, (MaxRows*8-1*trVectorQuestVarGetZ("P"+p+"Pos"))*10-10);
 					}
-					else{
+					else if((Stage >= 5) && (Stage < 7)){
 						xSetInt(dPlayerData, xDepth, (MaxRows*8-1*trVectorQuestVarGetZ("P"+p+"Pos"))*15-15);
+					}
+					else if(Stage == 7){
+						xSetInt(dPlayerData, xDepth, (MaxRows*8-1*trVectorQuestVarGetZ("P"+p+"Pos"))*20-20);
+					}
+					else if(Stage == 8){
+						xSetInt(dPlayerData, xDepth, (MaxRows*8-1*trVectorQuestVarGetZ("P"+p+"Pos"))*25-25);
+					}
+					else if(Stage == 9){
+						xSetInt(dPlayerData, xDepth, (MaxRows*8-1*trVectorQuestVarGetZ("P"+p+"Pos"))*50-50);
 					}
 				}
 			}

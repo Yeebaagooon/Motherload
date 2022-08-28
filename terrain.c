@@ -932,7 +932,7 @@ highFrequency
 		Hull3XMax = 96;
 		Hull4XMin = 97;
 		Hull4XMax = 99;
-		HullCost = 3;
+		HullCost = 4;
 		PaintAtlantisArea(Hull1XMin,95,Hull1XMax,97,"GrassA");
 		PaintAtlantisArea(Hull2XMin,95,Hull2XMax,97,"GrassB");
 		PaintAtlantisArea(Hull3XMin,95,Hull3XMax,97,"GrassB");
@@ -1092,7 +1092,7 @@ highFrequency
 		Hull3XMax = 96;
 		Hull4XMin = 97;
 		Hull4XMax = 99;
-		HullCost = 4;
+		HullCost = 5;
 		PaintAtlantisArea(Hull1XMin,95,Hull1XMax,97,"GrassA");
 		PaintAtlantisArea(Hull2XMin,95,Hull2XMax,97,"GrassB");
 		PaintAtlantisArea(Hull3XMin,95,Hull3XMax,97,"GrassB");
@@ -1203,8 +1203,12 @@ highFrequency
 		xsEnableRule("Rain");
 		xsEnableRule("Ragnorok");
 		temp = trGetNextUnitScenarioNameNumber();
-		for(x=0; < 24){
-			trArmyDispatch("0,0", "Victory Marker", 1, x*15,3,199, 180, true);
+		for(x=0; < 48){
+			if (iModulo(2, x) == 0) { //if is divisble by 2
+				trArmyDispatch("0,0", "Victory Marker", 1, x*7.5,3,199, 180, true);
+			}
+			else{trArmyDispatch("0,0", "Victory Marker", 1, x*7.5,3,199, 0, true);
+			}
 			trUnitSelectClear();
 			trUnitSelect(""+(temp+x));
 			trUnitChangeProtoUnit("Ice Block");
@@ -1506,9 +1510,9 @@ highFrequency
 						spawnRelicSpecific(v, 9);
 					}
 				}
-				/*else if((row > 10) && (row <= 17)){
+				else if((row > 14) && (row <= 16)){
 					trQuestVarSetFromRand("Temp",1,20);
-					trQuestVarSetFromRand("Temp2",6,9);
+					trQuestVarSetFromRand("Temp2",4,13);
 					if(1*trQuestVarGet("Temp") <= cNumberNonGaiaPlayers){
 						spawnRelicSpecific(v,1*trQuestVarGet("Temp2"));
 					}
@@ -1516,29 +1520,27 @@ highFrequency
 						spawnRelicSpecific(v,6);
 					}
 				}
-				else if((row > 2) && (row <= 10)){
-					trQuestVarSetFromRand("Temp",1,5);
-					if(1*trQuestVarGet("Temp") == 1){
-						trQuestVarSetFromRand("Temp2",6,9);
-						spawnRelicSpecific(v,1*trQuestVarGet("Temp2"));
-					}
-					if(1*trQuestVarGet("Temp") == 2){
-						trQuestVarSetFromRand("Temp2",12,13);
+				else if((row > 10) && (row <= 13)){
+					trQuestVarSetFromRand("Temp",1,20);
+					trQuestVarSetFromRand("Temp2",15,17);
+					if(1*trQuestVarGet("Temp") <= cNumberNonGaiaPlayers){
 						spawnRelicSpecific(v,1*trQuestVarGet("Temp2"));
 					}
 				}
-				else if(row <= 2){
-					if(GetRockType(trGetTerrainType(col*4-2,row*4-2),trGetTerrainSubType(col*4-2,row*4-2)) == Hades5){
-						spawnRelicSpecific(v,14);
+				else if((row > 4) && (row <= 8)){
+					trQuestVarSetFromRand("Temp",1,19);
+					trQuestVarSetFromRand("Temp2",15,18);
+					if(1*trQuestVarGet("Temp") <= cNumberNonGaiaPlayers){
+						spawnRelicSpecific(v,1*trQuestVarGet("Temp2"));
 					}
-					else{
-						trQuestVarSetFromRand("Temp",1,7);
-						if(1*trQuestVarGet("Temp") == 3){
-							trQuestVarSetFromRand("Temp2",12,13);
-							spawnRelicSpecific(v,1*trQuestVarGet("Temp2"));
-						}
+				}
+				else if(row <= 4){
+					trQuestVarSetFromRand("Temp",1,16);
+					trQuestVarSetFromRand("Temp2",16,19);
+					if(1*trQuestVarGet("Temp") <= cNumberNonGaiaPlayers){
+						spawnRelicSpecific(v,1*trQuestVarGet("Temp2"));
 					}
-				}*/
+				}
 			}
 		}
 	}
