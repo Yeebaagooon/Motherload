@@ -77,6 +77,49 @@ highFrequency
 				trUnitChangeProtoUnit("Ramming Ship Greek");
 			}
 		}
+		if(xGetInt(dPlayerData, xBonus+4) != 0){
+			trUnitSelectByQV("Bonus4");
+			trUnitChangeProtoUnit("Tent");
+			xAddDatabaseBlock(dSelectables, true);
+			xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus4"));
+			xSetInt(dSelectables, xSelectablesPrompt, 704);
+			if(xGetInt(dPlayerData, xBonus+4) == 2){
+				trUnitSelectByQV("BonusEffect4");
+				trUnitChangeProtoUnit("Gaia Forest effect");
+				trUnitSelectByQV("BonusUnit");
+				trUnitChangeProtoUnit("Tent");
+			}
+		}
+		if(xGetInt(dPlayerData, xBonus+5) != 0){
+			trUnitSelectByQV("Bonus5");
+			trUnitChangeProtoUnit("Dwarven Forge");
+			trUnitSelectByQV("Bonus5");
+			trUnitSetVariation(1*trQuestVarGet("Bonus5"), 1);
+			trSetSelectedScale(0.5,0.5,0.5);
+			xAddDatabaseBlock(dSelectables, true);
+			xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus5"));
+			xSetInt(dSelectables, xSelectablesPrompt, 705);
+			if(xGetInt(dPlayerData, xBonus+5) == 2){
+				trUnitSelectByQV("BonusEffect5");
+				trUnitChangeProtoUnit("Gaia Forest effect");
+				trUnitSelectByQV("BonusUnit");
+				trUnitChangeProtoUnit("Dwarven Forge");
+				trUnitSetVariation(1*trQuestVarGet("BonusUnit"), 1);
+			}
+		}
+		if(xGetInt(dPlayerData, xBonus+6) != 0){
+			trUnitSelectByQV("Bonus6");
+			trUnitChangeProtoUnit("Wall Connector");
+			xAddDatabaseBlock(dSelectables, true);
+			xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus6"));
+			xSetInt(dSelectables, xSelectablesPrompt, 706);
+			if(xGetInt(dPlayerData, xBonus+6) == 2){
+				trUnitSelectByQV("BonusEffect6");
+				trUnitChangeProtoUnit("Gaia Forest effect");
+				trUnitSelectByQV("BonusUnit");
+				trUnitChangeProtoUnit("Wall Connector");
+			}
+		}
 		if(xGetInt(dPlayerData, xBonus+7) != 0){
 			trUnitSelectByQV("Bonus7");
 			trUnitChangeProtoUnit("Hero Ragnorok");
@@ -105,6 +148,32 @@ highFrequency
 				trUnitChangeProtoUnit("Great Box");
 				trUnitSelectByQV("BonusUnit");
 				trSetSelectedScale(0.5,0.5,0.5);
+			}
+		}
+		if(xGetInt(dPlayerData, xBonus+9) != 0){
+			trUnitSelectByQV("Bonus9");
+			trUnitChangeProtoUnit("Pharaoh");
+			xAddDatabaseBlock(dSelectables, true);
+			xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus9"));
+			xSetInt(dSelectables, xSelectablesPrompt, 709);
+			if(xGetInt(dPlayerData, xBonus+9) == 2){
+				trUnitSelectByQV("BonusEffect9");
+				trUnitChangeProtoUnit("Gaia Forest effect");
+				trUnitSelectByQV("BonusUnit");
+				trUnitChangeProtoUnit("Pharaoh");
+			}
+		}
+		if(xGetInt(dPlayerData, xBonus+10) != 0){
+			trUnitSelectByQV("Bonus10");
+			trUnitChangeProtoUnit("Fire Giant");
+			xAddDatabaseBlock(dSelectables, true);
+			xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus10"));
+			xSetInt(dSelectables, xSelectablesPrompt, 710);
+			if(xGetInt(dPlayerData, xBonus+10) == 2){
+				trUnitSelectByQV("BonusEffect10");
+				trUnitChangeProtoUnit("Gaia Forest effect");
+				trUnitSelectByQV("BonusUnit");
+				trUnitChangeProtoUnit("Fire Giant");
 			}
 		}
 		xsDisableSelf();
@@ -151,19 +220,40 @@ void Select_Bonus(int bonus = 0){
 		}
 		if(bonus == 3){
 			trUnitChangeProtoUnit("Ramming Ship Greek");
-			trUnitSelectByQV("BonusUnit");
 			ColouredChat("1,0.5,0", "+10 drill power equipped");
+		}
+		if(bonus == 4){
+			trUnitChangeProtoUnit("Tent");
+			ColouredChat("1,0.5,0", "+4 percent radiator efficiency equipped");
+		}
+		if(bonus == 5){
+			trUnitChangeProtoUnit("Dwarven Forge");
+			trUnitSelectByQV("BonusUnit");
+			trSetSelectedScale(0.5,0.5,0.5);
+			ColouredChat("1,0.5,0", "+15 engine power equipped");
+			trUnitSetVariation(1*trQuestVarGet("BonusUnit"), 1);
+		}
+		if(bonus == 6){
+			trUnitChangeProtoUnit("Wall Connector");
+			ColouredChat("1,0.5,0", "+250hp hull equipped");
 		}
 		if(bonus == 7){
 			trUnitChangeProtoUnit("Hero Ragnorok");
-			trUnitSelectByQV("BonusUnit");
 			ColouredChat("1,0.5,0", "Free emergency fuel tank equipped");
 		}
 		if(bonus == 8){
 			trUnitChangeProtoUnit("Great Box");
 			trUnitSelectByQV("BonusUnit");
 			trSetSelectedScale(0.5,0.5,0.5);
-			ColouredChat("1,0.5,0", "Sell all held minerals at game end equipped!");
+			ColouredChat("1,0.5,0", "Sell all held minerals at game end equipped");
+		}
+		if(bonus == 9){
+			trUnitChangeProtoUnit("Pharaoh");
+			ColouredChat("1,0.5,0", "Nullified first two instances of damage equipped");
+		}
+		if(bonus == 10){
+			trUnitChangeProtoUnit("Fire Giant");
+			ColouredChat("1,0.5,0", "Gas pocket detection equipped");
 		}
 		Deselect_Bonus(bonus);
 	}
@@ -184,8 +274,20 @@ void Apply_Bonus(int s = -1){
 		if(xGetInt(dPlayerData, xBonus+3) == 2){
 			xSetFloat(dPlayerData, xDrillPower, xGetFloat(dPlayerData, xDrillPower)+10);
 		}
+		if(xGetInt(dPlayerData, xBonus+4) == 2){
+			xSetInt(dPlayerData, xRadiator, xGetInt(dPlayerData, xRadiator)+4);
+		}
+		if(xGetInt(dPlayerData, xBonus+5) == 2){
+			xSetInt(dPlayerData, xEnginePower, xGetInt(dPlayerData, xEnginePower)+15);
+		}
+		if(xGetInt(dPlayerData, xBonus+6) == 2){
+			xSetInt(dPlayerData, xHullHP, xGetInt(dPlayerData, xHullHP)+250);
+		}
 		if(xGetInt(dPlayerData, xBonus+7) == 2){
 			grantGodPowerNoRechargeNextPosition(p, "Ragnorok", 1);
+		}
+		if(xGetInt(dPlayerData, xBonus+9) == 2){
+			trQuestVarSet("P"+p+"B9", 2);
 		}
 	}
 	xsDisableSelf();

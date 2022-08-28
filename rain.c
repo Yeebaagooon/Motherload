@@ -216,7 +216,7 @@ highFrequency
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
 		}
 		if(Stage == 7){
-			StageTime = StageTime+120; //480
+			StageTime = StageTime+480; //480
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
 		}
 		if(Stage == 8){
@@ -273,12 +273,19 @@ highFrequency
 					trUnitSelectClear();
 					trUnitSelectByQV("P"+p+"Siphon");
 					if(trUnitDead()==true){
-						trChatSend(0, "Delete death");
 						trPlayerKillAllUnits(p);
 						trPlayerKillAllBuildings(p);
 						trSetPlayerDefeated(p);
 						xSetInt(dPlayerData, xPlayerActive, 0);
 						trPlayerKillAllGodPowers(p);
+						if (xGetInt(dPlayerData, xBonus+9) == 0){
+							xSetInt(dPlayerData, xBonus+9, 1);
+							ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked!");
+							if(trCurrentPlayer() == p){
+								saveAllData();
+								playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
+							}
+						}
 					}
 				}
 			}
@@ -391,6 +398,7 @@ void FuelBuy(int p = 0){
 						}
 						
 					}
+					trQuestVarSet("P"+p+"FuelWarning", 0);
 				}
 			}
 			xSetInt(dPlayerData, xFuelCountdownTime, trTime()+1);
@@ -493,6 +501,7 @@ highFrequency
 }
 
 
+
 rule FuelEconomy
 inactive
 highFrequency
@@ -567,7 +576,11 @@ highFrequency
 			xSetInt(dPlayerData, xPlayerActive, 0);
 			if (xGetInt(dPlayerData, xBonus+7) == 0){
 				xSetInt(dPlayerData, xBonus+7, 1);
-				ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked at the end of the stage!");
+				ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked!");
+				if(trCurrentPlayer() == p){
+					saveAllData();
+					playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
+				}
 			}
 		}
 		
@@ -588,8 +601,26 @@ highFrequency
 				ColouredIconChat("1,0.5,0", "icons/star", "Progression goal achieved.");
 			}
 		}
+		
+		if((xGetInt(dPlayerData, xBonus+4) == 0) && (xGetInt(dPlayerData, xDepth) >= 750)){
+			xSetInt(dPlayerData, xBonus+4, 1);
+			ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked!");
+			if(trCurrentPlayer() == p){
+				saveAllData();
+				playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
+			}
+		}
+		if((xGetInt(dPlayerData, xBonus+5) == 0) && (xGetInt(dPlayerData, xDepth) >= 1500)){
+			xSetInt(dPlayerData, xBonus+5, 1);
+			ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked!");
+			if(trCurrentPlayer() == p){
+				saveAllData();
+				playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
+			}
+		}
 	}
 }
+
 
 /*
 rule fuckssake

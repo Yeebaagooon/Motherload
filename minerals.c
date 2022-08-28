@@ -703,6 +703,16 @@ highFrequency
 			if(xGetInt(dPlayerData, xRelicCollected+r) == 0){
 				xSetInt(dPlayerData, xRelicCollected+r, 1);
 			}
+			if (xGetInt(dPlayerData, xBonus+6) == 0){
+				if(r == RELIC_URANIUM){
+					xSetInt(dPlayerData, xBonus+6, 1);
+					ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked!");
+					if(trCurrentPlayer() == GSeller){
+						saveAllData();
+						playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
+					}
+				}
+			}
 			//Stage 2
 			if((xGetInt(dPlayerData, xStageUnlocked) == 1) && (xGetInt(dPlayerData, xStageStatus) == 0) && (r == RELIC_GOLD)){
 				xSetInt(dPlayerData, xStageStatus, 1);
@@ -841,75 +851,50 @@ highFrequency
 					trUnitSelectByQV("P"+p+"Siphon");
 					trDamageUnit(400);
 					trChatSendToPlayer(0, p, "<color=1,0,0>You hit a gas pocket!</color>");
+					trQuestVarModify("P"+p+"GasHit", "+", 1);
+					if(1*trQuestVarGet("P"+p+"GasHit") >= 5){
+						xSetPointer(dPlayerData, p);
+						if (xGetInt(dPlayerData, xBonus+10) == 0){
+							xSetInt(dPlayerData, xBonus+10, 1);
+							ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked!");
+							if(trCurrentPlayer() == p){
+								saveAllData();
+								playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
+							}
+						}
+					}
 					if(trCurrentPlayer() == p){
 						trSoundPlayFN("meteorbighit.wav","1",-1,"","");
 						trSoundPlayFN("uprootbirth.wav","1",-1,"","");
 					}
 				}
 			}
+			
+			if(xGetInt(dPlayerData, xBonus+10) == 2){
+				if(trDistanceBetweenVectorsSquared("TempGas", "P"+p+"Pos") < 80){
+					if(trTime() > 1*trQuestVarGet("TimeS"+p+"")){
+						trChatSendToPlayer(0, p, "<color=0.7,0,0>You are near a gas pocket!</color>");
+						trQuestVarSet("TimeS"+p+"", trTime()+1);
+					}
+				}
+			}
+			
 		}
 	}
-	
-}
-
-//trChatSend(0, "Free relics = "+xGetDatabaseCount(dFreeRelics)+"");
-/* relics dropped */
-/*
-trQuestVarSet("relicPlayer", 1 + trQuestVarGet("relicPlayer"));
-if (trQuestVarGet("relicPlayer") >= cNumberNonGaiaPlayers) {
-	trQuestVarSet("relicPlayer", 1);
-}
-p = trQuestVarGet("relicPlayer");
-xSetPointer(dPlayerData, p);
-if (xGetBool(dPlayerData, xPlayerResigned) == false) {
-	xUnitSelect(dPlayerData, xPlayerUnit);
-	if (trUnitAlive() && xGetInt(dPlayerData, xPlayerDead) <= 0) {
-		pos = kbGetBlockPosition(""+xGetInt(dPlayerData,xPlayerUnit), true);
-		db = getRelicsDB(p);
-		for(x=xGetDatabaseCount(db); >0) {
-			xDatabaseNext(db);
-			xUnitSelect(db, xUnitName);
-			if (trUnitGetIsContained("Unit") == false) {
-				if (xGetInt(db, xRelicType) < KEY_RELICS) {
-					relicReturned = false;
-					if ((xGetInt(db, xRelicType) == RELIC_TRANSPORTER_TICKET) && Multiplayer) {
-						trUnitDestroy();
-						if (trCurrentPlayer() == p) {
-							uiMessageBox("Relic Transporter Ticket unequipped. Return to singleplayer if you want to equip it again.");
-						}
-					} else if (distanceBetweenVectors(pos, trVectorQuestVarGet("relicTransporterGuyPos")) < 36) {
-						relicReturned = true;
-						if (trPlayerUnitCountSpecific(p, "Villager Atlantean Hero") == 0) {
-							if (trPlayerResourceCount(p, "gold") >= 100) {
-								trPlayerGrantResources(p, "gold", -100);
-								trQuestVarSet("p"+p+"transporterPurchased", 1);
-								spawnPlayerUnit(p, kbGetProtoUnitID("Villager Atlantean Hero"), pos);
-								if (trCurrentPlayer() == p) {
-									trChatSend(0, "A Relic Transporter has been hired!");
-									trSoundPlayFN("favordump.wav","1",-1,"","");
-									trSoundPlayFN("villagercreate.wav","1",-1,"","");
-								}
-							}
-						}
-						
-						
-						if (relicReturned == false) {
-							id = kbGetBlockID(""+xGetInt(db, xUnitName));
-							if (trCurrentPlayer() == p) {
-								trSoundPlayFN("backtowork.wav","1",-1,"","");
-								trChatSend(0, relicName(xGetInt(db, xRelicType)) + " dropped.");
-							}
-							if (kbGetUnitBaseTypeID(id) == relicProto(xGetInt(db, xRelicType))) {
-								trUnitChangeProtoUnit("Relic");
-								xAddDatabaseBlock(dFreeRelics, true);
-								xSetInt(dFreeRelics, xUnitName, xGetInt(db, xUnitName));
-								xSetInt(dFreeRelics, xRelicType, xGetInt(db, xRelicType));
-							}
-							xFreeDatabaseBlock(db);
-						}
-					}
+	if(trTime() > 1*trQuestVarGet("Time1S")){
+		trQuestVarModify("Time1S", "+", 1);
+		for(p=1; < cNumberNonGaiaPlayers) {
+			xSetPointer(dPlayerData, p);
+			if ((xGetInt(dPlayerData, xBonus+9) == 2) && (1*trQuestVarGet("P"+p+"B9") != 0)){
+				trUnitSelectByQV("P"+p+"Siphon");
+				if(trUnitPercentDamaged() > 0){
+					trDamageUnitPercent(-100);
+					trQuestVarModify("P"+p+"B9", "-", 1);
+					spyEffect(1*trQuestVarGet("P"+p+"Siphon"), kbGetProtoUnitID("Heavenlight"), vector(0,0,0), vector(0,0,0));
+					trChatSendToPlayer(0, p, "<color=1,0.5,0>Bonus utilised!</color>");
 				}
 			}
 		}
 	}
-}*/
+	
+}

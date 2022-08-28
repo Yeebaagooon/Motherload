@@ -998,6 +998,54 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				}
 			}
 		}
+		case 704:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Gives you +4 percent radiator efficiency.");
+				}
+				case 2:
+				{
+					trShowChoiceDialog("Equip?",
+						"Yes", 26, "No", -1);
+					dialog = 0;
+				}
+			}
+		}
+		case 705:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Gives you +15 engine power.");
+				}
+				case 2:
+				{
+					trShowChoiceDialog("Equip?",
+						"Yes", 27, "No", -1);
+					dialog = 0;
+				}
+			}
+		}
+		case 706:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Gives you +250 hull hp.");
+				}
+				case 2:
+				{
+					trShowChoiceDialog("Equip?",
+						"Yes", 28, "No", -1);
+					dialog = 0;
+				}
+			}
+		}
 		case 707:
 		{
 			switch(dialog)
@@ -1008,8 +1056,7 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				}
 				case 2:
 				{
-					trShowChoiceDialog("Equip?",
-						"Yes", 29, "No", -1);
+					trShowChoiceDialog("Equip?", "Yes", 29, "No", -1);
 					dialog = 0;
 				}
 			}
@@ -1024,8 +1071,37 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				}
 				case 2:
 				{
-					trShowChoiceDialog("Equip?",
-						"Yes", 30, "No", -1);
+					trShowChoiceDialog("Equip?", "Yes", 30, "No", -1);
+					dialog = 0;
+				}
+			}
+		}
+		case 709:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Nullifies the first two instances of damage you take.");
+				}
+				case 2:
+				{
+					trShowChoiceDialog("Equip?", "Yes", 31, "No", -1);
+					dialog = 0;
+				}
+			}
+		}
+		case 710:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Alerts you if gas pockets are nearby.");
+				}
+				case 2:
+				{
+					trShowChoiceDialog("Equip?", "Yes", 32, "No", -1);
 					dialog = 0;
 				}
 			}

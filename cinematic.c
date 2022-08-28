@@ -524,7 +524,7 @@ highFrequency
 {
 	if((trTime()-cActivationTime) >= 4){
 		xsDisableSelf();
-		characterDialog("Mr Natas", "Also watch your fuel gague on the right of your screen when playing.", "icons\scenario g gargarensis icon 64");
+		characterDialog("Mr Natas", "Also watch your fuel gauge on the right of your screen when playing.", "icons\scenario g gargarensis icon 64");
 		xsEnableRule("Cine_26");
 	}
 }
@@ -691,6 +691,7 @@ highFrequency
 	if((trTime()-cActivationTime) >= 1){
 		xsDisableSelf();
 		characterDialog("Reward gained", "+100L fuel - Select this from the bonus bar in singleplayer", "icons\improvement murder holes icon 64");
+		playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
 		xsEnableRule("Cine_Off");
 	}
 }
@@ -703,6 +704,7 @@ highFrequency
 	if((trTime()-cActivationTime) >= 2){
 		if(1*trQuestVarGet("CineStatus") == 0){
 			trQuestVarSet("CineStatus", 1);
+			saveAllData();
 		}
 		xsDisableSelf();
 		trUnitSelectClear();

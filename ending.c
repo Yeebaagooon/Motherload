@@ -227,6 +227,9 @@ highFrequency
 			if ((xGetInt(dPlayerData, xBonus+8) == 0) && (1*trQuestVarGet("P"+p+"Leftover") >= 100)){
 				xSetInt(dPlayerData, xBonus+8, 1);
 				ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked - check out singleplayer!");
+				if(trCurrentPlayer() == p){
+					playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
+				}
 			}
 		}
 		xsDisableSelf();

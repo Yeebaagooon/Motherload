@@ -32,6 +32,7 @@ inactive
 highFrequency
 {
 	trModifyProtounit("Dwarf", 0, 55, 4);
+	trModifyProtounit("Relic", 0, 55, 4); //recent change
 	trModifyProtounit("Armory", 0, 55, 4);
 	trModifyProtounit("Heka Shockwave SFX", cNumberNonGaiaPlayers, 8, 1);
 	//movetype to air for mutated relics means they ungarrison in a pile
