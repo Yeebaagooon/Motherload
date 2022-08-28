@@ -7,7 +7,7 @@ void PaintSP(){
 	PaintAtlantisArea(32,1,36,5,"black"); // exit sq
 	
 	PaintAtlantisArea(33,28,35,30,"black"); //bonus central
-	PaintAtlantisArea(70,0,72,44,"MiningGround"); //relic warehouse
+	PaintAtlantisArea(70,0,72,44,"black"); //relic warehouse
 	for(z=1 ; <= 21){
 		trQuestVarSet("RelicEffect"+z, trGetNextUnitScenarioNameNumber());
 		trArmyDispatch("0,0", "Victory Marker", 1, 142,3,4*z, 90, true);
@@ -54,10 +54,10 @@ void PaintSP(){
 				trMutateSelected(kbGetProtoUnitID("Einheriar Boost SFX"));
 			}
 			if(z == RELIC_SAPPHIRE){
-				trMutateSelected(kbGetProtoUnitID("Vortex Finish Linked"));
+				trMutateSelected(kbGetProtoUnitID("Vortex Start Linked"));
 			}
 			if(z == RELIC_DIAMOND){
-				trMutateSelected(kbGetProtoUnitID("Cyclops"));
+				trMutateSelected(kbGetProtoUnitID("Healing SFX"));
 				trUnitSelectByQV("RelicEffect"+z);
 				trUnitOverrideAnimation(18,0,true,false,-1,0);
 				//trUnitSelectByQV("RelicEffect"+z);

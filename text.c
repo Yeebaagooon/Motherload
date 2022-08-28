@@ -587,11 +587,16 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				}
 				case 4:
 				{
+					trCameraCut(vector(146.952896,98.965134,111.240631), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
+					uiMessageBox("Fuel profits are getting extortionate even out here now, must be Ukrainium.");
+				}
+				case 5:
+				{
 					trCameraCut(vector(100.463554,153.803818,-59.088593), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
 					uiZoomToProto("Hero Greek Atalanta");
 					xSetPointer(dPlayerData, p);
-					if(xGetInt(dPlayerData, xStageUnlocked) == 6){
-						uiMessageBox("To unlock the next planet - sell x with 500 profit and upgrade all stats to at least level 6.");
+					if(xGetInt(dPlayerData, xStageUnlocked) == 7){
+						uiMessageBox("To unlock the final planet - condition here.");
 					}
 					dialog = 0;
 				}
@@ -604,6 +609,30 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				case 1:
 				{
 					uiMessageBox("Nuclear explosive. Instantly mines 2 squares around you. Cost = " + Shop2Cost);
+					dialog = 0;
+				}
+			}
+		}
+		case 22:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("YOU SHOULD NOT BE HERE!");
+				}
+				case 2:
+				{
+					uiMessageBox("TURN AROUND IMMEDIATELY.");
+				}
+				case 3:
+				{
+					trCameraCut(vector(100.463554,153.803818,-59.088593), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
+					uiZoomToProto("Hero Greek Atalanta");
+					xSetPointer(dPlayerData, p);
+					if(xGetInt(dPlayerData, xStageUnlocked) == 8){
+						uiMessageBox("THERE IS NOTHING TO SEE OR MINE HERE!");
+					}
 					dialog = 0;
 				}
 			}
@@ -949,6 +978,54 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				{
 					trShowChoiceDialog("Equip?",
 						"Yes", 24, "No", -1);
+					dialog = 0;
+				}
+			}
+		}
+		case 703:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Gives you +10 drilling power.");
+				}
+				case 2:
+				{
+					trShowChoiceDialog("Equip?",
+						"Yes", 25, "No", -1);
+					dialog = 0;
+				}
+			}
+		}
+		case 707:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Gives you a free emergency fuel tank at the start of every multiplayer game.");
+				}
+				case 2:
+				{
+					trShowChoiceDialog("Equip?",
+						"Yes", 29, "No", -1);
+					dialog = 0;
+				}
+			}
+		}
+		case 708:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Automatically sells any held minerals when the stage ends.");
+				}
+				case 2:
+				{
+					trShowChoiceDialog("Equip?",
+						"Yes", 30, "No", -1);
 					dialog = 0;
 				}
 			}

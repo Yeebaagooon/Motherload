@@ -29,6 +29,7 @@ highFrequency
 				xSetInt(dSelectables, xSelectablesPrompt, 701);
 			}
 		}
+		//Already unlcoked
 		if(xGetInt(dPlayerData, xBonus+2) != 0){
 			trUnitSelectByQV("Bonus2");
 			trUnitChangeProtoUnit("Well of Urd");
@@ -46,6 +47,7 @@ highFrequency
 				trSetSelectedScale(0.5,0.5,0.5);
 			}
 		}
+		//Actively unlock in SP
 		else if(xGetInt(dPlayerData, xBonus+2) == 0){
 			if(1*trQuestVarGet("CineStatus") != 0){
 				trUnitSelectByQV("Bonus2");
@@ -58,6 +60,51 @@ highFrequency
 				xAddDatabaseBlock(dSelectables, true);
 				xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus2"));
 				xSetInt(dSelectables, xSelectablesPrompt, 702);
+			}
+		}
+		if(xGetInt(dPlayerData, xBonus+3) != 0){
+			trUnitSelectByQV("Bonus3");
+			trUnitChangeProtoUnit("Ramming Ship Greek");
+			trUnitSelectByQV("Bonus3");
+			trSetSelectedScale(0.5,0.5,0.5);
+			xAddDatabaseBlock(dSelectables, true);
+			xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus3"));
+			xSetInt(dSelectables, xSelectablesPrompt, 703);
+			if(xGetInt(dPlayerData, xBonus+3) == 2){
+				trUnitSelectByQV("BonusEffect3");
+				trUnitChangeProtoUnit("Gaia Forest effect");
+				trUnitSelectByQV("BonusUnit");
+				trUnitChangeProtoUnit("Ramming Ship Greek");
+			}
+		}
+		if(xGetInt(dPlayerData, xBonus+7) != 0){
+			trUnitSelectByQV("Bonus7");
+			trUnitChangeProtoUnit("Hero Ragnorok");
+			xAddDatabaseBlock(dSelectables, true);
+			xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus7"));
+			xSetInt(dSelectables, xSelectablesPrompt, 707);
+			if(xGetInt(dPlayerData, xBonus+7) == 2){
+				trUnitSelectByQV("BonusEffect7");
+				trUnitChangeProtoUnit("Gaia Forest effect");
+				trUnitSelectByQV("BonusUnit");
+				trUnitChangeProtoUnit("Hero Ragnorok");
+			}
+		}
+		if(xGetInt(dPlayerData, xBonus+8) != 0){
+			trUnitSelectByQV("Bonus8");
+			trUnitChangeProtoUnit("Great Box");
+			trUnitSelectByQV("Bonus8");
+			trSetSelectedScale(0.5,0.5,0.5);
+			xAddDatabaseBlock(dSelectables, true);
+			xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus8"));
+			xSetInt(dSelectables, xSelectablesPrompt, 708);
+			if(xGetInt(dPlayerData, xBonus+8) == 2){
+				trUnitSelectByQV("BonusEffect8");
+				trUnitChangeProtoUnit("Gaia Forest effect");
+				trUnitSelectByQV("BonusUnit");
+				trUnitChangeProtoUnit("Great Box");
+				trUnitSelectByQV("BonusUnit");
+				trSetSelectedScale(0.5,0.5,0.5);
 			}
 		}
 		xsDisableSelf();
@@ -102,6 +149,22 @@ void Select_Bonus(int bonus = 0){
 			trSetSelectedScale(0.5,0.5,0.5);
 			ColouredChat("1,0.5,0", "+100L fuel capacity equipped");
 		}
+		if(bonus == 3){
+			trUnitChangeProtoUnit("Ramming Ship Greek");
+			trUnitSelectByQV("BonusUnit");
+			ColouredChat("1,0.5,0", "+10 drill power equipped");
+		}
+		if(bonus == 7){
+			trUnitChangeProtoUnit("Hero Ragnorok");
+			trUnitSelectByQV("BonusUnit");
+			ColouredChat("1,0.5,0", "Free emergency fuel tank equipped");
+		}
+		if(bonus == 8){
+			trUnitChangeProtoUnit("Great Box");
+			trUnitSelectByQV("BonusUnit");
+			trSetSelectedScale(0.5,0.5,0.5);
+			ColouredChat("1,0.5,0", "Sell all held minerals at game end equipped!");
+		}
 		Deselect_Bonus(bonus);
 	}
 	xsDisableSelf();
@@ -118,6 +181,12 @@ void Apply_Bonus(int s = -1){
 			xSetInt(dPlayerData, xFuelTank, xGetInt(dPlayerData, xFuelTank)+100);
 			xSetFloat(dPlayerData, xFuel, xGetFloat(dPlayerData, xFuel)+100);
 		}
+		if(xGetInt(dPlayerData, xBonus+3) == 2){
+			xSetFloat(dPlayerData, xDrillPower, xGetFloat(dPlayerData, xDrillPower)+10);
+		}
+		if(xGetInt(dPlayerData, xBonus+7) == 2){
+			grantGodPowerNoRechargeNextPosition(p, "Ragnorok", 1);
+		}
 	}
 	xsDisableSelf();
 }
@@ -128,4 +197,9 @@ highFrequency
 {
 	xsDisableSelf();
 	Apply_Bonus();
+	//Check status effects code
+	/*
+	xSetPointer(dPlayerData, 1);
+	trChatSend(0, "Drill power:" + xGetFloat(dPlayerData, xDrillPower));
+	*/
 }

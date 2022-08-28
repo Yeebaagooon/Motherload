@@ -42,6 +42,11 @@ void GroundType(int rock = 0) {
 			OVERTERRAIN_TYPE = 0;
 			OVERTERRAIN_SUBTYPE = 51;
 		}
+		case 9:
+		{
+			OVERTERRAIN_TYPE = 0;
+			OVERTERRAIN_SUBTYPE = 85;
+		}
 	}
 }
 
@@ -344,6 +349,63 @@ highFrequency
 						RockType(35);
 					}
 				}
+				if(Stage == 9){
+					if(row == 20){
+						RockType(36);
+						if(col <= 3){
+							RockType(26);
+						}
+					}
+					else if((row >= 17) && (row <= 18)){
+						RockType(26);
+					}
+					else if((row >= 14) && (row <= 16)){
+						RockType(36);
+						if(col >= 23){
+							RockType(26);
+						}
+					}
+					else if((row >= 11) && (row <= 13)){
+						RockType(26);
+					}
+					else if((row >= 9) && (row <= 10)){
+						RockType(36);
+						if(col <= 2){
+							RockType(26);
+						}
+					}
+					else if((row >= 7) && (row <= 8)){
+						RockType(26);
+					}
+					else if(row == 6){
+						RockType(36);
+						if(col >= 24){
+							RockType(26);
+						}
+					}
+					else if((row >= 4) && (row <= 5)){
+						RockType(26);
+					}
+					else if(row == 3){
+						RockType(36);
+						if(col <= 2){
+							RockType(26);
+						}
+					}
+					else if(row == 2){
+						RockType(26);
+					}
+					else if(row == 1){
+						RockType(36);
+						if(col == 25){
+							RockType(26);
+						}
+					}
+					/*
+					else{
+						RockType(35);
+					}*/
+				}
 				trPaintTerrain(4*col-1,4*row-1,4*col-3,4*row-3,TERRAIN_TYPE,TERRAIN_SUBTYPE,false);
 				trQuestVarSet("R"+row+"C"+col+"CentreY", row*4-2);
 				trQuestVarSet("R"+row+"C"+col+"CentreX", col*4-2);
@@ -565,7 +627,6 @@ highFrequency
 		SelectableSign(104, 197, 9);
 		xsEnableRule("Audrey");
 		xsEnableRule("Rain");
-		xsEnableRule("Ragnorok");
 		temp = trGetNextUnitScenarioNameNumber();
 		for(x=0; < 24){
 			trArmyDispatch("0,0", "Victory Marker", 1, x*15,3,196, 180, true);
@@ -645,7 +706,6 @@ highFrequency
 		SelectableSign(112, 197, 13);
 		xsEnableRule("Audrey");
 		xsEnableRule("Rain");
-		xsEnableRule("Ragnorok");
 		temp = trGetNextUnitScenarioNameNumber();
 		for(x=0; < 24){
 			trArmyDispatch("0,0", "Victory Marker", 1, x*15,3,196, 180, true);
@@ -748,7 +808,6 @@ highFrequency
 		SelectableSign(104, 197, 9);
 		xsEnableRule("Audrey");
 		xsEnableRule("Rain");
-		xsEnableRule("Ragnorok");
 		temp = trGetNextUnitScenarioNameNumber();
 		for(x=0; < 24){
 			trArmyDispatch("0,0", "Victory Marker", 1, x*15,3,196, 180, true);
@@ -890,7 +949,6 @@ highFrequency
 		SelectableSign(104, 197, 9);
 		xsEnableRule("AudreyL2");
 		xsEnableRule("Rain");
-		xsEnableRule("Ragnorok");
 		temp = trGetNextUnitScenarioNameNumber();
 		for(x=0; < 24){
 			trArmyDispatch("0,0", "Victory Marker", 1, x*15,3,196, 180, true);
@@ -932,7 +990,7 @@ highFrequency
 		Hull3XMax = 96;
 		Hull4XMin = 97;
 		Hull4XMax = 99;
-		HullCost = 4;
+		HullCost = 6;
 		PaintAtlantisArea(Hull1XMin,95,Hull1XMax,97,"GrassA");
 		PaintAtlantisArea(Hull2XMin,95,Hull2XMax,97,"GrassB");
 		PaintAtlantisArea(Hull3XMin,95,Hull3XMax,97,"GrassB");
@@ -1028,7 +1086,7 @@ highFrequency
 		Shop1Cost = 5;
 		Shop2XMin = 47;
 		Shop2XMax = 49;
-		Shop2Cost = 25;
+		Shop2Cost = 40;
 		Shop3XMin = 51;
 		Shop3XMax = 53;
 		Shop3Cost = 40;
@@ -1041,7 +1099,6 @@ highFrequency
 		SelectableSign(104, 197, 9);
 		xsEnableRule("AudreyL2");
 		xsEnableRule("Rain");
-		xsEnableRule("Ragnorok");
 		temp = trGetNextUnitScenarioNameNumber();
 		for(x=0; < 24){
 			trArmyDispatch("0,0", "Victory Marker", 1, x*15,3,196, 180, true);
@@ -1079,7 +1136,7 @@ highFrequency
 	if(Stage == 8){
 		MineT = 0;
 		MineST = 53;
-		FuelCost = 20;
+		FuelCost = 25;
 		PaintSmelter(20,180);
 		PaintSellTerrain(15,89);
 		SelectableSign(31, 180, 3);
@@ -1092,7 +1149,7 @@ highFrequency
 		Hull3XMax = 96;
 		Hull4XMin = 97;
 		Hull4XMax = 99;
-		HullCost = 5;
+		HullCost = 10;
 		PaintAtlantisArea(Hull1XMin,95,Hull1XMax,97,"GrassA");
 		PaintAtlantisArea(Hull2XMin,95,Hull2XMax,97,"GrassB");
 		PaintAtlantisArea(Hull3XMin,95,Hull3XMax,97,"GrassB");
@@ -1201,7 +1258,6 @@ highFrequency
 		SelectableSign(104, 197, 9);
 		xsEnableRule("AudreyL2");
 		xsEnableRule("Rain");
-		xsEnableRule("Ragnorok");
 		temp = trGetNextUnitScenarioNameNumber();
 		for(x=0; < 48){
 			if (iModulo(2, x) == 0) { //if is divisble by 2
@@ -1229,6 +1285,158 @@ highFrequency
 			xSetInt(dGasPocket, xGasRow, 1*trQuestVarGet("temp"));
 		}
 	}
+	if(Stage == 9){
+		MineT = 5;
+		MineST = 8;
+		FuelCost = 50;
+		PaintSmelter(20,180);
+		PaintSellTerrain(15,89);
+		SelectableSign(31, 180, 3);
+		PaintHullTerrain(80,97);
+		Hull1XMin = 88;
+		Hull1XMax = 90;
+		Hull2XMin = 91;
+		Hull2XMax = 93;
+		Hull3XMin = 94;
+		Hull3XMax = 96;
+		Hull4XMin = 97;
+		Hull4XMax = 99;
+		HullCost = 10;
+		PaintAtlantisArea(Hull1XMin,95,Hull1XMax,97,"GrassA");
+		PaintAtlantisArea(Hull2XMin,95,Hull2XMax,97,"GrassB");
+		PaintAtlantisArea(Hull3XMin,95,Hull3XMax,97,"GrassB");
+		PaintAtlantisArea(Hull4XMin,95,Hull4XMax,97,"GrassB");
+		SelectableSign(167, 197, 15);
+		temp = trGetNextUnitScenarioNameNumber();
+		trArmyDispatch("0,0", "Dwarf", 1, 179,3,196, 0, true);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitChangeProtoUnit("Flag Numbered");
+		trUnitSetVariation(temp, 1);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trSetSelectedScale(2,2,2);
+		temp = trGetNextUnitScenarioNameNumber();
+		trArmyDispatch("0,0", "Dwarf", 1, 185,3,196, 0, true);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitChangeProtoUnit("Flag Numbered");
+		trUnitSetVariation(temp, 3);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trSetSelectedScale(2,2,2);
+		temp = trGetNextUnitScenarioNameNumber();
+		trArmyDispatch("0,0", "Dwarf", 1, 191,3,196, 0, true);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitChangeProtoUnit("Flag Numbered");
+		trUnitSetVariation(temp, 7);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trSetSelectedScale(2,2,2);
+		temp = trGetNextUnitScenarioNameNumber();
+		trArmyDispatch("0,0", "Dwarf", 1, 197,3,196, 0, true);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitChangeProtoUnit("Flag Numbered");
+		trUnitSetVariation(temp, 9);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trSetSelectedScale(2,2,2);
+		
+		PaintFuelTerrain(80,89);
+		//fuel full pump
+		SelectableSign(167, 181, 18);
+		PaintAtlantisArea(88,87,90,89,"GrassA");
+		FSOneXMin = 176;
+		FSOneXMax = 182;
+		FSOneZMin = 174;
+		FSOneZMax = 180;
+		PaintAtlantisArea(91,87,93,90,"GrassB");
+		FSTwoXMin = 182;
+		FSTwoXMax = 188;
+		FSTwoZMin = 174;
+		FSTwoZMax = 182;
+		PaintAtlantisArea(94,87,96,91,"GaiaCreepA");
+		FSThreeXMin = 188;
+		FSThreeXMax = 194;
+		FSThreeZMin = 174;
+		FSThreeZMax = 184;
+		GVectorSellPos = vector(38,3,176);
+		temp = trGetNextUnitScenarioNameNumber();
+		trArmyDispatch("0,0", "Dwarf", 1, 179,3,181, 0, true);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitChangeProtoUnit("Flag Numbered");
+		trUnitSetVariation(temp, 0);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trSetSelectedScale(2,2,2);
+		temp = trGetNextUnitScenarioNameNumber();
+		trArmyDispatch("0,0", "Dwarf", 1, 185,3,183, 0, true);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitChangeProtoUnit("Flag Numbered");
+		trUnitSetVariation(temp, 1);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trSetSelectedScale(2,2,2);
+		temp = trGetNextUnitScenarioNameNumber();
+		trArmyDispatch("0,0", "Dwarf", 1, 191,3,185, 0, true);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitChangeProtoUnit("Flag Numbered");
+		trUnitSetVariation(temp, 2);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trSetSelectedScale(2,2,2);
+		//paint extra shop
+		PaintShopTerrain(45,93);
+		Shop1XMin = 43;
+		Shop1XMax = 45;
+		Shop1Cost = 5;
+		Shop2XMin = 47;
+		Shop2XMax = 49;
+		Shop2Cost = 125;
+		Shop3XMin = 51;
+		Shop3XMax = 53;
+		Shop3Cost = 40;
+		PaintAtlantisArea(Shop1XMin,95,Shop1XMax,97,"CityTileAtlantis");
+		PaintAtlantisArea(Shop2XMin,95,Shop2XMax,97,"UnderwaterRockF"); //UnderwaterRockF
+		PaintAtlantisArea(Shop3XMin,95,Shop3XMax,97,"UnderwaterIceC"); //UnderwaterIceC
+		xsEnableRule("ExtraShop");
+		SelectableSign(88, 197, 7);
+		SelectableSign(96, 197, 21);
+		SelectableSign(104, 197, 9);
+		xsEnableRule("AudreyL2");
+		xsEnableRule("Rain");
+		temp = trGetNextUnitScenarioNameNumber();
+		for(x=0; < 24){
+			if (iModulo(2, x) == 0) { //if is divisble by 2
+				trArmyDispatch("0,0", "Victory Marker", 1, x*15,3,199.8, 180, true);
+			}
+			else{trArmyDispatch("0,0", "Victory Marker", 1, x*15,3,199.8, 0, true);
+			}
+			trUnitSelectClear();
+			trUnitSelect(""+(temp+x));
+			trUnitChangeProtoUnit("Bolder Rolling");
+			trUnitSelectClear();
+			trUnitSelect(""+(temp+x));
+			trSetSelectedScale(10, 3, 0.1);
+		}
+		sunColor(57,20,2);
+		ambientColor(57,55,40);
+		terrainAmbient(255,155,155);
+		for(x=1; < 40){
+			xAddDatabaseBlock(dGasPocket, true);
+			xSetPointer(dGasPocket, x);
+			trQuestVarSetFromRand("temp", 1, 20);
+			xSetInt(dGasPocket, xGasCol, 1*trQuestVarGet("temp"));
+			trQuestVarSetFromRand("temp", 1, 18);
+			xSetInt(dGasPocket, xGasRow, 1*trQuestVarGet("temp"));
+		}
+	}
+	xsEnableRule("Ragnorok");
 	xsDisableSelf();
 	trPaintTerrain(0,80,100,80,MineT,MineST,false);
 }
@@ -1502,9 +1710,7 @@ highFrequency
 				}
 			}
 			if(Stage == 8){
-				//iron first two rows
 				if(row == 18){
-					//spawnRelicSpecific(v,9);
 					trQuestVarSetFromRand("Temp",1,10);
 					if(1*trQuestVarGet("Temp") <= cNumberNonGaiaPlayers){
 						spawnRelicSpecific(v, 9);

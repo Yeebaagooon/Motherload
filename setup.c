@@ -225,22 +225,28 @@ highFrequency
 	Slot 9
 	Total size: 0
 	*/
-	for(x=0; <= 21) {
+	for(x=0; <= 18) {
 		addSavedDataDB(dPlayerData, xBonus+x, 9, 3);
-	}
-	for(x=1; <= 21) {
-		addSavedDataDB(dPlayerData, xRelicCollected+x, 9, 2);
 	}
 	
 	/*
 	Slot 10
 	Total size: 0
 	*/
+	for(x=19; <= 21) {
+		addSavedDataDB(dPlayerData, xBonus+x, 10, 3);
+	}
+	for(x=1; <= 15) {
+		addSavedDataDB(dPlayerData, xRelicCollected+x, 10, 2);
+	}
 	
 	/*
 	Slot 11
 	Total size: 0
 	*/
+	for(x=16; <= 21) {
+		addSavedDataDB(dPlayerData, xRelicCollected+x, 11, 2);
+	}
 	
 	/*
 	Slot 12

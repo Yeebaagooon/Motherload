@@ -2,19 +2,46 @@ rule TimesUp
 inactive
 highFrequency
 {
-	xsDisableSelf();
 	xsDisableRule("CheckResigns");
 	xsDisableRule("FuelEconomy");
 	trCounterAbort("CDFuel");
 	trCounterAbort("CDDepth");
+	trOverlayTextColour(255,125,0);
 	trSetFogAndBlackmap(false, false);
 	trLetterBox(true);
+	for (x=xGetDatabaseCount(dHeldRelics); > 0) {
+		xDatabaseNext(dHeldRelics);
+		for(p=1; < cNumberNonGaiaPlayers) {
+			if (trUnitIsOwnedBy(p)) {
+				xUnitSelect(dHeldRelics, xRelicName);
+				trQuestVarSet("P"+p+"Leftover", 1*trQuestVarGet("P"+p+"Leftover")+relicCost(xGetInt(dHeldRelics, xRelicValue)));
+			}
+		}
+	}
+	for (x=xGetDatabaseCount(dHiddenRelics); > 0) {
+		xDatabaseNext(dHiddenRelics);
+		for(p=1; < cNumberNonGaiaPlayers) {
+			if (xGetInt(dHiddenRelics, xOwner) == p) {
+				xUnitSelect(dHiddenRelics, xRelicName);
+				trQuestVarSet("P"+p+"Leftover", 1*trQuestVarGet("P"+p+"Leftover")+relicCost(xGetInt(dHiddenRelics, xRelicValue)));
+			}
+		}
+	}
 	for(p = 1; < cNumberNonGaiaPlayers){
 		trUnitSelectByQV("P"+p+"Siphon");
 		trUnitChangeProtoUnit("Hero Death");
 		trUIFadeToColor(0,0,0,2000,1,true);
-		xsEnableRule("EndDialog1");
+		xSetPointer(dPlayerData, p);
+		if (xGetInt(dPlayerData, xBonus+8) == 2){
+			xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)+1*trQuestVarGet("P"+p+"Leftover"));
+			if(trCurrentPlayer() == p){
+				characterDialog("Left over gold added to your total!", ""+1*trQuestVarGet("P"+p+"Leftover")+"", "icons\special e son of osiris icon 64");
+			}
+		}
+		
 	}
+	xsEnableRule("EndDialog1");
+	xsDisableSelf();
 }
 
 rule EndDialog1
@@ -193,8 +220,16 @@ highFrequency
 		gadgetReal("ShowImageBox-CloseButton");
 		trLetterBox(false);
 		trUIFadeToColor(0,0,0,1500,1,false);
-		xsDisableSelf();
 		xsEnableRule("End2");
+		//BONUS CHECK AND UNLOCK
+		for(p=1; < cNumberNonGaiaPlayers) {
+			xSetPointer(dPlayerData, p);
+			if ((xGetInt(dPlayerData, xBonus+8) == 0) && (1*trQuestVarGet("P"+p+"Leftover") >= 100)){
+				xSetInt(dPlayerData, xBonus+8, 1);
+				ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked - check out singleplayer!");
+			}
+		}
+		xsDisableSelf();
 	}
 	
 }

@@ -121,6 +121,7 @@ highFrequency
 		unitTransform("Outpost", "Rocket");
 		trSetFogAndBlackmap(true, true);
 		xsEnableRule("BonusGo");
+		trDelayedRuleActivation("FuelEconomy");
 		//trShowImageDialog(stageIcon(Stage), stageName(Stage));
 		/*
 		trQuestVarSet("P1EnginePower", 100);
@@ -173,10 +174,12 @@ highFrequency
 		if(Stage == 8){
 			startNPCDialog(20);
 		}
+		if(Stage == 9){
+			startNPCDialog(22);
+		}
 	}
 	xSetPointer(dPlayerData, 1);
 	//trChatSend(0, ""+xGetInt(dPlayerData, xDrillLevel));
-	xsEnableRule("FuelEconomy");
 	xsEnableRule("StageTimer");
 	xsEnableRule("CheckResigns");
 	xsEnableRule("PlayerStats");
@@ -188,11 +191,11 @@ highFrequency
 {
 	if((trTime()-cActivationTime) >= 20){ //60
 		if(Stage == 1){
-			StageTime = StageTime+30; //480
+			StageTime = StageTime+480; //480
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
 		}
 		if(Stage == 2){
-			StageTime = StageTime+480; //480
+			StageTime = StageTime+40; //480
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
 		}
 		if(Stage == 3){
@@ -213,11 +216,16 @@ highFrequency
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
 		}
 		if(Stage == 7){
-			StageTime = StageTime+480; //480
+			StageTime = StageTime+120; //480
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
 		}
 		if(Stage == 8){
 			StageTime = StageTime+540; //540
+			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
+			grantGodPowerNoRechargeNextPosition(1, "Audrey", 100);
+		}
+		if(Stage == 9){
+			StageTime = StageTime+600; //600
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
 			grantGodPowerNoRechargeNextPosition(1, "Audrey", 100);
 		}
@@ -265,6 +273,7 @@ highFrequency
 					trUnitSelectClear();
 					trUnitSelectByQV("P"+p+"Siphon");
 					if(trUnitDead()==true){
+						trChatSend(0, "Delete death");
 						trPlayerKillAllUnits(p);
 						trPlayerKillAllBuildings(p);
 						trSetPlayerDefeated(p);
@@ -550,10 +559,28 @@ highFrequency
 			}
 		}
 		if((xGetFloat(dPlayerData, xFuel) <= 0) && (xGetInt(dPlayerData, xPlayerActive) == 1)){
-			trChatSendToPlayer(0, p, "OUT OF FUEL DEATH");
+			if(trCurrentPlayer() == p){
+				trOverlayText("OUT OF FUEL!", 8.0, 508, 350, 1000);
+			}
 			trUnitSelectByQV("P"+p+"Siphon");
 			trUnitDestroy();
 			xSetInt(dPlayerData, xPlayerActive, 0);
+			if (xGetInt(dPlayerData, xBonus+7) == 0){
+				xSetInt(dPlayerData, xBonus+7, 1);
+				ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked at the end of the stage!");
+			}
+		}
+		
+		if((xGetFloat(dPlayerData, xFuel) <= 200) && (1*trQuestVarGet("P"+p+"FuelWarning") == 0)){
+			if(trCurrentPlayer() == p){
+				trOverlayTextColour(200,0,0);
+				trOverlayText("LOW FUEL WARNING!", 8.0, 508, 350, 1000);
+				playSound("attackwarning.wav");
+			}
+			if (xGetInt(dPlayerData, xBonus+7) == 2){
+				trChatSendToPlayer(0, p, "<color=1,0.5,0>Consider using ragnorok - your emergency fuel tank!</color>");
+			}
+			trQuestVarSet("P"+p+"FuelWarning", 1);
 		}
 		if((xGetInt(dPlayerData, xStageUnlocked) == 4) && (xGetInt(dPlayerData, xStageStatus) == 0) && (xGetInt(dPlayerData, xDepth) >= 2000)){
 			xSetInt(dPlayerData, xStageStatus, 1);
@@ -564,6 +591,7 @@ highFrequency
 	}
 }
 
+/*
 rule fuckssake
 active
 highFrequency
@@ -574,3 +602,4 @@ highFrequency
 		trVectorQuestVarEcho("TargetVector1");
 	}
 }
+*/

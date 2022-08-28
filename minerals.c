@@ -23,19 +23,6 @@ const int RELIC_ANTIMATTER = 20;
 const int RELIC_YEEBIUM = 21;
 
 
-/*
-Obsidian, 12, 20
-Amethyst
-
-
-Plutonium
-
-Antimatter
-
-
-Yeebium 100
-
-*/
 const int URANIUM_DAMAGE = 1;
 const int PROMETHIUM_DAMAGE = 2;
 const int EINSTEINIUM_DAMAGE = 3;
@@ -176,51 +163,51 @@ int relicCost(int relic = 0) {
 		}
 		case RELIC_PROMETHIUM:
 		{
-			price = 25;
+			price = 15;
 		}
 		case RELIC_EINSTEINIUM:
 		{
-			price = 35;
+			price = 20;
 		}
 		case RELIC_EMERALD:
 		{
-			price = 20;
+			price = 13;
 		}
 		case RELIC_AMETHYST:
 		{
-			price = 25;
+			price = 14;
 		}
 		case RELIC_OBSIDIAN:
 		{
-			price = 40;
+			price = 20;
 		}
 		case RELIC_TOPAZ:
 		{
-			price = 45;
+			price = 25;
 		}
 		case RELIC_ICE:
 		{
-			price = 50;
+			price = 30;
 		}
 		case RELIC_QUARTZ:
 		{
-			price = 60;
+			price = 35;
 		}
 		case RELIC_OPAL:
 		{
-			price = 75;
+			price = 40;
 		}
 		case RELIC_HYDROGEN:
 		{
-			price = 100;
+			price = 50;
 		}
 		case RELIC_ANTIMATTER:
 		{
-			price = 400;
+			price = 100;
 		}
 		case RELIC_YEEBIUM:
 		{
-			price = 1000;
+			price = 500;
 		}
 	}
 	return(price);

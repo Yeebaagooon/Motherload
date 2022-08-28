@@ -35,6 +35,8 @@ const int UnderwaterIceA = 33;
 const int UnderwaterIceB = 34;
 const int UnderwaterIceC = 35;
 
+const int BlackRock = 36;
+
 
 void RockType(int rock = 0) {
 	switch(rock)
@@ -217,6 +219,12 @@ void RockType(int rock = 0) {
 			TERRAIN_SUBTYPE = 8;
 		}
 		
+		case BlackRock:
+		{
+			TERRAIN_TYPE = 2;
+			TERRAIN_SUBTYPE = 13;
+		}
+		
 	}
 }
 
@@ -353,6 +361,10 @@ int GetRockHardness(int rock = 0) {
 		{
 			return(2000);
 		}
+		case BlackRock:
+		{
+			return(10000);
+		}
 		
 		
 		//Ice C
@@ -422,6 +434,9 @@ int GetRockType(int t = 0, int st = 0){
 		}
 		if(st == 10){
 			return(Hades7); //lava
+		}
+		if(st == 13){
+			return(BlackRock); //lava
 		}
 	}
 	else if(t == 3){

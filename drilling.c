@@ -1,3 +1,6 @@
+//	if((trGetTerrainSubType(col*4-2,row*4-2) != 13) && (trGetTerrainType(col*4-2,row*4-2) != 2)){
+//Doesnt stop black rock from being blown up ... wtf
+
 void MineSquare(int row = 0, int col = 0){
 	trPaintTerrain(col*4-3,row*4-3,col*4-1,row*4-1,MineT, MineST,false);
 	trArmyDispatch("0,0", "Revealer", 1, col*8-4, 1, row*8-4, 180, true);
@@ -488,15 +491,27 @@ highFrequency
 				//SUCCEESSFUL DRILL
 				
 				//STATUS EFFECTS
+				//Lava 1
 				if((trGetTerrainSubType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
 							1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 7) && (trGetTerrainType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
 							1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 5)){
 					trQuestVarSet("StatusEffectP"+p+"", 1);
 				}
+				//Lava 2
 				if((trGetTerrainSubType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
 							1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 8) && (trGetTerrainType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
 							1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 2)){
 					trQuestVarSet("StatusEffectP"+p+"", 2);
+				}
+				//Drill egyptian cliff to unlock bonus 3
+				if((trGetTerrainSubType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
+							1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 2) && (trGetTerrainType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
+							1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 2)){
+					xSetPointer(dPlayerData, p);
+					if (xGetInt(dPlayerData, xBonus+3) == 0){
+						xSetInt(dPlayerData, xBonus+3, 1);
+						ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked!");
+					}
 				}
 				//DRILLING
 				if(zPos > startZPos){
