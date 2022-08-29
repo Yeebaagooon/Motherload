@@ -1106,6 +1106,21 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				}
 			}
 		}
+		case 711:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Adds 20 seconds to every stage you play.");
+				}
+				case 2:
+				{
+					trShowChoiceDialog("Equip?", "Yes", 33, "No", -1);
+					dialog = 0;
+				}
+			}
+		}
 	}
 	return(dialog);
 }

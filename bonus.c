@@ -60,8 +60,8 @@ highFrequency
 				xAddDatabaseBlock(dSelectables, true);
 				xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus2"));
 				xSetInt(dSelectables, xSelectablesPrompt, 702);
-						//ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked (3)!");
-						//	playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
+				//ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked (3)!");
+				//	playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
 			}
 		}
 		if(xGetInt(dPlayerData, xBonus+3) != 0){
@@ -178,6 +178,59 @@ highFrequency
 				trUnitChangeProtoUnit("Fire Giant");
 			}
 		}
+		//Already unlocked
+		if(xGetInt(dPlayerData, xBonus+11) != 0){
+			trUnitSelectByQV("Bonus11");
+			trBlockAllSounds();
+			trUnitChangeProtoUnit("Wonder SPC");
+			trUnblockAllSounds();
+			trChatHistoryClear();
+			trUnitSelectByQV("Bonus11");
+			trSetSelectedScale(0.3,0.3,0.3);
+			trUnitSelectByQV("Bonus11");
+			trUnitSetAnimationPath("3,0,0,1,0");
+			xAddDatabaseBlock(dSelectables, true);
+			xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus11"));
+			xSetInt(dSelectables, xSelectablesPrompt, 711);
+			if(xGetInt(dPlayerData, xBonus+11) == 2){
+				trUnitSelectByQV("BonusEffect11");
+				trUnitChangeProtoUnit("Gaia Forest effect");
+				trUnitSelectByQV("BonusUnit");
+				trUnitChangeProtoUnit("Prisoner");
+				trUnitSelectByQV("BonusUnit");
+				trBlockAllSounds();
+				trUnitChangeProtoUnit("Wonder SPC");
+				trChatHistoryClear();
+				trUnblockAllSounds();
+				trUnitSelectByQV("BonusUnit");
+				trSetSelectedScale(0.3,0.3,0.3);
+				trUnitSelectByQV("BonusUnit");
+				trUnitSetAnimationPath("3,0,0,1,0");
+			}
+		}
+		//Actively unlock in SP
+		else if(xGetInt(dPlayerData, xBonus+11) == 0){
+			if((xGetInt(dPlayerData, xDrillLevel) >= 3) || (xGetInt(dPlayerData, xHullLevel) >= 3) || (xGetInt(dPlayerData, xFuelLevel) >= 3) || (xGetInt(dPlayerData, xEngineLevel) >= 3) || (xGetInt(dPlayerData, xCargoLevel) >= 3) || (xGetInt(dPlayerData, xRadiatorLevel) >= 3)){
+				trUnitSelectByQV("Bonus11");
+				trUnitChangeProtoUnit("Prisoner");
+				trUnitSelectByQV("Bonus11");
+				trBlockAllSounds();
+				trUnitChangeProtoUnit("Wonder SPC");
+				trUnblockAllSounds();
+				trUnitSelectByQV("Bonus11");
+				trSetSelectedScale(0.3,0.3,0.3);
+				trUnitSelectByQV("Bonus11");
+				trUnitHighlight(5,true);
+				xSetInt(dPlayerData, xBonus+11, 1);
+				xAddDatabaseBlock(dSelectables, true);
+				xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus11"));
+				xSetInt(dSelectables, xSelectablesPrompt, 711);
+				trUnitSelectByQV("Bonus11");
+				trUnitSetAnimationPath("3,0,0,1,0");
+				ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked (11)!");
+				playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
+			}
+		}
 		xsDisableSelf();
 	}
 }
@@ -257,6 +310,19 @@ void Select_Bonus(int bonus = 0){
 			trUnitChangeProtoUnit("Fire Giant");
 			ColouredChat("1,0.5,0", "Gas pocket detection equipped");
 		}
+		if(bonus == 11){
+			trUnitChangeProtoUnit("Prisoner");
+			trUnitSelectByQV("BonusUnit");
+			trBlockAllSounds();
+			trUnitChangeProtoUnit("Wonder SPC");
+			trUnblockAllSounds();
+			trUnitSelectByQV("BonusUnit");
+			trSetSelectedScale(0.3,0.3,0.3);
+			trChatHistoryClear();
+			ColouredChat("1,0.5,0", "+20s extra stage time equipped");
+			trUnitSelectByQV("BonusUnit");
+			trUnitSetAnimationPath("3,0,0,1,0");
+		}
 		Deselect_Bonus(bonus);
 	}
 	xsDisableSelf();
@@ -290,6 +356,9 @@ void Apply_Bonus(int s = -1){
 		}
 		if(xGetInt(dPlayerData, xBonus+9) == 2){
 			trQuestVarSet("P"+p+"B9", 2);
+		}
+		if(xGetInt(dPlayerData, xBonus+11) == 2){
+			StageTime = StageTime+20;
 		}
 	}
 	xsDisableSelf();

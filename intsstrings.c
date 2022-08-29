@@ -7,7 +7,7 @@
 
 //---Test controls
 int QuickStart = 1;
-int QuickStage = 1;
+int QuickStage = 9;
 bool OverrideSP = true;
 bool OverrideStage = false;
 

@@ -2,37 +2,43 @@
 //Doesnt stop black rock from being blown up ... wtf
 
 void MineSquare(int row = 0, int col = 0){
-	trPaintTerrain(col*4-3,row*4-3,col*4-1,row*4-1,MineT, MineST,false);
-	trArmyDispatch("0,0", "Revealer", 1, col*8-4, 1, row*8-4, 180, true);
-	//Blow up gas pocket
-	for (x= xGetDatabaseCount(dGasPocket); > 0) {
-		xDatabaseNext(dGasPocket);
-		if((xGetInt(dGasPocket, xGasCol) == col) && (xGetInt(dGasPocket, xGasRow) == row)){
-			trVectorQuestVarSet("TempGas", xsVectorSet(8*xGetInt(dGasPocket, xGasCol)-4,3,8*xGetInt(dGasPocket, xGasRow)-4));
-			int temp = trGetNextUnitScenarioNameNumber();
-			trArmyDispatch("0,0", "Dwarf", 1, 1,1,1, 0, true);
-			trUnitSelectClear();
-			trUnitSelect(""+temp);
-			trUnitSelectClear();
-			trUnitSelect(""+temp);
-			trUnitTeleport(trVectorQuestVarGetX("TempGas"),trVectorQuestVarGetY("TempGas"),trVectorQuestVarGetZ("TempGas"));
-			trMutateSelected(kbGetProtoUnitID("Harpy"));
-			trUnitSelectClear();
-			trUnitSelect(""+temp);
-			trSetSelectedHeight(-10.0);
-			trUnitSelectClear();
-			trUnitSelect(""+temp);
-			trSetSelectedScale(0,0,0);
-			trUnitSelectClear();
-			trUnitSelect(""+temp);
-			trUnitOverrideAnimation(1,0,false,true,-1,-1);
-			xFreeDatabaseBlock(dGasPocket);
-			trUnitSelectClear();
-			trUnitSelect(""+temp);
-			xAddDatabaseBlock(dDestroyMe, true);
-			xSetInt(dDestroyMe, xDestroyName, temp);
-			xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+1500);
+	if((trGetTerrainSubType(col*4-2,row*4-2) != 13) && (trGetTerrainType(col*4-2,row*4-2) != 2)){
+		trPaintTerrain(col*4-3,row*4-3,col*4-1,row*4-1,MineT, MineST,false);
+		trArmyDispatch("0,0", "Revealer", 1, col*8-4, 1, row*8-4, 180, true);
+		//Blow up gas pocket
+		for (x= xGetDatabaseCount(dGasPocket); > 0) {
+			xDatabaseNext(dGasPocket);
+			if((xGetInt(dGasPocket, xGasCol) == col) && (xGetInt(dGasPocket, xGasRow) == row)){
+				trVectorQuestVarSet("TempGas", xsVectorSet(8*xGetInt(dGasPocket, xGasCol)-4,3,8*xGetInt(dGasPocket, xGasRow)-4));
+				int temp = trGetNextUnitScenarioNameNumber();
+				trArmyDispatch("0,0", "Dwarf", 1, 1,1,1, 0, true);
+				trUnitSelectClear();
+				trUnitSelect(""+temp);
+				trUnitSelectClear();
+				trUnitSelect(""+temp);
+				trUnitTeleport(trVectorQuestVarGetX("TempGas"),trVectorQuestVarGetY("TempGas"),trVectorQuestVarGetZ("TempGas"));
+				trMutateSelected(kbGetProtoUnitID("Harpy"));
+				trUnitSelectClear();
+				trUnitSelect(""+temp);
+				trSetSelectedHeight(-10.0);
+				trUnitSelectClear();
+				trUnitSelect(""+temp);
+				trSetSelectedScale(0,0,0);
+				trUnitSelectClear();
+				trUnitSelect(""+temp);
+				trUnitOverrideAnimation(1,0,false,true,-1,-1);
+				xFreeDatabaseBlock(dGasPocket);
+				trUnitSelectClear();
+				trUnitSelect(""+temp);
+				xAddDatabaseBlock(dDestroyMe, true);
+				xSetInt(dDestroyMe, xDestroyName, temp);
+				xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+1500);
+			}
 		}
+	}
+	else if((trGetTerrainSubType(col*4-2,row*4-2) == 13) && (trGetTerrainType(col*4-2,row*4-2) == 2)){
+		trChatSend(0, "Black rock detected at C"+col+",R"+row+"");
+		trPaintTerrain(col*4-3,row*4-3,col*4-1,row*4-1,2, 13,false);
 	}
 }
 
@@ -40,6 +46,11 @@ void RemoveBlack(int row = 0, int col = 0){
 	int rowmid = row*4-2;
 	int colmid = col*4-2;
 	//Wall above
+	if((trGetTerrainSubType(col*4-2,row*4-2) == 13) && (trGetTerrainType(col*4-2,row*4-2) == 2)){
+		trChatSend(0, "Black rock detected at C"+col+",R"+row+"");
+		trPaintTerrain(col*4-3,row*4-3,col*4-1,row*4-1,2, 13,false);
+		row = 100;
+	}
 	if(row <= MaxRows){
 		if((trGetTerrainSubType((colmid),(rowmid)+4) == MineST) && (trGetTerrainType((colmid),(rowmid)+4) == MineT)){
 			trUnitSelectClear();
@@ -88,8 +99,8 @@ void RemoveBlack(int row = 0, int col = 0){
 			trUnitSelectByQV("R"+row+"C"+(col-1)+"WallY");
 			trUnitDestroy();
 		}
+		trPaintTerrain(0,4*MaxRows+1,200,4*MaxRows+5,OVERTERRAIN_TYPE,OVERTERRAIN_SUBTYPE,false);
 	}
-	trPaintTerrain(0,4*MaxRows+1,200,4*MaxRows+5,OVERTERRAIN_TYPE,OVERTERRAIN_SUBTYPE,false);
 }
 
 rule Rain
@@ -310,7 +321,7 @@ highFrequency
 				RemoveBlack(Row-1, Col+1);
 				RemoveBlack(Row-1, Col);
 				RemoveBlack(Row-1, Col-1);
-				if(Stage == 8){
+				if(Stage >= 8){
 					if(Row < MaxRows-1){
 						MineSquare(Row+2, Col+2);
 						MineSquare(Row+2, Col+1);
@@ -610,7 +621,15 @@ highFrequency
 				trUnitSelectClear();
 				trUnitSelectByQV("DrillAttach"+p+"", true);
 				trUnitMoveToVectorEvent("TargetVector"+p+"", false, p);
-				trQuestVarSet("P"+p+"Drilling", 19+xGetInt(dPlayerData, xDrillLevel));
+				if(Stage <= 2){
+					trQuestVarSet("P"+p+"Drilling", 19);
+				}
+				else if((Stage <= 4) && (Stage >= 3)){
+					trQuestVarSet("P"+p+"Drilling", 19+xGetInt(dPlayerData, xDrillLevel));
+				}
+				else if(Stage >= 5){
+					trQuestVarSet("P"+p+"Drilling", 19+xGetInt(dPlayerData, xDrillLevel)*2-xGetInt(dPlayerData, xRadiatorLevel));
+				}
 				//Maybe double drill level and - engine level? - Bit harsh on stage 1
 				//10 seems to be lowest value here
 			}

@@ -1392,7 +1392,7 @@ highFrequency
 		trUnitSelect(""+temp);
 		trSetSelectedScale(2,2,2);
 		//paint extra shop
-		/*PaintShopTerrain(45,93);
+		PaintShopTerrain(45,93);
 		Shop1XMin = 43;
 		Shop1XMax = 45;
 		Shop1Cost = 5;
@@ -1408,7 +1408,8 @@ highFrequency
 		xsEnableRule("ExtraShop");
 		SelectableSign(88, 197, 7);
 		SelectableSign(96, 197, 21);
-		SelectableSign(104, 197, 9);*/
+		SelectableSign(104, 197, 9);
+		//end
 		xsEnableRule("AudreyL2");
 		xsEnableRule("Rain");
 		temp = trGetNextUnitScenarioNameNumber();
