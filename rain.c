@@ -280,7 +280,7 @@ highFrequency
 						trPlayerKillAllGodPowers(p);
 						if (xGetInt(dPlayerData, xBonus+9) == 0){
 							xSetInt(dPlayerData, xBonus+9, 1);
-							ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked!");
+							ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked (9)!");
 							if(trCurrentPlayer() == p){
 								saveAllData();
 								playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
@@ -507,7 +507,7 @@ inactive
 highFrequency
 //CHANGE condition to distance not time
 {
-	for(p = 1; <= cNumberNonGaiaPlayers){
+	for(p = 1; < cNumberNonGaiaPlayers){
 		xSetPointer(dPlayerData, p);
 		if(xGetInt(dPlayerData, xPlayerActive) == 1){
 			if(trDistanceToVectorSquared("P"+p+"Siphon", "P"+p+"Pos") > 0){
@@ -576,7 +576,7 @@ highFrequency
 			xSetInt(dPlayerData, xPlayerActive, 0);
 			if (xGetInt(dPlayerData, xBonus+7) == 0){
 				xSetInt(dPlayerData, xBonus+7, 1);
-				ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked!");
+				ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked (7)!");
 				if(trCurrentPlayer() == p){
 					saveAllData();
 					playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
@@ -603,17 +603,19 @@ highFrequency
 		}
 		
 		if((xGetInt(dPlayerData, xBonus+4) == 0) && (xGetInt(dPlayerData, xDepth) >= 750)){
+			trChatSend(0, ""+xGetInt(dPlayerData, xBonus+4));
 			xSetInt(dPlayerData, xBonus+4, 1);
-			ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked!");
+			trChatSend(0, ""+xGetInt(dPlayerData, xDepth));
 			if(trCurrentPlayer() == p){
+				ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked (4)!");
 				saveAllData();
 				playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
 			}
 		}
 		if((xGetInt(dPlayerData, xBonus+5) == 0) && (xGetInt(dPlayerData, xDepth) >= 1500)){
 			xSetInt(dPlayerData, xBonus+5, 1);
-			ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked!");
 			if(trCurrentPlayer() == p){
+				ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked (5)!");
 				saveAllData();
 				playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
 			}

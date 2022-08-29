@@ -60,6 +60,8 @@ highFrequency
 				xAddDatabaseBlock(dSelectables, true);
 				xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus2"));
 				xSetInt(dSelectables, xSelectablesPrompt, 702);
+						//ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked (3)!");
+						//	playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
 			}
 		}
 		if(xGetInt(dPlayerData, xBonus+3) != 0){

@@ -660,7 +660,7 @@ highFrequency
 	UnitCreate(1, "Athena", 40, 60, 90);
 	if(QuickStart == 1){
 		trUnitSelectByQV("StageSelector");
-		trUnitMoveToPoint(52,3,50,-1,false);
+		trUnitTeleport(50+10*QuickStage,3,60);
 	}
 	trOverlayText("Host, choose a stage", 8.0, 508, 70, 1000);
 	trLetterBox(false);

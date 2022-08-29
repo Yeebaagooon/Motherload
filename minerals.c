@@ -706,7 +706,7 @@ highFrequency
 			if (xGetInt(dPlayerData, xBonus+6) == 0){
 				if(r == RELIC_URANIUM){
 					xSetInt(dPlayerData, xBonus+6, 1);
-					ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked!");
+					ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked (6)!");
 					if(trCurrentPlayer() == GSeller){
 						saveAllData();
 						playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
@@ -856,7 +856,7 @@ highFrequency
 						xSetPointer(dPlayerData, p);
 						if (xGetInt(dPlayerData, xBonus+10) == 0){
 							xSetInt(dPlayerData, xBonus+10, 1);
-							ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked!");
+							ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked (10)!");
 							if(trCurrentPlayer() == p){
 								saveAllData();
 								playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");

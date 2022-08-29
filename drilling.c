@@ -461,6 +461,16 @@ highFrequency
 				trTechGodPower(p, "Animal Magnetism", 1);
 				break;
 			}
+			if((trGetTerrainSubType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
+						1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 13) && (trGetTerrainType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
+						1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 2)){
+				trChatSendToPlayer(0, p, "<color=1,0,0>You cannot drill here!</color>");
+				if(trCurrentPlayer() == p){
+					trSoundPlayFN("cantdothat.wav","1",-1,"","");
+				}
+				trTechGodPower(p, "Animal Magnetism", 1);
+				break;
+			}
 			else if(zPos > MaxRows){
 				trChatSendToPlayer(0, p, "<color=1,0,0>You can't drill above ground!</color>");
 				if(trCurrentPlayer() == p){
@@ -510,7 +520,7 @@ highFrequency
 					xSetPointer(dPlayerData, p);
 					if (xGetInt(dPlayerData, xBonus+3) == 0){
 						xSetInt(dPlayerData, xBonus+3, 1);
-						ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked!");
+						ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked (3)!");
 						if(trCurrentPlayer() == p){
 							saveAllData();
 							playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
@@ -600,7 +610,8 @@ highFrequency
 				trUnitSelectClear();
 				trUnitSelectByQV("DrillAttach"+p+"", true);
 				trUnitMoveToVectorEvent("TargetVector"+p+"", false, p);
-				trQuestVarSet("P"+p+"Drilling", 19);
+				trQuestVarSet("P"+p+"Drilling", 19+xGetInt(dPlayerData, xDrillLevel));
+				//Maybe double drill level and - engine level? - Bit harsh on stage 1
 				//10 seems to be lowest value here
 			}
 		}
@@ -751,12 +762,14 @@ void UngarrisonDrill(int p = 1){
 		}
 	}
 	//STATUS EFFECTS
+	//Lava 1
 	if(1*trQuestVarGet("StatusEffectP"+p+"") == 1){
 		trUnitSelectByQV("P"+p+"Siphon", false);
 		trDamageUnit(200-xGetInt(dPlayerData, xRadiator));
 		trDamageUnit(10*xGetInt(dPlayerData, xDepth)/xGetInt(dPlayerData, xRadiator));
 		trQuestVarSet("StatusEffectP"+p+"", 0);
 	}
+	//Lava 2
 	if(1*trQuestVarGet("StatusEffectP"+p+"") == 2){
 		trUnitSelectByQV("P"+p+"Siphon", false);
 		trDamageUnit(350-xGetInt(dPlayerData, xRadiator));
