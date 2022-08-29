@@ -662,6 +662,7 @@ void processHeldRelics(int count = 1) {
 					xUnitSelect(dHeldRelics, xRelicName);
 					xSetPointer(dPlayerData, p);
 					xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)+1*relicCost(1*xGetInt(dHeldRelics, xRelicValue)));
+					trQuestVarSet("P"+p+"Invoice", 1*trQuestVarGet("P"+p+"Invoice") + 1*relicCost(1*xGetInt(dHeldRelics, xRelicValue)));
 					if (trCurrentPlayer() == dropper) {
 						//trChatSend(0, relicName(xGetInt(dHeldRelics, xRelicValue)) + " sold!");
 						trSoundPlayFN("favordump.wav","1",-1,"","");
@@ -694,6 +695,7 @@ inactive
 highFrequency
 {
 	//trChatSendToPlayer(0, GSeller, ""+1*trQuestVarGet("TEMPNumber")+"x "+relicName(1*trQuestVarGet("TEMPValue"))+" sold!");
+	trChatSendToPlayer(0, GSeller, "<color=1,0.5,0><u>Receipt:</u></color>");
 	for(r=RELIC_NUMBER; >= 1) {
 		if(trQuestVarGet("P"+GSeller+"R"+r+"") > 0){
 			ColouredChatToPlayer(GSeller, RelicColour(r), ""+1*trQuestVarGet("P"+GSeller+"R"+r+"")+"x "+relicName(r)+" sold!");
@@ -736,6 +738,10 @@ highFrequency
 			}
 		}
 	}
+	int CurrentProfit = xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart);
+	trChatSendToPlayer(0, GSeller, "<color=1,0.5,0>--------------------</color>");
+	trChatSendToPlayer(0, GSeller, "<color=1,0.5,0>Total:" + 1*trQuestVarGet("P"+GSeller+"Invoice") + " | Current profit: " + CurrentProfit);
+	trQuestVarSet("P"+GSeller+"Invoice", 0);
 	xsDisableSelf();
 }
 
