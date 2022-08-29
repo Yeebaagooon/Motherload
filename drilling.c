@@ -37,7 +37,6 @@ void MineSquare(int row = 0, int col = 0){
 		}
 	}
 	else if((trGetTerrainSubType(col*4-2,row*4-2) == 13) && (trGetTerrainType(col*4-2,row*4-2) == 2)){
-		trChatSend(0, "Black rock detected at C"+col+",R"+row+"");
 		trPaintTerrain(col*4-3,row*4-3,col*4-1,row*4-1,2, 13,false);
 	}
 }
@@ -47,7 +46,6 @@ void RemoveBlack(int row = 0, int col = 0){
 	int colmid = col*4-2;
 	//Wall above
 	if((trGetTerrainSubType(col*4-2,row*4-2) == 13) && (trGetTerrainType(col*4-2,row*4-2) == 2)){
-		trChatSend(0, "Black rock detected at C"+col+",R"+row+"");
 		trPaintTerrain(col*4-3,row*4-3,col*4-1,row*4-1,2, 13,false);
 		row = 100;
 	}
@@ -190,6 +188,9 @@ highFrequency
 			//Direction calculate
 			if(((xsMax(Row,startRow)-xsMin(Row,startRow) == 0) && (xsMax(Col,startCol)-xsMin(Col,startCol) == 1)) || ((xsMax(Row,startRow)-xsMin(Row,startRow) == 1) && (xsMax(Col,startCol)-xsMin(Col,startCol) == 0))){
 				if(Row-startRow == 0){
+					if(trCurrentPlayer() == p){
+						playSoundCustom("earthdragonbirth.wav", "earthdragonbirth.wav");
+					}
 					if((Col-startCol) == 1){
 						MineSquare(Row, Col);
 						MineSquare(Row, Col+1);
@@ -615,12 +616,32 @@ highFrequency
 				trUnitSelectClear();
 				trUnitSelectByQV("DrillAttach"+p+"", true);
 				trMutateSelected(kbGetProtoUnitID("Wadjet Spit"));
+				/*trUnitSelectClear();
+				trSetUnitOrientation(x,y,true);
+				trUnitSelectByQV("DrillAttach"+p+"", true);
+				if(1*trQuestVarGet("P"+p+"Approach") == 4){
+					trUnitSetHeading(90);
+				}
+				if(1*trQuestVarGet("P"+p+"Approach") == 3){
+					trUnitSetHeading(270);
+				}
+				if(1*trQuestVarGet("P"+p+"Approach") == 2){
+					trUnitSetHeading(180);
+				}
+				if(1*trQuestVarGet("P"+p+"Approach") == 1){
+					trUnitSetHeading(0);
+				}*/
+				trUnitSelectClear();
 				//DRILL SPEED
 				xSetPointer(dPlayerData, p);
 				SetDrillSpeed(p, 1*trQuestVarGet("P"+p+"DrillTargetX")/2-1, 1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1);
 				trUnitSelectClear();
 				trUnitSelectByQV("DrillAttach"+p+"", true);
+				trVectorQuestVarSet("TargetVector"+p+"", xsVectorSet(1*trQuestVarGet("P"+p+"DrillTargetX")-4,3,1*trQuestVarGet("P"+p+"DrillTargetZ")-4));
 				trUnitMoveToVectorEvent("TargetVector"+p+"", false, p);
+				if(trCurrentPlayer() == p){
+					playSoundCustom("earthquakeexist.wav", "earthquakeexist.wav");
+				}
 				if(Stage <= 2){
 					trQuestVarSet("P"+p+"Drilling", 19);
 				}

@@ -738,9 +738,55 @@ highFrequency
 			}
 		}
 	}
+	xSetPointer(dPlayerData, GSeller);
+	if ((xGetInt(dPlayerData, xBonus+12) == 2) && (1*trQuestVarGet("P"+GSeller+"B12") == 1)){
+		trQuestVarSet("P"+GSeller+"B12", 0);
+		xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)+0.25*trQuestVarGet("P"+GSeller+"Invoice"));
+	}
 	int CurrentProfit = xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart);
+	string first = "<color=1,0.5,0>Total: ";
+	string seco = " | Current profit: ";
+	string colred = "<color=1,0,0>";
+	string colgrn = "<color=0,1,0>";
+	string outof = "<color=1,0.5,0>/ ";
+	int goal = 0;
+	if(Stage == 1){
+		goal = 10;
+	}
+	if(Stage == 3){
+		goal = 25;
+	}
+	if(Stage == 5){
+		goal = 50;
+	}
+	if(Stage == 6){
+		goal = 200;
+	}
+	if(Stage == 7){
+		goal = 150;
+	}
 	trChatSendToPlayer(0, GSeller, "<color=1,0.5,0>--------------------</color>");
-	trChatSendToPlayer(0, GSeller, "<color=1,0.5,0>Total:" + 1*trQuestVarGet("P"+GSeller+"Invoice") + " | Current profit: " + CurrentProfit);
+	if(xGetInt(dPlayerData, xStageUnlocked) == Stage-1){
+		if(CurrentProfit < goal){
+			trChatSendToPlayer(0, GSeller, first + 1*trQuestVarGet("P"+GSeller+"Invoice") + seco + colred + CurrentProfit + outof + goal);
+		}
+		else{
+			trChatSendToPlayer(0, GSeller, first + 1*trQuestVarGet("P"+GSeller+"Invoice") + seco + colgrn + CurrentProfit + outof + goal);
+		}
+	}
+	else{
+		trChatSendToPlayer(0, GSeller, first + 1*trQuestVarGet("P"+GSeller+"Invoice") + seco + CurrentProfit);
+	}
+	if (xGetInt(dPlayerData, xBonus+12) == 0){
+		if(1*trQuestVarGet("P"+GSeller+"Invoice") >= 100){
+			xSetInt(dPlayerData, xBonus+12, 1);
+			ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked (12)!");
+			if(trCurrentPlayer() == GSeller){
+				saveAllData();
+				playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
+			}
+		}
+	}
 	trQuestVarSet("P"+GSeller+"Invoice", 0);
 	xsDisableSelf();
 }

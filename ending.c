@@ -6,6 +6,8 @@ highFrequency
 	xsDisableRule("FuelEconomy");
 	trCounterAbort("CDFuel");
 	trCounterAbort("CDDepth");
+	trFadeOutMusic(4);
+	trFadeOutAllSounds(4);
 	trOverlayTextColour(255,125,0);
 	trSetFogAndBlackmap(false, false);
 	trLetterBox(true);

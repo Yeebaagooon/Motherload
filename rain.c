@@ -122,6 +122,8 @@ highFrequency
 		trSetFogAndBlackmap(true, true);
 		xsEnableRule("BonusGo");
 		trDelayedRuleActivation("FuelEconomy");
+		trMusicPlay();
+		trPlayNextMusicTrack();
 		//trShowImageDialog(stageIcon(Stage), stageName(Stage));
 		/*
 		trQuestVarSet("P1EnginePower", 100);
@@ -195,7 +197,7 @@ highFrequency
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
 		}
 		if(Stage == 2){
-			StageTime = StageTime+40; //480
+			StageTime = StageTime+480; //480
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
 		}
 		if(Stage == 3){
@@ -280,8 +282,8 @@ highFrequency
 						trPlayerKillAllGodPowers(p);
 						if (xGetInt(dPlayerData, xBonus+9) == 0){
 							xSetInt(dPlayerData, xBonus+9, 1);
-							ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked (9)!");
 							if(trCurrentPlayer() == p){
+								ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked (9)!");
 								saveAllData();
 								playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
 							}
@@ -576,9 +578,9 @@ highFrequency
 			xSetInt(dPlayerData, xPlayerActive, 0);
 			if (xGetInt(dPlayerData, xBonus+7) == 0){
 				xSetInt(dPlayerData, xBonus+7, 1);
-				ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked (7)!");
 				if(trCurrentPlayer() == p){
 					saveAllData();
+					ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked (7)!");
 					playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
 				}
 			}
@@ -603,9 +605,7 @@ highFrequency
 		}
 		
 		if((xGetInt(dPlayerData, xBonus+4) == 0) && (xGetInt(dPlayerData, xDepth) >= 750)){
-			trChatSend(0, ""+xGetInt(dPlayerData, xBonus+4));
 			xSetInt(dPlayerData, xBonus+4, 1);
-			trChatSend(0, ""+xGetInt(dPlayerData, xDepth));
 			if(trCurrentPlayer() == p){
 				ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked (4)!");
 				saveAllData();

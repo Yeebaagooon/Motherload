@@ -37,6 +37,7 @@ highFrequency
 	trModifyProtounit("Heka Shockwave SFX", cNumberNonGaiaPlayers, 8, 1);
 	//movetype to air for mutated relics means they ungarrison in a pile
 	trModifyProtounit("Wadjet Spit", 0, 8, -1000);
+	trModifyProtounit("Alfred", 0, 1, -1000);
 	trModifyProtounit("Athena", 1, 1, 4);
 	trModifyProtounit("Meteorite", 0, 8, 4);
 	xsDisableSelf();

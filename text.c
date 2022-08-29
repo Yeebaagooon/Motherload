@@ -180,6 +180,9 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				case 1:
 				{
 					uiMessageBox("Welcome to  " + stageName(Stage) + ", we need you to dig some minerals out of this planet!");
+					if(xGetInt(dPlayerData, xStageUnlocked) >= 4){
+						dialog = 0;
+					}
 				}
 				case 2:
 				{
@@ -272,6 +275,9 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				case 1:
 				{
 					uiMessageBox("Welcome to  " + stageName(Stage) + ", you should have the hang of things by now!");
+					if(xGetInt(dPlayerData, xStageUnlocked) >= 4){
+						dialog = 0;
+					}
 				}
 				case 2:
 				{
@@ -338,6 +344,9 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				case 1:
 				{
 					uiMessageBox("Welcome to  " + stageName(Stage) + ", more riches await us here!");
+					if(xGetInt(dPlayerData, xStageUnlocked) >= 5){
+						dialog = 0;
+					}
 				}
 				case 2:
 				{
@@ -404,7 +413,10 @@ int npcDiag(int npc = 0, int dialog = 0) {
 			{
 				case 1:
 				{
-					uiMessageBox("Welcome to  " + stageName(Stage) + ", more riches await us here!");
+					uiMessageBox("Welcome to  " + stageName(Stage) + ", more valuable minerals await us here!");
+					if(xGetInt(dPlayerData, xStageUnlocked) >= 6){
+						dialog = 0;
+					}
 				}
 				case 2:
 				{
@@ -449,6 +461,9 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				case 1:
 				{
 					uiMessageBox("Welcome to  " + stageName(Stage) + ", the first of the gas giants!");
+					if(xGetInt(dPlayerData, xStageUnlocked) >= 7){
+						dialog = 0;
+					}
 				}
 				case 2:
 				{
@@ -497,6 +512,9 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				case 1:
 				{
 					uiMessageBox("This planet is toxic, we can't stay here too long!");
+					if(xGetInt(dPlayerData, xStageUnlocked) >= 8){
+						dialog = 0;
+					}
 				}
 				case 2:
 				{
@@ -513,7 +531,7 @@ int npcDiag(int npc = 0, int dialog = 0) {
 					uiZoomToProto("Hero Greek Atalanta");
 					xSetPointer(dPlayerData, p);
 					if(xGetInt(dPlayerData, xStageUnlocked) == 5){
-						uiMessageBox("To unlock the next planet - you need drill level 5 and selling a diamond with 200 profit.");
+						uiMessageBox("To unlock the next planet - you need drill level 5 AND sell a diamond AND make 200 profit.");
 					}
 					dialog = 0;
 				}
@@ -563,7 +581,7 @@ int npcDiag(int npc = 0, int dialog = 0) {
 					uiZoomToProto("Hero Greek Atalanta");
 					xSetPointer(dPlayerData, p);
 					if(xGetInt(dPlayerData, xStageUnlocked) == 6){
-						uiMessageBox("To unlock the next planet - sell a lump of obsidian with 150 profit.");
+						uiMessageBox("To unlock the next planet - sell a lump of obsidian and make 150 profit.");
 					}
 					dialog = 0;
 				}
@@ -1117,6 +1135,21 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				case 2:
 				{
 					trShowChoiceDialog("Equip?", "Yes", 33, "No", -1);
+					dialog = 0;
+				}
+			}
+		}
+		case 712:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Your first mineral sale on each stage yields an extra 25 percent profit.");
+				}
+				case 2:
+				{
+					trShowChoiceDialog("Equip?", "Yes", 34, "No", -1);
 					dialog = 0;
 				}
 			}

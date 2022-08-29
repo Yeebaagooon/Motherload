@@ -231,6 +231,19 @@ highFrequency
 				playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
 			}
 		}
+		if(xGetInt(dPlayerData, xBonus+12) != 0){
+			trUnitSelectByQV("Bonus12");
+			trUnitChangeProtoUnit("Alfred");
+			xAddDatabaseBlock(dSelectables, true);
+			xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus12"));
+			xSetInt(dSelectables, xSelectablesPrompt, 712);
+			if(xGetInt(dPlayerData, xBonus+12) == 2){
+				trUnitSelectByQV("BonusEffect12");
+				trUnitChangeProtoUnit("Gaia Forest effect");
+				trUnitSelectByQV("BonusUnit");
+				trUnitChangeProtoUnit("Alfred");
+			}
+		}
 		xsDisableSelf();
 	}
 }
@@ -323,7 +336,12 @@ void Select_Bonus(int bonus = 0){
 			trUnitSelectByQV("BonusUnit");
 			trUnitSetAnimationPath("3,0,0,1,0");
 		}
+		if(bonus == 12){
+			trUnitChangeProtoUnit("Alfred");
+			ColouredChat("1,0.5,0", "Extra 25 percent profit on first sale equipped");
+		}
 		Deselect_Bonus(bonus);
+		playSoundCustom("ageadvance.wav", "\Yeebaagooon\Motherload\SelectBonus.mp3");
 	}
 	xsDisableSelf();
 }
@@ -359,6 +377,9 @@ void Apply_Bonus(int s = -1){
 		}
 		if(xGetInt(dPlayerData, xBonus+11) == 2){
 			StageTime = StageTime+20;
+		}
+		if(xGetInt(dPlayerData, xBonus+12) == 2){
+			trQuestVarSet("P"+p+"B12", 1);
 		}
 	}
 	xsDisableSelf();
