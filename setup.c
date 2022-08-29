@@ -183,37 +183,37 @@ highFrequency
 	Slot 2
 	Total size: 1,000,000
 	*/
-	addSavedDataDB(dPlayerData, xDrillLevel, 2, 7);
+	addSavedDataDB(dPlayerData, xDrillLevel, 2, 9);
 	
 	/*
 	Slot 3
 	Total size: 1000
 	*/
-	addSavedDataDB(dPlayerData, xHullLevel, 3, 7);
+	addSavedDataDB(dPlayerData, xHullLevel, 3, 9);
 	
 	/*
 	Slot 4
 	Total size: 0
 	*/
-	addSavedDataDB(dPlayerData, xFuelLevel, 4, 7);
+	addSavedDataDB(dPlayerData, xFuelLevel, 4, 9);
 	
 	/*
 	Slot 5
 	Total size: 0
 	*/
-	addSavedDataDB(dPlayerData, xCargoLevel, 5, 7);
+	addSavedDataDB(dPlayerData, xCargoLevel, 5, 9);
 	
 	/*
 	Slot 6
 	Total size: 0
 	*/
-	addSavedDataDB(dPlayerData, xEngineLevel, 6, 7);
+	addSavedDataDB(dPlayerData, xEngineLevel, 6, 9);
 	
 	/*
 	Slot 7
 	Total size: 0
 	*/
-	addSavedDataDB(dPlayerData, xRadiatorLevel, 7, 7);
+	addSavedDataDB(dPlayerData, xRadiatorLevel, 7, 9);
 	
 	/*
 	Slot 8
@@ -715,6 +715,7 @@ highFrequency
 		trOverlayText("Planet " + xGetInt(dObelisks, xObeliskStage) + ": " + stageName(Stage), 3.0, 520, 380, 800);
 	} else if (trUnitIsSelected()) {
 		uiClearSelection();
+		xSetPointer(dPlayerData, trCurrentPlayer());
 		if(xGetInt(dPlayerData, xStageUnlocked) >= xGetInt(dObelisks, xObeliskStage)-1){
 			trShowImageDialog(stageIcon(xGetInt(dObelisks, xObeliskStage)), "Planet " + xGetInt(dObelisks, xObeliskStage) + ": " + stageName(xGetInt(dObelisks, xObeliskStage)));
 		}

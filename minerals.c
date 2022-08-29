@@ -708,9 +708,9 @@ highFrequency
 			if (xGetInt(dPlayerData, xBonus+6) == 0){
 				if(r == RELIC_URANIUM){
 					xSetInt(dPlayerData, xBonus+6, 1);
-					ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked (6)!");
 					if(trCurrentPlayer() == GSeller){
 						saveAllData();
+						ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked (6)!");
 						playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
 					}
 				}
@@ -780,8 +780,8 @@ highFrequency
 	if (xGetInt(dPlayerData, xBonus+12) == 0){
 		if(1*trQuestVarGet("P"+GSeller+"Invoice") >= 100){
 			xSetInt(dPlayerData, xBonus+12, 1);
-			ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked (12)!");
 			if(trCurrentPlayer() == GSeller){
+				ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked (12)!");
 				saveAllData();
 				playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
 			}
@@ -908,8 +908,8 @@ highFrequency
 						xSetPointer(dPlayerData, p);
 						if (xGetInt(dPlayerData, xBonus+10) == 0){
 							xSetInt(dPlayerData, xBonus+10, 1);
-							ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked (10)!");
 							if(trCurrentPlayer() == p){
+								ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked (10)!");
 								saveAllData();
 								playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
 							}
@@ -923,7 +923,7 @@ highFrequency
 			}
 			
 			if(xGetInt(dPlayerData, xBonus+10) == 2){
-				if(trDistanceBetweenVectorsSquared("TempGas", "P"+p+"Pos") < 80){
+				if(trDistanceBetweenVectorsSquared("TempGas", "P"+p+"Pos") < 150){
 					if(trTime() > 1*trQuestVarGet("TimeS"+p+"")){
 						trChatSendToPlayer(0, p, "<color=0.7,0,0>You are near a gas pocket!</color>");
 						trQuestVarSet("TimeS"+p+"", trTime()+1);

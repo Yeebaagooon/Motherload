@@ -6,9 +6,9 @@
 
 
 //---Test controls
-int QuickStart = 0;
-int QuickStage = 0;
-bool OverrideSP = false;
+int QuickStart = 1;
+int QuickStage = 9;
+bool OverrideSP = true;
 bool OverrideStage = false;
 
 //---
@@ -178,6 +178,12 @@ highFrequency
 	trQuestVarSet("DrillCostL6", 250);
 	trQuestVarSet("DrillPowerL6", 200);
 	trStringQuestVarSet("DrillL6", "Diamond Drill");
+	trQuestVarSet("DrillCostL7", 500);
+	trQuestVarSet("DrillPowerL7", 400);
+	trStringQuestVarSet("DrillL7", "Nanotech Drill");
+	trQuestVarSet("DrillCostL8", 10000);
+	trQuestVarSet("DrillPowerL8", 400);
+	trStringQuestVarSet("DrillL8", "NOT MADE YET");
 	
 	//HULL UPGRADES
 	trQuestVarSet("HullCostL2", 10);
@@ -197,6 +203,12 @@ highFrequency
 	trQuestVarSet("HullCostL6", 300);
 	trQuestVarSet("HullHPL6", 3000);
 	trStringQuestVarSet("HullL6", "Shield hull");
+	trQuestVarSet("HullCostL7", 500);
+	trQuestVarSet("HullHPL7", 5000);
+	trStringQuestVarSet("HullL7", "Electromagnetic hull");
+	trQuestVarSet("HullCostL8", 10000);
+	trQuestVarSet("HullHPL8", 5000);
+	trStringQuestVarSet("HullL8", "NOT MADE YET");
 	
 	//Fuel UPGRADES
 	trQuestVarSet("FuelCostL2", 10);
@@ -214,8 +226,14 @@ highFrequency
 	trQuestVarSet("FuelCL5", 2500);
 	trStringQuestVarSet("FuelL5", "Crucible tank");
 	trQuestVarSet("FuelCostL6", 300);
-	trQuestVarSet("FuelCL6", 4000);
+	trQuestVarSet("FuelCL6", 3200);
 	trStringQuestVarSet("FuelL6", "Juggernaut tank");
+	trQuestVarSet("FuelCostL7", 400);
+	trQuestVarSet("FuelCL7", 4000);
+	trStringQuestVarSet("FuelL7", "Oceanic tank");
+	trQuestVarSet("FuelCostL8", 10000);
+	trQuestVarSet("FuelCL8", 4000);
+	trStringQuestVarSet("FuelL8", "NOT MADE YET");
 	
 	//Cargo UPGRADES
 	trQuestVarSet("CargoCostL2", 10);
@@ -235,6 +253,12 @@ highFrequency
 	trQuestVarSet("CargoCostL6", 200);
 	trQuestVarSet("CargoCL6", 8);
 	trStringQuestVarSet("CargoL6", "Tetris Hold");
+	trQuestVarSet("CargoCostL7", 230);
+	trQuestVarSet("CargoCL7", 9);
+	trStringQuestVarSet("CargoL7", "4D Hold");
+	trQuestVarSet("CargoCostL8", 10000);
+	trQuestVarSet("CargoCL8", 9);
+	trStringQuestVarSet("CargoL8", "NOT MADE YET");
 	
 	//Engine UPGRADES
 	trQuestVarSet("EngineCostL2", 10);
@@ -254,6 +278,12 @@ highFrequency
 	trQuestVarSet("EngineCostL6", 250);
 	trQuestVarSet("EngineCL6", 150);
 	trStringQuestVarSet("EngineL6", "Tyrannosauruschomp engine");
+	trQuestVarSet("EngineCostL7", 330);
+	trQuestVarSet("EngineCL7", 180);
+	trStringQuestVarSet("EngineL7", "Megalodongnaw engine");
+	trQuestVarSet("EngineCostL8", 10000);
+	trQuestVarSet("EngineCL8", 180);
+	trStringQuestVarSet("EngineL8", "NOT MADE YET");
 	
 	//Radiator UPGRADES
 	trQuestVarSet("RadiatorCostL2", 10);
@@ -273,4 +303,10 @@ highFrequency
 	trQuestVarSet("RadiatorCostL6", 100);
 	trQuestVarSet("RadiatorCL6", 47);
 	trStringQuestVarSet("RadiatorL6", "Convection Radiator");
+	trQuestVarSet("RadiatorCostL7", 200);
+	trQuestVarSet("RadiatorCL7", 50);
+	trStringQuestVarSet("RadiatorL7", "Equilibrium Radiator");
+	trQuestVarSet("RadiatorCostL8", 10000);
+	trQuestVarSet("RadiatorCL8", 50);
+	trStringQuestVarSet("RadiatorL8", "NOT MADE YET");
 }

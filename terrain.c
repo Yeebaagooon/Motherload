@@ -353,20 +353,33 @@ highFrequency
 					if(row == 20){
 						RockType(36);
 						if(col <= 3){
-							RockType(26);
+							trQuestVarSetFromRand("Temp",21,25,true);
+							RockType(1*trQuestVarGet("Temp"));
 						}
 					}
 					else if((row >= 17) && (row <= 18)){
-						RockType(26);
+						trQuestVarSetFromRand("Temp",23,26,true);
+						if(1*trQuestVarGet("Temp") == 26){
+							RockType(18);
+						}
+						else{
+							RockType(1*trQuestVarGet("Temp"));
+						}
 					}
 					else if((row >= 14) && (row <= 16)){
 						RockType(36);
 						if(col >= 23){
-							RockType(26);
+							RockType(18);
 						}
 					}
 					else if((row >= 11) && (row <= 13)){
-						RockType(26);
+						trQuestVarSetFromRand("Temp",37,40,true);
+						if(1*trQuestVarGet("Temp") == 40){
+							RockType(26);
+						}
+						else{
+							RockType(1*trQuestVarGet("Temp"));
+						}
 					}
 					else if((row >= 9) && (row <= 10)){
 						RockType(36);
@@ -375,7 +388,14 @@ highFrequency
 						}
 					}
 					else if((row >= 7) && (row <= 8)){
-						RockType(26);
+						//edit harder terrain
+						trQuestVarSetFromRand("Temp",40,42,true);
+						if(1*trQuestVarGet("Temp") == 42){
+							RockType(26);
+						}
+						else{
+							RockType(1*trQuestVarGet("Temp"));
+						}
 					}
 					else if(row == 6){
 						RockType(36);
@@ -384,7 +404,14 @@ highFrequency
 						}
 					}
 					else if((row >= 4) && (row <= 5)){
-						RockType(26);
+						//edit
+						trQuestVarSetFromRand("Temp",37,39,true);
+						if(1*trQuestVarGet("Temp") < 39){
+							RockType(26);
+						}
+						else{
+							RockType(1*trQuestVarGet("Temp"));
+						}
 					}
 					else if(row == 3){
 						RockType(36);
@@ -393,12 +420,12 @@ highFrequency
 						}
 					}
 					else if(row == 2){
-						RockType(26);
+						RockType(9);
 					}
 					else if(row == 1){
 						RockType(36);
 						if(col == 25){
-							RockType(26);
+							RockType(22);
 						}
 					}
 					/*

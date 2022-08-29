@@ -596,8 +596,22 @@ highFrequency
 				trUnitSelectByQV("P"+p+"Siphon", false);
 				trUnitTeleport(startXPos, 3, startZPos);
 				trQuestVarSet("DrillAttach"+p+"", trGetNextUnitScenarioNameNumber());
-				trArmyDispatch(""+p+",0", "Victory Marker", 1, trVectorQuestVarGetX("SiphonPos"+p+""), trVectorQuestVarGetY("SiphonPos"+p+""),
-					trVectorQuestVarGetZ("SiphonPos"+p+""), 180, true);
+				if(1*trQuestVarGet("P"+p+"Approach") == 4){
+					trArmyDispatch(""+p+",0", "Victory Marker", 1, trVectorQuestVarGetX("SiphonPos"+p+""), trVectorQuestVarGetY("SiphonPos"+p+""),
+						trVectorQuestVarGetZ("SiphonPos"+p+""), 90, true);
+				}
+				if(1*trQuestVarGet("P"+p+"Approach") == 3){
+					trArmyDispatch(""+p+",0", "Victory Marker", 1, trVectorQuestVarGetX("SiphonPos"+p+""), trVectorQuestVarGetY("SiphonPos"+p+""),
+						trVectorQuestVarGetZ("SiphonPos"+p+""), 270, true);
+				}
+				if(1*trQuestVarGet("P"+p+"Approach") == 2){
+					trArmyDispatch(""+p+",0", "Victory Marker", 1, trVectorQuestVarGetX("SiphonPos"+p+""), trVectorQuestVarGetY("SiphonPos"+p+""),
+						trVectorQuestVarGetZ("SiphonPos"+p+""), 180, true);
+				}
+				if(1*trQuestVarGet("P"+p+"Approach") == 1){
+					trArmyDispatch(""+p+",0", "Victory Marker", 1, trVectorQuestVarGetX("SiphonPos"+p+""), trVectorQuestVarGetY("SiphonPos"+p+""),
+						trVectorQuestVarGetZ("SiphonPos"+p+""), 0, true);
+				}
 				trUnitSelectClear();
 				trUnitSelectByQV("P"+p+"Siphon", false);
 				trMutateSelected(kbGetProtoUnitID("Relic"));
@@ -616,22 +630,6 @@ highFrequency
 				trUnitSelectClear();
 				trUnitSelectByQV("DrillAttach"+p+"", true);
 				trMutateSelected(kbGetProtoUnitID("Wadjet Spit"));
-				/*trUnitSelectClear();
-				trSetUnitOrientation(x,y,true);
-				trUnitSelectByQV("DrillAttach"+p+"", true);
-				if(1*trQuestVarGet("P"+p+"Approach") == 4){
-					trUnitSetHeading(90);
-				}
-				if(1*trQuestVarGet("P"+p+"Approach") == 3){
-					trUnitSetHeading(270);
-				}
-				if(1*trQuestVarGet("P"+p+"Approach") == 2){
-					trUnitSetHeading(180);
-				}
-				if(1*trQuestVarGet("P"+p+"Approach") == 1){
-					trUnitSetHeading(0);
-				}*/
-				trUnitSelectClear();
 				//DRILL SPEED
 				xSetPointer(dPlayerData, p);
 				SetDrillSpeed(p, 1*trQuestVarGet("P"+p+"DrillTargetX")/2-1, 1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1);

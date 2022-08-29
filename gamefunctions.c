@@ -37,6 +37,13 @@ const int UnderwaterIceC = 35;
 
 const int BlackRock = 36;
 
+const int Hades1 = 37;
+const int Hades2 = 38;
+const int Hades6 = 39;
+
+const int Hades9 = 40;
+const int HadesCliff = 41;
+
 
 void RockType(int rock = 0) {
 	switch(rock)
@@ -225,6 +232,36 @@ void RockType(int rock = 0) {
 			TERRAIN_SUBTYPE = 13;
 		}
 		
+		case Hades1:
+		{
+			TERRAIN_TYPE = 5;
+			TERRAIN_SUBTYPE = 5;
+		}
+		
+		case Hades2:
+		{
+			TERRAIN_TYPE = 5;
+			TERRAIN_SUBTYPE = 6;
+		}
+		
+		case Hades6:
+		{
+			TERRAIN_TYPE = 2;
+			TERRAIN_SUBTYPE = 9;
+		}
+		
+		case Hades9:
+		{
+			TERRAIN_TYPE = 5;
+			TERRAIN_SUBTYPE = 9;
+		}
+		
+		case HadesCliff:
+		{
+			TERRAIN_TYPE = 2;
+			TERRAIN_SUBTYPE = 11;
+		}
+		
 	}
 }
 
@@ -351,13 +388,33 @@ int GetRockHardness(int rock = 0) {
 		}
 		case UnderwaterIceA:
 		{
-			return(1200);
+			return(1000);
 		}
 		case UnderwaterIceB:
 		{
-			return(1500);
+			return(1200);
 		}
 		case UnderwaterIceC:
+		{
+			return(1500);
+		}
+		case Hades1:
+		{
+			return(1000);
+		}
+		case Hades2:
+		{
+			return(1200);
+		}
+		case Hades6:
+		{
+			return(1400);
+		}
+		case Hades9:
+		{
+			return(1800);
+		}
+		case HadesCliff:
 		{
 			return(2000);
 		}
@@ -432,11 +489,17 @@ int GetRockType(int t = 0, int st = 0){
 		if(st == 8){
 			return(Hades5);
 		}
+		if(st == 9){
+			return(Hades6);
+		}
 		if(st == 10){
 			return(Hades7); //lava
 		}
+		if(st == 11){
+			return(HadesCliff);
+		}
 		if(st == 13){
-			return(BlackRock); //lava
+			return(BlackRock);
 		}
 	}
 	else if(t == 3){
@@ -492,8 +555,17 @@ int GetRockType(int t = 0, int st = 0){
 		if(st == 0){
 			return(IceA);
 		}
-		if(st == 7){
+		if(st == 5){
 			return(Hades4Passable);
+		}
+		if(st == 6){
+			return(Hades1);
+		}
+		if(st == 7){
+			return(Hades2);
+		}
+		if(st == 9){
+			return(Hades9);
 		}
 	}
 }
