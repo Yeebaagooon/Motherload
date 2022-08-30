@@ -224,12 +224,14 @@ highFrequency
 		if(Stage == 8){
 			StageTime = StageTime+540; //540
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
-			grantGodPowerNoRechargeNextPosition(1, "Audrey", 100);
 		}
 		if(Stage == 9){
 			StageTime = StageTime+600; //600
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
 			grantGodPowerNoRechargeNextPosition(1, "Audrey", 100);
+			grantGodPowerNoRechargeNextPosition(1, "Sandstorm", 1);
+			grantGodPowerNoRechargeNextPosition(1, "Vision", 1);
+			trPaintTerrain(90,0,100,100,5,3,true);
 		}
 		xsDisableSelf();
 		xsEnableRule("StageEnd");
@@ -619,6 +621,10 @@ highFrequency
 				saveAllData();
 				playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
 			}
+		}
+		if((Stage == 9) && (xGetInt(dPlayerData, xDepth) >= 7750)){
+			xsEnableRule("SednaWin");
+			xsDisableSelf();
 		}
 	}
 }

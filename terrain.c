@@ -1777,6 +1777,99 @@ highFrequency
 					}
 				}
 			}
+			if(Stage == 9){
+				if((row >= 17) && (row <= 18)){
+					trQuestVarSetFromRand("Temp",1,10);
+					trQuestVarSetFromRand("Temp2",1,9);
+					if(1*trQuestVarGet("Temp") <= cNumberNonGaiaPlayers){
+						spawnRelicSpecific(v,1*trQuestVarGet("Temp2"));
+					}
+				}
+				else if((row >= 14) && (row <= 16)){
+					if(col >= 23){
+						trQuestVarSetFromRand("Temp",1,2);
+						trQuestVarSetFromRand("Temp2",7,9);
+						if(1*trQuestVarGet("Temp") <= 2){
+							spawnRelicSpecific(v,1*trQuestVarGet("Temp2"));
+						}
+					}
+				}
+				else if((row >= 11) && (row <= 13)){
+					if(GetRockType(trGetTerrainType(col*4-2,row*4-2),trGetTerrainSubType(col*4-2,row*4-2)) == Hades5){
+						trQuestVarSetFromRand("Temp",1,3);
+						if(1*trQuestVarGet("Temp") == 1){
+							spawnRelicSpecific(v,9);
+						}
+						if(1*trQuestVarGet("Temp") == 2){
+							spawnRelicSpecific(v,14);
+						}
+					}
+					else{
+						trQuestVarSetFromRand("Temp",1,3);
+						if(1*trQuestVarGet("Temp") == 3){
+							trQuestVarSetFromRand("Temp2",7,13);
+							spawnRelicSpecific(v,1*trQuestVarGet("Temp2"));
+						}
+					}
+				}
+				else if((row >= 9) && (row <= 10)){
+					RockType(36);
+					if(col <= 2){
+						trQuestVarSetFromRand("Temp2",12,13);
+						spawnRelicSpecific(v,1*trQuestVarGet("Temp2"));
+					}
+				}
+				else if((row >= 7) && (row <= 8)){
+					if(GetRockType(trGetTerrainType(col*4-2,row*4-2),trGetTerrainSubType(col*4-2,row*4-2)) == Hades5){
+						trQuestVarSetFromRand("Temp",1,2);
+						if(1*trQuestVarGet("Temp") == 1){
+							spawnRelicSpecific(v,9);
+						}
+					}
+					else{
+						trQuestVarSetFromRand("Temp",1,3);
+						if(1*trQuestVarGet("Temp") == 3){
+							trQuestVarSetFromRand("Temp2",10,15);
+							spawnRelicSpecific(v,1*trQuestVarGet("Temp2"));
+						}
+					}
+				}
+				else if(row == 6){
+					if(col >= 24){
+						trQuestVarSetFromRand("Temp",1,3);
+						if(1*trQuestVarGet("Temp") == 3){
+							trQuestVarSetFromRand("Temp2",13,15);
+							spawnRelicSpecific(v,1*trQuestVarGet("Temp2"));
+						}
+					}
+				}
+				else if((row >= 4) && (row <= 5)){
+					if(GetRockType(trGetTerrainType(col*4-2,row*4-2),trGetTerrainSubType(col*4-2,row*4-2)) == Hades5){
+						trQuestVarSetFromRand("Temp",1,2);
+						if(1*trQuestVarGet("Temp") == 1){
+							spawnRelicSpecific(v,19);
+						}
+					}
+					else{
+						trQuestVarSetFromRand("Temp",1,3);
+						if(1*trQuestVarGet("Temp") == 3){
+							trQuestVarSetFromRand("Temp2",17,18);
+							spawnRelicSpecific(v,1*trQuestVarGet("Temp2"));
+						}
+					}
+				}
+				else if(row == 3){
+					if(col <= 2){
+						trQuestVarSetFromRand("Temp2",17,18);
+						spawnRelicSpecific(v,1*trQuestVarGet("Temp2"));
+					}
+				}
+				else if(row == 2){
+					if (iModulo(4, col) == 0) {
+						spawnRelicSpecific(v,20);
+					}
+				}
+			}
 		}
 	}
 	xsEnableRule("WallUp");

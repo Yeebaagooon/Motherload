@@ -55,6 +55,9 @@ highFrequency
 		xSetPointer(dPlayerData, p);
 		trQuestVarSet("Profit", xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart));
 		characterDialog(stageName(Stage) + " complete!", "You have made " +1*trQuestVarGet("Profit") + " gold profit here.", "icons\special e son of osiris icon 64");
+		if(Stage == 9){
+			characterDialog("Mr Natas", "I TOLD YOU THIS PLANET IS FORBIDDEN!", "icons\scenario g gargarensis icon 64");
+		}
 		xsDisableSelf();
 		xsEnableRule("EndDialog2");
 	}
@@ -189,6 +192,9 @@ highFrequency
 		} else {
 			trShowImageDialog(stageIcon(Stage+1), "You have already unlocked the next planet.");
 		}
+		if(Stage == 9){
+			characterDialog("Mr Natas", "NEVER COME BACK HERE, MINE OTHER PLANETS ONLY!", "icons\scenario g gargarensis icon 64");
+		}
 		gadgetUnreal("ShowImageBox-BordersTop");
 		gadgetUnreal("ShowImageBox-BordersBottom");
 		gadgetUnreal("ShowImageBox-BordersLeft");
@@ -252,4 +258,20 @@ highFrequency
 		trEndGame();
 	}
 	
+}
+
+rule SednaWin
+inactive
+highFrequency
+{
+	xsDisableSelf();
+	xsDisableRule("CheckResigns");
+	xsDisableRule("FuelEconomy");
+	trCounterAbort("CDFuel");
+	trCounterAbort("CDDepth");
+	trFadeOutMusic(1);
+	trFadeOutAllSounds(1);
+	trSetFogAndBlackmap(false, false);
+	trLetterBox(true);
+	trCameraCut(vector(183.582794,86.963791,-54.754787), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
 }
