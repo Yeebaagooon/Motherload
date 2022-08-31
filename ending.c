@@ -261,17 +261,86 @@ highFrequency
 }
 
 rule SednaWin
+active
+highFrequency
+{
+	if(trChatHistoryContains("lol", 1) == true){
+		xsDisableSelf();
+		xsDisableRule("CheckResigns");
+		xsDisableRule("FuelEconomy");
+		trCounterAbort("CDFuel");
+		trCounterAbort("CDDepth");
+		trFadeOutMusic(1);
+		trFadeOutAllSounds(1);
+		trSetFogAndBlackmap(false, false);
+		//trLetterBox(true);
+		unitTransform("Invisible Wall", "Rocket");
+		unitTransform("Bolder Rolling", "Rocket");
+		unitTransform("Flag Numbered", "Rocket");
+		unitTransform("Dwarven Forge", "Rocket");
+		trPaintTerrain(70,0,100,30,5,4,true);
+		trCameraCut(vector(183.582794,86.963791,-54.754787), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
+		int z = trGetNextUnitScenarioNameNumber();
+		trArmyDispatch("0,0","Dwarf",1,198,0,2,0,true);
+		trUnitSelectClear();
+		trUnitSelect(""+z, true);
+		trUnitChangeProtoUnit("Spy Eye");
+		trUnitSelectClear();
+		trUnitSelect(""+z, true);
+		trMutateSelected(kbGetProtoUnitID("Tartarian Gate"));
+		trSetSelectedScale(0,0,0);
+		trUnitOverrideAnimation(15,0,true,false,-1);
+		xsEnableRule("Sedna_C01");
+		for(x=xGetDatabaseCount(dFreeRelics); >0) {
+			xDatabaseNext(dFreeRelics);
+			xUnitSelect(dFreeRelics,xRelicName);
+			trUnitDestroy();
+			xFreeDatabaseBlock(dFreeRelics);
+		}
+		aiPlanDestroy(dFreeRelics);
+		for(x=xGetDatabaseCount(dHeldRelics); >0) {
+			xDatabaseNext(dHeldRelics);
+			xUnitSelect(dHeldRelics,xRelicName);
+			trUnitDestroy();
+			xFreeDatabaseBlock(dHeldRelics);
+		}
+		aiPlanDestroy(dHeldRelics);
+		for(x=xGetDatabaseCount(dHiddenRelics); >0) {
+			xDatabaseNext(dHiddenRelics);
+			xUnitSelect(dHiddenRelics,xRelicName);
+			trUnitDestroy();
+			xFreeDatabaseBlock(dHeldRelics);
+		}
+		aiPlanDestroy(dHiddenRelics);
+		for(x=xGetDatabaseCount(dSelectables); >0) {
+			xDatabaseNext(dSelectables);
+			xUnitSelect(dSelectables,xSelectablesName);
+			trUnitDestroy();
+			xFreeDatabaseBlock(dSelectables);
+		}
+	}
+	
+}
+
+rule Sedna_C01
 inactive
 highFrequency
 {
-	xsDisableSelf();
-	xsDisableRule("CheckResigns");
-	xsDisableRule("FuelEconomy");
-	trCounterAbort("CDFuel");
-	trCounterAbort("CDDepth");
-	trFadeOutMusic(1);
-	trFadeOutAllSounds(1);
-	trSetFogAndBlackmap(false, false);
-	trLetterBox(true);
-	trCameraCut(vector(183.582794,86.963791,-54.754787), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
+	if((trTime()-cActivationTime) >= 2){
+		trSetLighting("default", 0.1);
+		xsDisableSelf();
+		trPaintTerrain(0,0,100,100,5,4,true);
+		PaintPlanets(20,20, 1);
+		int z = trGetNextUnitScenarioNameNumber();
+		trArmyDispatch("1,0","Dwarf",1,160,0,60,270,true);
+		trUnitSelectClear();
+		trUnitSelect(""+z, true);
+		//Mr Natas Spaceship
+		trUnitChangeProtoUnit("Phoenix");
+		spyEffect(z, kbGetProtoUnitID("Sky Passage"), vector(0,0,0), vector(1,1,1));
+		spyEffect(z, kbGetProtoUnitID("Fire Ship Atlantean"), vector(0,0,0), vector(2,2,2));
+		spyEffect(z, kbGetProtoUnitID("Helepolis"), vector(0,0,0), vector(2,1,2));
+		spyEffect(z, kbGetProtoUnitID("Migdol Stronghold"), vector(0,0,0), vector(1,-0.4,1));
+		spyEffect(z, kbGetProtoUnitID("Outpost"), vector(0,0,0), vector(1,1.5,1));
+	}
 }
