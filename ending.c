@@ -332,7 +332,7 @@ highFrequency
 		trPaintTerrain(0,0,100,100,5,4,true);
 		PaintPlanets(20,20, 1);
 		int z = trGetNextUnitScenarioNameNumber();
-		trArmyDispatch("1,0","Dwarf",1,160,0,60,270,true);
+		trArmyDispatch(""+cNumberNonGaiaPlayers+",0","Dwarf",1,160,0,60,270,true);
 		trUnitSelectClear();
 		trUnitSelect(""+z, true);
 		//Mr Natas Spaceship
