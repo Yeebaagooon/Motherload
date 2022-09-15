@@ -40,7 +40,7 @@ string stageName(int stage = 0) {
 		}
 		case 10:
 		{
-			name = "Planet X";
+			name = "The Goodship Saucy Gibbon";
 		}
 	}
 	return(name);
@@ -94,7 +94,7 @@ string stageIcon(int stage = 0) {
 			}
 			case 10:
 			{
-				img = "ui\ui map missing 256x256";
+				img = "icons\improvement long serpent icon 64";
 			}
 		}
 		return(img);

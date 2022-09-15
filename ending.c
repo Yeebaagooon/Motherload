@@ -186,6 +186,7 @@ highFrequency
 					}
 				}
 			}
+			//Stage 8 requirement here
 		} else if (xGetInt(dPlayerData, xStageUnlocked) < Stage-1) {
 			trShowImageDialog(stageIcon(Stage+1), "You must beat previous planets to unlock this one.");
 			trSoundPlayFN("cantdothat.wav","1",-1,"","");
@@ -318,6 +319,13 @@ highFrequency
 			trUnitDestroy();
 			xFreeDatabaseBlock(dSelectables);
 		}
+		for(p=1 ; < cNumberNonGaiaPlayers){
+			xSetPointer(dPlayerData, p);
+			if(xGetInt(dPlayerData, xStageUnlocked) == 8){
+				xSetInt(dPlayerData, xStageUnlocked, xGetInt(dPlayerData, xStageUnlocked) + 1);
+				xSetInt(dPlayerData, xStageStatus, 0);
+			}
+		}
 	}
 	
 }
@@ -342,5 +350,17 @@ highFrequency
 		spyEffect(z, kbGetProtoUnitID("Helepolis"), vector(0,0,0), vector(2,1,2));
 		spyEffect(z, kbGetProtoUnitID("Migdol Stronghold"), vector(0,0,0), vector(1,-0.4,1));
 		spyEffect(z, kbGetProtoUnitID("Outpost"), vector(0,0,0), vector(1,1.5,1));
+		int pelletsIncoming = trQuestVarGet("p1pelletsIncoming");
+		addGenericProj(pelletsIncoming, vector(0,0,0), vector(1,0,1), 1, 3, 5);
+		initGenericProj("p1pelletsIncoming", kbGetProtoUnitID("Cyclops"),2,3.0,4.5,0.3, 0);
+		xsEnableRule("Proj");
 	}
+}
+
+rule Proj
+inactive
+highFrequency
+{
+	int pelletsIncoming = trQuestVarGet("p1pelletsIncoming");
+	processGenericProj(pelletsIncoming);
 }

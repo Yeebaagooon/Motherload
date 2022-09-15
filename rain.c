@@ -233,6 +233,10 @@ highFrequency
 			grantGodPowerNoRechargeNextPosition(1, "Vision", 1);
 			trPaintTerrain(90,0,100,100,5,3,true);
 		}
+		if(Stage == 10){
+			StageTime = StageTime+600; //540
+			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
+		}
 		xsDisableSelf();
 		xsEnableRule("StageEnd");
 	}

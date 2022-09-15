@@ -1525,3 +1525,147 @@ int yFindLatest(string qv = "", string proto = "", int p = 0) {
 	}
 	return(-1);
 }
+
+const int PROJ_NONE = 0;
+const int PROJ_GROUND = 1;
+const int PROJ_FALLING = 2;
+const int PROJ_BOUNCE = 3;
+const int PROJ_REMOVE = 4;
+int xUnitName = 0;
+int xPlayerOwner = 0;
+int xUnitID = 0;
+int xPhysicalResist = 0;
+int xMagicResist = 0;
+int xIsHero = 0;
+int xUnitPos = 0;
+int xDoppelganger = 0;
+/* generic projectiles */
+int xProjYeehaw = 0;
+int xProjScale = 0;
+int xProjProto = 0;
+int xProjAnim = 0;
+int xProjDir = 0;
+int xProjHeight = 0;
+int xProjSpeed = 0;
+int xProjPrev = 0;
+int xProjDist = 0;
+int worldHeight = 3;
+
+void zSetProtoUnitStat(string r = "", int p = 0, int f = 0, float v = 0.0) {
+for(zsps=0; >1){}
+	zsps = kbGetProtoUnitID(r);
+	trModifyProtounit(r, p, f, 0.0 + v - trQuestVarGet("p"+p+"pf"+zsps+"f"+f));
+	trQuestVarSet("p"+p+"pf"+zsps+"f"+f, 0.0 + v);
+}
+
+/*
+this performs a yDatabaseNext on the database and keeps projectiles moving. It will return
+an enumeration giving you the state of the projectile.
+PROJ_REMOVE = the projectile was removed because it was somehow destroyed
+PROJ_BOUNCE = the projectile has just turned into kronny and is falling back down to the ground
+PROJ_GROUND = the projectile has hit the ground and will turn into kronny
+PROJ_FALLING = the projectile is falling towards the ground. This is the recommended state for
+adding any additional computation
+*/
+int processGenericProj(int db = 0) {
+	int id = 0;
+	int action = PROJ_NONE;
+	float scale = 0;
+	xDatabaseNext(db);
+	xUnitSelectByID(db,xUnitID);
+	id = kbGetBlockID(""+xGetInt(db,xUnitName));
+	int yeehaw = xGetInt(db, xProjYeehaw);
+	if (id == -1) {
+		xFreeDatabaseBlock(db);
+		action = PROJ_REMOVE;
+	} else if (yeehaw == 1) {
+		trMutateSelected(xGetInt(db,xProjProto));
+		trUnitOverrideAnimation(xGetInt(db,xProjAnim),0,true,true,-1);
+		scale = xGetFloat(db,xProjScale);
+		trSetSelectedScale(scale,scale,scale);
+		xSetInt(db,xProjYeehaw,0);
+		action = PROJ_BOUNCE;
+	} else if (yeehaw == 2) {
+		/* first time search */
+		xSetInt(db, xProjYeehaw, 1);
+	} else {
+		vector pos = kbGetBlockPosition(""+xGetInt(db,xUnitName));
+		if (xsVectorGetY(pos) < worldHeight + 0.5 || xGetInt(db,xProjYeehaw) == 99) {
+			action = PROJ_GROUND;
+			vector dir = xGetVector(db, xProjDir);
+			zSetProtoUnitStat("Kronny Flying", xGetInt(db,xPlayerOwner), 1, xGetFloat(db,xProjSpeed));
+			trUnitChangeProtoUnit("Kronny Flying");
+			xUnitSelectByID(db,xUnitID);
+			trDamageUnitPercent(-100);
+			trMutateSelected(kbGetProtoUnitID("Kronny Flying"));
+			trSetUnitOrientation(dir, vector(0,1,0), true);
+			trSetSelectedScale(0,0.0-xGetFloat(db, xProjHeight),0);
+			trDamageUnitPercent(100);
+			xSetInt(db,xProjYeehaw,1);
+		} else {
+			action = PROJ_FALLING;
+		}
+	}
+	
+	return(action);
+}
+
+/*
+db = name of the ydatabase to put the projectile in
+start = the name of the start trVector
+dir = the name of the direction vector. Must be a normal vector (length 1) starting from the origin
+height = the negative height of the object (if you want something falling from a higher location, input a negative number here)
+*/
+int addGenericProj(int db = 0, vector start = vector(0,0,0), vector dir = vector(0,0,0),
+	int p = -1, float speed = -1, float height = -1) {
+	int next = trGetNextUnitScenarioNameNumber();
+	int index = xAddDatabaseBlock(db, true);
+	xSetInt(db, xUnitName, next);
+	xSetVector(db,xProjDir, dir);
+	
+	if (speed == -1) {
+		speed = xGetFloat(db, xProjSpeed, 0);
+	} else {
+		xSetFloat(db, xProjSpeed, speed);
+	}
+	if (height == -1) {
+		height = xGetFloat(db, xProjHeight, 0);
+	} else {
+		xSetFloat(db, xProjHeight, height);
+	}
+	if (p == -1) {
+		p = xGetInt(db, xPlayerOwner, 0);
+	} else {
+		xSetInt(db, xPlayerOwner, p);
+	}
+	
+	trArmyDispatch(""+p+",0", "Dwarf",1,xsVectorGetX(start),0,xsVectorGetZ(start),0,true);
+	trUnitSelectClear();
+	trUnitSelect(""+next,true);
+	trMutateSelected(kbGetProtoUnitID("Kronny Flying"));
+	zSetProtoUnitStat("Kronny Flying", p, 1, speed);
+	trSetUnitOrientation(dir, vector(0,1,0), true);
+	trSetSelectedScale(0, 0.0 - height, 0);
+	trDamageUnitPercent(100);
+	xSetInt(db, xUnitID, kbGetBlockID(""+next, true));
+	return(index);
+}
+
+int initGenericProj(string name = "", int proto = 0, int anim = 0, float speed = 10.0,
+	float height = 4.5, float scale = 0, int p = 0, bool hitbox = false, int count = 0) {
+	int db = xInitDatabase(name,count);
+	xInitAddInt(db, "name");
+	xInitAddInt(db, "player", p);
+	xInitAddInt(db, "id");
+	xProjProto = xInitAddInt(db, "proto", proto);
+	xProjYeehaw = xInitAddInt(db, "yeehaw", 2);
+	xProjAnim = xInitAddInt(db, "anim", anim);
+	xProjHeight = xInitAddFloat(db, "height", height);
+	xProjSpeed = xInitAddFloat(db, "speed", speed);
+	xProjScale = xInitAddFloat(db, "scale", scale);
+	xProjDir = xInitAddVector(db, "dir");
+	if (hitbox) {
+		xProjPrev = xInitAddVector(db,"prev");
+	}
+	return(db);
+}

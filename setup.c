@@ -429,11 +429,27 @@ void PaintPlanets(int x = 0, int z = 0, int offsetearth = 0){
 	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 7);
 	trUnitSetVariation(trQuestVarGet("QVRelic"), 0);
 	trUnblockAllSounds();
-	for(p = 1; <= 9){
+	//monument
+	temp = trGetNextUnitScenarioNameNumber();
+	trArmyDispatch("0,0","Dwarf",1,x*2+12*8, 3, z*2+30,90,true);
+	trArmySelect("0,0");
+	trUnitChangeProtoUnit("Spy Eye");
+	trUnitSelectClear();
+	trUnitSelect(""+temp, true);
+	trMutateSelected(kbGetProtoUnitID("Monument 5"));
+	trSetSelectedScale(0,0,0);
+	trUnitOverrideAnimation(4,0,false,false,-1);
+	xAddDatabaseBlock(dPlanetEyecandy, true);
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,temp);
+	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 8);
+	for(p = 1; <= 10){
 		int next = trGetNextUnitScenarioNameNumber();
 		int offset = 0;
 		if (iModulo(2, p) == 0) { //if is divisble by 2
 			offset = 20;
+		}
+		if (iModulo(10, p) == 0) { //if is divisble by 2
+			offset = 10;
 		}
 		xSetPointer(dPlayerData, 1);
 		if(aiIsMultiplayer() == true){
@@ -452,6 +468,14 @@ void PaintPlanets(int x = 0, int z = 0, int offsetearth = 0){
 			xAddDatabaseBlock(dObelisks, true);
 			xSetInt(dObelisks, xObeliskName,next);
 			xSetInt(dObelisks, xObeliskStage, p);
+		}
+		if(p == 10){
+			xSetPointer(dPlayerData, 1);
+			if(xGetInt(dPlayerData, xStageUnlocked) != 9){
+				trUnitSelectClear();
+				trUnitSelect(""+next, true);
+				trUnitChangeProtoUnit("Cinematic Block");
+			}
 		}
 	}
 	//EYECANDY PLANET 1
@@ -693,7 +717,6 @@ highFrequency
 	int n = xGetInt(dObelisks, xObeliskName);
 	xUnitSelect(dObelisks,xObeliskName);
 	if (trCountUnitsInArea(""+n, 1, "Athena",5) == 1){
-		//and is an obleisk
 		trQuestVarSet("Stage", xGetInt(dObelisks,xObeliskStage));
 		Stage = 1*trQuestVarGet("Stage");
 		//fire event build stage
@@ -712,7 +735,12 @@ highFrequency
 		//trLetterBox(true);
 		trUIFadeToColor(0,0,0,1000,0,true);
 		trSoundPlayFN("ageadvance.wav","1",-1,"","");
-		trOverlayText("Planet " + xGetInt(dObelisks, xObeliskStage) + ": " + stageName(Stage), 3.0, 520, 380, 800);
+		if(n <= 0){
+			trOverlayText("Planet " + xGetInt(dObelisks, xObeliskStage) + ": " + stageName(Stage), 3.0, 520, 380, 800);
+		}
+		else{
+			trOverlayText(stageName(Stage), 3.0, 520, 380, 800);
+		}
 	} else if (trUnitIsSelected()) {
 		uiClearSelection();
 		xSetPointer(dPlayerData, trCurrentPlayer());

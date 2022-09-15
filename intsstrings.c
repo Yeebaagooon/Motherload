@@ -9,7 +9,7 @@
 int QuickStart = 1;
 int QuickStage = 9;
 bool OverrideSP = false;
-bool OverrideStage = false;
+bool OverrideStage = true;
 
 //---
 int Stage = 0;
