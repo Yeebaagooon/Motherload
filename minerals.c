@@ -307,94 +307,100 @@ string RelicColour(int relic = 0) {
 
 string relicIcon(int relic = 0) {
 	string icon = "icons\infantry g hoplite icon 64";
-	switch(relic)
-	{
-		case RELIC_IRON:
-		{
-			icon = "icons\scenario thors hammer icon 64";
-		}
-		case RELIC_BRONZE:
-		{
-			icon = "icons\special x behemoth icons 64";
-		}
-		case RELIC_SILVER:
-		{
-			icon = "icons\special x automaton icons 64";
-		}
-		case RELIC_GOLD:
-		{
-			icon = "icons\special n battle boar icon 64";
-		}
-		case RELIC_PLATINUM:
-		{
-			icon = "icons\hero g bellerophon icon 64";
-		}
-		case RELIC_URANIUM:
-		{
-			icon = "icons\special g medusa icon 64";
-		}
-		case RELIC_RUBY:
-		{
-			icon = "icons\special g manticore icon 64";
-		}
-		case RELIC_SAPPHIRE:
-		{
-			icon = "icons\special x servant icons 64";
-		}
-		case RELIC_DIAMOND:
-		{
-			icon = "icons\building lighthouse icon 64";
-		}
-		case RELIC_PROMETHIUM:
-		{
-			icon = "icons\special x promethean icons 64";
-		}
-		case RELIC_EINSTEINIUM:
-		{
-			icon = "icons\hero g physician icon";
-		}
-		case RELIC_EMERALD:
-		{
-			icon = "icons\special x argus icons 64";
-		}
-		case RELIC_AMETHYST:
-		{
-			icon = "icons\special x lampades icons 64";
-		}
-		case RELIC_OBSIDIAN:
-		{
-			icon = "icons\scenario c danzhu icon";
-		}
-		case RELIC_TOPAZ:
-		{
-			icon = "icons\special g nemean lion icon 64";
-		}
-		case RELIC_ICE:
-		{
-			icon = "icons\special n frost giant icon 64";
-		}
-		case RELIC_QUARTZ:
-		{
-			icon = "icons\special c vermilion bird icon";
-		}
-		case RELIC_OPAL:
-		{
-			icon = "icons\special c qilin icon";
-		}
-		case RELIC_HYDROGEN:
-		{
-			icon = "icons\special n fire giant icon 64";
-		}
-		case RELIC_ANTIMATTER:
-		{
-			icon = "icons\icon building wonder 64";
-		}
-		case RELIC_YEEBIUM:
-		{
-			icon = "icons\special e son of osiris icon 64";
-		}
+	if (1*trQuestVarGet("CustomContent") == 1){
+		icon = "Yeebaagooon\Motherload\mineral" + relic;
+		return(icon);
 	}
-	return(icon);
+	else if (1*trQuestVarGet("CustomContent") == 0){
+		switch(relic)
+		{
+			case RELIC_IRON:
+			{
+				icon = "icons\scenario thors hammer icon 64";
+			}
+			case RELIC_BRONZE:
+			{
+				icon = "icons\special x behemoth icons 64";
+			}
+			case RELIC_SILVER:
+			{
+				icon = "icons\special x automaton icons 64";
+			}
+			case RELIC_GOLD:
+			{
+				icon = "icons\special n battle boar icon 64";
+			}
+			case RELIC_PLATINUM:
+			{
+				icon = "icons\hero g bellerophon icon 64";
+			}
+			case RELIC_URANIUM:
+			{
+				icon = "icons\special g medusa icon 64";
+			}
+			case RELIC_RUBY:
+			{
+				icon = "icons\special g manticore icon 64";
+			}
+			case RELIC_SAPPHIRE:
+			{
+				icon = "icons\special x servant icons 64";
+			}
+			case RELIC_DIAMOND:
+			{
+				icon = "icons\building lighthouse icon 64";
+			}
+			case RELIC_PROMETHIUM:
+			{
+				icon = "icons\special x promethean icons 64";
+			}
+			case RELIC_EINSTEINIUM:
+			{
+				icon = "icons\hero g physician icon";
+			}
+			case RELIC_EMERALD:
+			{
+				icon = "icons\special x argus icons 64";
+			}
+			case RELIC_AMETHYST:
+			{
+				icon = "icons\special x lampades icons 64";
+			}
+			case RELIC_OBSIDIAN:
+			{
+				icon = "icons\scenario c danzhu icon";
+			}
+			case RELIC_TOPAZ:
+			{
+				icon = "icons\special g nemean lion icon 64";
+			}
+			case RELIC_ICE:
+			{
+				icon = "icons\special n frost giant icon 64";
+			}
+			case RELIC_QUARTZ:
+			{
+				icon = "icons\special c vermilion bird icon";
+			}
+			case RELIC_OPAL:
+			{
+				icon = "icons\special c qilin icon";
+			}
+			case RELIC_HYDROGEN:
+			{
+				icon = "icons\special n fire giant icon 64";
+			}
+			case RELIC_ANTIMATTER:
+			{
+				icon = "icons\icon building wonder 64";
+			}
+			case RELIC_YEEBIUM:
+			{
+				icon = "icons\special e son of osiris icon 64";
+			}
+		}
+		return(icon);
+	}
 }
 
 int relicProto(int relic = 0) {
@@ -493,8 +499,11 @@ void relicDescription(int relic = 0) {
 	string icon = relicIcon(relic);
 	string msg = relicName(relic);
 	string textgap = " - Value = ";
+	string message = " ";
 	int price = relicCost(relic);
-	string message = msg + textgap + price;
+	if (1*trQuestVarGet("CustomContent") == 0){
+		message = msg + textgap + price;
+	}
 	trShowImageDialog(icon, message);
 }
 
