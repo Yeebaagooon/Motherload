@@ -21,6 +21,10 @@ int dDestroyMe = 0;
 int xDestroyName = 0;
 int xDestroyTime = 0;
 
+int dSpaceHull = 0;
+int xSpaceRow = 0;
+int xSpaceCol = 0;
+
 int dSpace = 0;
 int xSpaceName = 0;
 
@@ -75,6 +79,11 @@ highFrequency
 	dGasPocket = xInitDatabase("GasPocket");
 	xGasRow = xInitAddInt(dGasPocket, "gasrow", 0);
 	xGasCol = xInitAddInt(dGasPocket, "gascol", 0);
+	
+	//Space tiles
+	dSpaceHull = xInitDatabase("Space Hull");
+	xSpaceCol = xInitAddInt(dSpaceHull, "col", 0);
+	xSpaceRow = xInitAddInt(dSpaceHull, "Row", 0);
 	
 	dDestroyMe = xInitDatabase("Destroy");
 	xDestroyName = xInitAddInt(dDestroyMe, "unitname");

@@ -121,15 +121,26 @@ highFrequency
 		unitTransform("Outpost", "Rocket");
 		trSetFogAndBlackmap(true, true);
 		xsEnableRule("BonusGo");
-		trDelayedRuleActivation("FuelEconomy");
+		if(Stage != 10){
+			trDelayedRuleActivation("FuelEconomy");
+		}
 		trMusicPlay();
 		trPlayNextMusicTrack();
-		//trShowImageDialog(stageIcon(Stage), stageName(Stage));
-		/*
-		trQuestVarSet("P1EnginePower", 100);
-		trQuestVarSet("P1Radiator", 0.1);
-		xsEnableRule("TEMPfuel");
-		*/
+		if(Stage == 10){
+			//Drones
+			int z = trGetNextUnitScenarioNameNumber();
+			trArmyDispatch("1,0", "Dwarf", 1,5,0,5,0,true);
+			spyEffect(z, kbGetProtoUnitID("Implode Sphere"), vector(0,0,0), vector(2,2,2));
+			spyEffect(z, kbGetProtoUnitID("Implode Sphere Effect"), vector(0,0,0), vector(0.5,0.5,0.5), 18);
+			trUnitSelect();
+			trUnitSelect(""+z);
+			trUnitChangeProtoUnit("Raven");
+			trUnitSelect();
+			trUnitSelect(""+z);
+			trSetSelectedScale(0,0,0);
+			trTechGodPower(1, "vision", 1);
+			trQuestVarSet("Drone1", z);
+		}
 	}
 }
 
@@ -148,6 +159,9 @@ highFrequency
 	trModifyProtounit("Revealer", 0, 2, 14);
 	for(x = 1; <= 19){
 		trArmyDispatch("0,8", "Revealer", 1, 200-x*10, 1, 190, 0, true);
+		if(Stage == 10){
+			trArmyDispatch("0,8", "Revealer", 1, 200-x*10, 1, 175, 0, true);
+		}
 	}
 	trPlayerResetBlackMapForAllPlayers();
 	//Tutorial dialog
@@ -399,6 +413,9 @@ void FuelBuy(int p = 0){
 						xSetFloat(dPlayerData, xFuel, xGetFloat(dPlayerData, xFuel)+1000*GetFuelPump(trVectorQuestVarGetX("P"+p+"Pos"),trVectorQuestVarGetZ("P"+p+"Pos")));
 						xSetInt(dPlayerData, xFuelCountdown, 0);
 						xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*FuelCost*GetFuelPump(trVectorQuestVarGetX("P"+p+"Pos"),trVectorQuestVarGetZ("P"+p+"Pos")));
+						if(xGetInt(dPlayerData, xFuelSpend) < 4700){
+							xSetInt(dPlayerData, xFuelSpend, xGetInt(dPlayerData, xFuelSpend)+1*FuelCost*GetFuelPump(trVectorQuestVarGetX("P"+p+"Pos"),trVectorQuestVarGetZ("P"+p+"Pos")));
+						}
 						ColouredChatToPlayer(p, "0,1,0", "Refuel complete.");
 						spyEffect(1*trQuestVarGet("P"+p+"Siphon"), kbGetProtoUnitID("Mountain Giant"), vector(0,0,0), vector(0,0,0), 18);
 						if(xGetFloat(dPlayerData, xFuel) > xGetInt(dPlayerData,xFuelTank)){
@@ -468,6 +485,9 @@ highFrequency
 							if(trUnitPercentDamaged() != 0){
 								ColouredChatToPlayer(p, "1,0.5,0", "250hp hull repaired.");
 								xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*Shop4Cost);
+								if(xGetInt(dPlayerData, xHullSpend) < 4700){
+									xSetInt(dPlayerData, xHullSpend, xGetInt(dPlayerData, xHullSpend)+1*Shop4Cost);
+								}
 								trUnitSelectClear();
 								trUnitSelectByQV("P"+p+"Siphon");
 								trDamageUnit(-250);
@@ -488,6 +508,9 @@ highFrequency
 								if(trUnitPercentDamaged() != 0){
 									ColouredChatToPlayer(p, "1,0.5,0", ""+250*GetHullShop(trVectorQuestVarGetX("P"+p+"Pos"))+"" + " hp hull repaired.");
 									xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*HullCost*GetHullShop(trVectorQuestVarGetX("P"+p+"Pos")));
+									if(xGetInt(dPlayerData, xHullSpend) < 4700){
+										xSetInt(dPlayerData, xHullSpend, xGetInt(dPlayerData, xHullSpend)+1*HullCost*GetHullShop(trVectorQuestVarGetX("P"+p+"Pos")));
+									}
 									trUnitSelectClear();
 									trUnitSelectByQV("P"+p+"Siphon");
 									trDamageUnit(-250*GetHullShop(trVectorQuestVarGetX("P"+p+"Pos")));
@@ -599,7 +622,7 @@ highFrequency
 				playSound("attackwarning.wav");
 			}
 			if (xGetInt(dPlayerData, xBonus+7) == 2){
-				trChatSendToPlayer(0, p, "<color=1,0.5,0>Consider using ragnorok - your emergency fuel tank!</color>");
+				trChatSendToPlayer(0, p, "<color=1,0.5,0>Consider using ragnorok (R) - your emergency fuel tank!</color>");
 			}
 			trQuestVarSet("P"+p+"FuelWarning", 1);
 		}
@@ -634,15 +657,36 @@ highFrequency
 }
 
 
-/*
+
 rule fuckssake
 active
 highFrequency
 {
 	if(trChatHistoryContains("DEBUG", 1)){
+		trVectorSetUnitPos("Drone1V", "Drone1", true);
+		int z = trGetNextUnitScenarioNameNumber();
+		trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1,trVectorQuestVarGetX("Drone1V"),0,trVectorQuestVarGetZ("Drone1V"),0,true);
+		trUnitSelectClear();
+		
+		trUnitSelect(""+z);
+		trUnitTeleport(trVectorQuestVarGetX("Drone1V"),0,trVectorQuestVarGetZ("Drone1V"));
+		
+		trUnitSelectClear();
+		trUnitSelect(""+z);
+		trUnitChangeProtoUnit("Hero Birth");
+		z = trGetNextUnitScenarioNameNumber();
+		trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1,trVectorQuestVarGetX("Drone1V"),0,trVectorQuestVarGetZ("Drone1V"),0,true);
+		trUnitSelectClear();
+		
+		trUnitSelect(""+z);
+		trUnitTeleport(trVectorQuestVarGetX("Drone1V"),0,trVectorQuestVarGetZ("Drone1V"));
+		
+		trUnitSelectClear();
+		trUnitSelect(""+z);
+		trUnitChangeProtoUnit("Ball of Fire Impact");
 		trChatHistoryClear();
-		trVectorQuestVarSet("TargetVector1", vector(1,1,1));
-		trVectorQuestVarEcho("TargetVector1");
+		//xsDisableSelf();
+		
 	}
 }
-*/
+

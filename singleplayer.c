@@ -476,6 +476,9 @@ highFrequency
 	uiClearSelection();
 	
 	PaintPlanets(8,35);
+	MainTitle(14,115);
+	//trChatSend(0, "Hull repair spend - " + xGetInt(dPlayerData, xHullSpend));
+	//trChatSend(0, "Fuel spend - " + xGetInt(dPlayerData, xFuelSpend));
 	xsEnableRule("choose_stage");
 	if((xGetInt(dPlayerData, xStageUnlocked) == 1) && (xGetInt(dPlayerData, xStageStatus) == 1)){
 		xsEnableRule("SPUnlock3");

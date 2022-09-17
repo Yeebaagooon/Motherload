@@ -8,7 +8,7 @@
 //---Test controls
 int QuickStart = 1;
 int QuickStage = 9;
-bool OverrideSP = false;
+bool OverrideSP = true;
 bool OverrideStage = true;
 
 //---
@@ -108,6 +108,8 @@ int xStageStatus = 0;
 
 int xBonus = 0;
 int xRelicCollected = 0;
+int xFuelSpend = 0;
+int xHullSpend = 0;
 
 int CinematicObelisk = 0;
 
@@ -149,6 +151,8 @@ highFrequency
 		xInitAddInt(dPlayerData, "relic number"+x, 0);
 		//""+xGetInt(dPlayerData, xBonus+5);
 	}
+	xFuelSpend = xInitAddInt(dPlayerData, "fuel spend", 0);
+	xHullSpend = xInitAddInt(dPlayerData, "hull spend", 0);
 	xsDisableSelf();
 	for(p=1; <= cNumberNonGaiaPlayers) {
 		xAddDatabaseBlock(dPlayerData, true);

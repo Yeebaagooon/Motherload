@@ -252,6 +252,8 @@ highFrequency
 	Slot 12
 	Total size: 0
 	*/
+	addSavedDataDB(dPlayerData, xFuelSpend, 12, 5000);
+	addSavedDataDB(dPlayerData, xHullSpend, 12, 5000);
 	
 	/*
 	Slot 13
@@ -680,6 +682,7 @@ highFrequency
 		}
 	}*/
 	PaintPlanets(20,20, 1);
+	MainTitle(38,85);
 	trQuestVarSet("StageSelector", trGetNextUnitScenarioNameNumber());
 	UnitCreate(1, "Athena", 40, 60, 90);
 	if(QuickStart == 1){

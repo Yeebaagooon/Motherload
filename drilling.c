@@ -814,4 +814,13 @@ void UngarrisonDrill(int p = 1){
 		trDamageUnit(10*xGetInt(dPlayerData, xDepth)/xGetInt(dPlayerData, xRadiator));
 		trQuestVarSet("StatusEffectP"+p+"", 0);
 	}
+	//Hull destroy
+	if(Stage == 10){
+		trUnitSelectClear();
+		int row = zPos;
+		int col = xPos;
+		trUnitSelectByQV("HullR"+row+"C"+col+"");
+		trUnitChangeProtoUnit("Meteor Impact Ground");
+		trUnitDestroy();
+	}
 }

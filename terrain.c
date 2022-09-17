@@ -47,6 +47,11 @@ void GroundType(int rock = 0) {
 			OVERTERRAIN_TYPE = 0;
 			OVERTERRAIN_SUBTYPE = 85;
 		}
+		case 10:
+		{
+			OVERTERRAIN_TYPE = 5;
+			OVERTERRAIN_SUBTYPE = 4;
+		}
 	}
 }
 
@@ -432,6 +437,11 @@ highFrequency
 					else{
 						RockType(35);
 					}*/
+				}
+				if(Stage == 10){
+					if((row >= 19) && (row <= 20)){
+						RockType(33);
+					}
 				}
 				trPaintTerrain(4*col-1,4*row-1,4*col-3,4*row-3,TERRAIN_TYPE,TERRAIN_SUBTYPE,false);
 				trQuestVarSet("R"+row+"C"+col+"CentreY", row*4-2);
@@ -1465,6 +1475,24 @@ highFrequency
 			xSetInt(dGasPocket, xGasRow, 1*trQuestVarGet("temp"));
 		}
 	}
+	if(Stage == 10){
+		MineT = 0;
+		MineST = 70;
+		FuelCost = 1;
+		xsEnableRule("AudreyL2");
+		temp = trGetNextUnitScenarioNameNumber();
+		for(x=0; < 147){
+			trQuestVarSetFromRand("TempX",1,200);
+			trQuestVarSetFromRand("TempZ",170,199);
+			trArmyDispatch("0,0", "Victory Marker", 1, 1*trQuestVarGet("TempX"),3,1*trQuestVarGet("TempZ"), 0, true);
+			trUnitSelectClear();
+			trUnitSelect(""+(temp+x));
+			trUnitChangeProtoUnit("Armor Glow Small");
+		}
+		sunColor(57,20,2);
+		ambientColor(57,55,40);
+		terrainAmbient(255,155,155);
+	}
 	xsEnableRule("Ragnorok");
 	xsDisableSelf();
 	trPaintTerrain(0,80,100,80,MineT,MineST,false);
@@ -1869,6 +1897,32 @@ highFrequency
 						spawnRelicSpecific(v,20);
 					}
 				}
+			}
+			if(Stage == 10){
+				if((row >= 19) && (row <= 20)){
+					trQuestVarSet("TEMPRELIC", trGetNextUnitScenarioNameNumber());
+					trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1,xsVectorGetX(v),0,xsVectorGetZ(v),0,true);
+					trUnitSelectClear();
+					trUnitSelectByQV("TEMPRELIC");
+					trUnitChangeProtoUnit("Spy Eye");
+					trUnitSelectClear();
+					trUnitSelectByQV("TEMPRELIC");
+					trMutateSelected(kbGetProtoUnitID("Sentinel Base"));
+					trUnitSelectClear();
+					trUnitSelectByQV("TEMPRELIC");
+					trSetSelectedScale(4,0.3,4);
+					trUnitSelectClear();
+					trQuestVarSet("HullR"+row+"C"+col+"", 1*trQuestVarGet("TEMPRELIC"));
+				}
+				/*else if((row >= 14) && (row <= 16)){
+					if(col >= 23){
+						trQuestVarSetFromRand("Temp",1,2);
+						trQuestVarSetFromRand("Temp2",7,9);
+						if(1*trQuestVarGet("Temp") <= 2){
+							spawnRelicSpecific(v,1*trQuestVarGet("Temp2"));
+						}
+					}
+				}*/
 			}
 		}
 	}
