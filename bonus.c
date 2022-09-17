@@ -244,6 +244,81 @@ highFrequency
 				trUnitChangeProtoUnit("Alfred");
 			}
 		}
+		if(xGetInt(dPlayerData, xBonus+13) != 0){
+			trUnitSelectByQV("Bonus13");
+			trUnitChangeProtoUnit("Chariot Archer");
+			xAddDatabaseBlock(dSelectables, true);
+			xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus13"));
+			xSetInt(dSelectables, xSelectablesPrompt, 713);
+			if(xGetInt(dPlayerData, xBonus+13) == 2){
+				trUnitSelectByQV("BonusEffect13");
+				trUnitChangeProtoUnit("Gaia Forest effect");
+				trUnitSelectByQV("BonusUnit");
+				trUnitChangeProtoUnit("Chariot Archer");
+			}
+		}
+		//Already unlocked
+		if(xGetInt(dPlayerData, xBonus+14) != 0){
+			trUnitSelectByQV("Bonus14");
+			trBlockAllSounds();
+			trUnitChangeProtoUnit("Tower Mirror");
+			trUnblockAllSounds();
+			trChatHistoryClear();
+			trUnitSelectByQV("Bonus14");
+			trSetSelectedScale(0.3,0.5,0.3);
+			xAddDatabaseBlock(dSelectables, true);
+			xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus14"));
+			xSetInt(dSelectables, xSelectablesPrompt, 714);
+			if(xGetInt(dPlayerData, xBonus+14) == 2){
+				trUnitSelectByQV("BonusEffect14");
+				trUnitChangeProtoUnit("Gaia Forest effect");
+				trUnitSelectByQV("BonusUnit");
+				trUnitChangeProtoUnit("Prisoner");
+				trUnitSelectByQV("BonusUnit");
+				trBlockAllSounds();
+				trUnitChangeProtoUnit("Tower Mirror");
+				trChatHistoryClear();
+				trUnblockAllSounds();
+				trUnitSelectByQV("BonusUnit");
+				trSetSelectedScale(0.3,0.5,0.3);
+			}
+		}
+		//Actively unlock in SP
+		else if(xGetInt(dPlayerData, xBonus+14) == 0){
+			if((xGetInt(dPlayerData, xDrillLevel) >= 8) || (xGetInt(dPlayerData, xHullLevel) >= 8) || (xGetInt(dPlayerData, xFuelLevel) >= 8) || (xGetInt(dPlayerData, xEngineLevel) >= 8) || (xGetInt(dPlayerData, xCargoLevel) >= 8) || (xGetInt(dPlayerData, xRadiatorLevel) >= 8)){
+				trUnitSelectByQV("Bonus14");
+				trUnitChangeProtoUnit("Prisoner");
+				trUnitSelectByQV("Bonus14");
+				trUnitChangeProtoUnit("Tower Mirror");
+				trUnitSelectByQV("Bonus14");
+				trSetSelectedScale(0.3,0.5,0.3);
+				trUnitSelectByQV("Bonus14");
+				trUnitHighlight(5,true);
+				xSetInt(dPlayerData, xBonus+14, 1);
+				xAddDatabaseBlock(dSelectables, true);
+				xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus14"));
+				xSetInt(dSelectables, xSelectablesPrompt, 714);
+				ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked (14)!");
+				playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
+			}
+		}
+		if(xGetInt(dPlayerData, xBonus+15) != 0){
+			trUnitSelectByQV("Bonus15");
+			trUnitChangeProtoUnit("Roc Tent");
+			trUnitSelectByQV("Bonus15");
+			trSetSelectedScale(0.5,0.5,0.5);
+			xAddDatabaseBlock(dSelectables, true);
+			xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus15"));
+			xSetInt(dSelectables, xSelectablesPrompt, 715);
+			if(xGetInt(dPlayerData, xBonus+15) == 2){
+				trUnitSelectByQV("BonusEffect15");
+				trUnitChangeProtoUnit("Gaia Forest effect");
+				trUnitSelectByQV("BonusUnit");
+				trUnitChangeProtoUnit("Roc Tent");
+				trUnitSelectByQV("BonusUnit");
+				trSetSelectedScale(0.5,0.5,0.5);
+			}
+		}
 		xsDisableSelf();
 	}
 }
@@ -332,13 +407,39 @@ void Select_Bonus(int bonus = 0){
 			trUnitSelectByQV("BonusUnit");
 			trSetSelectedScale(0.3,0.3,0.3);
 			trChatHistoryClear();
-			ColouredChat("1,0.5,0", "+20s extra stage time equipped");
+			ColouredChat("1,0.5,0", "+30s extra stage time equipped");
 			trUnitSelectByQV("BonusUnit");
 			trUnitSetAnimationPath("3,0,0,1,0");
 		}
 		if(bonus == 12){
 			trUnitChangeProtoUnit("Alfred");
 			ColouredChat("1,0.5,0", "Extra 25 percent profit on first sale equipped");
+		}
+		if(bonus == 13){
+			trUnitChangeProtoUnit("Chariot Archer");
+			ColouredChat("1,0.5,0", "Extra 5 ship speed equipped");
+		}
+		if(bonus == 14){
+			trUnitChangeProtoUnit("Prisoner");
+			trUnitSelectByQV("BonusUnit");
+			trBlockAllSounds();
+			trUnitChangeProtoUnit("Tower Mirror");
+			trUnblockAllSounds();
+			trUnitSelectByQV("BonusUnit");
+			trSetSelectedScale(0.3,0.5,0.3);
+			trChatHistoryClear();
+			ColouredChat("1,0.5,0", "Mining laser equipped");
+		}
+		if(bonus == 15){
+			trUnitChangeProtoUnit("Prisoner");
+			trUnitSelectByQV("BonusUnit");
+			trBlockAllSounds();
+			trUnitChangeProtoUnit("Roc Tent");
+			trUnblockAllSounds();
+			trUnitSelectByQV("BonusUnit");
+			trSetSelectedScale(0.5,0.5,0.5);
+			trChatHistoryClear();
+			ColouredChat("1,0.5,0", "Antimatter bomb equipped");
 		}
 		Deselect_Bonus(bonus);
 		playSoundCustom("ageadvance.wav", "\Yeebaagooon\Motherload\SelectBonus.mp3");
@@ -376,10 +477,24 @@ void Apply_Bonus(int s = -1){
 			trQuestVarSet("P"+p+"B9", 2);
 		}
 		if(xGetInt(dPlayerData, xBonus+11) == 2){
-			StageTime = StageTime+20;
+			StageTime = StageTime+30;
 		}
 		if(xGetInt(dPlayerData, xBonus+12) == 2){
 			trQuestVarSet("P"+p+"B12", 1);
+		}
+		if(xGetInt(dPlayerData, xBonus+13) == 2){
+			trModifyProtounit("Hero Greek Atalanta", p, 1, 5);
+		}
+		if(xGetInt(dPlayerData, xBonus+14) == 2){
+			grantGodPowerNoRechargeNextPosition(p, "Underworld Passage", 1);
+			ColouredChatToPlayer(p, "1,0.5,0", "Mining laser equipped (L key to use)");
+			ColouredChatToPlayer(p, "1,0.5,0", "DIRECTIONAL - mines 10 tiles in the target direction");
+			ColouredChatToPlayer(p, "1,0.5,0", "Use like dynamite - have the cursor next to your ship");
+		}
+		if(xGetInt(dPlayerData, xBonus+15) == 2){
+			grantGodPowerNoRechargeNextPosition(p, "Vision", 1);
+			ColouredChatToPlayer(p, "1,0.5,0", "Antimatter bomb equipped (A key to use)");
+			ColouredChatToPlayer(p, "1,0.5,0", "Blasts 5x5 squares around you when used.");
 		}
 	}
 	xsDisableSelf();

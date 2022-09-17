@@ -39,6 +39,9 @@ runImmediately
 	map("w", "game", "uiSetSpecialPower(407) uiSpecialPowerAtPointer");
 	map("e", "game", "uiSetSpecialPower(156) uiSpecialPowerAtPointer");
 	map("r", "game", "uiSetSpecialPower(234) uiSpecialPowerAtPointer");
+	//special powers
+	map("l", "game", "uiSetSpecialPower(133) uiSpecialPowerAtPointer");
+	map("a", "game", "uiSetSpecialPower(220) uiSpecialPowerAtPointer");
 }
 
 rule START
@@ -295,7 +298,7 @@ rule load1
 inactive
 highFrequency
 {
-	characterDialog("Loading map.", ""+MapVersion+"", "icons\special e son of osiris icon 64");
+	characterDialog("Loading map", ""+MapVersion+"", "icons\special e son of osiris icon 64");
 	xsEnableRule("load4");
 	xsEnableRule("Stats");
 	trBlockAllSounds(false);
@@ -321,7 +324,6 @@ highFrequency
 {
 	//fade out when loaded
 	trUnblockAllSounds();
-	trLetterBox(false);
 	//trUIFadeToColor(0,0,0,1000,1,false);
 	trOverlayTextColour(255, 125, 0);
 	gadgetUnreal("ShowImageBox");
@@ -331,6 +333,7 @@ highFrequency
 	if(aiIsMultiplayer() == false){
 		if(OverrideSP == false){
 			trDelayedRuleActivation("LoadSP");
+			trLetterBox(false);
 		}
 		else if(OverrideSP == true){
 			trDelayedRuleActivation("LoadMP");
@@ -653,6 +656,23 @@ void PaintPlanets(int x = 0, int z = 0, int offsetearth = 0){
 	xAddDatabaseBlock(dPlanetEyecandy, true);
 	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVHero"));
 	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 9);
+	//NATAS
+	if((Stage != 9) && (xGetInt(dPlayerData, xStageUnlocked) >= 9)){
+		int a = trGetNextUnitScenarioNameNumber();
+		trArmyDispatch(""+cNumberNonGaiaPlayers+",0","Dwarf",1,160,0,60,270,true);
+		trUnitSelectClear();
+		trUnitSelect(""+a, true);
+		//Mr Natas Spaceship
+		trUnitChangeProtoUnit("Phoenix");
+		spyEffect(a, kbGetProtoUnitID("Sky Passage"), vector(0,0,0), vector(1,1,1));
+		spyEffect(a, kbGetProtoUnitID("Fire Ship Atlantean"), vector(0,0,0), vector(2,2,2));
+		spyEffect(a, kbGetProtoUnitID("Helepolis"), vector(0,0,0), vector(2,1,2));
+		spyEffect(a, kbGetProtoUnitID("Migdol Stronghold"), vector(0,0,0), vector(1,-0.4,1));
+		spyEffect(a, kbGetProtoUnitID("Outpost"), vector(0,0,0), vector(1,1.5,1));
+		xAddDatabaseBlock(dPlanetEyecandy, true);
+		xSetInt(dPlanetEyecandy, xPlanetEyecandyName,a);
+		xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 10);
+	}
 	//END
 }
 
@@ -660,56 +680,86 @@ rule LoadMP
 inactive
 highFrequency
 {
-	//FEATURE - Kick inactives on planet screen
-	/*
-	for(p = 2; < cNumberNonGaiaPlayers){
-		xSetPointer(dPlayerData, p);
-		if(xGetInt(dPlayerData, xPlayerActive) == 1){
-			if(kbIsPlayerHuman(p) == false){
-				trPlayerKillAllUnits(p);
-				trPlayerKillAllBuildings(p);
-				trSetPlayerDefeated(p);
-				xSetInt(dPlayerData, xPlayerActive, 0);
-			}
+	trCameraCut(vector(100.057152,219.744125,92.986107), vector(0.000006,-0.999997,0.002399), vector(0.002398,0.002398,0.999994), vector(0.999997,0.000000,-0.002398));
+	xsEnableRule("LoadMP2");
+	xsEnableRule("LoadMP3");
+	trUIFadeToColor(0,0,0,1500,0,false);
+	trOverlayText("Yeebaagooon presents", 4.0, 518, 100, 1000);
+	sunColor(0,0,0);
+	ambientColor(0,0,0);
+	terrainAmbient(0,0,0);
+	trSoundPlayDialog("default", "1", -1, false, " : ", "");
+	xsDisableSelf();
+}
+
+rule LoadMP3
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 1){
+		MainTitle(38,85);
+		trSoundPlayDialog("default", "1", -1, false, " : ", "");
+		xsDisableSelf();
+		trSetLighting("Erebus", 1.0);
+	}
+}
+
+rule LoadMP2
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 4){
+		trLetterBox(false);
+		//FEATURE - Kick inactives on planet screen
+		/*
+		for(p = 2; < cNumberNonGaiaPlayers){
+			xSetPointer(dPlayerData, p);
 			if(xGetInt(dPlayerData, xPlayerActive) == 1){
-				if(kbIsPlayerResigned(p) == true){
+				if(kbIsPlayerHuman(p) == false){
 					trPlayerKillAllUnits(p);
 					trPlayerKillAllBuildings(p);
 					trSetPlayerDefeated(p);
 					xSetInt(dPlayerData, xPlayerActive, 0);
 				}
+				if(xGetInt(dPlayerData, xPlayerActive) == 1){
+					if(kbIsPlayerResigned(p) == true){
+						trPlayerKillAllUnits(p);
+						trPlayerKillAllBuildings(p);
+						trSetPlayerDefeated(p);
+						xSetInt(dPlayerData, xPlayerActive, 0);
+					}
+				}
 			}
+		}*/
+		trSetLighting("default", 5.0);
+		PaintPlanets(20,20, 1);
+		trQuestVarSet("StageSelector", trGetNextUnitScenarioNameNumber());
+		UnitCreate(1, "Athena", 40, 60, 90);
+		if(QuickStart == 1){
+			trUnitSelectByQV("StageSelector");
+			trUnitTeleport(50+10*QuickStage,3,60);
 		}
-	}*/
-	PaintPlanets(20,20, 1);
-	MainTitle(38,85);
-	trQuestVarSet("StageSelector", trGetNextUnitScenarioNameNumber());
-	UnitCreate(1, "Athena", 40, 60, 90);
-	if(QuickStart == 1){
-		trUnitSelectByQV("StageSelector");
-		trUnitTeleport(50+10*QuickStage,3,60);
-	}
-	trOverlayText("Host, choose a stage", 8.0, 508, 70, 1000);
-	trLetterBox(false);
-	trUIFadeToColor(0,0,0,1500,0,false);
-	xsDisableSelf();
-	xsEnableRule("choose_stage");
-	trCameraCut(vector(97.212753,163.322815,-63.585068), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619730,0.784813), vector(0.999997,-0.000000,-0.002398));
-	if(trCurrentPlayer() == 1){
+		trOverlayText("Host, choose a stage", 8.0, 508, 70, 1000);
+		trLetterBox(false);
+		xsDisableSelf();
+		xsEnableRule("choose_stage");
+		trCameraCut(vector(97.212753,163.322815,-63.585068), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619730,0.784813), vector(0.999997,-0.000000,-0.002398));
+		if(trCurrentPlayer() == 1){
+			trCameraCut(vector(100.463554,153.803818,-59.088593), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
+			uiZoomToProto("Athena");
+		}
+		/*
+		//CREATE CAMERA TRACK
+		createCameraTrack(10000);
 		trCameraCut(vector(100.463554,153.803818,-59.088593), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
-		uiZoomToProto("Athena");
+		addCameraTrackWaypoint();
+		trCameraCut(vector(100.463554,103.803818,-59.088593), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
+		addCameraTrackWaypoint();
+		trCameraCut(vector(100.463554,103.803818,-9.088593), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
+		addCameraTrackWaypoint();
+		playCameraTrack();
+		*/
 	}
-	/*
-	//CREATE CAMERA TRACK
-	createCameraTrack(10000);
-	trCameraCut(vector(100.463554,153.803818,-59.088593), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
-	addCameraTrackWaypoint();
-	trCameraCut(vector(100.463554,103.803818,-59.088593), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
-	addCameraTrackWaypoint();
-	trCameraCut(vector(100.463554,103.803818,-9.088593), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
-	addCameraTrackWaypoint();
-	playCameraTrack();
-	*/
 }
 
 rule choose_stage
@@ -737,8 +787,8 @@ highFrequency
 		//trForceNonCinematicModels(true);
 		//trLetterBox(true);
 		trUIFadeToColor(0,0,0,1000,0,true);
-		trSoundPlayFN("ageadvance.wav","1",-1,"","");
-		if(n <= 0){
+		playSound("ageadvance.wav");
+		if(xGetInt(dObelisks,xObeliskStage) <= 9){
 			trOverlayText("Planet " + xGetInt(dObelisks, xObeliskStage) + ": " + stageName(Stage), 3.0, 520, 380, 800);
 		}
 		else{
@@ -748,7 +798,12 @@ highFrequency
 		uiClearSelection();
 		xSetPointer(dPlayerData, trCurrentPlayer());
 		if(xGetInt(dPlayerData, xStageUnlocked) >= xGetInt(dObelisks, xObeliskStage)-1){
-			trShowImageDialog(stageIcon(xGetInt(dObelisks, xObeliskStage)), "Planet " + xGetInt(dObelisks, xObeliskStage) + ": " + stageName(xGetInt(dObelisks, xObeliskStage)));
+			if(xGetInt(dObelisks,xObeliskStage) <= 9){
+				trShowImageDialog(stageIcon(xGetInt(dObelisks, xObeliskStage)), "Planet " + xGetInt(dObelisks, xObeliskStage) + ": " + stageName(xGetInt(dObelisks, xObeliskStage)));
+			}
+			if(xGetInt(dObelisks,xObeliskStage) == 10){
+				trShowImageDialog(stageIcon(xGetInt(dObelisks, xObeliskStage)), stageName(xGetInt(dObelisks, xObeliskStage)));
+			}
 		}
 		else{
 			trShowImageDialog(stageIcon(xGetInt(dObelisks, xObeliskStage)), "LOCKED");

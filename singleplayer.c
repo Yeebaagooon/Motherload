@@ -641,7 +641,9 @@ highFrequency
 {
 	if((trTime()-cActivationTime) >= 1){
 		if(OverrideStage == true){
-			trSetCurrentScenarioUserData(0,9);
+			//xSetPointer(dPlayerData, 1);
+			//xSetInt(dPlayerData, xBonus+15, 1);
+			//saveAllData();
 		}
 		xsDisableSelf();
 		trEndGame();

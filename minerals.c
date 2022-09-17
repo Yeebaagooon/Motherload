@@ -796,6 +796,16 @@ highFrequency
 			}
 		}
 	}
+	if (xGetInt(dPlayerData, xBonus+13) == 0){
+		if(1*trQuestVarGet("P"+GSeller+"Invoice") == 47){
+			xSetInt(dPlayerData, xBonus+13, 1);
+			if(trCurrentPlayer() == GSeller){
+				ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked (13)!");
+				saveAllData();
+				playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
+			}
+		}
+	}
 	trQuestVarSet("P"+GSeller+"Invoice", 0);
 	xsDisableSelf();
 }

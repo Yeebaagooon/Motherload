@@ -1326,7 +1326,7 @@ highFrequency
 	if(Stage == 9){
 		MineT = 5;
 		MineST = 8;
-		FuelCost = 50;
+		FuelCost = 30;
 		PaintSmelter(20,180);
 		PaintSellTerrain(15,89);
 		SelectableSign(31, 180, 3);
@@ -1381,7 +1381,6 @@ highFrequency
 		trUnitSelectClear();
 		trUnitSelect(""+temp);
 		trSetSelectedScale(2,2,2);
-		
 		PaintFuelTerrain(80,89);
 		//fuel full pump
 		SelectableSign(167, 181, 18);

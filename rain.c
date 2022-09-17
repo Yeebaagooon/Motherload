@@ -193,8 +193,11 @@ highFrequency
 		if(Stage == 9){
 			startNPCDialog(22);
 		}
+		if(Stage == 10){
+			startNPCDialog(23);
+		}
 	}
-	xSetPointer(dPlayerData, 1);
+	//xSetPointer(dPlayerData, 1);
 	//trChatSend(0, ""+xGetInt(dPlayerData, xDrillLevel));
 	xsEnableRule("StageTimer");
 	xsEnableRule("CheckResigns");
@@ -213,6 +216,8 @@ highFrequency
 		if(Stage == 2){
 			StageTime = StageTime+480; //480
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
+			grantGodPowerNoRechargeNextPosition(1, "Audrey", 100);
+			xsEnableRule("AudreyL2");
 		}
 		if(Stage == 3){
 			StageTime = StageTime+480; //480
@@ -240,15 +245,11 @@ highFrequency
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
 		}
 		if(Stage == 9){
-			StageTime = StageTime+600; //600
+			StageTime = StageTime+1200; //600
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
-			grantGodPowerNoRechargeNextPosition(1, "Audrey", 100);
-			grantGodPowerNoRechargeNextPosition(1, "Sandstorm", 1);
-			grantGodPowerNoRechargeNextPosition(1, "Vision", 1);
-			trPaintTerrain(90,0,100,100,5,3,true);
 		}
 		if(Stage == 10){
-			StageTime = StageTime+600; //540
+			StageTime = StageTime+1200; //540
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
 		}
 		xsDisableSelf();
@@ -365,7 +366,7 @@ int GetHullShop(float x = 0){
 			return(8);
 		}
 	}
-	if(Stage == 8){
+	if(Stage >= 8){
 		if((x > Hull1XMin*2) && (x < Hull1XMax*2)){
 			return(2);
 		}
@@ -605,6 +606,7 @@ highFrequency
 			trUnitSelectByQV("P"+p+"Siphon");
 			trUnitDestroy();
 			xSetInt(dPlayerData, xPlayerActive, 0);
+			trSetPlayerDefeated(p);
 			if (xGetInt(dPlayerData, xBonus+7) == 0){
 				xSetInt(dPlayerData, xBonus+7, 1);
 				if(trCurrentPlayer() == p){

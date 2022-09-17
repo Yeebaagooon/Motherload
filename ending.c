@@ -186,7 +186,16 @@ highFrequency
 					}
 				}
 			}
-			//Stage 8 requirement here
+			if(Stage == 8){
+				if(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart) < 350){
+					characterDialog("You did not meet the requirements to progress.", "You needed to make 350 gold profit.", "icons\special e son of osiris icon 64");
+				}
+				else{
+					xSetInt(dPlayerData, xStageUnlocked, xGetInt(dPlayerData, xStageUnlocked) + 1);
+					trShowImageDialog(stageIcon(Stage+1), "Next planet unlocked - " + stageName(Stage+1));
+					xSetInt(dPlayerData, xStageStatus, 0);
+				}
+			}
 		} else if (xGetInt(dPlayerData, xStageUnlocked) < Stage-1) {
 			trShowImageDialog(stageIcon(Stage+1), "You must beat previous planets to unlock this one.");
 			trSoundPlayFN("cantdothat.wav","1",-1,"","");
@@ -227,8 +236,10 @@ highFrequency
 		gadgetReal("ShowImageBox-BordersRightBottom");
 		gadgetReal("ShowImageBox-BordersRightTop");
 		gadgetReal("ShowImageBox-CloseButton");
-		trLetterBox(false);
-		trUIFadeToColor(0,0,0,1500,1,false);
+		if(Stage != 9){
+			trLetterBox(false);
+			trUIFadeToColor(0,0,0,1500,1,false);
+		}
 		xsEnableRule("End2");
 		//BONUS CHECK AND UNLOCK
 		for(p=1; < cNumberNonGaiaPlayers) {
@@ -262,72 +273,69 @@ highFrequency
 }
 
 rule SednaWin
-active
+inactive
 highFrequency
 {
-	if(trChatHistoryContains("lol", 1) == true){
-		xsDisableSelf();
-		xsDisableRule("CheckResigns");
-		xsDisableRule("FuelEconomy");
-		trCounterAbort("CDFuel");
-		trCounterAbort("CDDepth");
-		trFadeOutMusic(1);
-		trFadeOutAllSounds(1);
-		trSetFogAndBlackmap(false, false);
-		//trLetterBox(true);
-		unitTransform("Invisible Wall", "Rocket");
-		unitTransform("Bolder Rolling", "Rocket");
-		unitTransform("Flag Numbered", "Rocket");
-		unitTransform("Dwarven Forge", "Rocket");
-		trPaintTerrain(70,0,100,30,5,4,true);
-		trCameraCut(vector(183.582794,86.963791,-54.754787), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
-		int z = trGetNextUnitScenarioNameNumber();
-		trArmyDispatch("0,0","Dwarf",1,198,0,2,0,true);
-		trUnitSelectClear();
-		trUnitSelect(""+z, true);
-		trUnitChangeProtoUnit("Spy Eye");
-		trUnitSelectClear();
-		trUnitSelect(""+z, true);
-		trMutateSelected(kbGetProtoUnitID("Tartarian Gate"));
-		trSetSelectedScale(0,0,0);
-		trUnitOverrideAnimation(15,0,true,false,-1);
-		xsEnableRule("Sedna_C01");
-		for(x=xGetDatabaseCount(dFreeRelics); >0) {
-			xDatabaseNext(dFreeRelics);
-			xUnitSelect(dFreeRelics,xRelicName);
-			trUnitDestroy();
-			xFreeDatabaseBlock(dFreeRelics);
-		}
-		aiPlanDestroy(dFreeRelics);
-		for(x=xGetDatabaseCount(dHeldRelics); >0) {
-			xDatabaseNext(dHeldRelics);
-			xUnitSelect(dHeldRelics,xRelicName);
-			trUnitDestroy();
-			xFreeDatabaseBlock(dHeldRelics);
-		}
-		aiPlanDestroy(dHeldRelics);
-		for(x=xGetDatabaseCount(dHiddenRelics); >0) {
-			xDatabaseNext(dHiddenRelics);
-			xUnitSelect(dHiddenRelics,xRelicName);
-			trUnitDestroy();
-			xFreeDatabaseBlock(dHeldRelics);
-		}
-		aiPlanDestroy(dHiddenRelics);
-		for(x=xGetDatabaseCount(dSelectables); >0) {
-			xDatabaseNext(dSelectables);
-			xUnitSelect(dSelectables,xSelectablesName);
-			trUnitDestroy();
-			xFreeDatabaseBlock(dSelectables);
-		}
-		for(p=1 ; < cNumberNonGaiaPlayers){
-			xSetPointer(dPlayerData, p);
-			if(xGetInt(dPlayerData, xStageUnlocked) == 8){
-				xSetInt(dPlayerData, xStageUnlocked, xGetInt(dPlayerData, xStageUnlocked) + 1);
-				xSetInt(dPlayerData, xStageStatus, 0);
-			}
+	xsDisableSelf();
+	xsDisableRule("CheckResigns");
+	xsDisableRule("FuelEconomy");
+	trCounterAbort("CDFuel");
+	trCounterAbort("CDDepth");
+	trFadeOutMusic(1);
+	trFadeOutAllSounds(1);
+	trSetFogAndBlackmap(false, false);
+	//trLetterBox(true);
+	unitTransform("Invisible Wall", "Rocket");
+	unitTransform("Bolder Rolling", "Rocket");
+	unitTransform("Flag Numbered", "Rocket");
+	unitTransform("Dwarven Forge", "Rocket");
+	trPaintTerrain(70,0,100,30,5,4,true);
+	trCameraCut(vector(183.582794,86.963791,-54.754787), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
+	int z = trGetNextUnitScenarioNameNumber();
+	trArmyDispatch("0,0","Dwarf",1,198,0,2,0,true);
+	trUnitSelectClear();
+	trUnitSelect(""+z, true);
+	trUnitChangeProtoUnit("Spy Eye");
+	trUnitSelectClear();
+	trUnitSelect(""+z, true);
+	trMutateSelected(kbGetProtoUnitID("Tartarian Gate"));
+	trSetSelectedScale(0,0,0);
+	trUnitOverrideAnimation(15,0,true,false,-1);
+	xsEnableRule("Sedna_C01");
+	for(x=xGetDatabaseCount(dFreeRelics); >0) {
+		xDatabaseNext(dFreeRelics);
+		xUnitSelect(dFreeRelics,xRelicName);
+		trUnitDestroy();
+		xFreeDatabaseBlock(dFreeRelics);
+	}
+	aiPlanDestroy(dFreeRelics);
+	for(x=xGetDatabaseCount(dHeldRelics); >0) {
+		xDatabaseNext(dHeldRelics);
+		xUnitSelect(dHeldRelics,xRelicName);
+		trUnitDestroy();
+		xFreeDatabaseBlock(dHeldRelics);
+	}
+	aiPlanDestroy(dHeldRelics);
+	for(x=xGetDatabaseCount(dHiddenRelics); >0) {
+		xDatabaseNext(dHiddenRelics);
+		xUnitSelect(dHiddenRelics,xRelicName);
+		trUnitDestroy();
+		xFreeDatabaseBlock(dHeldRelics);
+	}
+	aiPlanDestroy(dHiddenRelics);
+	for(x=xGetDatabaseCount(dSelectables); >0) {
+		xDatabaseNext(dSelectables);
+		xUnitSelect(dSelectables,xSelectablesName);
+		trUnitDestroy();
+		xFreeDatabaseBlock(dSelectables);
+	}
+	for(p=1 ; < cNumberNonGaiaPlayers){
+		xSetPointer(dPlayerData, p);
+		if(xGetInt(dPlayerData, xStageUnlocked) == 8){
+			xSetInt(dPlayerData, xStageUnlocked, xGetInt(dPlayerData, xStageUnlocked) + 1);
+			xSetInt(dPlayerData, xStageStatus, 0);
 		}
 	}
-	
 }
 
 rule Sedna_C01
@@ -350,17 +358,25 @@ highFrequency
 		spyEffect(z, kbGetProtoUnitID("Helepolis"), vector(0,0,0), vector(2,1,2));
 		spyEffect(z, kbGetProtoUnitID("Migdol Stronghold"), vector(0,0,0), vector(1,-0.4,1));
 		spyEffect(z, kbGetProtoUnitID("Outpost"), vector(0,0,0), vector(1,1.5,1));
-		int pelletsIncoming = trQuestVarGet("p1pelletsIncoming");
-		addGenericProj(pelletsIncoming, vector(0,0,0), vector(1,0,1), 1, 3, 5);
-		initGenericProj("p1pelletsIncoming", kbGetProtoUnitID("Cyclops"),2,3.0,4.5,0.3, 0);
-		xsEnableRule("Proj");
+		createCameraTrack(5500);
+		trCameraCut(vector(-41.022690,21.803864,60.732624), vector(0.984738,-0.167602,-0.046911), vector(0.167415,0.985854,-0.007975), vector(-0.047584,0.000000,-0.998867));
+		addCameraTrackWaypoint();
+		trCameraCut(vector(112.058205,21.803864,62.570534), vector(0.967717,-0.247788,-0.046100), vector(0.247510,0.968814,-0.011791), vector(-0.047584,0.000000,-0.998867));
+		addCameraTrackWaypoint();
+		playCameraTrack();
+		for(p=1 ; < cNumberNonGaiaPlayers){
+			xSetPointer(dPlayerData, p);
+			if(xGetInt(dPlayerData, xStageUnlocked) == 9){
+				trOverlayText(stageName(10) + " unlocked!", 8.0, 489, 300, 1000);
+			}
+			else if(xGetInt(dPlayerData, xStageUnlocked) == 10){
+				trOverlayText(stageName(10) + "!", 8.0, 489, 300, 1000);
+			}
+			else{
+				trOverlayText("You need to beat all other planets to unlock this stage", 8.0, 409, 300, 1000);
+			}
+		}
+		xsEnableRule("End1");
+		trChatHistoryClear();
 	}
-}
-
-rule Proj
-inactive
-highFrequency
-{
-	int pelletsIncoming = trQuestVarGet("p1pelletsIncoming");
-	processGenericProj(pelletsIncoming);
 }

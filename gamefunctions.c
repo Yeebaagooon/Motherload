@@ -576,7 +576,7 @@ void SetDrillSpeed(int p = 0, int x = 0, int z = 0){
 	int terrainsubtype = trGetTerrainSubType(x,z);
 	xSetPointer(dPlayerData, p);
 	trQuestVarSet("DrillCalc", xGetFloat(dPlayerData, xDrillPower)/GetRockHardness(GetRockType(terraintype, terrainsubtype)));
-	modifyProtounitAbsolute("Wadjet Spit", p, 1, trQuestVarGet("DrillCalc")*3);
+	modifyProtounitAbsolute("Wadjet Spit", p, 1, xsMin(30,trQuestVarGet("DrillCalc")*3));
 }
 
 void MainTitle(int x = 0, int z = 0){
@@ -593,6 +593,9 @@ void MainTitle(int x = 0, int z = 0){
 	trUnitSelectClear();
 	trUnitSelect(""+a);
 	trUnitSetAnimationPath("0,2,0,0,0");
+	xAddDatabaseBlock(dDestroyMe, true);
+	xSetInt(dDestroyMe, xDestroyName, a);
+	xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+5000);
 	a = trGetNextUnitScenarioNameNumber();
 	trArmyDispatch("0,0", "Dwarf", 1,1,0,1,90,true);
 	trUnitSelectClear();
@@ -604,6 +607,9 @@ void MainTitle(int x = 0, int z = 0){
 	trUnitSelectClear();
 	trUnitSelect(""+a);
 	trUnitSetAnimationPath("0,2,0,0,0");
+	xAddDatabaseBlock(dDestroyMe, true);
+	xSetInt(dDestroyMe, xDestroyName, a);
+	xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+5000);
 	a = trGetNextUnitScenarioNameNumber();
 	trArmyDispatch("0,0", "Dwarf", 1,1,0,1,45,true);
 	trUnitSelectClear();
@@ -615,6 +621,9 @@ void MainTitle(int x = 0, int z = 0){
 	trUnitSelectClear();
 	trUnitSelect(""+a);
 	trUnitSetAnimationPath("0,2,0,0,0");
+	xAddDatabaseBlock(dDestroyMe, true);
+	xSetInt(dDestroyMe, xDestroyName, a);
+	xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+5000);
 	a = trGetNextUnitScenarioNameNumber();
 	trArmyDispatch("0,0", "Dwarf", 1,1,0,1,135,true);
 	trUnitSelectClear();
@@ -626,6 +635,9 @@ void MainTitle(int x = 0, int z = 0){
 	trUnitSelectClear();
 	trUnitSelect(""+a);
 	trUnitSetAnimationPath("0,2,0,0,0");
+	xAddDatabaseBlock(dDestroyMe, true);
+	xSetInt(dDestroyMe, xDestroyName, a);
+	xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+5000);
 	a = trGetNextUnitScenarioNameNumber();
 	trArmyDispatch("0,0", "Dwarf", 1,1,0,1,90,true);
 	trUnitSelectClear();
@@ -637,6 +649,9 @@ void MainTitle(int x = 0, int z = 0){
 	trUnitSelectClear();
 	trUnitSelect(""+a);
 	trUnitSetAnimationPath("0,2,0,0,0");
+	xAddDatabaseBlock(dDestroyMe, true);
+	xSetInt(dDestroyMe, xDestroyName, a);
+	xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+5000);
 	a = trGetNextUnitScenarioNameNumber();
 	trArmyDispatch("0,0", "Dwarf", 1,1,0,1,90,true);
 	trUnitSelectClear();
@@ -648,6 +663,9 @@ void MainTitle(int x = 0, int z = 0){
 	trUnitSelectClear();
 	trUnitSelect(""+a);
 	trUnitSetAnimationPath("0,2,0,0,0");
+	xAddDatabaseBlock(dDestroyMe, true);
+	xSetInt(dDestroyMe, xDestroyName, a);
+	xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+5000);
 	a = trGetNextUnitScenarioNameNumber();
 	trArmyDispatch("0,0", "Dwarf", 1,1,0,1,0,true);
 	trUnitSelectClear();
@@ -659,6 +677,9 @@ void MainTitle(int x = 0, int z = 0){
 	trUnitSelectClear();
 	trUnitSelect(""+a);
 	trUnitSetAnimationPath("0,2,0,0,0");
+	xAddDatabaseBlock(dDestroyMe, true);
+	xSetInt(dDestroyMe, xDestroyName, a);
+	xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+5000);
 	a = trGetNextUnitScenarioNameNumber();
 	trArmyDispatch("0,0", "Dwarf", 1,1,0,1,0,true);
 	trUnitSelectClear();
@@ -670,6 +691,9 @@ void MainTitle(int x = 0, int z = 0){
 	trUnitSelectClear();
 	trUnitSelect(""+a);
 	trUnitSetAnimationPath("0,2,0,0,0");
+	xAddDatabaseBlock(dDestroyMe, true);
+	xSetInt(dDestroyMe, xDestroyName, a);
+	xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+5000);
 	a = trGetNextUnitScenarioNameNumber();
 	trArmyDispatch("0,0", "Dwarf", 1,1,0,1,90,true);
 	trUnitSelectClear();
@@ -681,6 +705,9 @@ void MainTitle(int x = 0, int z = 0){
 	trUnitSelectClear();
 	trUnitSelect(""+a);
 	trUnitSetAnimationPath("0,2,0,0,0");
+	xAddDatabaseBlock(dDestroyMe, true);
+	xSetInt(dDestroyMe, xDestroyName, a);
+	xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+5000);
 	a = trGetNextUnitScenarioNameNumber();
 	trArmyDispatch("0,0", "Dwarf", 1,1,0,1,180,true);
 	trUnitSelectClear();
@@ -692,6 +719,9 @@ void MainTitle(int x = 0, int z = 0){
 	trUnitSelectClear();
 	trUnitSelect(""+a);
 	trUnitSetAnimationPath("0,2,0,0,0");
+	xAddDatabaseBlock(dDestroyMe, true);
+	xSetInt(dDestroyMe, xDestroyName, a);
+	xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+5000);
 	a = trGetNextUnitScenarioNameNumber();
 	trArmyDispatch("0,0", "Dwarf", 1,1,0,1,180,true);
 	trUnitSelectClear();
@@ -703,6 +733,9 @@ void MainTitle(int x = 0, int z = 0){
 	trUnitSelectClear();
 	trUnitSelect(""+a);
 	trUnitSetAnimationPath("0,2,0,0,0");
+	xAddDatabaseBlock(dDestroyMe, true);
+	xSetInt(dDestroyMe, xDestroyName, a);
+	xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+5000);
 	a = trGetNextUnitScenarioNameNumber();
 	trArmyDispatch("0,0", "Dwarf", 1,1,0,1,90,true);
 	trUnitSelectClear();
@@ -714,6 +747,9 @@ void MainTitle(int x = 0, int z = 0){
 	trUnitSelectClear();
 	trUnitSelect(""+a);
 	trUnitSetAnimationPath("0,2,0,0,0");
+	xAddDatabaseBlock(dDestroyMe, true);
+	xSetInt(dDestroyMe, xDestroyName, a);
+	xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+5000);
 	a = trGetNextUnitScenarioNameNumber();
 	trArmyDispatch("0,0", "Dwarf", 1,1,0,1,90,true);
 	trUnitSelectClear();
@@ -725,6 +761,9 @@ void MainTitle(int x = 0, int z = 0){
 	trUnitSelectClear();
 	trUnitSelect(""+a);
 	trUnitSetAnimationPath("0,2,0,0,0");
+	xAddDatabaseBlock(dDestroyMe, true);
+	xSetInt(dDestroyMe, xDestroyName, a);
+	xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+5000);
 	a = trGetNextUnitScenarioNameNumber();
 	trArmyDispatch("0,0", "Dwarf", 1,1,0,1,180,true);
 	trUnitSelectClear();
@@ -737,6 +776,9 @@ void MainTitle(int x = 0, int z = 0){
 	trUnitSelectClear();
 	trUnitSelect(""+a);
 	trUnitSetAnimationPath("0,2,0,0,0");
+	xAddDatabaseBlock(dDestroyMe, true);
+	xSetInt(dDestroyMe, xDestroyName, a);
+	xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+5000);
 	a = trGetNextUnitScenarioNameNumber();
 	trArmyDispatch("0,0", "Dwarf", 1,1,0,1,90,true);
 	trUnitSelectClear();
@@ -748,6 +790,9 @@ void MainTitle(int x = 0, int z = 0){
 	trUnitSelectClear();
 	trUnitSelect(""+a);
 	trUnitSetAnimationPath("0,2,0,0,0");
+	xAddDatabaseBlock(dDestroyMe, true);
+	xSetInt(dDestroyMe, xDestroyName, a);
+	xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+5000);
 	a = trGetNextUnitScenarioNameNumber();
 	trArmyDispatch("0,0", "Dwarf", 1,1,0,1,180,true);
 	trUnitSelectClear();
@@ -759,6 +804,9 @@ void MainTitle(int x = 0, int z = 0){
 	trUnitSelectClear();
 	trUnitSelect(""+a);
 	trUnitSetAnimationPath("0,2,0,0,0");
+	xAddDatabaseBlock(dDestroyMe, true);
+	xSetInt(dDestroyMe, xDestroyName, a);
+	xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+5000);
 	a = trGetNextUnitScenarioNameNumber();
 	trArmyDispatch("0,0", "Dwarf", 1,1,0,1,180,true);
 	trUnitSelectClear();
@@ -770,6 +818,9 @@ void MainTitle(int x = 0, int z = 0){
 	trUnitSelectClear();
 	trUnitSelect(""+a);
 	trUnitSetAnimationPath("0,2,0,0,0");
+	xAddDatabaseBlock(dDestroyMe, true);
+	xSetInt(dDestroyMe, xDestroyName, a);
+	xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+5000);
 	a = trGetNextUnitScenarioNameNumber();
 	trArmyDispatch("0,0", "Dwarf", 1,1,0,1,180,true);
 	trUnitSelectClear();
@@ -781,6 +832,9 @@ void MainTitle(int x = 0, int z = 0){
 	trUnitSelectClear();
 	trUnitSelect(""+a);
 	trUnitSetAnimationPath("0,2,0,0,0");
+	xAddDatabaseBlock(dDestroyMe, true);
+	xSetInt(dDestroyMe, xDestroyName, a);
+	xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+5000);
 	a = trGetNextUnitScenarioNameNumber();
 	trArmyDispatch("0,0", "Dwarf", 1,1,0,1,90,true);
 	trUnitSelectClear();
@@ -792,6 +846,9 @@ void MainTitle(int x = 0, int z = 0){
 	trUnitSelectClear();
 	trUnitSelect(""+a);
 	trUnitSetAnimationPath("0,2,0,0,0");
+	xAddDatabaseBlock(dDestroyMe, true);
+	xSetInt(dDestroyMe, xDestroyName, a);
+	xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+5000);
 	a = trGetNextUnitScenarioNameNumber();
 	trArmyDispatch("0,0", "Dwarf", 1,1,0,1,180,true);
 	trUnitSelectClear();
@@ -803,6 +860,9 @@ void MainTitle(int x = 0, int z = 0){
 	trUnitSelectClear();
 	trUnitSelect(""+a);
 	trUnitSetAnimationPath("0,2,0,0,0");
+	xAddDatabaseBlock(dDestroyMe, true);
+	xSetInt(dDestroyMe, xDestroyName, a);
+	xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+5000);
 	a = trGetNextUnitScenarioNameNumber();
 	trArmyDispatch("0,0", "Dwarf", 1,1,0,1,90,true);
 	trUnitSelectClear();
@@ -814,6 +874,9 @@ void MainTitle(int x = 0, int z = 0){
 	trUnitSelectClear();
 	trUnitSelect(""+a);
 	trUnitSetAnimationPath("0,2,0,0,0");
+	xAddDatabaseBlock(dDestroyMe, true);
+	xSetInt(dDestroyMe, xDestroyName, a);
+	xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+5000);
 	a = trGetNextUnitScenarioNameNumber();
 	trArmyDispatch("0,0", "Dwarf", 1,1,0,1,0,true);
 	trUnitSelectClear();
@@ -825,6 +888,9 @@ void MainTitle(int x = 0, int z = 0){
 	trUnitSelectClear();
 	trUnitSelect(""+a);
 	trUnitSetAnimationPath("0,2,0,0,0");
+	xAddDatabaseBlock(dDestroyMe, true);
+	xSetInt(dDestroyMe, xDestroyName, a);
+	xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+5000);
 	a = trGetNextUnitScenarioNameNumber();
 	trArmyDispatch("0,0", "Dwarf", 1,1,0,1,245,true);
 	trUnitSelectClear();
@@ -836,6 +902,9 @@ void MainTitle(int x = 0, int z = 0){
 	trUnitSelectClear();
 	trUnitSelect(""+a);
 	trUnitSetAnimationPath("0,2,0,0,0");
+	xAddDatabaseBlock(dDestroyMe, true);
+	xSetInt(dDestroyMe, xDestroyName, a);
+	xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+5000);
 	a = trGetNextUnitScenarioNameNumber();
 	trArmyDispatch("0,0", "Dwarf", 1,1,0,1,90,true);
 	trUnitSelectClear();
@@ -847,6 +916,9 @@ void MainTitle(int x = 0, int z = 0){
 	trUnitSelectClear();
 	trUnitSelect(""+a);
 	trUnitSetAnimationPath("0,2,0,0,0");
+	xAddDatabaseBlock(dDestroyMe, true);
+	xSetInt(dDestroyMe, xDestroyName, a);
+	xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+5000);
 	a = trGetNextUnitScenarioNameNumber();
 	trArmyDispatch("0,0", "Dwarf", 1,1,0,1,180,true);
 	trUnitSelectClear();
@@ -858,6 +930,9 @@ void MainTitle(int x = 0, int z = 0){
 	trUnitSelectClear();
 	trUnitSelect(""+a);
 	trUnitSetAnimationPath("0,2,0,0,0");
+	xAddDatabaseBlock(dDestroyMe, true);
+	xSetInt(dDestroyMe, xDestroyName, a);
+	xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+5000);
 	a = trGetNextUnitScenarioNameNumber();
 	trArmyDispatch("0,0", "Dwarf", 1,1,0,1,90,true);
 	trUnitSelectClear();
@@ -869,6 +944,9 @@ void MainTitle(int x = 0, int z = 0){
 	trUnitSelectClear();
 	trUnitSelect(""+a);
 	trUnitSetAnimationPath("0,2,0,0,0");
+	xAddDatabaseBlock(dDestroyMe, true);
+	xSetInt(dDestroyMe, xDestroyName, a);
+	xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+5000);
 	a = trGetNextUnitScenarioNameNumber();
 	trArmyDispatch("0,0", "Dwarf", 1,1,0,1,0,true);
 	trUnitSelectClear();
@@ -880,6 +958,9 @@ void MainTitle(int x = 0, int z = 0){
 	trUnitSelectClear();
 	trUnitSelect(""+a);
 	trUnitSetAnimationPath("0,2,0,0,0");
+	xAddDatabaseBlock(dDestroyMe, true);
+	xSetInt(dDestroyMe, xDestroyName, a);
+	xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+5000);
 	a = trGetNextUnitScenarioNameNumber();
 	trArmyDispatch("0,0", "Dwarf", 1,1,0,1,0,true);
 	trUnitSelectClear();
@@ -891,6 +972,9 @@ void MainTitle(int x = 0, int z = 0){
 	trUnitSelectClear();
 	trUnitSelect(""+a);
 	trUnitSetAnimationPath("0,2,0,0,0");
+	xAddDatabaseBlock(dDestroyMe, true);
+	xSetInt(dDestroyMe, xDestroyName, a);
+	xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+5000);
 	a = trGetNextUnitScenarioNameNumber();
 	trArmyDispatch("0,0", "Dwarf", 1,1,0,1,90,true);
 	trUnitSelectClear();
@@ -902,6 +986,9 @@ void MainTitle(int x = 0, int z = 0){
 	trUnitSelectClear();
 	trUnitSelect(""+a);
 	trUnitSetAnimationPath("0,2,0,0,0");
+	xAddDatabaseBlock(dDestroyMe, true);
+	xSetInt(dDestroyMe, xDestroyName, a);
+	xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+5000);
 	a = trGetNextUnitScenarioNameNumber();
 	trArmyDispatch("0,0", "Dwarf", 1,1,0,1,112,true);
 	trUnitSelectClear();
@@ -913,6 +1000,9 @@ void MainTitle(int x = 0, int z = 0){
 	trUnitSelectClear();
 	trUnitSelect(""+a);
 	trUnitSetAnimationPath("0,2,0,0,0");
+	xAddDatabaseBlock(dDestroyMe, true);
+	xSetInt(dDestroyMe, xDestroyName, a);
+	xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+5000);
 	a = trGetNextUnitScenarioNameNumber();
 	trArmyDispatch("0,0", "Dwarf", 1,1,0,1,67,true);
 	trUnitSelectClear();
@@ -924,6 +1014,9 @@ void MainTitle(int x = 0, int z = 0){
 	trUnitSelectClear();
 	trUnitSelect(""+a);
 	trUnitSetAnimationPath("0,2,0,0,0");
+	xAddDatabaseBlock(dDestroyMe, true);
+	xSetInt(dDestroyMe, xDestroyName, a);
+	xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+5000);
 	a = trGetNextUnitScenarioNameNumber();
 	trArmyDispatch("0,0", "Dwarf", 1,1,0,1,0,true);
 	trUnitSelectClear();
@@ -935,6 +1028,9 @@ void MainTitle(int x = 0, int z = 0){
 	trUnitSelectClear();
 	trUnitSelect(""+a);
 	trUnitSetAnimationPath("0,2,0,0,0");
+	xAddDatabaseBlock(dDestroyMe, true);
+	xSetInt(dDestroyMe, xDestroyName, a);
+	xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+5000);
 	a = trGetNextUnitScenarioNameNumber();
 	trArmyDispatch("0,0", "Dwarf", 1,1,0,1,90,true);
 	trUnitSelectClear();
@@ -946,6 +1042,9 @@ void MainTitle(int x = 0, int z = 0){
 	trUnitSelectClear();
 	trUnitSelect(""+a);
 	trUnitSetAnimationPath("0,2,0,0,0");
+	xAddDatabaseBlock(dDestroyMe, true);
+	xSetInt(dDestroyMe, xDestroyName, a);
+	xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+5000);
 	a = trGetNextUnitScenarioNameNumber();
 	trArmyDispatch("0,0", "Dwarf", 1,1,0,1,135,true);
 	trUnitSelectClear();
@@ -957,6 +1056,9 @@ void MainTitle(int x = 0, int z = 0){
 	trUnitSelectClear();
 	trUnitSelect(""+a);
 	trUnitSetAnimationPath("0,2,0,0,0");
+	xAddDatabaseBlock(dDestroyMe, true);
+	xSetInt(dDestroyMe, xDestroyName, a);
+	xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+5000);
 	a = trGetNextUnitScenarioNameNumber();
 	trArmyDispatch("0,0", "Dwarf", 1,1,0,1,45,true);
 	trUnitSelectClear();
@@ -968,6 +1070,9 @@ void MainTitle(int x = 0, int z = 0){
 	trUnitSelectClear();
 	trUnitSelect(""+a);
 	trUnitSetAnimationPath("0,2,0,0,0");
+	xAddDatabaseBlock(dDestroyMe, true);
+	xSetInt(dDestroyMe, xDestroyName, a);
+	xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+5000);
 	a = trGetNextUnitScenarioNameNumber();
 	trArmyDispatch("0,0", "Dwarf", 1,1,0,1,90,true);
 	trUnitSelectClear();
@@ -979,6 +1084,9 @@ void MainTitle(int x = 0, int z = 0){
 	trUnitSelectClear();
 	trUnitSelect(""+a);
 	trUnitSetAnimationPath("0,2,0,0,0");
+	xAddDatabaseBlock(dDestroyMe, true);
+	xSetInt(dDestroyMe, xDestroyName, a);
+	xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+5000);
 	
 	
 }

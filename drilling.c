@@ -823,4 +823,18 @@ void UngarrisonDrill(int p = 1){
 		trUnitChangeProtoUnit("Meteor Impact Ground");
 		trUnitDestroy();
 	}
+	if(trPlayerUnitCountSpecific(cNumberNonGaiaPlayers, "Invisible Wall") <= 20){
+		for(a = 1; < cNumberNonGaiaPlayers){
+			xSetPointer(dPlayerData, a);
+			if (xGetInt(dPlayerData, xBonus+15) == 0){
+				xSetInt(dPlayerData, xBonus+15, 1);
+				if(trCurrentPlayer() == a){
+					ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked (15)!");
+				}
+			}
+		}
+		saveAllData();
+		trOverlayText("Entire planet drilled!", 4.0, 579, 350, 1000);
+		playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
+	}
 }

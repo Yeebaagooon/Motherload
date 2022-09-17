@@ -40,7 +40,7 @@ string stageName(int stage = 0) {
 		}
 		case 10:
 		{
-			name = "The Goodship Saucy Gibbon";
+			name = "Mr. Natas' Ship";
 		}
 	}
 	return(name);
@@ -614,7 +614,7 @@ int npcDiag(int npc = 0, int dialog = 0) {
 					uiZoomToProto("Hero Greek Atalanta");
 					xSetPointer(dPlayerData, p);
 					if(xGetInt(dPlayerData, xStageUnlocked) == 7){
-						uiMessageBox("To unlock the final planet - condition here.");
+						uiMessageBox("To unlock the final planet - make 350 profit here.");
 					}
 					dialog = 0;
 				}
@@ -651,6 +651,26 @@ int npcDiag(int npc = 0, int dialog = 0) {
 					if(xGetInt(dPlayerData, xStageUnlocked) == 8){
 						uiMessageBox("THERE IS NOTHING TO SEE OR MINE HERE!");
 					}
+					dialog = 0;
+				}
+			}
+		}
+		case 23:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("MWAHAHAHA!");
+				}
+				case 2:
+				{
+					uiMessageBox("YOU SHALL NEVER SUCCEED.");
+				}
+				case 3:
+				{
+					uiZoomToProto("Hero Greek Atalanta");
+					uiMessageBox("MY RICHES ARE MINE!");
 					dialog = 0;
 				}
 			}
@@ -1130,7 +1150,7 @@ int npcDiag(int npc = 0, int dialog = 0) {
 			{
 				case 1:
 				{
-					uiMessageBox("Adds 20 seconds to every stage you play.");
+					uiMessageBox("Adds 30 seconds to every stage you play.");
 				}
 				case 2:
 				{
@@ -1150,6 +1170,51 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				case 2:
 				{
 					trShowChoiceDialog("Equip?", "Yes", 34, "No", -1);
+					dialog = 0;
+				}
+			}
+		}
+		case 713:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Gives your ship an additional 5 speed when on a planet.");
+				}
+				case 2:
+				{
+					trShowChoiceDialog("Equip?", "Yes", 35, "No", -1);
+					dialog = 0;
+				}
+			}
+		}
+		case 714:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Grants one use of an extremely powerful directional mining laser each round.");
+				}
+				case 2:
+				{
+					trShowChoiceDialog("Equip?", "Yes", 36, "No", -1);
+					dialog = 0;
+				}
+			}
+		}
+		case 715:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Grants one use of an extremely powerful antimatter bomb each round.");
+				}
+				case 2:
+				{
+					trShowChoiceDialog("Equip?", "Yes", 37, "No", -1);
 					dialog = 0;
 				}
 			}

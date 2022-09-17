@@ -6,10 +6,10 @@
 
 
 //---Test controls
-int QuickStart = 1;
-int QuickStage = 9;
-bool OverrideSP = true;
-bool OverrideStage = true;
+int QuickStart = 0;
+int QuickStage = 0;
+bool OverrideSP = false;
+bool OverrideStage = false;
 
 //---
 int Stage = 0;
@@ -185,9 +185,12 @@ highFrequency
 	trQuestVarSet("DrillCostL7", 500);
 	trQuestVarSet("DrillPowerL7", 400);
 	trStringQuestVarSet("DrillL7", "Nanotech Drill");
-	trQuestVarSet("DrillCostL8", 10000);
-	trQuestVarSet("DrillPowerL8", 400);
-	trStringQuestVarSet("DrillL8", "NOT MADE YET");
+	trQuestVarSet("DrillCostL8", 500);
+	trQuestVarSet("DrillPowerL8", 500);
+	trStringQuestVarSet("DrillL8", "Plasma Drill");
+	trQuestVarSet("DrillCostL9", 10000);
+	trQuestVarSet("DrillPowerL9", 400);
+	trStringQuestVarSet("DrillL9", "NOT MADE YET");
 	
 	//HULL UPGRADES
 	trQuestVarSet("HullCostL2", 10);
@@ -200,7 +203,7 @@ highFrequency
 	trStringQuestVarSet("HullL3", "Aluminium hull");
 	trQuestVarSet("HullCostL4", 100);
 	trQuestVarSet("HullHPL4", 1000);
-	trStringQuestVarSet("HullL4", "Titanium hull");
+	trStringQuestVarSet("HullL4", "Tritanium hull");
 	trQuestVarSet("HullCostL5", 150);
 	trQuestVarSet("HullHPL5", 1750);
 	trStringQuestVarSet("HullL5", "Carbon fibre hull");
@@ -210,9 +213,12 @@ highFrequency
 	trQuestVarSet("HullCostL7", 500);
 	trQuestVarSet("HullHPL7", 5000);
 	trStringQuestVarSet("HullL7", "Electromagnetic hull");
-	trQuestVarSet("HullCostL8", 10000);
-	trQuestVarSet("HullHPL8", 5000);
-	trStringQuestVarSet("HullL8", "NOT MADE YET");
+	trQuestVarSet("HullCostL8", 500);
+	trQuestVarSet("HullHPL8", 7000);
+	trStringQuestVarSet("HullL8", "Dimondium hull");
+	trQuestVarSet("HullCostL9", 10000);
+	trQuestVarSet("HullHPL9", 5000);
+	trStringQuestVarSet("HullL9", "NOT MADE YET");
 	
 	//Fuel UPGRADES
 	trQuestVarSet("FuelCostL2", 10);
@@ -235,9 +241,12 @@ highFrequency
 	trQuestVarSet("FuelCostL7", 400);
 	trQuestVarSet("FuelCL7", 4000);
 	trStringQuestVarSet("FuelL7", "Oceanic tank");
-	trQuestVarSet("FuelCostL8", 10000);
-	trQuestVarSet("FuelCL8", 4000);
-	trStringQuestVarSet("FuelL8", "NOT MADE YET");
+	trQuestVarSet("FuelCostL8", 400);
+	trQuestVarSet("FuelCL8", 5000);
+	trStringQuestVarSet("FuelL8", "Whirlpool extraction tank");
+	trQuestVarSet("FuelCostL9", 10000);
+	trQuestVarSet("FuelCL9", 4000);
+	trStringQuestVarSet("FuelL9", "NOT MADE YET");
 	
 	//Cargo UPGRADES
 	trQuestVarSet("CargoCostL2", 10);
@@ -260,9 +269,12 @@ highFrequency
 	trQuestVarSet("CargoCostL7", 230);
 	trQuestVarSet("CargoCL7", 9);
 	trStringQuestVarSet("CargoL7", "4D Hold");
-	trQuestVarSet("CargoCostL8", 10000);
-	trQuestVarSet("CargoCL8", 9);
-	trStringQuestVarSet("CargoL8", "NOT MADE YET");
+	trQuestVarSet("CargoCostL8", 300);
+	trQuestVarSet("CargoCL8", 10);
+	trStringQuestVarSet("CargoL8", "Singularity Hold");
+	trQuestVarSet("CargoCostL9", 10000);
+	trQuestVarSet("CargoCL9", 9);
+	trStringQuestVarSet("CargoL9", "NOT MADE YET");
 	
 	//Engine UPGRADES
 	trQuestVarSet("EngineCostL2", 10);
@@ -285,9 +297,12 @@ highFrequency
 	trQuestVarSet("EngineCostL7", 330);
 	trQuestVarSet("EngineCL7", 180);
 	trStringQuestVarSet("EngineL7", "Megalodongnaw engine");
-	trQuestVarSet("EngineCostL8", 10000);
-	trQuestVarSet("EngineCL8", 180);
-	trStringQuestVarSet("EngineL8", "NOT MADE YET");
+	trQuestVarSet("EngineCostL8", 350);
+	trQuestVarSet("EngineCL8", 200);
+	trStringQuestVarSet("EngineL8", "Squidpull engine");
+	trQuestVarSet("EngineCostL9", 10000);
+	trQuestVarSet("EngineCL9", 180);
+	trStringQuestVarSet("EngineL9", "NOT MADE YET");
 	
 	//Radiator UPGRADES
 	trQuestVarSet("RadiatorCostL2", 10);
@@ -310,7 +325,10 @@ highFrequency
 	trQuestVarSet("RadiatorCostL7", 200);
 	trQuestVarSet("RadiatorCL7", 50);
 	trStringQuestVarSet("RadiatorL7", "Equilibrium Radiator");
-	trQuestVarSet("RadiatorCostL8", 10000);
-	trQuestVarSet("RadiatorCL8", 50);
-	trStringQuestVarSet("RadiatorL8", "NOT MADE YET");
+	trQuestVarSet("RadiatorCostL8", 400);
+	trQuestVarSet("RadiatorCL8", 60);
+	trStringQuestVarSet("RadiatorL8", "Thermal dissipation radiator");
+	trQuestVarSet("RadiatorCostL9", 10000);
+	trQuestVarSet("RadiatorCL9", 50);
+	trStringQuestVarSet("RadiatorL9", "NOT MADE YET");
 }
