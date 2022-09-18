@@ -486,13 +486,13 @@ void Apply_Bonus(int s = -1){
 			trModifyProtounit("Hero Greek Atalanta", p, 1, 5);
 		}
 		if(xGetInt(dPlayerData, xBonus+14) == 2){
-			grantGodPowerNoRechargeNextPosition(p, "Underworld Passage", 1);
+			grantGodPowerNoRechargeNextPosition(p, "Earth Dragon", 1);
 			ColouredChatToPlayer(p, "1,0.5,0", "Mining laser equipped (L key to use)");
 			ColouredChatToPlayer(p, "1,0.5,0", "DIRECTIONAL - mines 10 tiles in the target direction");
 			ColouredChatToPlayer(p, "1,0.5,0", "Use like dynamite - have the cursor next to your ship");
 		}
 		if(xGetInt(dPlayerData, xBonus+15) == 2){
-			grantGodPowerNoRechargeNextPosition(p, "Vision", 1);
+			grantGodPowerNoRechargeNextPosition(p, "Underworld Passage", 1);
 			ColouredChatToPlayer(p, "1,0.5,0", "Antimatter bomb equipped (A key to use)");
 			ColouredChatToPlayer(p, "1,0.5,0", "Blasts 5x5 squares around you when used.");
 		}

@@ -1544,6 +1544,8 @@ void SPCineOption(){
 	trUnitSelect(""+CinematicObelisk);
 	trUnitChangeProtoUnit("Outpost");
 	trUnitSelectClear();
+	trUnitSelect(""+CinematicObelisk);
+	trUnitTeleport(2,0,2);
 	xAddDatabaseBlock(dSelectables, true);
 	xSetInt(dSelectables, xSelectablesName, 1*CinematicObelisk);
 	xSetInt(dSelectables, xSelectablesPrompt, 99);

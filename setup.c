@@ -40,8 +40,8 @@ runImmediately
 	map("e", "game", "uiSetSpecialPower(156) uiSpecialPowerAtPointer");
 	map("r", "game", "uiSetSpecialPower(234) uiSpecialPowerAtPointer");
 	//special powers
-	map("l", "game", "uiSetSpecialPower(133) uiSpecialPowerAtPointer");
-	map("a", "game", "uiSetSpecialPower(220) uiSpecialPowerAtPointer");
+	map("l", "game", "uiSetSpecialPower(557) uiSpecialPowerAtPointer");
+	map("a", "game", "uiSetSpecialPower(133) uiSpecialPowerAtPointer");
 }
 
 rule START
@@ -657,12 +657,12 @@ void PaintPlanets(int x = 0, int z = 0, int offsetearth = 0){
 	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVHero"));
 	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 9);
 	//NATAS
-	if((Stage != 9) && (xGetInt(dPlayerData, xStageUnlocked) >= 9)){
+	if(((Stage != 9) && (xGetInt(dPlayerData, xStageUnlocked) >= 9) && (aiIsMultiplayer() == true))){
 		int a = trGetNextUnitScenarioNameNumber();
 		trArmyDispatch(""+cNumberNonGaiaPlayers+",0","Dwarf",1,160,0,60,270,true);
 		trUnitSelectClear();
 		trUnitSelect(""+a, true);
-		//Mr Natas Spaceship
+		//Mr Natas Spaceship - make floating building instead
 		trUnitChangeProtoUnit("Phoenix");
 		spyEffect(a, kbGetProtoUnitID("Sky Passage"), vector(0,0,0), vector(1,1,1));
 		spyEffect(a, kbGetProtoUnitID("Fire Ship Atlantean"), vector(0,0,0), vector(2,2,2));

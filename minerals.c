@@ -543,12 +543,14 @@ void spawnRelicSpecific(vector v = vector (0,0,0), int val = 1){
 
 void reselectMyself(int p = 0) {
 	if(trCurrentPlayer() == p){
+		trBlockAllSounds();
 		uiClearSelection();
 		trackInsert();
 		trackAddWaypoint();
 		trackAddWaypoint();
 		uiFindType(kbGetProtoUnitName(554));
 		trackPlay(1,999);
+		trUnblockAllSounds();
 	}
 	
 }

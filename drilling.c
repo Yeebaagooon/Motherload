@@ -288,6 +288,211 @@ highFrequency
 	}
 }
 
+rule EarthDragon
+active
+highFrequency
+{
+	for(p = 1; <= cNumberNonGaiaPlayers){
+		if (trPlayerUnitCountSpecific(p, "Earth Dragon") == 1) {
+			yFindLatestReverse("p"+p+"DragonObject", "Earth Dragon", p);
+			trVectorSetUnitPos("BombVector"+p+"", "p"+p+"DragonObject", true);
+			trMutateSelected(kbGetProtoUnitID("Rocket"));
+			trVectorSnapToGrid("BombVector"+p+"");
+			int Col = (trVectorQuestVarGetX("BombVector"+p+"") ) / 8 +1;
+			int Row = (trVectorQuestVarGetZ("BombVector"+p+"") ) / 8 +1;
+			//trChatSend(0, "TRow" + Row);
+			//trChatSend(0, "TCol" + Col);
+			trVectorSetUnitPos("SiphonPos"+p+"", "P"+p+"Siphon");
+			trVectorSnapToGrid("SiphonPos"+p+"");
+			int startCol = (trVectorQuestVarGetX("SiphonPos"+p+"") ) / 8 +1;
+			int startRow = (trVectorQuestVarGetZ("SiphonPos"+p+"") ) / 8 +1;
+			unitTransform("Earth Dragon Hole", "Rocket");
+			//trChatSend(0, "SRow" + startRow);
+			//trChatSend(0, "SCol" + startCol);
+			//VALIDITY CHECKS
+			if(Row > MaxRows){
+				trChatSendToPlayer(0, p, "<color=1,0,0>Cannot use laser here!</color>");
+				if(trCurrentPlayer() == p){
+					trSoundPlayFN("cantdothat.wav","1",-1,"","");
+				}
+				grantGodPowerNoRechargeNextPosition(p, "Earth Dragon", 1);
+				break;
+			}
+			if((Row == startRow) && (Col == startCol)){
+				trChatSendToPlayer(0, p, "<color=1,0,0>Laser error - no direction. Use adjacent to your ship.</color>");
+				if(trCurrentPlayer() == p){
+					trSoundPlayFN("cantdothat.wav","1",-1,"","");
+				}
+				grantGodPowerNoRechargeNextPosition(p, "Earth Dragon", 1);
+				break;
+			}
+			//Direction calculate
+			if(((xsMax(Row,startRow)-xsMin(Row,startRow) == 0) && (xsMax(Col,startCol)-xsMin(Col,startCol) == 1)) || ((xsMax(Row,startRow)-xsMin(Row,startRow) == 1) && (xsMax(Col,startCol)-xsMin(Col,startCol) == 0))){
+				if(Row-startRow == 0){
+					if((Col-startCol) == 1){
+						MineSquare(Row, Col);
+						MineSquare(Row, Col+1);
+						RemoveBlack(Row, Col);
+						RemoveBlack(Row, Col+1);
+						RemoveBlack(Row, Col-1);
+						for(d=2 ; <= 10){
+							MineSquare(Row, Col+d);
+							RemoveBlack(Row, Col+d);
+						}
+					}
+					if((Col-startCol) == -1){
+						MineSquare(Row, Col);
+						MineSquare(Row, Col-1);
+						RemoveBlack(Row, Col);
+						RemoveBlack(Row, Col-1);
+						RemoveBlack(Row, Col+1);
+						for(d=2 ; <= 10){
+							MineSquare(Row, Col-d);
+							RemoveBlack(Row, Col-d);
+						}
+					}
+				}
+				else if(Col-startCol == 0){
+					if((Row-startRow) == 1){
+						MineSquare(Row, Col);
+						MineSquare(Row+1, Col);
+						RemoveBlack(Row, Col);
+						RemoveBlack(Row+1, Col);
+						RemoveBlack(Row-1, Col);
+						for(d=2 ; <= 10){
+							MineSquare(Row+d, Col);
+							RemoveBlack(Row+d, Col);
+						}
+					}
+					if((Row-startRow) == -1){
+						MineSquare(Row, Col);
+						MineSquare(Row+1, Col);
+						RemoveBlack(Row, Col);
+						RemoveBlack(Row-1, Col);
+						RemoveBlack(Row+1, Col);
+						for(d=2 ; <= 10){
+							MineSquare(Row-d, Col);
+							RemoveBlack(Row-d, Col);
+						}
+					}
+				}
+				if(trCurrentPlayer() == p){
+					playSoundCustom("cinematics\32_out\doorseal.wav", "\Yeebaagooon\Motherload\Laser.mp3");
+					playSoundCustom("cinematics\32_out\explosion.wav", "");
+					playSoundCustom("cinematics\32_out\bigfire.wav", "");
+					playSoundCustom("cinematics\32_out\hammerglow.wav", "");
+				}
+				int a = trGetNextUnitScenarioNameNumber();
+				if((Row-startRow) != 0){
+					trArmyDispatch("0,0","Dwarf",1,1,0,1,0,true);
+				}
+				if((Col-startCol) != 0){
+					trArmyDispatch("0,0","Dwarf",1,1,0,1,90,true);
+				}
+				trUnitSelectClear();
+				trUnitSelect(""+a);
+				trUnitTeleport(trVectorQuestVarGetX("P"+p+"Pos"),4,trVectorQuestVarGetZ("P"+p+"Pos"));
+				trUnitSelectClear();
+				trUnitSelect(""+a);
+				trUnitChangeProtoUnit("Petosuchus Projectile");
+				trUnitSelectClear();
+				trUnitSelect(""+a);
+				if((Row-startRow) == -1){
+					trSetSelectedScale(40,4,100);
+				}
+				if((Row-startRow) == 1){
+					trSetSelectedScale(40,4,-100);
+				}
+				if((Col-startCol) == -1){
+					trSetSelectedScale(40,4,100);
+					//L
+				}
+				if((Col-startCol) == 1){
+					trSetSelectedScale(40,4,-100);
+					//R
+				}
+				trUnitSelectClear();
+				trUnitSelect(""+a);
+				trUnitHighlight(5.0, false);
+				xAddDatabaseBlock(dDestroyMe, true);
+				xSetInt(dDestroyMe, xDestroyName, a);
+				xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+1500);
+				a = trGetNextUnitScenarioNameNumber();
+				trArmyDispatch("0,0","Dwarf",1,1,0,1,0,true);
+				trUnitSelectClear();
+				trUnitSelect(""+a);
+				
+				if((Row-startRow) == -1){
+					trUnitTeleport(trVectorQuestVarGetX("P"+p+"Pos"),4,1*trVectorQuestVarGetZ("P"+p+"Pos")+8);
+				}
+				if((Row-startRow) == 1){
+					trUnitTeleport(trVectorQuestVarGetX("P"+p+"Pos"),4,1*trVectorQuestVarGetZ("P"+p+"Pos")-8);
+				}
+				if((Col-startCol) == -1){
+					trUnitTeleport(1*trVectorQuestVarGetX("P"+p+"Pos")+8,4,1*trVectorQuestVarGetZ("P"+p+"Pos"));
+					//L
+				}
+				if((Col-startCol) == 1){
+					trUnitTeleport(1*trVectorQuestVarGetX("P"+p+"Pos")-8,4,1*trVectorQuestVarGetZ("P"+p+"Pos"));
+					//R
+				}
+				//trUnitTeleport(1*trVectorQuestVarGetX("P"+p+"Pos"),4,1*trVectorQuestVarGetZ("P"+p+"Pos"));
+				trUnitSelectClear();
+				trUnitSelect(""+a);
+				trUnitChangeProtoUnit("Meteorite");
+				trUnitSelectClear();
+				trUnitSelect(""+a);
+				trUnitOverrideAnimation(6,0,false,false,-1,-1);
+				trUnitSelectClear();
+				trUnitSelect(""+a);
+				trSetSelectedScale(0,0,0);
+				trUnitSelectClear();
+				trUnitSelect(""+a);
+				if((Row-startRow) == -1){
+					trSetSelectedUpVector(0,0,-15);
+				}
+				if((Row-startRow) == 1){
+					trSetSelectedUpVector(0,0,15);
+				}
+				if((Col-startCol) == -1){
+					trSetSelectedUpVector(-15,0,0);
+					//L
+				}
+				if((Col-startCol) == 1){
+					trSetSelectedUpVector(15,0,0);
+					//R
+				}
+				trUnitSelectClear();
+				trUnitSelect(""+a);
+				trUnitHighlight(5.0, false);
+				xAddDatabaseBlock(dDestroyMe, true);
+				xSetInt(dDestroyMe, xDestroyName, a);
+				xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+3500);
+				//effect
+				/*
+				it's very simple
+				just toss them in a database
+				with a variable that keeps track of their timeout
+				like trTimeMS() + 1000
+				and then set their scale to be a fraction of that
+				(timeout - current time) / lifespan
+				well, more like
+				0.001 * (timeout - current time)
+				since you want it to be a float
+				*/
+				break;
+			}
+			else{
+				trChatSendToPlayer(0, p, "<color=1,0,0>Laser error - target too far. Use adjacent to your ship.</color>");
+				if(trCurrentPlayer() == p){
+					trSoundPlayFN("cantdothat.wav","1",-1,"","");
+				}
+				grantGodPowerNoRechargeNextPosition(p, "Earth Dragon", 1);
+			}
+		}
+	}
+}
+
 rule AudreyL2
 inactive
 highFrequency

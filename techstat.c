@@ -54,6 +54,7 @@ highFrequency
 		trModifyProtounit("Meteorite", p, 8, 4);
 		trModifyProtounit("Animal Attractor", p, 2, -40);
 		trModifyProtounit("Animal Attractor", p, 55, 4);
+		trModifyProtounit("Earth Dragon", p, 55, 4);
 		trModifyProtounit("Wadjet Spit", p, 8, -1000);
 		trModifyProtounit("Hero Greek Atalanta", p, 1, 10);
 		xSetPointer(dPlayerData, p);

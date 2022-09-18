@@ -46,7 +46,9 @@ void PaintSP(){
 			if(z == RELIC_URANIUM){
 				trMutateSelected(kbGetProtoUnitID("Medusa"));
 				trUnitSelectByQV("RelicEffect"+z);
+				trBlockAllSounds();
 				trUnitOverrideAnimation(40,0,true,true,-1,0);
+				trUnblockAllSounds();
 				trUnitSelectByQV("RelicEffect"+z);
 				trSetSelectedScale(0.001,0.5,0);
 			}
@@ -214,6 +216,194 @@ void PaintSP(){
 	}
 }
 
+void UpgradeEffect(int u = 0){
+	xsSetContextPlayer(0);
+	if((u == 2) || (u == 5)){
+		trQuestVarSet("Path"+u+"", 12);
+	}
+	else {
+		trQuestVarSet("Path"+u+"", 15);
+	}
+}
+
+rule UpgradeSFX
+inactive
+highFrequency
+{
+	if(trTimeMS() > 1*trQuestVarGet("100MS")){
+		trQuestVarModify("100MS", "+", 100);
+		int a = 0;
+		if(1*trQuestVarGet("Path1") == 15){
+			trQuestVarSet("1X",47);
+			trQuestVarSet("1Z",39);
+		}
+		if(1*trQuestVarGet("Path1") >= 1){
+			a = trGetNextUnitScenarioNameNumber();
+			trArmyDispatch("0,0", "Dwarf", 1, 1,1,1, 0, true);
+			trUnitSelectClear();
+			trUnitSelect(""+a);
+			trUnitTeleport(1*trQuestVarGet("1X"),3,1*trQuestVarGet("1Z"));
+			trUnitSelectClear();
+			trUnitSelect(""+a);
+			trUnitChangeProtoUnit("Lampades Bolt");
+			if(1*trQuestVarGet("Path1") >= 9){
+				trQuestVarModify("1X", "+", 2);
+			}
+			else if((1*trQuestVarGet("Path1") >= 5) && (1*trQuestVarGet("Path1") < 9)){
+				trQuestVarModify("1Z", "-", 2);
+			}
+			else if((1*trQuestVarGet("Path1") >= 3) && (1*trQuestVarGet("Path1") < 5)){
+				trQuestVarModify("1X", "+", 2);
+			}
+			else if(1*trQuestVarGet("Path1") <= 2){
+				trQuestVarModify("1X", "+", 2);
+				trQuestVarModify("1Z", "-", 2);
+			}
+			trQuestVarModify("Path1", "-", 1);
+			if(1*trQuestVarGet("Path1") == 0){
+				trUnitSelectByQV("MainSiphon");
+				trUnitHighlight(1.0, false);
+			}
+		}
+		if(1*trQuestVarGet("Path2") == 12){
+			trQuestVarSet("2X",47);
+			trQuestVarSet("2Z",29);
+		}
+		if(1*trQuestVarGet("Path2") >= 1){
+			a = trGetNextUnitScenarioNameNumber();
+			trArmyDispatch("0,0", "Dwarf", 1, 1,1,1, 0, true);
+			trUnitSelectClear();
+			trUnitSelect(""+a);
+			trUnitTeleport(1*trQuestVarGet("2X"),3,1*trQuestVarGet("2Z"));
+			trUnitSelectClear();
+			trUnitSelect(""+a);
+			trUnitChangeProtoUnit("Lampades Bolt");
+			trQuestVarModify("2X", "+", 2);
+			trQuestVarModify("Path2", "-", 1);
+			if(1*trQuestVarGet("Path2") == 0){
+				trUnitSelectByQV("MainSiphon");
+				trUnitHighlight(1.0, false);
+			}
+		}
+		if(1*trQuestVarGet("Path3") == 15){
+			trQuestVarSet("3X",47);
+			trQuestVarSet("3Z",19);
+		}
+		if(1*trQuestVarGet("Path3") >= 1){
+			a = trGetNextUnitScenarioNameNumber();
+			trArmyDispatch("0,0", "Dwarf", 1, 1,1,1, 0, true);
+			trUnitSelectClear();
+			trUnitSelect(""+a);
+			trUnitTeleport(1*trQuestVarGet("3X"),3,1*trQuestVarGet("3Z"));
+			trUnitSelectClear();
+			trUnitSelect(""+a);
+			trUnitChangeProtoUnit("Lampades Bolt");
+			if(1*trQuestVarGet("Path3") >= 9){
+				trQuestVarModify("3X", "+", 2);
+			}
+			else if((1*trQuestVarGet("Path3") >= 5) && (1*trQuestVarGet("Path3") < 9)){
+				trQuestVarModify("3Z", "+", 2);
+			}
+			else if((1*trQuestVarGet("Path3") >= 3) && (1*trQuestVarGet("Path3") < 5)){
+				trQuestVarModify("3X", "+", 2);
+			}
+			else if(1*trQuestVarGet("Path3") <= 2){
+				trQuestVarModify("3X", "+", 2);
+				trQuestVarModify("3Z", "+", 2);
+			}
+			trQuestVarModify("Path3", "-", 1);
+			if(1*trQuestVarGet("Path3") == 0){
+				trUnitSelectByQV("MainSiphon");
+				trUnitHighlight(1.0, false);
+			}
+		}
+		if(1*trQuestVarGet("Path4") == 15){
+			trQuestVarSet("4X",91);
+			trQuestVarSet("4Z",39);
+		}
+		if(1*trQuestVarGet("Path4") >= 1){
+			a = trGetNextUnitScenarioNameNumber();
+			trArmyDispatch("0,0", "Dwarf", 1, 1,1,1, 0, true);
+			trUnitSelectClear();
+			trUnitSelect(""+a);
+			trUnitTeleport(1*trQuestVarGet("4X"),3,1*trQuestVarGet("4Z"));
+			trUnitSelectClear();
+			trUnitSelect(""+a);
+			trUnitChangeProtoUnit("Lampades Bolt");
+			if(1*trQuestVarGet("Path4") >= 9){
+				trQuestVarModify("4X", "-", 2);
+			}
+			else if((1*trQuestVarGet("Path4") >= 5) && (1*trQuestVarGet("Path4") < 9)){
+				trQuestVarModify("4Z", "-", 2);
+			}
+			else if((1*trQuestVarGet("Path4") >= 3) && (1*trQuestVarGet("Path4") < 5)){
+				trQuestVarModify("4X", "-", 2);
+			}
+			else if(1*trQuestVarGet("Path4") <= 2){
+				trQuestVarModify("4X", "-", 2);
+				trQuestVarModify("4Z", "-", 2);
+			}
+			trQuestVarModify("Path4", "-", 1);
+			if(1*trQuestVarGet("Path4") == 0){
+				trUnitSelectByQV("MainSiphon");
+				trUnitHighlight(1.0, false);
+			}
+		}
+		if(1*trQuestVarGet("Path5") == 12){
+			trQuestVarSet("5X",91);
+			trQuestVarSet("5Z",29);
+		}
+		if(1*trQuestVarGet("Path5") >= 1){
+			a = trGetNextUnitScenarioNameNumber();
+			trArmyDispatch("0,0", "Dwarf", 1, 1,1,1, 0, true);
+			trUnitSelectClear();
+			trUnitSelect(""+a);
+			trUnitTeleport(1*trQuestVarGet("5X"),3,1*trQuestVarGet("5Z"));
+			trUnitSelectClear();
+			trUnitSelect(""+a);
+			trUnitChangeProtoUnit("Lampades Bolt");
+			trQuestVarModify("5X", "-", 2);
+			trQuestVarModify("Path5", "-", 1);
+			if(1*trQuestVarGet("Path5") == 0){
+				trUnitSelectByQV("MainSiphon");
+				trUnitHighlight(1.0, false);
+			}
+		}
+		if(1*trQuestVarGet("Path6") == 15){
+			trQuestVarSet("6X",91);
+			trQuestVarSet("6Z",19);
+		}
+		if(1*trQuestVarGet("Path6") >= 1){
+			a = trGetNextUnitScenarioNameNumber();
+			trArmyDispatch("0,0", "Dwarf", 1, 1,1,1, 0, true);
+			trUnitSelectClear();
+			trUnitSelect(""+a);
+			trUnitTeleport(1*trQuestVarGet("6X"),3,1*trQuestVarGet("6Z"));
+			trUnitSelectClear();
+			trUnitSelect(""+a);
+			trUnitChangeProtoUnit("Lampades Bolt");
+			if(1*trQuestVarGet("Path6") >= 9){
+				trQuestVarModify("6X", "-", 2);
+			}
+			else if((1*trQuestVarGet("Path6") >= 5) && (1*trQuestVarGet("Path6") < 9)){
+				trQuestVarModify("6Z", "+", 2);
+			}
+			else if((1*trQuestVarGet("Path6") >= 3) && (1*trQuestVarGet("Path6") < 5)){
+				trQuestVarModify("6X", "-", 2);
+			}
+			else if(1*trQuestVarGet("Path6") <= 2){
+				trQuestVarModify("6X", "-", 2);
+				trQuestVarModify("6Z", "+", 2);
+			}
+			trQuestVarModify("Path6", "-", 1);
+			if(1*trQuestVarGet("Path6") == 0){
+				trUnitSelectByQV("MainSiphon");
+				trUnitHighlight(1.0, false);
+			}
+		}
+	}
+}
+
 rule LoadSP
 inactive
 highFrequency
@@ -222,7 +412,9 @@ highFrequency
 	trSetFogAndBlackmap(false, false);
 	xsDisableSelf();
 	//xsEnableRule("SPCineChoice");
+	xsEnableRule("UpgradeSFX");
 	PaintSP();
+	trQuestVarSet("MainSiphon", trGetNextUnitScenarioNameNumber());
 	UnitCreate(0, "Fire Siphon", 68, 28, 180); //main siphon
 	trQuestVarSet("ExitYeeb", trGetNextUnitScenarioNameNumber());
 	UnitCreate(1, "Pharaoh of Osiris XP", 68, 20, 180); //Player Unit
@@ -531,6 +723,8 @@ void UpgradeDrill(int p = -1){
 	trChatHistoryClear();
 	trChatSend(0, "<u><color=1,1,1>Drill Upgraded:</color></u>");
 	trChatSend(0, trStringQuestVarGet("DrillL"+1*trQuestVarGet("CurrentDrillL")+"") + " "+1*xGetFloat(dPlayerData, xDrillPower)+" m/s");
+	playSoundCustom("ageadvance.wav", "\Yeebaagooon\Motherload\Upgrade.mp3");
+	UpgradeEffect(1);
 }
 
 void UpgradeHull(int p = -1){
@@ -548,6 +742,8 @@ void UpgradeHull(int p = -1){
 	trChatHistoryClear();
 	trChatSend(0, "<u><color=1,1,1>Hull Upgraded:</color></u>");
 	trChatSend(0, trStringQuestVarGet("HullL"+1*trQuestVarGet("CurrentHullL")+"") + " "+1*xGetInt(dPlayerData, xHullHP)+" hp");
+	playSoundCustom("ageadvance.wav", "\Yeebaagooon\Motherload\Upgrade.mp3");
+	UpgradeEffect(2);
 }
 
 void UpgradeFuel(int p = -1){
@@ -565,6 +761,8 @@ void UpgradeFuel(int p = -1){
 	trChatHistoryClear();
 	trChatSend(0, "<u><color=1,1,1>Fuel Upgraded:</color></u>");
 	trChatSend(0, trStringQuestVarGet("FuelL"+1*trQuestVarGet("CurrentFuelL")+"") + " "+1*xGetInt(dPlayerData, xFuelTank)+" L");
+	playSoundCustom("ageadvance.wav", "\Yeebaagooon\Motherload\Upgrade.mp3");
+	UpgradeEffect(3);
 }
 
 void UpgradeCargo(int p = -1){
@@ -582,6 +780,8 @@ void UpgradeCargo(int p = -1){
 	trChatHistoryClear();
 	trChatSend(0, "<u><color=1,1,1>Cargo Upgraded:</color></u>");
 	trChatSend(0, trStringQuestVarGet("CargoL"+1*trQuestVarGet("CurrentCargoL")+"") + " "+1*xGetInt(dPlayerData, xCargoHold)+" minerals");
+	playSoundCustom("ageadvance.wav", "\Yeebaagooon\Motherload\Upgrade.mp3");
+	UpgradeEffect(4);
 }
 
 void UpgradeEngine(int p = -1){
@@ -599,6 +799,8 @@ void UpgradeEngine(int p = -1){
 	trChatHistoryClear();
 	trChatSend(0, "<u><color=1,1,1>Engine Upgraded:</color></u>");
 	trChatSend(0, trStringQuestVarGet("EngineL"+1*trQuestVarGet("CurrentEngineL")+"") + " "+1*xGetInt(dPlayerData, xEnginePower)+" kW");
+	playSoundCustom("ageadvance.wav", "\Yeebaagooon\Motherload\Upgrade.mp3");
+	UpgradeEffect(5);
 }
 
 void UpgradeRadiator(int p = -1){
@@ -616,6 +818,8 @@ void UpgradeRadiator(int p = -1){
 	trChatHistoryClear();
 	trChatSend(0, "<u><color=1,1,1>Radiator Upgraded:</color></u>");
 	trChatSend(0, trStringQuestVarGet("RadiatorL"+1*trQuestVarGet("CurrentRadiatorL")+"") + " "+1*xGetInt(dPlayerData, xRadiator)+" percent efficient");
+	playSoundCustom("ageadvance.wav", "\Yeebaagooon\Motherload\Upgrade.mp3");
+	UpgradeEffect(6);
 }
 
 rule SPLoops
@@ -641,9 +845,11 @@ highFrequency
 {
 	if((trTime()-cActivationTime) >= 1){
 		if(OverrideStage == true){
-			//xSetPointer(dPlayerData, 1);
-			//xSetInt(dPlayerData, xBonus+15, 1);
-			//saveAllData();
+			xSetPointer(dPlayerData, 1);
+			xSetInt(dPlayerData, xGold, 10000);
+			xSetInt(dPlayerData, xStageUnlocked, 9);
+			trQuestVarSet("CineStatus", 1);
+			saveAllData();
 		}
 		xsDisableSelf();
 		trEndGame();

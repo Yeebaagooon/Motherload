@@ -84,6 +84,8 @@ highFrequency
 	if((trTime()-cActivationTime) >= 1){
 		for(p = 1; < cNumberNonGaiaPlayers){
 			xSetPointer(dPlayerData, p);
+			//trQuestVarSet("P"+p+"RadiationResist", 1.00);
+			//trQuestVarModify("P"+p+"RadiationResist", "-", 0.05*xGetInt(dPlayerData, xRadiatorLevel));
 			if(xGetInt(dPlayerData, xPlayerActive) == 1){
 				trQuestVarSet("P"+p+"Siphon", trGetNextUnitScenarioNameNumber());
 				//VECTOR IS 2X+1
@@ -651,7 +653,7 @@ highFrequency
 				playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
 			}
 		}
-		if((Stage == 9) && (xGetInt(dPlayerData, xDepth) >= 7750)){
+		if((Stage == 9) && (xGetInt(dPlayerData, xDepth) > 7900)){
 			xsEnableRule("SednaWin");
 			xsDisableSelf();
 		}
