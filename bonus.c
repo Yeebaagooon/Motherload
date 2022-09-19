@@ -28,6 +28,15 @@ highFrequency
 				xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus1"));
 				xSetInt(dSelectables, xSelectablesPrompt, 701);
 			}
+			if(1*trQuestVarGet("CustomContent") == 0){
+				trUnitSelectByQV("Bonus1");
+				trUnitChangeProtoUnit("Outpost");
+				trUnitSelectByQV("Bonus1");
+				trSetSelectedScale(0.5,0.1,0.5);
+				xAddDatabaseBlock(dSelectables, true);
+				xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus1"));
+				xSetInt(dSelectables, xSelectablesPrompt, 731);
+			}
 		}
 		//Already unlcoked
 		if(xGetInt(dPlayerData, xBonus+2) != 0){
@@ -60,8 +69,15 @@ highFrequency
 				xAddDatabaseBlock(dSelectables, true);
 				xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus2"));
 				xSetInt(dSelectables, xSelectablesPrompt, 702);
-				//ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked (3)!");
-				//	playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
+			}
+			if(1*trQuestVarGet("CineStatus") == 0){
+				trUnitSelectByQV("Bonus2");
+				trUnitChangeProtoUnit("Outpost");
+				trUnitSelectByQV("Bonus2");
+				trSetSelectedScale(0.5,0.1,0.5);
+				xAddDatabaseBlock(dSelectables, true);
+				xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus2"));
+				xSetInt(dSelectables, xSelectablesPrompt, 732);
 			}
 		}
 		if(xGetInt(dPlayerData, xBonus+3) != 0){
@@ -79,6 +95,15 @@ highFrequency
 				trUnitChangeProtoUnit("Ramming Ship Greek");
 			}
 		}
+		if(xGetInt(dPlayerData, xBonus+3) == 0){
+			trUnitSelectByQV("Bonus3");
+			trUnitChangeProtoUnit("Outpost");
+			trUnitSelectByQV("Bonus3");
+			trSetSelectedScale(0.5,0.1,0.5);
+			xAddDatabaseBlock(dSelectables, true);
+			xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus3"));
+			xSetInt(dSelectables, xSelectablesPrompt, 733);
+		}
 		if(xGetInt(dPlayerData, xBonus+4) != 0){
 			trUnitSelectByQV("Bonus4");
 			trUnitChangeProtoUnit("Tent");
@@ -91,6 +116,15 @@ highFrequency
 				trUnitSelectByQV("BonusUnit");
 				trUnitChangeProtoUnit("Tent");
 			}
+		}
+		if(xGetInt(dPlayerData, xBonus+4) == 0){
+			trUnitSelectByQV("Bonus4");
+			trUnitChangeProtoUnit("Outpost");
+			trUnitSelectByQV("Bonus4");
+			trSetSelectedScale(0.5,0.1,0.5);
+			xAddDatabaseBlock(dSelectables, true);
+			xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus4"));
+			xSetInt(dSelectables, xSelectablesPrompt, 734);
 		}
 		if(xGetInt(dPlayerData, xBonus+5) != 0){
 			trUnitSelectByQV("Bonus5");
@@ -109,6 +143,15 @@ highFrequency
 				trUnitSetVariation(1*trQuestVarGet("BonusUnit"), 1);
 			}
 		}
+		if(xGetInt(dPlayerData, xBonus+5) == 0){
+			trUnitSelectByQV("Bonus5");
+			trUnitChangeProtoUnit("Outpost");
+			trUnitSelectByQV("Bonus5");
+			trSetSelectedScale(0.5,0.1,0.5);
+			xAddDatabaseBlock(dSelectables, true);
+			xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus5"));
+			xSetInt(dSelectables, xSelectablesPrompt, 735);
+		}
 		if(xGetInt(dPlayerData, xBonus+6) != 0){
 			trUnitSelectByQV("Bonus6");
 			trUnitChangeProtoUnit("Wall Connector");
@@ -122,6 +165,15 @@ highFrequency
 				trUnitChangeProtoUnit("Wall Connector");
 			}
 		}
+		if(xGetInt(dPlayerData, xBonus+6) == 0){
+			trUnitSelectByQV("Bonus6");
+			trUnitChangeProtoUnit("Outpost");
+			trUnitSelectByQV("Bonus6");
+			trSetSelectedScale(0.5,0.1,0.5);
+			xAddDatabaseBlock(dSelectables, true);
+			xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus6"));
+			xSetInt(dSelectables, xSelectablesPrompt, 736);
+		}
 		if(xGetInt(dPlayerData, xBonus+7) != 0){
 			trUnitSelectByQV("Bonus7");
 			trUnitChangeProtoUnit("Hero Ragnorok");
@@ -133,6 +185,24 @@ highFrequency
 				trUnitChangeProtoUnit("Gaia Forest effect");
 				trUnitSelectByQV("BonusUnit");
 				trUnitChangeProtoUnit("Hero Ragnorok");
+			}
+		}
+		if(xGetInt(dPlayerData, xBonus+7) == 0){
+			trUnitSelectByQV("Bonus7");
+			trUnitChangeProtoUnit("Outpost");
+			trUnitSelectByQV("Bonus7");
+			trSetSelectedScale(0.5,0.1,0.5);
+			if(xGetInt(dPlayerData, xFuelLevel) < 3){
+				trUnitSelectByQV("Bonus7");
+				trUnitSetAnimationPath("0,1,0,0,0");
+				xAddDatabaseBlock(dSelectables, true);
+				xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus7"));
+				xSetInt(dSelectables, xSelectablesPrompt, 730);
+			}
+			else{
+				xAddDatabaseBlock(dSelectables, true);
+				xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus7"));
+				xSetInt(dSelectables, xSelectablesPrompt, 737);
 			}
 		}
 		if(xGetInt(dPlayerData, xBonus+8) != 0){
@@ -152,6 +222,24 @@ highFrequency
 				trSetSelectedScale(0.5,0.5,0.5);
 			}
 		}
+		if(xGetInt(dPlayerData, xBonus+8) == 0){
+			trUnitSelectByQV("Bonus8");
+			trUnitChangeProtoUnit("Outpost");
+			trUnitSelectByQV("Bonus8");
+			trSetSelectedScale(0.5,0.1,0.5);
+			if(xGetInt(dPlayerData, xStageUnlocked) < 6){
+				trUnitSelectByQV("Bonus8");
+				trUnitSetAnimationPath("0,1,0,0,0");
+				xAddDatabaseBlock(dSelectables, true);
+				xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus8"));
+				xSetInt(dSelectables, xSelectablesPrompt, 730);
+			}
+			else{
+				xAddDatabaseBlock(dSelectables, true);
+				xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus8"));
+				xSetInt(dSelectables, xSelectablesPrompt, 738);
+			}
+		}
 		if(xGetInt(dPlayerData, xBonus+9) != 0){
 			trUnitSelectByQV("Bonus9");
 			trUnitChangeProtoUnit("Pharaoh");
@@ -165,6 +253,24 @@ highFrequency
 				trUnitChangeProtoUnit("Pharaoh");
 			}
 		}
+		if(xGetInt(dPlayerData, xBonus+9) == 0){
+			trUnitSelectByQV("Bonus9");
+			trUnitChangeProtoUnit("Outpost");
+			trUnitSelectByQV("Bonus9");
+			trSetSelectedScale(0.5,0.1,0.5);
+			if(xGetInt(dPlayerData, xStageUnlocked) < 5){
+				trUnitSelectByQV("Bonus9");
+				trUnitSetAnimationPath("0,1,0,0,0");
+				xAddDatabaseBlock(dSelectables, true);
+				xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus9"));
+				xSetInt(dSelectables, xSelectablesPrompt, 730);
+			}
+			else{
+				xAddDatabaseBlock(dSelectables, true);
+				xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus9"));
+				xSetInt(dSelectables, xSelectablesPrompt, 739);
+			}
+		}
 		if(xGetInt(dPlayerData, xBonus+10) != 0){
 			trUnitSelectByQV("Bonus10");
 			trUnitChangeProtoUnit("Fire Giant");
@@ -176,6 +282,24 @@ highFrequency
 				trUnitChangeProtoUnit("Gaia Forest effect");
 				trUnitSelectByQV("BonusUnit");
 				trUnitChangeProtoUnit("Fire Giant");
+			}
+		}
+		if(xGetInt(dPlayerData, xBonus+10) == 0){
+			trUnitSelectByQV("Bonus10");
+			trUnitChangeProtoUnit("Outpost");
+			trUnitSelectByQV("Bonus10");
+			trSetSelectedScale(0.5,0.1,0.5);
+			if(xGetInt(dPlayerData, xStageUnlocked) < 5){
+				trUnitSelectByQV("Bonus10");
+				trUnitSetAnimationPath("0,1,0,0,0");
+				xAddDatabaseBlock(dSelectables, true);
+				xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus10"));
+				xSetInt(dSelectables, xSelectablesPrompt, 730);
+			}
+			else{
+				xAddDatabaseBlock(dSelectables, true);
+				xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus10"));
+				xSetInt(dSelectables, xSelectablesPrompt, 740);
 			}
 		}
 		//Already unlocked
@@ -230,6 +354,23 @@ highFrequency
 				ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked (11)!");
 				playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
 			}
+			else{trUnitSelectByQV("Bonus11");
+				trUnitChangeProtoUnit("Outpost");
+				trUnitSelectByQV("Bonus11");
+				trSetSelectedScale(0.5,0.1,0.5);
+				if(xGetInt(dPlayerData, xDrillLevel) < 2){
+					trUnitSelectByQV("Bonus11");
+					trUnitSetAnimationPath("0,1,0,0,0");
+					xAddDatabaseBlock(dSelectables, true);
+					xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus11"));
+					xSetInt(dSelectables, xSelectablesPrompt, 730);
+				}
+				else{
+					xAddDatabaseBlock(dSelectables, true);
+					xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus11"));
+					xSetInt(dSelectables, xSelectablesPrompt, 741);
+				}
+			}
 		}
 		if(xGetInt(dPlayerData, xBonus+12) != 0){
 			trUnitSelectByQV("Bonus12");
@@ -244,6 +385,24 @@ highFrequency
 				trUnitChangeProtoUnit("Alfred");
 			}
 		}
+		if(xGetInt(dPlayerData, xBonus+12) == 0){
+			trUnitSelectByQV("Bonus12");
+			trUnitChangeProtoUnit("Outpost");
+			trUnitSelectByQV("Bonus12");
+			trSetSelectedScale(0.5,0.1,0.5);
+			if(xGetInt(dPlayerData, xGold) < 999){
+				trUnitSelectByQV("Bonus12");
+				trUnitSetAnimationPath("0,1,0,0,0");
+				xAddDatabaseBlock(dSelectables, true);
+				xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus12"));
+				xSetInt(dSelectables, xSelectablesPrompt, 730);
+			}
+			else{
+				xAddDatabaseBlock(dSelectables, true);
+				xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus12"));
+				xSetInt(dSelectables, xSelectablesPrompt, 742);
+			}
+		}
 		if(xGetInt(dPlayerData, xBonus+13) != 0){
 			trUnitSelectByQV("Bonus13");
 			trUnitChangeProtoUnit("Chariot Archer");
@@ -255,6 +414,24 @@ highFrequency
 				trUnitChangeProtoUnit("Gaia Forest effect");
 				trUnitSelectByQV("BonusUnit");
 				trUnitChangeProtoUnit("Chariot Archer");
+			}
+		}
+		if(xGetInt(dPlayerData, xBonus+13) == 0){
+			trUnitSelectByQV("Bonus13");
+			trUnitChangeProtoUnit("Outpost");
+			trUnitSelectByQV("Bonus13");
+			trSetSelectedScale(0.5,0.1,0.5);
+			if(xGetInt(dPlayerData, xStageUnlocked) <= 3){
+				trUnitSelectByQV("Bonus13");
+				trUnitSetAnimationPath("0,1,0,0,0");
+				xAddDatabaseBlock(dSelectables, true);
+				xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus13"));
+				xSetInt(dSelectables, xSelectablesPrompt, 730);
+			}
+			else{
+				xAddDatabaseBlock(dSelectables, true);
+				xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus13"));
+				xSetInt(dSelectables, xSelectablesPrompt, 743);
 			}
 		}
 		//Already unlocked
@@ -301,6 +478,23 @@ highFrequency
 				ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked (14)!");
 				playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
 			}
+			else{trUnitSelectByQV("Bonus14");
+				trUnitChangeProtoUnit("Outpost");
+				trUnitSelectByQV("Bonus14");
+				trSetSelectedScale(0.5,0.1,0.5);
+				if(xGetInt(dPlayerData, xDrillLevel) <= 5){
+					trUnitSelectByQV("Bonus14");
+					trUnitSetAnimationPath("0,1,0,0,0");
+					xAddDatabaseBlock(dSelectables, true);
+					xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus14"));
+					xSetInt(dSelectables, xSelectablesPrompt, 730);
+				}
+				else{
+					xAddDatabaseBlock(dSelectables, true);
+					xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus14"));
+					xSetInt(dSelectables, xSelectablesPrompt, 744);
+				}
+			}
 		}
 		if(xGetInt(dPlayerData, xBonus+15) != 0){
 			trUnitSelectByQV("Bonus15");
@@ -317,6 +511,156 @@ highFrequency
 				trUnitChangeProtoUnit("Roc Tent");
 				trUnitSelectByQV("BonusUnit");
 				trSetSelectedScale(0.5,0.5,0.5);
+			}
+		}
+		if(xGetInt(dPlayerData, xBonus+15) == 0){
+			trUnitSelectByQV("Bonus15");
+			trUnitChangeProtoUnit("Outpost");
+			trUnitSelectByQV("Bonus15");
+			trSetSelectedScale(0.5,0.1,0.5);
+			if(xGetInt(dPlayerData, xStageUnlocked) < 8){
+				trUnitSelectByQV("Bonus15");
+				trUnitSetAnimationPath("0,1,0,0,0");
+				xAddDatabaseBlock(dSelectables, true);
+				xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus15"));
+				xSetInt(dSelectables, xSelectablesPrompt, 730);
+			}
+			else{
+				xAddDatabaseBlock(dSelectables, true);
+				xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus15"));
+				xSetInt(dSelectables, xSelectablesPrompt, 745);
+			}
+		}
+		if(xGetInt(dPlayerData, xBonus+16) != 0){
+			trUnitSelectByQV("Bonus16");
+			trUnitChangeProtoUnit("Well of Urd");
+			trUnitSelectByQV("Bonus16");
+			trSetSelectedScale(0.5,0.5,0.5);
+			xAddDatabaseBlock(dSelectables, true);
+			xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus16"));
+			xSetInt(dSelectables, xSelectablesPrompt, 716);
+			if(xGetInt(dPlayerData, xBonus+16) == 2){
+				trUnitSelectByQV("BonusEffect16");
+				trUnitChangeProtoUnit("Gaia Forest effect");
+				trUnitSelectByQV("BonusUnit");
+				trUnitChangeProtoUnit("Well of Urd");
+				trUnitSelectByQV("BonusUnit");
+				trSetSelectedScale(0.5,0.5,0.5);
+			}
+		}
+		if(xGetInt(dPlayerData, xBonus+16) == 0){
+			trUnitSelectByQV("Bonus16");
+			trUnitChangeProtoUnit("Outpost");
+			trUnitSelectByQV("Bonus16");
+			trSetSelectedScale(0.5,0.1,0.5);
+			if(xGetInt(dPlayerData, xFuelSpend) < 1000){
+				trUnitSelectByQV("Bonus16");
+				trUnitSetAnimationPath("0,1,0,0,0");
+				xAddDatabaseBlock(dSelectables, true);
+				xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus16"));
+				xSetInt(dSelectables, xSelectablesPrompt, 730);
+			}
+			else{
+				xAddDatabaseBlock(dSelectables, true);
+				xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus16"));
+				xSetInt(dSelectables, xSelectablesPrompt, 746);
+			}
+		}
+		if(xGetInt(dPlayerData, xBonus+17) != 0){
+			trUnitSelectByQV("Bonus17");
+			trUnitChangeProtoUnit("Theris");
+			xAddDatabaseBlock(dSelectables, true);
+			xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus17"));
+			xSetInt(dSelectables, xSelectablesPrompt, 717);
+			if(xGetInt(dPlayerData, xBonus+17) == 2){
+				trUnitSelectByQV("BonusEffect17");
+				trUnitChangeProtoUnit("Gaia Forest effect");
+				trUnitSelectByQV("BonusUnit");
+				trUnitChangeProtoUnit("Theris");
+			}
+		}
+		if(xGetInt(dPlayerData, xBonus+17) == 0){
+			trUnitSelectByQV("Bonus17");
+			trUnitChangeProtoUnit("Outpost");
+			trUnitSelectByQV("Bonus17");
+			trSetSelectedScale(0.5,0.1,0.5);
+			if(xGetInt(dPlayerData, xStageUnlocked) < 9){
+				trUnitSelectByQV("Bonus17");
+				trUnitSetAnimationPath("0,1,0,0,0");
+				xAddDatabaseBlock(dSelectables, true);
+				xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus17"));
+				xSetInt(dSelectables, xSelectablesPrompt, 730);
+			}
+			else{
+				xAddDatabaseBlock(dSelectables, true);
+				xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus17"));
+				xSetInt(dSelectables, xSelectablesPrompt, 747);
+			}
+		}
+		if(xGetInt(dPlayerData, xBonus+18) != 0){
+			trUnitSelectByQV("Bonus18");
+			trUnitChangeProtoUnit("Monk");
+			xAddDatabaseBlock(dSelectables, true);
+			xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus18"));
+			xSetInt(dSelectables, xSelectablesPrompt, 718);
+			if(xGetInt(dPlayerData, xBonus+18) == 2){
+				trUnitSelectByQV("BonusEffect18");
+				trUnitChangeProtoUnit("Gaia Forest effect");
+				trUnitSelectByQV("BonusUnit");
+				trUnitChangeProtoUnit("Monk");
+			}
+		}
+		if(xGetInt(dPlayerData, xBonus+18) == 0){
+			trUnitSelectByQV("Bonus18");
+			trUnitChangeProtoUnit("Outpost");
+			trUnitSelectByQV("Bonus18");
+			trSetSelectedScale(0.5,0.1,0.5);
+			if(xGetInt(dPlayerData, xRadioactivesSold) < RadiationBonus/4){
+				trUnitSelectByQV("Bonus18");
+				trUnitSetAnimationPath("0,1,0,0,0");
+				xAddDatabaseBlock(dSelectables, true);
+				xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus18"));
+				xSetInt(dSelectables, xSelectablesPrompt, 730);
+			}
+			else{
+				xAddDatabaseBlock(dSelectables, true);
+				xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus18"));
+				xSetInt(dSelectables, xSelectablesPrompt, 748);
+			}
+		}
+		if(xGetInt(dPlayerData, xBonus+20) != 0){
+			trUnitSelectByQV("Bonus20");
+			trUnitChangeProtoUnit("Troy Wall Connector");
+			trUnitSelectByQV("Bonus20");
+			trSetSelectedScale(0.2,0.2,0.2);
+			xAddDatabaseBlock(dSelectables, true);
+			xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus20"));
+			xSetInt(dSelectables, xSelectablesPrompt, 720);
+			if(xGetInt(dPlayerData, xBonus+20) == 2){
+				trUnitSelectByQV("BonusEffect20");
+				trUnitChangeProtoUnit("Gaia Forest effect");
+				trUnitSelectByQV("BonusUnit");
+				trUnitChangeProtoUnit("Troy Wall Connector");
+				trUnitSelectByQV("BonusUnit");
+				trSetSelectedScale(0.2,0.2,0.2);
+			}
+		}
+		if(xGetInt(dPlayerData, xBonus+20) == 0){
+			trUnitSelectByQV("Bonus20");
+			trUnitChangeProtoUnit("Outpost");
+			trUnitSelectByQV("Bonus20");
+			trSetSelectedScale(0.5,0.1,0.5);
+			if(xGetInt(dPlayerData, xHullSpend) < 1000){
+				trUnitSelectByQV("Bonus20");
+				trUnitSetAnimationPath("0,1,0,0,0");
+				xAddDatabaseBlock(dSelectables, true);
+				xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus20"));
+				xSetInt(dSelectables, xSelectablesPrompt, 730);
+			}
+			else{
+				xAddDatabaseBlock(dSelectables, true);
+				xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus20"));
+				xSetInt(dSelectables, xSelectablesPrompt, 750);
 			}
 		}
 		xsDisableSelf();
@@ -431,15 +775,33 @@ void Select_Bonus(int bonus = 0){
 			ColouredChat("1,0.5,0", "Mining laser equipped");
 		}
 		if(bonus == 15){
-			trUnitChangeProtoUnit("Prisoner");
-			trUnitSelectByQV("BonusUnit");
-			trBlockAllSounds();
 			trUnitChangeProtoUnit("Roc Tent");
-			trUnblockAllSounds();
 			trUnitSelectByQV("BonusUnit");
 			trSetSelectedScale(0.5,0.5,0.5);
 			trChatHistoryClear();
 			ColouredChat("1,0.5,0", "Antimatter bomb equipped");
+		}
+		if(bonus == 16){
+			trUnitChangeProtoUnit("Well of Urd");
+			trUnitSelectByQV("BonusUnit");
+			trSetSelectedScale(0.5,0.5,0.5);
+			ColouredChat("1,0.5,0", "+1000L fuel capacity equipped");
+		}
+		if(bonus == 17){
+			trUnitChangeProtoUnit("Theris");
+			trChatHistoryClear();
+			ColouredChat("1,0.5,0", "Lava resist equipped");
+		}
+		if(bonus == 18){
+			trUnitChangeProtoUnit("Monk");
+			trChatHistoryClear();
+			ColouredChat("1,0.5,0", "Radiation resist equipped");
+		}
+		if(bonus == 20){
+			trUnitChangeProtoUnit("Troy Wall Connector");
+			trUnitSelectByQV("BonusUnit");
+			trSetSelectedScale(0.2,0.2,0.2);
+			ColouredChat("1,0.5,0", "+1500 hull hp equipped");
 		}
 		Deselect_Bonus(bonus);
 		playSoundCustom("ageadvance.wav", "\Yeebaagooon\Motherload\SelectBonus.mp3");
@@ -486,15 +848,37 @@ void Apply_Bonus(int s = -1){
 			trModifyProtounit("Hero Greek Atalanta", p, 1, 5);
 		}
 		if(xGetInt(dPlayerData, xBonus+14) == 2){
-			grantGodPowerNoRechargeNextPosition(p, "Earth Dragon", 1);
-			ColouredChatToPlayer(p, "1,0.5,0", "Mining laser equipped (L key to use)");
-			ColouredChatToPlayer(p, "1,0.5,0", "DIRECTIONAL - mines 10 tiles in the target direction");
-			ColouredChatToPlayer(p, "1,0.5,0", "Use like dynamite - have the cursor next to your ship");
+			if(Stage != 10){
+				grantGodPowerNoRechargeNextPosition(p, "Earth Dragon", 1);
+				ColouredChatToPlayer(p, "1,0.5,0", "Mining laser equipped (L key to use)");
+				ColouredChatToPlayer(p, "1,0.5,0", "DIRECTIONAL - mines 10 tiles in the target direction");
+				ColouredChatToPlayer(p, "1,0.5,0", "Use like dynamite - have the cursor next to your ship");
+				spyEffect(1*trQuestVarGet("P"+p+"Siphon"), kbGetProtoUnitID("Tower Mirror"), xsVectorSet(dPlayerData,xSpyObject,p), vector(0.3,0.5,0.3));
+			}
+			else{
+				ColouredChatToPlayer(p, "1,0.5,0", "Super weapons are not permitted on this stage.");
+			}
 		}
 		if(xGetInt(dPlayerData, xBonus+15) == 2){
-			grantGodPowerNoRechargeNextPosition(p, "Underworld Passage", 1);
-			ColouredChatToPlayer(p, "1,0.5,0", "Antimatter bomb equipped (A key to use)");
-			ColouredChatToPlayer(p, "1,0.5,0", "Blasts 5x5 squares around you when used.");
+			if(Stage != 10){
+				grantGodPowerNoRechargeNextPosition(p, "Vision", 1);
+				ColouredChatToPlayer(p, "1,0.5,0", "Antimatter bomb equipped (A key to use)");
+				ColouredChatToPlayer(p, "1,0.5,0", "Blasts 5x5 squares around you when used.");
+				spyEffect(1*trQuestVarGet("P"+p+"Siphon"), kbGetProtoUnitID("Roc Tent"), xsVectorSet(dPlayerData,xSpyObject,p), vector(1,1,1));
+			}
+			else{
+				ColouredChatToPlayer(p, "1,0.5,0", "Super weapons are not permitted on this stage.");
+			}
+		}
+		if(xGetInt(dPlayerData, xBonus+16) == 2){
+			xSetInt(dPlayerData, xFuelTank, xGetInt(dPlayerData, xFuelTank)+1000);
+			xSetFloat(dPlayerData, xFuel, xGetFloat(dPlayerData, xFuel)+1000);
+		}
+		if(xGetInt(dPlayerData, xBonus+17) == 2){
+			trQuestVarSet("P"+p+"B17", 1);
+		}
+		if(xGetInt(dPlayerData, xBonus+20) == 2){
+			xSetInt(dPlayerData, xHullHP, xGetInt(dPlayerData, xHullHP)+1500);
 		}
 	}
 	xsDisableSelf();
@@ -512,3 +896,35 @@ highFrequency
 	trChatSend(0, "Drill power:" + xGetFloat(dPlayerData, xDrillPower));
 	*/
 }
+
+/*
+for (x= xGetDatabaseCount(dDestroyMe); > 0) {
+	xDatabaseNext(dDestroyMe);
+	if(xGetInt(dDestroyMe, 1)){
+		trUnitDestroy();
+		xFreeDatabaseBlock(dDestroyMe);
+		
+		
+		trUnitSelectClear();
+		xUnitSelect(dDestroyMe, 1)
+		trUnitChangeProtoUnit("Cinematic Block");
+	}
+}
+
+
+
+
+so just add a new variable to that one
+xMirrorTowerObject
+something like that
+and in the spy effect
+the destination is (dPlayerData, xMirrorTowerObject, p)
+and then the unit name of the spy eye will be stored in the xGetInt(dPlayerData, xMirrorTowerObject) at index p, which is the player
+
+
+9
+and then
+xUnitSelect(dPlayerData, xSpyObject)
+after setting the pointer
+
+*/

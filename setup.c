@@ -41,7 +41,7 @@ runImmediately
 	map("r", "game", "uiSetSpecialPower(234) uiSpecialPowerAtPointer");
 	//special powers
 	map("l", "game", "uiSetSpecialPower(557) uiSpecialPowerAtPointer");
-	map("a", "game", "uiSetSpecialPower(133) uiSpecialPowerAtPointer");
+	map("a", "game", "uiSetSpecialPower(220) uiSpecialPowerAtPointer");
 }
 
 rule START
@@ -262,6 +262,8 @@ highFrequency
 	Slot 13
 	Total size: 0
 	*/
+	addSavedDataDB(dPlayerData, xRadioactivesSold, 13, 20+RadiationBonus);
+	//200
 	
 	/*
 	Slot 14
@@ -272,6 +274,7 @@ highFrequency
 	Slot 15
 	Total size: 0
 	*/
+	addSavedDataDB(dPlayerData, xVersionControl, 15, 100);
 	xsDisableSelf();
 }
 

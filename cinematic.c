@@ -457,6 +457,8 @@ highFrequency
 	if((trTime()-cActivationTime) >= 4){
 		xsDisableSelf();
 		characterDialog("Mr Natas", "Different rocks vary in hardness.", "icons\scenario g gargarensis icon 64");
+		trOverlayTextColour(0,0,0);
+		trOverlayText("Q", 3.0, 600, 450, 1000);
 		trUnitSelectClear();
 		trModifyProtounit("Fire Siphon", 1, 55, 4);
 		trUnitSelectByQV("TempSiphon");
@@ -482,6 +484,8 @@ highFrequency
 		unitTransform("Heka Shockwave SFX", "Rocket");
 		trPaintTerrain(17,77,19,79,5,3,false);
 		trModifyProtounit("Fire Siphon", 1, 1, 3);
+		trOverlayTextColour(255,125,0);
+		trOverlayText(".", 0.1, 1, 1, 10);
 	}
 }
 
@@ -512,7 +516,7 @@ highFrequency
 	if((trTime()-cActivationTime) >= 4){
 		xsDisableSelf();
 		characterDialog("Mr Natas", "You can initially hold up to 2 relics.", "icons\scenario g gargarensis icon 64");
-		spyEffect(1*trQuestVarGet("TempSiphon"), kbGetProtoUnitID("Automaton"), vector(0,0,0),vector(0,0,0), 18);
+		spyEffect(1*trQuestVarGet("TempSiphon"), kbGetProtoUnitID("Automaton"), xsVectorSet(dPlayerData,xSpyObject,1),vector(0,0,0), 18);
 		playSound("favordump.wav");
 		xsEnableRule("Cine_25");
 	}
@@ -544,6 +548,9 @@ highFrequency
 		trUnitSelectByQV("TempSiphon");
 		trUnitMoveToPoint(50,3,178,-1,false);
 		unitTransform("Dwarven Forge", "Rocket");
+		trUnitSelectClear();
+		xUnitSelect(dPlayerData, xSpyObject);
+		trUnitChangeProtoUnit("Rocket");
 	}
 }
 
@@ -692,6 +699,35 @@ highFrequency
 		xsDisableSelf();
 		characterDialog("Reward gained", "+100L fuel - Select this from the bonus bar in singleplayer", "icons\improvement murder holes icon 64");
 		playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
+		xsEnableRule("Cine_37");
+	}
+}
+
+rule Cine_37
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 4){
+		xsDisableSelf();
+		xSetPointer(dPlayerData, 1);
+		if(xGetInt(dPlayerData, xGold) == 0){
+			xSetInt(dPlayerData, xGold, 10);
+			characterDialog("Mr Natas", "And you've also been given enough gold for one free ship upgrade.", "icons\scenario g gargarensis icon 64");
+			xsEnableRule("Cine_38");
+			UpgradeEffect();
+		}
+		else{
+			xsEnableRule("Cine_Off");
+		}
+	}
+}
+
+rule Cine_38
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 3){
+		xsDisableSelf();
 		xsEnableRule("Cine_Off");
 	}
 }

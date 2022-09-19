@@ -99,7 +99,7 @@ highFrequency
 				trPlayerSetDiplomacy(0, p, "Enemy");
 				trUnitSelectClear();
 				trUnitSelectByQV("P"+p+"Siphon");
-				trSetSelectedScale(1,0.1,1);
+				trSetSelectedScale(1,0.1,0);
 				spyEffect(1*trQuestVarGet("P"+p+"Siphon"), kbGetProtoUnitID("Fire Siphon"), vector(0,0,0), vector(1,1,1));
 				/*trUnitSelectByQV("P"+p+"Siphon", false);
 				trQuestVarSet("P"+p+"MainSpy", trGetNextUnitScenarioNameNumber());
@@ -113,6 +113,11 @@ highFrequency
 				xSetInt(dPlayerData, xEnginePower ,1*trQuestVarGet("EngineCL"+xGetInt(dPlayerData, xEngineLevel)+""));
 				xSetInt(dPlayerData, xRadiator ,1*trQuestVarGet("RadiatorCL"+xGetInt(dPlayerData, xRadiatorLevel)+""));
 				xSetFloat(dPlayerData, xFuel, xGetInt(dPlayerData, xFuelTank));
+				spawnRelicSpecific(vector(10,3,190), 15);
+				spawnRelicSpecific(vector(10,3,195), 16);
+				spawnRelicSpecific(vector(10,3,185), 17);
+				spawnRelicSpecific(vector(10,3,180), 20);
+				spawnRelicSpecific(vector(70,3,190), 21);
 			}
 			//trChatSend(0, "P"+p+"gold is " + 1*trQuestVarGet("p"+p+"goldGrant"));
 			//trChatSend(0, "p"+p+"Drill level is " + xGetInt(dPlayerData, xDrillLevel));
@@ -418,6 +423,14 @@ void FuelBuy(int p = 0){
 						xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*FuelCost*GetFuelPump(trVectorQuestVarGetX("P"+p+"Pos"),trVectorQuestVarGetZ("P"+p+"Pos")));
 						if(xGetInt(dPlayerData, xFuelSpend) < 4700){
 							xSetInt(dPlayerData, xFuelSpend, xGetInt(dPlayerData, xFuelSpend)+1*FuelCost*GetFuelPump(trVectorQuestVarGetX("P"+p+"Pos"),trVectorQuestVarGetZ("P"+p+"Pos")));
+							if ((xGetInt(dPlayerData, xBonus+16) == 0) && (xGetInt(dPlayerData, xFuelSpend) >= FuelSpendForBonus)){
+								xSetInt(dPlayerData, xBonus+16, 1);
+								if(trCurrentPlayer() == p){
+									saveAllData();
+									ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked (16)!");
+									playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
+								}
+							}
 						}
 						ColouredChatToPlayer(p, "0,1,0", "Refuel complete.");
 						spyEffect(1*trQuestVarGet("P"+p+"Siphon"), kbGetProtoUnitID("Mountain Giant"), vector(0,0,0), vector(0,0,0), 18);
@@ -490,6 +503,14 @@ highFrequency
 								xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*Shop4Cost);
 								if(xGetInt(dPlayerData, xHullSpend) < 4700){
 									xSetInt(dPlayerData, xHullSpend, xGetInt(dPlayerData, xHullSpend)+1*Shop4Cost);
+									if ((xGetInt(dPlayerData, xBonus+20) == 0) && (xGetInt(dPlayerData, xHullSpend) >= HullSpendForBonus)){
+										xSetInt(dPlayerData, xBonus+20, 1);
+										if(trCurrentPlayer() == p){
+											saveAllData();
+											ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked (20)!");
+											playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
+										}
+									}
 								}
 								trUnitSelectClear();
 								trUnitSelectByQV("P"+p+"Siphon");
@@ -513,6 +534,14 @@ highFrequency
 									xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*HullCost*GetHullShop(trVectorQuestVarGetX("P"+p+"Pos")));
 									if(xGetInt(dPlayerData, xHullSpend) < 4700){
 										xSetInt(dPlayerData, xHullSpend, xGetInt(dPlayerData, xHullSpend)+1*HullCost*GetHullShop(trVectorQuestVarGetX("P"+p+"Pos")));
+										if ((xGetInt(dPlayerData, xBonus+20) == 0) && (xGetInt(dPlayerData, xHullSpend) >= HullSpendForBonus)){
+											xSetInt(dPlayerData, xBonus+20, 1);
+											if(trCurrentPlayer() == p){
+												saveAllData();
+												ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked (20)!");
+												playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
+											}
+										}
 									}
 									trUnitSelectClear();
 									trUnitSelectByQV("P"+p+"Siphon");

@@ -1,106 +1,3 @@
-//	if((trGetTerrainSubType(col*4-2,row*4-2) != 13) && (trGetTerrainType(col*4-2,row*4-2) != 2)){
-//Doesnt stop black rock from being blown up ... wtf
-
-void MineSquare(int row = 0, int col = 0){
-	if((trGetTerrainSubType(col*4-2,row*4-2) != 13) && (trGetTerrainType(col*4-2,row*4-2) != 2)){
-		trPaintTerrain(col*4-3,row*4-3,col*4-1,row*4-1,MineT, MineST,false);
-		trArmyDispatch("0,0", "Revealer", 1, col*8-4, 1, row*8-4, 180, true);
-		//Blow up gas pocket
-		for (x= xGetDatabaseCount(dGasPocket); > 0) {
-			xDatabaseNext(dGasPocket);
-			if((xGetInt(dGasPocket, xGasCol) == col) && (xGetInt(dGasPocket, xGasRow) == row)){
-				trVectorQuestVarSet("TempGas", xsVectorSet(8*xGetInt(dGasPocket, xGasCol)-4,3,8*xGetInt(dGasPocket, xGasRow)-4));
-				int temp = trGetNextUnitScenarioNameNumber();
-				trArmyDispatch("0,0", "Dwarf", 1, 1,1,1, 0, true);
-				trUnitSelectClear();
-				trUnitSelect(""+temp);
-				trUnitSelectClear();
-				trUnitSelect(""+temp);
-				trUnitTeleport(trVectorQuestVarGetX("TempGas"),trVectorQuestVarGetY("TempGas"),trVectorQuestVarGetZ("TempGas"));
-				trMutateSelected(kbGetProtoUnitID("Harpy"));
-				trUnitSelectClear();
-				trUnitSelect(""+temp);
-				trSetSelectedHeight(-10.0);
-				trUnitSelectClear();
-				trUnitSelect(""+temp);
-				trSetSelectedScale(0,0,0);
-				trUnitSelectClear();
-				trUnitSelect(""+temp);
-				trUnitOverrideAnimation(1,0,false,true,-1,-1);
-				xFreeDatabaseBlock(dGasPocket);
-				trUnitSelectClear();
-				trUnitSelect(""+temp);
-				xAddDatabaseBlock(dDestroyMe, true);
-				xSetInt(dDestroyMe, xDestroyName, temp);
-				xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+1500);
-			}
-		}
-	}
-	else if((trGetTerrainSubType(col*4-2,row*4-2) == 13) && (trGetTerrainType(col*4-2,row*4-2) == 2)){
-		trPaintTerrain(col*4-3,row*4-3,col*4-1,row*4-1,2, 13,false);
-	}
-}
-
-void RemoveBlack(int row = 0, int col = 0){
-	int rowmid = row*4-2;
-	int colmid = col*4-2;
-	//Wall above
-	if((trGetTerrainSubType(col*4-2,row*4-2) == 13) && (trGetTerrainType(col*4-2,row*4-2) == 2)){
-		trPaintTerrain(col*4-3,row*4-3,col*4-1,row*4-1,2, 13,false);
-		row = 100;
-	}
-	if(row <= MaxRows){
-		if((trGetTerrainSubType((colmid),(rowmid)+4) == MineST) && (trGetTerrainType((colmid),(rowmid)+4) == MineT)){
-			trUnitSelectClear();
-			trPaintTerrain(col*4-3,row*4-3,col*4-1,row*4,MineT, MineST,false);
-			trUnitSelectByQV("R"+row+"C"+col+"WallX");
-			trUnitChangeProtoUnit("Meteor Impact Ground");
-			trUnitSelectClear();
-			trUnitSelectByQV("R"+row+"C"+col+"WallX");
-			trUnitDestroy();
-			//correct wall but not top layer because terrain above isnt overworld
-		}
-		if((trGetTerrainSubType((colmid),(rowmid)+4) == OVERTERRAIN_SUBTYPE) && (trGetTerrainType((colmid),(rowmid)+4) == OVERTERRAIN_TYPE)){
-			trUnitSelectClear();
-			trUnitSelectByQV("R"+row+"C"+col+"WallX");
-			trUnitChangeProtoUnit("Meteor Impact Ground");
-			trUnitSelectClear();
-			trUnitSelectByQV("R"+row+"C"+col+"WallX");
-			trUnitDestroy();
-		}
-		//Wall below
-		if((trGetTerrainSubType((colmid),(rowmid)-4) == MineST) && (trGetTerrainType((colmid),(rowmid)-4) == MineT)){
-			trPaintTerrain(col*4-3,row*4-4,col*4-1,row*4-1,MineT, MineST,false);
-			trUnitSelectClear();
-			trUnitSelectByQV("R"+(row-1)+"C"+col+"WallX");
-			trUnitChangeProtoUnit("Meteor Impact Ground");
-			trUnitSelectClear();
-			trUnitSelectByQV("R"+(row-1)+"C"+col+"WallX");
-			trUnitDestroy();
-			//correct wall but not top layer because terrain above isnt overworld
-		}
-		if((trGetTerrainSubType((colmid)+4,(rowmid)) == MineST) && (trGetTerrainType((colmid)+4,(rowmid)) == MineT)){
-			trPaintTerrain(col*4-3,row*4-3,col*4,row*4-1,MineT, MineST,false);
-			trUnitSelectClear();
-			trUnitSelectByQV("R"+row+"C"+col+"WallY");
-			trUnitChangeProtoUnit("Meteor Impact Ground");
-			trUnitSelectClear();
-			trUnitSelectByQV("R"+row+"C"+col+"WallY");
-			trUnitDestroy();
-		}
-		if((trGetTerrainSubType((colmid)-4,(rowmid)) == MineST) && (trGetTerrainType((colmid)-4,(rowmid)) == MineT)){
-			trPaintTerrain(col*4-4,row*4-3,col*4-1,row*4-1,MineT, MineST,false);
-			trUnitSelectClear();
-			trUnitSelectByQV("R"+row+"C"+(col-1)+"WallY");
-			trUnitChangeProtoUnit("Meteor Impact Ground");
-			trUnitSelectClear();
-			trUnitSelectByQV("R"+row+"C"+(col-1)+"WallY");
-			trUnitDestroy();
-		}
-		trPaintTerrain(0,4*MaxRows+1,200,4*MaxRows+5,OVERTERRAIN_TYPE,OVERTERRAIN_SUBTYPE,false);
-	}
-}
-
 rule Rain
 inactive
 highFrequency
@@ -465,9 +362,10 @@ highFrequency
 				trUnitSelectClear();
 				trUnitSelect(""+a);
 				trUnitHighlight(5.0, false);
-				xAddDatabaseBlock(dDestroyMe, true);
-				xSetInt(dDestroyMe, xDestroyName, a);
-				xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+3500);
+				xSetPointer(dPlayerData, p);
+				trUnitSelectClear();
+				xUnitSelect(dPlayerData, xSpyObject);
+				trUnitChangeProtoUnit("Olympus Temple SFX");
 				//effect
 				/*
 				it's very simple
@@ -489,6 +387,58 @@ highFrequency
 				}
 				grantGodPowerNoRechargeNextPosition(p, "Earth Dragon", 1);
 			}
+		}
+	}
+}
+
+rule Vision
+active
+highFrequency
+{
+	for(p = 1; <= cNumberNonGaiaPlayers){
+		if (trPlayerGetPopulation(p) >= 10000) {
+			unitTransform("Vision Revealer", "Rocket");
+			trVectorSetUnitPos("SiphonPos"+p+"", "P"+p+"Siphon");
+			trVectorSnapToGrid("SiphonPos"+p+"");
+			int Col = (trVectorQuestVarGetX("SiphonPos"+p+"") ) / 8 +1;
+			int Row = (trVectorQuestVarGetZ("SiphonPos"+p+"") ) / 8 +1;
+			for(a=0 ; < 5){
+				for(b=0 ; < 5){
+					MineSquare(Row+a-2, Col+b-2);
+					RemoveBlack(Row+a-2, Col+b-2);
+				}
+			}
+			int temp = trGetNextUnitScenarioNameNumber();
+			trArmyDispatch("0,0","Dwarf",1,trVectorQuestVarGetX("P"+p+"Pos"),0,trVectorQuestVarGetZ("P"+p+"Pos"),0,true);
+			trArmySelect("0,0");
+			trUnitChangeProtoUnit("Spy Eye");
+			trUnitSelectClear();
+			trUnitSelect(""+temp, true);
+			trMutateSelected(kbGetProtoUnitID("Hades Door"));
+			trSetSelectedScale(0,0,0);
+			trUnitOverrideAnimation(25,0,false,false,-1);
+			trUnitSetAnimationPath("3,0,0,0,0,0,0");
+			trSetUnitOrientation(vector(0,1,0),vector(1,0,0),true);
+			trUnitSelectClear();
+			//trUnitSelect(""+temp, true);
+			xAddDatabaseBlock(dDestroyMe, true);
+			xSetInt(dDestroyMe, xDestroyName, temp);
+			xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+1500);
+			//trChatSend(0, ""+xGetDatabaseCount(dDestroyMe));
+			//trChatSend(0, "<color=0,1,0>"+xGetInt(dDestroyMe, xDestroyName));
+			trArmyDispatch("0,0","Dwarf",25,trVectorQuestVarGetX("P"+p+"Pos"),0,trVectorQuestVarGetZ("P"+p+"Pos"),0,true);
+			trUnitSelectClear();
+			trArmySelect("0,0");
+			trUnitChangeProtoUnit("Vision SFX");
+			trArmyDispatch("0,1","Cyclops",25,trVectorQuestVarGetX("P"+p+"Pos"),0,trVectorQuestVarGetZ("P"+p+"Pos"),0,true);
+			trUnitSelectClear();
+			trArmySelect("0,1");
+			trUnitChangeProtoUnit("Dust Large");
+			trCameraShake(3, 0.25);
+			xSetPointer(dPlayerData, p);
+			trUnitSelectClear();
+			xUnitSelect(dPlayerData, xSpyObject);
+			trUnitChangeProtoUnit("Olympus Temple SFX");
 		}
 	}
 }
@@ -647,25 +597,28 @@ highFrequency
 			
 			//Terrain check fails
 			if(Stage == 1){
-				if((trGetTerrainSubType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
-							1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 2) && (trGetTerrainType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
-							1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 5)){
-					trChatSendToPlayer(0, p, "<color=1,0,0>The ice is too hard for you to drill!</color>");
-					if(trCurrentPlayer() == p){
-						trSoundPlayFN("cantdothat.wav","1",-1,"","");
+				xSetPointer(dPlayerData, p);
+				if(xGetInt(dPlayerData, xDrillLevel) < 6){
+					if((trGetTerrainSubType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
+								1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 2) && (trGetTerrainType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
+								1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 5)){
+						trChatSendToPlayer(0, p, "<color=1,0,0>The ice is too hard for you to drill!</color>");
+						if(trCurrentPlayer() == p){
+							trSoundPlayFN("cantdothat.wav","1",-1,"","");
+						}
+						trTechGodPower(p, "Animal Magnetism", 1);
+						break;
 					}
-					trTechGodPower(p, "Animal Magnetism", 1);
-					break;
-				}
-				if((trGetTerrainSubType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
-							1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 10) && (trGetTerrainType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
-							1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 2)){
-					trChatSendToPlayer(0, p, "<color=1,0,0>Bad idea to drill into the lava...</color>");
-					if(trCurrentPlayer() == p){
-						trSoundPlayFN("cantdothat.wav","1",-1,"","");
+					if((trGetTerrainSubType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
+								1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 10) && (trGetTerrainType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
+								1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 2)){
+						trChatSendToPlayer(0, p, "<color=1,0,0>Bad idea to drill into the lava...</color>");
+						if(trCurrentPlayer() == p){
+							trSoundPlayFN("cantdothat.wav","1",-1,"","");
+						}
+						trTechGodPower(p, "Animal Magnetism", 1);
+						break;
 					}
-					trTechGodPower(p, "Animal Magnetism", 1);
-					break;
 				}
 			}
 			if((trGetTerrainSubType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
@@ -729,6 +682,13 @@ highFrequency
 							1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 8) && (trGetTerrainType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
 							1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 2)){
 					trQuestVarSet("StatusEffectP"+p+"", 2);
+				}
+				//Lava 3
+				if((trGetTerrainSubType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
+							1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 10) && (trGetTerrainType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
+							1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 2)){
+					trQuestVarSet("StatusEffectP"+p+"", 3);
+					//BONUS 17
 				}
 				//Drill egyptian cliff to unlock bonus 3
 				if((trGetTerrainSubType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
@@ -1011,6 +971,9 @@ void UngarrisonDrill(int p = 1){
 		trDamageUnit(200-xGetInt(dPlayerData, xRadiator));
 		trDamageUnit(10*xGetInt(dPlayerData, xDepth)/xGetInt(dPlayerData, xRadiator));
 		trQuestVarSet("StatusEffectP"+p+"", 0);
+		if(trQuestVarGet("P"+p+"B17") == 1){
+			trDamageUnit(-100);
+		}
 	}
 	//Lava 2
 	if(1*trQuestVarGet("StatusEffectP"+p+"") == 2){
@@ -1018,6 +981,32 @@ void UngarrisonDrill(int p = 1){
 		trDamageUnit(350-xGetInt(dPlayerData, xRadiator));
 		trDamageUnit(10*xGetInt(dPlayerData, xDepth)/xGetInt(dPlayerData, xRadiator));
 		trQuestVarSet("StatusEffectP"+p+"", 0);
+		if(trQuestVarGet("P"+p+"B17") == 1){
+			trDamageUnit(-100);
+		}
+	}
+	//Lava 3
+	if(1*trQuestVarGet("StatusEffectP"+p+"") == 3){
+		trUnitSelectByQV("P"+p+"Siphon", false);
+		trDamageUnit(500-xGetInt(dPlayerData, xRadiator));
+		trQuestVarSet("StatusEffectP"+p+"", 0);
+		if(trQuestVarGet("P"+p+"B17") == 1){
+			trDamageUnit(-100);
+		}
+		if(Stage == 1){
+			trQuestVarModify("P"+p+"LavaBonus", "+", 1);
+			if(trQuestVarGet("P"+p+"LavaBonus") >= 10){
+				xSetPointer(dPlayerData, p);
+				if (xGetInt(dPlayerData, xBonus+17) == 0){
+					xSetInt(dPlayerData, xBonus+17, 1);
+					if(trCurrentPlayer() == p){
+						ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked (17)!");
+						playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
+						saveAllData();
+					}
+				}
+			}
+		}
 	}
 	//Hull destroy
 	if(Stage == 10){
@@ -1028,7 +1017,7 @@ void UngarrisonDrill(int p = 1){
 		trUnitChangeProtoUnit("Meteor Impact Ground");
 		trUnitDestroy();
 	}
-	if(trPlayerUnitCountSpecific(cNumberNonGaiaPlayers, "Invisible Wall") <= 20){
+	if((trPlayerUnitCountSpecific(cNumberNonGaiaPlayers, "Invisible Wall") <= 20) && (Stage != 10)){
 		for(a = 1; < cNumberNonGaiaPlayers){
 			xSetPointer(dPlayerData, a);
 			if (xGetInt(dPlayerData, xBonus+15) == 0){

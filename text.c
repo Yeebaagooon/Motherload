@@ -388,25 +388,6 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				}
 			}
 		}
-		case 100:
-		{
-			switch(dialog)
-			{
-				case 1:
-				{
-					trChatHistoryClear();
-					trChatSend(0, "<u><color=1,1,1>Current Drill:</color></u>");
-					trChatSend(0, trStringQuestVarGet("DrillL"+1*trQuestVarGet("CurrentDrillL")+"") + " "+1*xGetFloat(dPlayerData, xDrillPower)+" m/s");
-					uiMessageBox("Your drill power controls how easy it is to drill through harder rock.");
-				}
-				case 2:
-				{
-					xSetPointer(dPlayerData, 1);
-					uiMessageBox("Current drill power = " + 1*xGetFloat(dPlayerData, xDrillPower) +  " m/s");
-					dialog = 0;
-				}
-			}
-		}
 		case 12:
 		{
 			switch(dialog)
@@ -681,6 +662,26 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				case 1:
 				{
 					trShowChoiceDialog("Watch introduction cinematic?", "Yes", 15, "No", 16);
+					dialog = 0;
+				}
+			}
+		}
+		case 100:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					trChatHistoryClear();
+					trChatSend(0, "<u><color=1,1,1>Current Drill:</color></u>");
+					trChatSend(0, trStringQuestVarGet("DrillL"+1*trQuestVarGet("CurrentDrillL")+"") + " "+1*xGetFloat(dPlayerData, xDrillPower)+" m/s");
+					uiMessageBox("Your drill power controls how easy it is to drill through harder rock.");
+				}
+				case 2:
+				{
+					xSetPointer(dPlayerData, 1);
+					uiMessageBox("Current drill power = " + 1*xGetFloat(dPlayerData, xDrillPower) +  " m/s");
+					dialog = 0;
 				}
 			}
 		}
@@ -728,6 +729,9 @@ int npcDiag(int npc = 0, int dialog = 0) {
 			{
 				case 1:
 				{
+					trChatHistoryClear();
+					trChatSend(0, "<u><color=1,1,1>Current Hull:</color></u>");
+					trChatSend(0, trStringQuestVarGet("HullL"+1*trQuestVarGet("CurrentHullL")+"") + " "+1*xGetInt(dPlayerData, xHullHP)+" hp");
 					uiMessageBox("Your hull strength determines how much damage your ship can take before exploding.");
 				}
 				case 2:
@@ -782,6 +786,9 @@ int npcDiag(int npc = 0, int dialog = 0) {
 			{
 				case 1:
 				{
+					trChatHistoryClear();
+					trChatSend(0, "<u><color=1,1,1>Current Fuel Tank:</color></u>");
+					trChatSend(0, trStringQuestVarGet("FuelL"+1*trQuestVarGet("CurrentFuelL")+"") + " "+1*xGetInt(dPlayerData, xFuelTank)+" L");
 					uiMessageBox("Your fuel tank capacity is fairly self explanatory.");
 				}
 				case 2:
@@ -835,6 +842,9 @@ int npcDiag(int npc = 0, int dialog = 0) {
 			{
 				case 1:
 				{
+					trChatHistoryClear();
+					trChatSend(0, "<u><color=1,1,1>Current Cargo Hold:</color></u>");
+					trChatSend(0, trStringQuestVarGet("CargoL"+1*trQuestVarGet("CurrentCargoL")+"") + " "+1*xGetInt(dPlayerData, xCargoHold)+" minerals");
 					uiMessageBox("Your cargo hold specifies how many minerals you can hold at any one time.");
 				}
 				case 2:
@@ -888,6 +898,9 @@ int npcDiag(int npc = 0, int dialog = 0) {
 			{
 				case 1:
 				{
+					trChatHistoryClear();
+					trChatSend(0, "<u><color=1,1,1>Current Engine:</color></u>");
+					trChatSend(0, trStringQuestVarGet("EngineL"+1*trQuestVarGet("CurrentEngineL")+"") + " "+1*xGetInt(dPlayerData, xEnginePower)+" kW");
 					uiMessageBox("A more powerful engine will help with fuel efficiency.");
 				}
 				case 2:
@@ -941,6 +954,9 @@ int npcDiag(int npc = 0, int dialog = 0) {
 			{
 				case 1:
 				{
+					trChatHistoryClear();
+					trChatSend(0, "<u><color=1,1,1>Current Radiator:</color></u>");
+					trChatSend(0, trStringQuestVarGet("RadiatorL"+1*trQuestVarGet("CurrentRadiatorL")+"") + " "+1*xGetInt(dPlayerData, xRadiator)+" percent");
 					uiMessageBox("Your radiator will help save fuel and prevent temperature damage.");
 				}
 				case 2:
@@ -1215,6 +1231,290 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				case 2:
 				{
 					trShowChoiceDialog("Equip?", "Yes", 37, "No", -1);
+					dialog = 0;
+				}
+			}
+		}
+		case 716:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Allows you to hold +1000L extra fuel.");
+				}
+				case 2:
+				{
+					trShowChoiceDialog("Equip?", "Yes", 38, "No", -1);
+					dialog = 0;
+				}
+			}
+		}
+		case 717:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Lava resist - lava deals 100 less damage.");
+				}
+				case 2:
+				{
+					trShowChoiceDialog("Equip?", "Yes", 39, "No", -1);
+					dialog = 0;
+				}
+			}
+		}
+		case 718:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Radiation resist.");
+				}
+				case 2:
+				{
+					trShowChoiceDialog("Equip?", "Yes", 40, "No", -1);
+					dialog = 0;
+				}
+			}
+		}
+		case 720:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Gives you +1500 hull hp.");
+				}
+				case 2:
+				{
+					trShowChoiceDialog("Equip?", "Yes", 42, "No", -1);
+					dialog = 0;
+				}
+			}
+		}
+		case 730:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("To unlock - ??????????????????????? Check back later");
+					dialog = 0;
+				}
+			}
+		}
+		case 731:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("To unlock - Subscribe to this map on the Steam Workshop!");
+					dialog = 0;
+				}
+			}
+		}
+		case 732:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("To unlock - Watch the introduction cinematic!");
+				}
+				case 2:
+				{
+					trShowChoiceDialog("Watch introduction cinematic now?", "Yes", 15, "No", 16);
+					dialog = 0;
+				}
+			}
+		}
+		case 733:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("To unlock - Drill into egyptian cliff terrain");
+					dialog = 0;
+				}
+			}
+		}
+		case 734:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("To unlock - Reach 750m depth");
+					dialog = 0;
+				}
+			}
+		}
+		case 735:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("To unlock - Reach 1.5km depth");
+					dialog = 0;
+				}
+			}
+		}
+		case 736:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("To unlock - Sell a uranium mineral");
+					dialog = 0;
+				}
+			}
+		}
+		case 737:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("To unlock - Empty your fuel tank");
+					dialog = 0;
+				}
+			}
+		}
+		case 738:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("To unlock - End a stage holding over 100 gold worth of minerals");
+					dialog = 0;
+				}
+			}
+		}
+		case 739:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("To unlock - Destroy your ship");
+					dialog = 0;
+				}
+			}
+		}
+		case 740:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("To unlock - Hit 5 gas pockets in the same stage");
+					dialog = 0;
+				}
+			}
+		}
+		case 741:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("To unlock - Upgrade any ship component to level 3");
+					dialog = 0;
+				}
+			}
+		}
+		case 742:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("To unlock - Make over 100 gold in a single sale");
+					dialog = 0;
+				}
+			}
+		}
+		case 743:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("To unlock - Make exactly 47 gold in a single sale");
+					dialog = 0;
+				}
+			}
+		}
+		case 744:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("To unlock - Upgrade any ship component to level 8");
+					dialog = 0;
+				}
+			}
+		}
+		case 745:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("To unlock - Mine an entire planet");
+					dialog = 0;
+				}
+			}
+		}
+		case 746:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("To unlock - spend " + FuelSpendForBonus + " on fuel. Current = " + xGetInt(dPlayerData, xFuelSpend));
+					dialog = 0;
+				}
+			}
+		}
+		case 747:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("To unlock - drill out 10 lava pockets on Thule");
+					dialog = 0;
+				}
+			}
+		}
+		case 748:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("To unlock - sell " + RadiationBonus + " radioactives. Current = " + xGetInt(dPlayerData, xRadioactivesSold));
+					dialog = 0;
+				}
+			}
+		}
+		case 750:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("To unlock - spend " + HullSpendForBonus + " on hull repair. Current = " + xGetInt(dPlayerData, xHullSpend));
 					dialog = 0;
 				}
 			}

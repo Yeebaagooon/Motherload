@@ -224,6 +224,38 @@ void UpgradeEffect(int u = 0){
 	else {
 		trQuestVarSet("Path"+u+"", 15);
 	}
+	//SP Obelisk anim light cost
+	if(xGetInt(dPlayerData, xGold) < 1*trQuestVarGet("DrillCostL"+(1*xGetInt(dPlayerData, xDrillLevel)+1)+"")){
+		trUnitSelectClear();
+		trUnitSelect(""+UnitObelisk1);
+		trUnitSetAnimationPath("0,1,0,0,0");
+	}
+	if(xGetInt(dPlayerData, xGold) < 1*trQuestVarGet("HullCostL"+(1*xGetInt(dPlayerData, xHullLevel)+1)+"")){
+		trUnitSelectClear();
+		trUnitSelect(""+UnitObelisk2);
+		trUnitSetAnimationPath("0,1,0,0,0");
+	}
+	if(xGetInt(dPlayerData, xGold) < 1*trQuestVarGet("FuelCostL"+(1*xGetInt(dPlayerData, xFuelLevel)+1)+"")){
+		trUnitSelectClear();
+		trUnitSelect(""+UnitObelisk3);
+		trUnitSetAnimationPath("0,1,0,0,0");
+	}
+	if(xGetInt(dPlayerData, xGold) < 1*trQuestVarGet("CargoCostL"+(1*xGetInt(dPlayerData, xCargoLevel)+1)+"")){
+		trUnitSelectClear();
+		trUnitSelect(""+UnitObelisk4);
+		trUnitSetAnimationPath("0,1,0,0,0");
+	}
+	if(xGetInt(dPlayerData, xGold) < 1*trQuestVarGet("EngineCostL"+(1*xGetInt(dPlayerData, xEngineLevel)+1)+"")){
+		trUnitSelectClear();
+		trUnitSelect(""+UnitObelisk5);
+		trUnitSetAnimationPath("0,1,0,0,0");
+	}
+	if(xGetInt(dPlayerData, xGold) < 1*trQuestVarGet("RadiatorCostL"+(1*xGetInt(dPlayerData, xRadiatorLevel)+1)+"")){
+		trUnitSelectClear();
+		trUnitSelect(""+UnitObelisk6);
+		trUnitSetAnimationPath("0,1,0,0,0");
+	}
+	trUnitSelectClear();
 }
 
 rule UpgradeSFX
@@ -537,17 +569,17 @@ highFrequency
 	trUnitSelect(""+UnitBox6);
 	trSetSelectedScale(1.2,1.2,1.2);
 	
-	int UnitObelisk1 = trGetNextUnitScenarioNameNumber();
+	UnitObelisk1 = trGetNextUnitScenarioNameNumber();
 	UnitCreate(1, "Victory Marker", 38, 38, 90);
-	int UnitObelisk2 = trGetNextUnitScenarioNameNumber();
+	UnitObelisk2 = trGetNextUnitScenarioNameNumber();
 	UnitCreate(1, "Victory Marker", 38, 28, 90);
-	int UnitObelisk3 = trGetNextUnitScenarioNameNumber();
+	UnitObelisk3 = trGetNextUnitScenarioNameNumber();
 	UnitCreate(1, "Victory Marker", 38, 18, 90);
-	int UnitObelisk4 = trGetNextUnitScenarioNameNumber();
+	UnitObelisk4 = trGetNextUnitScenarioNameNumber();
 	UnitCreate(1, "Victory Marker", 98, 38, 90);
-	int UnitObelisk5 = trGetNextUnitScenarioNameNumber();
+	UnitObelisk5 = trGetNextUnitScenarioNameNumber();
 	UnitCreate(1, "Victory Marker", 98, 28, 90);
-	int UnitObelisk6 = trGetNextUnitScenarioNameNumber();
+	UnitObelisk6 = trGetNextUnitScenarioNameNumber();
 	UnitCreate(1, "Victory Marker", 98, 18, 90);
 	trUnitSelectClear();
 	trUnitSelect(""+UnitObelisk1);
@@ -567,6 +599,32 @@ highFrequency
 	trUnitSelectClear();
 	trUnitSelect(""+UnitObelisk6);
 	trUnitChangeProtoUnit("Outpost");
+	
+	//SP Obelisk anim light cost
+	if(xGetInt(dPlayerData, xGold) < 1*trQuestVarGet("DrillCostL"+(1*xGetInt(dPlayerData, xDrillLevel)+1)+"")){
+		trUnitSelect(""+UnitObelisk1);
+		trUnitSetAnimationPath("0,1,0,0,0");
+	}
+	if(xGetInt(dPlayerData, xGold) < 1*trQuestVarGet("HullCostL"+(1*xGetInt(dPlayerData, xHullLevel)+1)+"")){
+		trUnitSelect(""+UnitObelisk2);
+		trUnitSetAnimationPath("0,1,0,0,0");
+	}
+	if(xGetInt(dPlayerData, xGold) < 1*trQuestVarGet("FuelCostL"+(1*xGetInt(dPlayerData, xFuelLevel)+1)+"")){
+		trUnitSelect(""+UnitObelisk3);
+		trUnitSetAnimationPath("0,1,0,0,0");
+	}
+	if(xGetInt(dPlayerData, xGold) < 1*trQuestVarGet("CargoCostL"+(1*xGetInt(dPlayerData, xCargoLevel)+1)+"")){
+		trUnitSelect(""+UnitObelisk4);
+		trUnitSetAnimationPath("0,1,0,0,0");
+	}
+	if(xGetInt(dPlayerData, xGold) < 1*trQuestVarGet("EngineCostL"+(1*xGetInt(dPlayerData, xEngineLevel)+1)+"")){
+		trUnitSelect(""+UnitObelisk5);
+		trUnitSetAnimationPath("0,1,0,0,0");
+	}
+	if(xGetInt(dPlayerData, xGold) < 1*trQuestVarGet("RadiatorCostL"+(1*xGetInt(dPlayerData, xRadiatorLevel)+1)+"")){
+		trUnitSelect(""+UnitObelisk6);
+		trUnitSetAnimationPath("0,1,0,0,0");
+	}
 	
 	//SET units selectable for info
 	xAddDatabaseBlock(dSelectables, true);
@@ -847,8 +905,6 @@ highFrequency
 		if(OverrideStage == true){
 			xSetPointer(dPlayerData, 1);
 			xSetInt(dPlayerData, xGold, 10000);
-			xSetInt(dPlayerData, xStageUnlocked, 9);
-			trQuestVarSet("CineStatus", 1);
 			saveAllData();
 		}
 		xsDisableSelf();

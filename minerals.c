@@ -203,7 +203,7 @@ int relicCost(int relic = 0) {
 		}
 		case RELIC_ANTIMATTER:
 		{
-			price = 100;
+			price = 250;
 		}
 		case RELIC_YEEBIUM:
 		{
@@ -485,7 +485,7 @@ int relicProto(int relic = 0) {
 		}
 		case RELIC_ANTIMATTER:
 		{
-			proto = kbGetProtoUnitID("Wonder SPC");
+			proto = kbGetProtoUnitID("Outpost");
 		}
 		case RELIC_YEEBIUM:
 		{
@@ -636,30 +636,66 @@ void processHeldRelics(int count = 1) {
 			if (currentDistance > 80) {
 				trUnitChangeProtoUnit("Relic");
 				xUnitSelect(dHeldRelics, xRelicName);
-				xAddDatabaseBlock(dFreeRelics, true);
-				xSetInt(dFreeRelics, xRelicName, 1*xGetInt(dHeldRelics, xRelicName));
-				xSetInt(dFreeRelics, xRelicValue, 1*xGetInt(dHeldRelics, xRelicValue));
-				xSetInt(dFreeRelics, xRelicTick, (trTimeMS()+50));
-				if(xGetInt(dHeldRelics, xRelicValue) == RELIC_URANIUM){
-					xSetInt(dFreeRelics, xRelicDamage, 1);
-				}
-				else if(xGetInt(dFreeRelics, xRelicValue) == RELIC_PROMETHIUM){
-					xSetInt(dHeldRelics, xRelicDamage, PROMETHIUM_DAMAGE);
-				}
-				else if(xGetInt(dFreeRelics, xRelicValue) == RELIC_EINSTEINIUM){
-					xSetInt(dHeldRelics, xRelicDamage, EINSTEINIUM_DAMAGE);
-				}
-				else if(xGetInt(dFreeRelics, xRelicValue) == RELIC_HYDROGEN){
-					xSetInt(dHeldRelics, xRelicDamage, HYDROGEN_DAMAGE);
-				}
-				else if(xGetInt(dFreeRelics, xRelicValue) == RELIC_ANTIMATTER){
-					xSetInt(dHeldRelics, xRelicDamage, ANTIMATTER_DAMAGE);
+				if(xGetInt(dHeldRelics, xRelicValue) == RELIC_ANTIMATTER){
+					trVectorSetUnitPos("RelicPos", "P"+dropper+"Siphon");
+					trVectorSnapToGrid("RelicPos");
+					int Col = (trVectorQuestVarGetX("RelicPos") ) / 8 +1;
+					int Row = (trVectorQuestVarGetZ("RelicPos") ) / 8 +1;
+					trUnitChangeProtoUnit("Implode Sphere Effect");
+					trUnitSelectClear();
+					xUnitSelect(dHeldRelics, xRelicName);
+					trDamageUnitPercent(100);
+					xFreeDatabaseBlock(dHeldRelics);
+					playSoundCustom("implode explode.wav", "implode explode.wav");
+					if(Row <= MaxRows){
+						if(Row < MaxRows){
+							MineSquare(Row+1, Col+1);
+							MineSquare(Row+1, Col);
+							MineSquare(Row+1, Col-1);
+						}
+						MineSquare(Row, Col+1);
+						MineSquare(Row, Col-1);
+						MineSquare(Row-1, Col+1);
+						MineSquare(Row-1, Col);
+						MineSquare(Row-1, Col-1);
+						if(Row < MaxRows){RemoveBlack(Row+1, Col+1);
+							RemoveBlack(Row+1, Col);
+							RemoveBlack(Row+1, Col-1);
+						}
+						RemoveBlack(Row, Col+1);
+						RemoveBlack(Row, Col-1);
+						RemoveBlack(Row-1, Col+1);
+						RemoveBlack(Row-1, Col);
+						RemoveBlack(Row-1, Col-1);
+					}
+					break;
 				}
 				else{
-					xSetInt(dFreeRelics, xRelicDamage, 0);
+					xAddDatabaseBlock(dFreeRelics, true);
+					xSetInt(dFreeRelics, xRelicName, 1*xGetInt(dHeldRelics, xRelicName));
+					xSetInt(dFreeRelics, xRelicValue, 1*xGetInt(dHeldRelics, xRelicValue));
+					xSetInt(dFreeRelics, xRelicTick, (trTimeMS()+50));
+					if(xGetInt(dHeldRelics, xRelicValue) == RELIC_URANIUM){
+						xSetInt(dFreeRelics, xRelicDamage, 1);
+					}
+					else if(xGetInt(dFreeRelics, xRelicValue) == RELIC_PROMETHIUM){
+						xSetInt(dHeldRelics, xRelicDamage, PROMETHIUM_DAMAGE);
+					}
+					else if(xGetInt(dFreeRelics, xRelicValue) == RELIC_EINSTEINIUM){
+						xSetInt(dHeldRelics, xRelicDamage, EINSTEINIUM_DAMAGE);
+					}
+					else if(xGetInt(dFreeRelics, xRelicValue) == RELIC_HYDROGEN){
+						xSetInt(dHeldRelics, xRelicDamage, HYDROGEN_DAMAGE);
+					}
+					else if(xGetInt(dFreeRelics, xRelicValue) == RELIC_ANTIMATTER){
+						xSetInt(dHeldRelics, xRelicDamage, ANTIMATTER_DAMAGE);
+					}
+					else{
+						xSetInt(dFreeRelics, xRelicDamage, 0);
+					}
+					xFreeDatabaseBlock(dHeldRelics);
+					//break;
 				}
-				xFreeDatabaseBlock(dHeldRelics);
-				//break;
 			}
 		}
 		if (currentDistance < 80) {
@@ -710,6 +746,25 @@ highFrequency
 	for(r=RELIC_NUMBER; >= 1) {
 		if(trQuestVarGet("P"+GSeller+"R"+r+"") > 0){
 			ColouredChatToPlayer(GSeller, RelicColour(r), ""+1*trQuestVarGet("P"+GSeller+"R"+r+"")+"x "+relicName(r)+" sold!");
+			if (xGetInt(dPlayerData, xBonus+18) == 0){
+				if(r == RELIC_URANIUM){
+					xSetInt(dPlayerData, xRadioactivesSold, xGetInt(dPlayerData, xRadioactivesSold)+1*trQuestVarGet("P"+GSeller+"R"+r+""));
+				}
+				if(r == RELIC_PROMETHIUM){
+					xSetInt(dPlayerData, xRadioactivesSold, xGetInt(dPlayerData, xRadioactivesSold)+1*trQuestVarGet("P"+GSeller+"R"+r+""));
+				}
+				if(r == RELIC_EINSTEINIUM){
+					xSetInt(dPlayerData, xRadioactivesSold, xGetInt(dPlayerData, xRadioactivesSold)+1*trQuestVarGet("P"+GSeller+"R"+r+""));
+				}
+				if(xGetInt(dPlayerData, xRadioactivesSold) >= RadiationBonus){
+					xSetInt(dPlayerData, xBonus+18, 1);
+					if(trCurrentPlayer() == GSeller){
+						saveAllData();
+						ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked (18)!");
+						playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
+					}
+				}
+			}
 			trQuestVarSet("P"+GSeller+"R"+r+"", 0);
 			//Stage unlock conditions
 			xSetPointer(dPlayerData, GSeller);

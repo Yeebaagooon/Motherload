@@ -1457,7 +1457,10 @@ highFrequency
 			}
 			trUnitSelectClear();
 			trUnitSelect(""+(temp+x));
-			trUnitChangeProtoUnit("Bolder Rolling");
+			trUnitChangeProtoUnit("Spy Eye");
+			trUnitSelectClear();
+			trUnitSelect(""+(temp+x));
+			trMutateSelected(kbGetProtoUnitID("Bolder Rolling"));
 			trUnitSelectClear();
 			trUnitSelect(""+(temp+x));
 			trSetSelectedScale(10, 3, 0.1);
@@ -1541,6 +1544,34 @@ highFrequency
 							spawnRelicSpecific(v,1*trQuestVarGet("Temp2"));
 						}
 					}
+				}
+				int ExtraThule = 0;
+				for(p = 1; < cNumberNonGaiaPlayers){
+					xSetPointer(dPlayerData, p);
+					if(xGetInt(dPlayerData, xDrillLevel) >= 6){
+						if(col > 20){
+							trQuestVarSetFromRand("Temp",1,15);
+							if(1*trQuestVarGet("Temp") <= cNumberNonGaiaPlayers){
+								spawnRelicSpecific(v,16);
+							}
+						}
+						if(col < 5){
+							trQuestVarSetFromRand("Temp",1,15);
+							if(1*trQuestVarGet("Temp") <= cNumberNonGaiaPlayers){
+								trQuestVarSetFromRand("Temp2",1,3);
+								if(trQuestVarGet("Temp2") < 3){
+									spawnRelicSpecific(v,18);
+								}
+								else{
+									spawnRelicSpecific(v,20);
+								}
+							}
+						}
+					}
+				}
+				if(ExtraThule == 1){
+					// THULE EXTRA STUFF
+					trChatSend(0, "Extra");
 				}
 			}
 			if(Stage == 2){

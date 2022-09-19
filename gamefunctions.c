@@ -412,7 +412,7 @@ int GetRockHardness(int rock = 0) {
 		}
 		case Hades9:
 		{
-			return(1800);
+			return(1500);
 		}
 		case HadesCliff:
 		{
@@ -1087,6 +1087,107 @@ void MainTitle(int x = 0, int z = 0){
 	xAddDatabaseBlock(dDestroyMe, true);
 	xSetInt(dDestroyMe, xDestroyName, a);
 	xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+5000);
-	
-	
+}
+
+//	if((trGetTerrainSubType(col*4-2,row*4-2) != 13) && (trGetTerrainType(col*4-2,row*4-2) != 2)){
+//Doesnt stop black rock from being blown up ... wtf
+
+void MineSquare(int row = 0, int col = 0){
+	if((trGetTerrainSubType(col*4-2,row*4-2) != 13) && (trGetTerrainType(col*4-2,row*4-2) != 2)){
+		trPaintTerrain(col*4-3,row*4-3,col*4-1,row*4-1,MineT, MineST,false);
+		trArmyDispatch("0,0", "Revealer", 1, col*8-4, 1, row*8-4, 180, true);
+		//Blow up gas pocket
+		for (x= xGetDatabaseCount(dGasPocket); > 0) {
+			xDatabaseNext(dGasPocket);
+			if((xGetInt(dGasPocket, xGasCol) == col) && (xGetInt(dGasPocket, xGasRow) == row)){
+				trVectorQuestVarSet("TempGas", xsVectorSet(8*xGetInt(dGasPocket, xGasCol)-4,3,8*xGetInt(dGasPocket, xGasRow)-4));
+				int temp = trGetNextUnitScenarioNameNumber();
+				trArmyDispatch("0,0", "Dwarf", 1, 1,1,1, 0, true);
+				trUnitSelectClear();
+				trUnitSelect(""+temp);
+				trUnitSelectClear();
+				trUnitSelect(""+temp);
+				trUnitTeleport(trVectorQuestVarGetX("TempGas"),trVectorQuestVarGetY("TempGas"),trVectorQuestVarGetZ("TempGas"));
+				trMutateSelected(kbGetProtoUnitID("Harpy"));
+				trUnitSelectClear();
+				trUnitSelect(""+temp);
+				trSetSelectedHeight(-10.0);
+				trUnitSelectClear();
+				trUnitSelect(""+temp);
+				trSetSelectedScale(0,0,0);
+				trUnitSelectClear();
+				trUnitSelect(""+temp);
+				trUnitOverrideAnimation(1,0,false,true,-1,-1);
+				xFreeDatabaseBlock(dGasPocket);
+				trUnitSelectClear();
+				trUnitSelect(""+temp);
+				xAddDatabaseBlock(dDestroyMe, true);
+				xSetInt(dDestroyMe, xDestroyName, temp);
+				xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+1500);
+			}
+		}
+	}
+	else if((trGetTerrainSubType(col*4-2,row*4-2) == 13) && (trGetTerrainType(col*4-2,row*4-2) == 2)){
+		trPaintTerrain(col*4-3,row*4-3,col*4-1,row*4-1,2, 13,false);
+	}
+}
+
+void RemoveBlack(int row = 0, int col = 0){
+	int rowmid = row*4-2;
+	int colmid = col*4-2;
+	//Wall above
+	if((trGetTerrainSubType(col*4-2,row*4-2) == 13) && (trGetTerrainType(col*4-2,row*4-2) == 2)){
+		trPaintTerrain(col*4-3,row*4-3,col*4-1,row*4-1,2, 13,false);
+		row = 100;
+	}
+	if(row <= MaxRows){
+		if((trGetTerrainSubType((colmid),(rowmid)+4) == MineST) && (trGetTerrainType((colmid),(rowmid)+4) == MineT)){
+			trUnitSelectClear();
+			trPaintTerrain(col*4-3,row*4-3,col*4-1,row*4,MineT, MineST,false);
+			trUnitSelectByQV("R"+row+"C"+col+"WallX");
+			trUnitChangeProtoUnit("Meteor Impact Ground");
+			trUnitSelectClear();
+			trUnitSelectByQV("R"+row+"C"+col+"WallX");
+			trUnitDestroy();
+			//correct wall but not top layer because terrain above isnt overworld
+		}
+		if((trGetTerrainSubType((colmid),(rowmid)+4) == OVERTERRAIN_SUBTYPE) && (trGetTerrainType((colmid),(rowmid)+4) == OVERTERRAIN_TYPE)){
+			trUnitSelectClear();
+			trUnitSelectByQV("R"+row+"C"+col+"WallX");
+			trUnitChangeProtoUnit("Meteor Impact Ground");
+			trUnitSelectClear();
+			trUnitSelectByQV("R"+row+"C"+col+"WallX");
+			trUnitDestroy();
+		}
+		//Wall below
+		if((trGetTerrainSubType((colmid),(rowmid)-4) == MineST) && (trGetTerrainType((colmid),(rowmid)-4) == MineT)){
+			trPaintTerrain(col*4-3,row*4-4,col*4-1,row*4-1,MineT, MineST,false);
+			trUnitSelectClear();
+			trUnitSelectByQV("R"+(row-1)+"C"+col+"WallX");
+			trUnitChangeProtoUnit("Meteor Impact Ground");
+			trUnitSelectClear();
+			trUnitSelectByQV("R"+(row-1)+"C"+col+"WallX");
+			trUnitDestroy();
+			//correct wall but not top layer because terrain above isnt overworld
+		}
+		if((trGetTerrainSubType((colmid)+4,(rowmid)) == MineST) && (trGetTerrainType((colmid)+4,(rowmid)) == MineT)){
+			trPaintTerrain(col*4-3,row*4-3,col*4,row*4-1,MineT, MineST,false);
+			trUnitSelectClear();
+			trUnitSelectByQV("R"+row+"C"+col+"WallY");
+			trUnitChangeProtoUnit("Meteor Impact Ground");
+			trUnitSelectClear();
+			trUnitSelectByQV("R"+row+"C"+col+"WallY");
+			trUnitDestroy();
+		}
+		if((trGetTerrainSubType((colmid)-4,(rowmid)) == MineST) && (trGetTerrainType((colmid)-4,(rowmid)) == MineT)){
+			trPaintTerrain(col*4-4,row*4-3,col*4-1,row*4-1,MineT, MineST,false);
+			trUnitSelectClear();
+			trUnitSelectByQV("R"+row+"C"+(col-1)+"WallY");
+			trUnitChangeProtoUnit("Meteor Impact Ground");
+			trUnitSelectClear();
+			trUnitSelectByQV("R"+row+"C"+(col-1)+"WallY");
+			trUnitDestroy();
+		}
+		trPaintTerrain(0,4*MaxRows+1,200,4*MaxRows+5,OVERTERRAIN_TYPE,OVERTERRAIN_SUBTYPE,false);
+	}
 }

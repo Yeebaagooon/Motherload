@@ -1,14 +1,24 @@
 //--SUGGESTIONS
 /*
-*Highlight Earths for sexier bg effect
-*Auto sell
+BUG - The active SP unlock bonuses need a seperate trigger always on
+Population will trigger antimatter bomb
+
+Search //VERSION OVERRIDE HERE for release to rewrite all data
+
+--TO DO--
+-Trap stage
+-Bonuses
+-Super relics (skeleton etc)
+-Nick said something recently in SD about linking mousewheel to camera
+
+- SP click drill and says type, not for others
 */
 
 
 //---Test controls
-int QuickStart = 0;
-int QuickStage = 0;
-bool OverrideSP = true;
+int QuickStart = 1;
+int QuickStage = 2;
+bool OverrideSP = false;
 bool OverrideStage = false;
 
 //---
@@ -20,7 +30,6 @@ string MapName = "Motherload.xs";
 int MaxRows = 20;
 int MaxCols = 25;
 int GSeller = 0; //dont touch, does the player when selling minerals
-int GVortex = 0;
 vector GVectorSellPos = vector(5,3,180);
 int TERRAIN_TYPE = 2;
 int TERRAIN_SUBTYPE = 2;
@@ -30,6 +39,11 @@ int CheckTime = 1;
 
 int MineT = 5;
 int MineST = 3;
+
+//Max is 4800
+int FuelSpendForBonus = 3000;
+int HullSpendForBonus = 4000;
+int RadiationBonus = 200;
 
 float FuelCost = 0;
 float FSOneXMin = 10;
@@ -110,8 +124,19 @@ int xBonus = 0;
 int xRelicCollected = 0;
 int xFuelSpend = 0;
 int xHullSpend = 0;
+int xRadioactivesSold = 0;
 
 int CinematicObelisk = 0;
+
+int xVersionControl = 0;
+int xSpyObject = 0;
+
+int UnitObelisk1 = 0;
+int UnitObelisk2 = 0;
+int UnitObelisk3 = 0;
+int UnitObelisk4 = 0;
+int UnitObelisk5 = 0;
+int UnitObelisk6 = 0;
 
 rule setup_first_databases
 active
@@ -153,6 +178,9 @@ highFrequency
 	}
 	xFuelSpend = xInitAddInt(dPlayerData, "fuel spend", 0);
 	xHullSpend = xInitAddInt(dPlayerData, "hull spend", 0);
+	xVersionControl = xInitAddInt(dPlayerData, "version", 0);
+	xSpyObject = xInitAddInt(dPlayerData, "spy id", 0);
+	xRadioactivesSold = xInitAddInt(dPlayerData, "radioactives sold", 0);
 	xsDisableSelf();
 	for(p=1; <= cNumberNonGaiaPlayers) {
 		xAddDatabaseBlock(dPlayerData, true);

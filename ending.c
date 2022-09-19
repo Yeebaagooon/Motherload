@@ -276,6 +276,8 @@ rule SednaWin
 inactive
 highFrequency
 {
+	trCounterAbort("CDSTage");
+	StageTime = StageTime+100;
 	xsDisableSelf();
 	xsDisableRule("CheckResigns");
 	xsDisableRule("FuelEconomy");
