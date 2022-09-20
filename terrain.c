@@ -442,6 +442,9 @@ highFrequency
 					if((row >= 19) && (row <= 20)){
 						RockType(33);
 					}
+					else{
+						RockType(36);
+					}
 				}
 				trPaintTerrain(4*col-1,4*row-1,4*col-3,4*row-3,TERRAIN_TYPE,TERRAIN_SUBTYPE,false);
 				trQuestVarSet("R"+row+"C"+col+"CentreY", row*4-2);
@@ -1494,6 +1497,12 @@ highFrequency
 		sunColor(57,20,2);
 		ambientColor(57,55,40);
 		terrainAmbient(255,155,155);
+		//This is the ship layout
+		Layout(18,2);
+		Layout(18,3);
+		Layout(17,2);
+		Layout(17,3);
+		
 	}
 	xsEnableRule("Ragnorok");
 	xsDisableSelf();

@@ -11,14 +11,13 @@ Search //VERSION OVERRIDE HERE for release to rewrite all data
 -Super relics (skeleton etc)
 -Nick said something recently in SD about linking mousewheel to camera
 
-- SP click drill and says type, not for others
 */
 
 
 //---Test controls
 int QuickStart = 1;
 int QuickStage = 2;
-bool OverrideSP = false;
+bool OverrideSP = true;
 bool OverrideStage = false;
 
 //---

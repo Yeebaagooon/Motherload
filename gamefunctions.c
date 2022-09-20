@@ -1191,3 +1191,9 @@ void RemoveBlack(int row = 0, int col = 0){
 		trPaintTerrain(0,4*MaxRows+1,200,4*MaxRows+5,OVERTERRAIN_TYPE,OVERTERRAIN_SUBTYPE,false);
 	}
 }
+
+void Layout(int row = 0, int col = 0){
+	trPaintTerrain(4*col-1,4*row-1,4*col-3,4*row-3,MineT,MineST,false);
+	MineSquare(row,col);
+	RemoveBlack(row,col);
+}

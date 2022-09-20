@@ -304,6 +304,7 @@ highFrequency
 	trSetSelectedScale(0,0,0);
 	trUnitOverrideAnimation(15,0,true,false,-1);
 	xsEnableRule("Sedna_C01");
+	trQuestVarSet("ShowSpaceship", 1);
 	for(x=xGetDatabaseCount(dFreeRelics); >0) {
 		xDatabaseNext(dFreeRelics);
 		xUnitSelect(dFreeRelics,xRelicName);
@@ -349,18 +350,6 @@ highFrequency
 		xsDisableSelf();
 		trPaintTerrain(0,0,100,100,5,4,true);
 		PaintPlanets(20,20, 1);
-		int z = trGetNextUnitScenarioNameNumber();
-		trArmyDispatch(""+cNumberNonGaiaPlayers+",0","Dwarf",1,160,0,60,270,true);
-		trUnitSelectClear();
-		trUnitSelect(""+z, true);
-		//Mr Natas Spaceship
-		trUnitChangeProtoUnit("Phoenix");
-		spyEffect(z, kbGetProtoUnitID("Sky Passage"), vector(0,0,0), vector(1,1,1));
-		spyEffect(z, kbGetProtoUnitID("Fire Ship Atlantean"), vector(0,0,0), vector(2,2,2));
-		spyEffect(z, kbGetProtoUnitID("Helepolis"), vector(0,0,0), vector(2,1,2));
-		spyEffect(z, kbGetProtoUnitID("Migdol Stronghold"), vector(0,0,0), vector(1,-0.4,1));
-		spyEffect(z, kbGetProtoUnitID("Outpost"), vector(0,0,0), vector(1,1.5,1));
-		trModifyProtounit("Phoenix", cNumberNonGaiaPlayers, 1, -10);
 		createCameraTrack(5500);
 		trCameraCut(vector(-41.022690,21.803864,60.732624), vector(0.984738,-0.167602,-0.046911), vector(0.167415,0.985854,-0.007975), vector(-0.047584,0.000000,-0.998867));
 		addCameraTrackWaypoint();
