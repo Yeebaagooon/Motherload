@@ -1502,7 +1502,17 @@ highFrequency
 		Layout(18,3);
 		Layout(17,2);
 		Layout(17,3);
-		
+		trPaintTerrain(7,68,7,72,0,73,false);
+		xAddDatabaseBlock(dTrap);
+		xSetPointer(dTrap, xGetDatabaseCount(dTrap));
+		xSetInt(dTrap, xTrapXMin, 14);
+		xSetInt(dTrap, xTrapXMax, 16);
+		xSetInt(dTrap, xTrapZMin, 68*2);
+		xSetInt(dTrap, xTrapZMax, 72*2+2);
+		xSetInt(dTrap, xTrapType, 1);
+		xSetBool(dTrap, xTrapOn, true);
+		xSetBool(dTrap, xTrapReady, true);
+		xSetInt(dTrap, xTrapReset, 1000);
 	}
 	xsEnableRule("Ragnorok");
 	xsDisableSelf();

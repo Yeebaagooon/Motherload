@@ -1024,5 +1024,36 @@ highFrequency
 			}
 		}
 	}
+	if(Stage == 10){
+		//TEMPORARY UNTIL FUEL ECONOMY REDONE
+		for(p=1; < cNumberNonGaiaPlayers) {
+			trVectorSetUnitPos("P"+p+"Pos", "P"+p+"Siphon");
+		}
+		/*trChatHistoryClear();
+		trChatSend(0, "Trap count = " + xGetDatabaseCount(dTrap));
+		xSetPointer(dTrap, xGetDatabaseCount(dTrap));
+		trChatSend(0, "Trap ZMin = " + xGetInt(dTrap, xTrapZMin));
+		trChatSend(0, "Trap ZMax = " + xGetInt(dTrap, xTrapZMax));
+		trChatSend(0, "My Z = " + 1*trVectorQuestVarGetZ("P"+1+"Pos"));*/
+		for (x= xGetDatabaseCount(dTrap); > 0) {
+			xDatabaseNext(dTrap);
+			if((xGetBool(dTrap, xTrapOn) == true) && (xGetBool(dTrap, xTrapReady) == true) && (trTimeMS() > xGetInt(dTrap, xTrapReset))){
+				//Trap active, on, and ready
+				for(p=1; < cNumberNonGaiaPlayers) {
+					if((trVectorQuestVarGetX("P"+p+"Pos") >= xGetInt(dTrap, xTrapXMin)) && (trVectorQuestVarGetX("P"+p+"Pos") < xGetInt(dTrap, xTrapXMax)) && (trVectorQuestVarGetZ("P"+p+"Pos") >= xGetInt(dTrap, xTrapZMin)) && (trVectorQuestVarGetZ("P"+p+"Pos") <= xGetInt(dTrap, xTrapZMax))){
+						//Trap activate
+						trChatSend(0, "Trap activated!");
+						xSetInt(dTrap, xTrapReset, trTimeMS()+1000);
+						xSetBool(dTrap, xTrapReady, false);
+						playSoundCustom("crocsnap.wav");
+					}
+				}
+			}
+			else if((xGetBool(dTrap, xTrapOn) == true) && (xGetBool(dTrap, xTrapReady) == false) && (trTimeMS() > xGetInt(dTrap, xTrapReset))){
+				xSetBool(dTrap, xTrapReady, true);
+				//Reset trap to ready
+			}
+		}
+	}
 	
 }

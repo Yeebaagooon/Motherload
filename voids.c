@@ -1289,10 +1289,10 @@ void CTFBuildBase(int p = 1, float PosX = 0, float PosZ = 0){
 }
 
 void playSoundCustom(string BasesoundName = "", string CustomsoundName = ""){
-	if(1*trQuestVarGet("CustomContent") == 0){
+	if((1*trQuestVarGet("CustomContent") == 0) || (CustomsoundName == "")){
 		trSoundPlayPaused(""+BasesoundName+"", "1", -1, "", "");
 	}
-	else {
+	else{
 		trSoundPlayPaused(""+CustomsoundName+"", "1", -1, "", "");
 	}
 }
