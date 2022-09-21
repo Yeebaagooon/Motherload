@@ -1046,12 +1046,24 @@ highFrequency
 						xSetInt(dTrap, xTrapReset, trTimeMS()+1000);
 						xSetBool(dTrap, xTrapReady, false);
 						playSoundCustom("crocsnap.wav");
+						trUnitSelectClear();
+						trUnitSelect(""+1*xGetInt(dTrap, xTrapUnit)+"");
+						trUnitSetAnimationPath("0,0,0,0,0,0");
+						trUnitSelectClear();
+						trUnitSelect(""+1*xGetInt(dTrap, xTrapUnit)+"");
+						trUnitOverrideAnimation(18,0,true,true,-1,-1);
 					}
 				}
 			}
 			else if((xGetBool(dTrap, xTrapOn) == true) && (xGetBool(dTrap, xTrapReady) == false) && (trTimeMS() > xGetInt(dTrap, xTrapReset))){
 				xSetBool(dTrap, xTrapReady, true);
 				//Reset trap to ready
+				trUnitSelectClear();
+				trUnitSelect(""+1*xGetInt(dTrap, xTrapUnit)+"");
+				trUnitOverrideAnimation(2,0,true,true,-1,-1);
+				trUnitSelectClear();
+				trUnitSelect(""+1*xGetInt(dTrap, xTrapUnit)+"");
+				trUnitSetAnimationPath("0,0,1,1,0,0");
 			}
 		}
 	}

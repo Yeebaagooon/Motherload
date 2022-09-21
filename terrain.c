@@ -1513,6 +1513,24 @@ highFrequency
 		xSetBool(dTrap, xTrapOn, true);
 		xSetBool(dTrap, xTrapReady, true);
 		xSetInt(dTrap, xTrapReset, 1000);
+		xSetInt(dTrap, xTrapUnit, 1*trGetNextUnitScenarioNameNumber());
+		temp = trGetNextUnitScenarioNameNumber();
+		trArmyDispatch("1,0", "Dwarf", 1, 24,3,70*2, 0, true);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitChangeProtoUnit("Spy Eye");
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trMutateSelected(kbGetProtoUnitID("Tartarian Gate"));
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trSetSelectedScale(0.4,-0.4,0.4);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitOverrideAnimation(2,0,true,true,-1,-1);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitSetAnimationPath("0,0,1,1,0,0");
 	}
 	xsEnableRule("Ragnorok");
 	xsDisableSelf();

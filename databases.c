@@ -47,6 +47,7 @@ int xTrapType = 0;
 int xTrapOn = 0;
 int xTrapReady = 0;
 int xTrapReset = 0;
+int xTrapUnit = 0;
 
 rule setup_databases
 active
@@ -110,6 +111,7 @@ highFrequency
 	xTrapOn = xInitAddBool (dTrap, "On", true);
 	xTrapReady = xInitAddBool (dTrap, "Ready", true);
 	xTrapReset = xInitAddInt(dTrap, "Reset time", 10);
+	xTrapUnit = xInitAddInt (dTrap, "Trap unit ID");
 }
 
 
