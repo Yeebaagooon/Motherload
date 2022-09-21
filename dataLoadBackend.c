@@ -50,7 +50,160 @@ void addLocalDataQV(string qvName = "", int slot = 0, int size = 1) {
 }
 
 void showLoadProgress() {
-	trSoundPlayFN("default","1",-1,"Loading Data:"+100 * loadProgress / totalLoad,"icons\god power reverse time icons 64");
+	if((100 * loadProgress / totalLoad) == 0){
+		displayz = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 2){
+		displayz = "=~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 4){
+		displayz = "==~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 6){
+		displayz = "===~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 8){
+		displayz = "====~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 10){
+		displayz = "=====~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 12){
+		displayz = "======~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 14){
+		displayz = "=======~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 16){
+		displayz = "========~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 18){
+		displayz = "=========~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 20){
+		displayz = "==========~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 22){
+		displayz = "===========~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 24){
+		displayz = "============~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 26){
+		displayz = "=============~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 28){
+		displayz = "==============~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 30){
+		displayz = "===============~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 32){
+		displayz = "================~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 34){
+		displayz = "=================~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 36){
+		displayz = "==================~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 38){
+		displayz = "===================~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 40){
+		displayz = "====================~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 42){
+		displayz = "=====================~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 44){
+		displayz = "======================~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 46){
+		displayz = "=======================~~~~~~~~~~~~~~~~~~~~~~~~~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 48){
+		displayz = "========================~~~~~~~~~~~~~~~~~~~~~~~~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 50){
+		displayz = "=========================~~~~~~~~~~~~~~~~~~~~~~~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 52){
+		displayz = "==========================~~~~~~~~~~~~~~~~~~~~~~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 54){
+		displayz = "===========================~~~~~~~~~~~~~~~~~~~~~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 56){
+		displayz = "============================~~~~~~~~~~~~~~~~~~~~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 58){
+		displayz = "=============================~~~~~~~~~~~~~~~~~~~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 60){
+		displayz = "==============================~~~~~~~~~~~~~~~~~~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 62){
+		displayz = "===============================~~~~~~~~~~~~~~~~~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 64){
+		displayz = "================================~~~~~~~~~~~~~~~~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 66){
+		displayz = "=================================~~~~~~~~~~~~~~~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 68){
+		displayz = "==================================~~~~~~~~~~~~~~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 70){
+		displayz = "===================================~~~~~~~~~~~~~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 72){
+		displayz = "====================================~~~~~~~~~~~~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 74){
+		displayz = "=====================================~~~~~~~~~~~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 76){
+		displayz = "======================================~~~~~~~~~~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 78){
+		displayz = "=======================================~~~~~~~~~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 80){
+		displayz = "========================================~~~~~~~~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 82){
+		displayz = "=========================================~~~~~~~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 84){
+		displayz = "==========================================~~~~~~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 86){
+		displayz = "===========================================~~~~~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 88){
+		displayz = "============================================~~~~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 90){
+		displayz = "=============================================~~~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 92){
+		displayz = "==============================================~~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 94){
+		displayz = "===============================================~~~";
+	}
+	if((100 * loadProgress / totalLoad) == 96){
+		displayz = "================================================~~";
+	}
+	if((100 * loadProgress / totalLoad) == 98){
+		displayz = "=================================================~";
+	}
+	if((100 * loadProgress / totalLoad) == 100){
+		displayz = "==================================================";
+	}
+	trSoundPlayFN("default","1",-1,"Loading Data:"+ displayz,"icons\god power reverse time icons 64");
 }
 
 void saveAllData() {

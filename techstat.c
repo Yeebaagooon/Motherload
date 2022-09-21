@@ -40,6 +40,9 @@ highFrequency
 	trModifyProtounit("Alfred", 0, 1, -1000);
 	trModifyProtounit("Athena", 1, 1, 4);
 	trModifyProtounit("Meteorite", 0, 8, 4);
+	trModifyProtounit("Lampades", cNumberNonGaiaPlayers, 0, 1000);
+	trModifyProtounit("Lampades", cNumberNonGaiaPlayers, 1, 5);
+	trModifyProtounit("Lampades", cNumberNonGaiaPlayers, 55, 4);
 	xsDisableSelf();
 }
 

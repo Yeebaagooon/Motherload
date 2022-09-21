@@ -568,7 +568,13 @@ highFrequency
 		}
 		if(xGetInt(dPlayerData, xBonus+17) != 0){
 			trUnitSelectByQV("Bonus17");
-			trUnitChangeProtoUnit("Theris");
+			trUnitChangeProtoUnit("Tartarian Gate");
+			trUnitSelectByQV("Bonus17");
+			trSetSelectedScale(0.4,-0.4,0.4);
+			trUnitSelectByQV("Bonus17");
+			trUnitOverrideAnimation(2,0,true,true,-1,-1);
+			trUnitSelectByQV("Bonus17");
+			trUnitSetAnimationPath("0,0,1,1,0,0");
 			xAddDatabaseBlock(dSelectables, true);
 			xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus17"));
 			xSetInt(dSelectables, xSelectablesPrompt, 717);
@@ -576,7 +582,13 @@ highFrequency
 				trUnitSelectByQV("BonusEffect17");
 				trUnitChangeProtoUnit("Gaia Forest effect");
 				trUnitSelectByQV("BonusUnit");
-				trUnitChangeProtoUnit("Theris");
+				trUnitChangeProtoUnit("Tartarian Gate");
+				trUnitSelectByQV("BonusUnit");
+				trSetSelectedScale(0.4,-0.4,0.4);
+				trUnitSelectByQV("BonusUnit");
+				trUnitOverrideAnimation(2,0,true,true,-1,-1);
+				trUnitSelectByQV("BonusUnit");
+				trUnitSetAnimationPath("0,0,1,1,0,0");
 			}
 		}
 		if(xGetInt(dPlayerData, xBonus+17) == 0){
@@ -788,7 +800,13 @@ void Select_Bonus(int bonus = 0){
 			ColouredChat("1,0.5,0", "+1000L fuel capacity equipped");
 		}
 		if(bonus == 17){
-			trUnitChangeProtoUnit("Theris");
+			trUnitChangeProtoUnit("Tartarian Gate");
+			trUnitSelectByQV("BonusUnit");
+			trSetSelectedScale(0.4,-0.4,0.4);
+			trUnitSelectByQV("BonusUnit");
+			trUnitOverrideAnimation(2,0,true,true,-1,-1);
+			trUnitSelectByQV("BonusUnit");
+			trUnitSetAnimationPath("0,0,1,1,0,0");
 			trChatHistoryClear();
 			ColouredChat("1,0.5,0", "Lava resist equipped");
 		}

@@ -1013,10 +1013,13 @@ highFrequency
 			xDatabaseNext(dPlanetEyecandy);
 			xUnitSelect(dPlanetEyecandy,xPlanetEyecandyName);
 			trUnitDestroy();
+		}
+		aiPlanDestroy(dPlanetEyecandy);
+		if(Stage != 10){
 			xsEnableRule("BasicVC1");
 			xsEnableRule("BasicVC2");
 		}
-		aiPlanDestroy(dPlanetEyecandy);
+		aiSet("NoAI", cNumberNonGaiaPlayers);
 		/*int limit = trGetNextUnitScenarioNameNumber()-1;
 		for(x = cNumberNonGaiaPlayers+1; < limit){
 			trUnitSelectClear();

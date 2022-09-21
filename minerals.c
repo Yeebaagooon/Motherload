@@ -1043,27 +1043,58 @@ highFrequency
 					if((trVectorQuestVarGetX("P"+p+"Pos") >= xGetInt(dTrap, xTrapXMin)) && (trVectorQuestVarGetX("P"+p+"Pos") < xGetInt(dTrap, xTrapXMax)) && (trVectorQuestVarGetZ("P"+p+"Pos") >= xGetInt(dTrap, xTrapZMin)) && (trVectorQuestVarGetZ("P"+p+"Pos") <= xGetInt(dTrap, xTrapZMax))){
 						//Trap activate
 						trChatSend(0, "Trap activated!");
-						xSetInt(dTrap, xTrapReset, trTimeMS()+1000);
+						xSetInt(dTrap, xTrapResetTime, trTimeMS()+xGetInt(dTrap, xTrapReset));
 						xSetBool(dTrap, xTrapReady, false);
-						playSoundCustom("crocsnap.wav");
-						trUnitSelectClear();
-						trUnitSelect(""+1*xGetInt(dTrap, xTrapUnit)+"");
-						trUnitSetAnimationPath("0,0,0,0,0,0");
-						trUnitSelectClear();
-						trUnitSelect(""+1*xGetInt(dTrap, xTrapUnit)+"");
-						trUnitOverrideAnimation(18,0,true,true,-1,-1);
+						if(xGetInt(dTrap, xTrapType) == 1){
+							playSoundCustom("crocsnap.wav");
+							trUnitSelectClear();
+							trUnitSelect(""+1*xGetInt(dTrap, xTrapUnit)+"");
+							trUnitSetAnimationPath("0,0,0,0,0,0");
+							trUnitSelectClear();
+							trUnitSelect(""+1*xGetInt(dTrap, xTrapUnit)+"");
+							trUnitOverrideAnimation(18,0,true,true,-1,-1);
+						}
+						if(xGetInt(dTrap, xTrapType) == 2){
+							playSoundCustom("crocsnap.wav");
+							trUnitSelectClear();
+							trUnitSelect(""+1*xGetInt(dTrap, xTrapUnit)+"");
+							trUnitMoveToPoint(xsVectorGetX(xGetVector(dTrap, xTrapStartVector)+xGetVector(dTrap, xTrapTargetVector)),3,xsVectorGetZ(xGetVector(dTrap, xTrapStartVector)+xGetVector(dTrap, xTrapTargetVector)),-1,false);
+						}
 					}
 				}
 			}
-			else if((xGetBool(dTrap, xTrapOn) == true) && (xGetBool(dTrap, xTrapReady) == false) && (trTimeMS() > xGetInt(dTrap, xTrapReset))){
+			else if((xGetBool(dTrap, xTrapOn) == true) && (xGetBool(dTrap, xTrapReady) == false) && (trTimeMS() < xGetInt(dTrap, xTrapResetTime))){
+				if(xGetInt(dTrap, xTrapType) == 2){
+					trVectorQuestVarSet("TrapV"+xGetInt(dTrap, xTrapUnit)+"", kbGetBlockPosition(""+1*xGetInt(dTrap, xTrapUnit)));
+					trChatHistoryClear();
+					trChatSend(0, ""+trVectorQuestVarGetX("TrapV"+xGetInt(dTrap, xTrapUnit)+""));
+					trChatSend(0, ""+xGetVector(dTrap, xTrapTargetVector)+xGetVector(dTrap, xTrapStartVector));
+				}
+			}
+			else if((xGetBool(dTrap, xTrapOn) == true) && (xGetBool(dTrap, xTrapReady) == false) && (trTimeMS() > xGetInt(dTrap, xTrapResetTime))){
 				xSetBool(dTrap, xTrapReady, true);
-				//Reset trap to ready
-				trUnitSelectClear();
-				trUnitSelect(""+1*xGetInt(dTrap, xTrapUnit)+"");
-				trUnitOverrideAnimation(2,0,true,true,-1,-1);
-				trUnitSelectClear();
-				trUnitSelect(""+1*xGetInt(dTrap, xTrapUnit)+"");
-				trUnitSetAnimationPath("0,0,1,1,0,0");
+				if(xGetInt(dTrap, xTrapType) == 1){
+					//Reset trap to ready
+					trUnitSelectClear();
+					trUnitSelect(""+1*xGetInt(dTrap, xTrapUnit)+"");
+					trUnitOverrideAnimation(2,0,true,true,-1,-1);
+					trUnitSelectClear();
+					trUnitSelect(""+1*xGetInt(dTrap, xTrapUnit)+"");
+					trUnitSetAnimationPath("0,0,1,1,0,0");
+				}
+				if(xGetInt(dTrap, xTrapType) == 2){
+					if(xsVectorGetX(xGetVector(dTrap, xTrapTargetVector)+xGetVector(dTrap, xTrapStartVector)) >= trVectorQuestVarGetX("TrapV"+xGetInt(dTrap, xTrapUnit)+"")){
+						trUnitSelectClear();
+						trUnitSelect(""+1*xGetInt(dTrap, xTrapUnit)+"");
+						trMutateSelected(kbGetProtoUnitID("Victory Marker"));
+						trUnitSelectClear();
+						trUnitSelect(""+1*xGetInt(dTrap, xTrapUnit)+"");
+						trUnitTeleport(xsVectorGetX(xGetVector(dTrap, xTrapStartVector)),3,xsVectorGetZ(xGetVector(dTrap, xTrapStartVector)));
+						trUnitSelectClear();
+						trUnitSelect(""+1*xGetInt(dTrap, xTrapUnit)+"");
+						trMutateSelected(kbGetProtoUnitID("Lampades"));
+					}
+				}
 			}
 		}
 	}

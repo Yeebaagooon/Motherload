@@ -11,8 +11,8 @@ Search //VERSION OVERRIDE HERE for release to rewrite all data
 -Super relics (skeleton etc)
 -Nick said something recently in SD about linking mousewheel to camera
 -Redo Natas unlock track
--Lava resist unit tartarian gate
 
+*CHANGE vector to anim for trap 2 movement
 */
 
 
@@ -21,6 +21,7 @@ int QuickStart = 1;
 int QuickStage = 9;
 bool OverrideSP = true;
 bool OverrideStage = false;
+string displayz = "lol";
 
 //---
 int Stage = 0;

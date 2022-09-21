@@ -47,7 +47,10 @@ int xTrapType = 0;
 int xTrapOn = 0;
 int xTrapReady = 0;
 int xTrapReset = 0;
+int xTrapResetTime = 0;
 int xTrapUnit = 0;
+int xTrapStartVector = 0;
+int xTrapTargetVector = 0;
 
 rule setup_databases
 active
@@ -110,8 +113,11 @@ highFrequency
 	xTrapType = xInitAddInt (dTrap, "Trap type");
 	xTrapOn = xInitAddBool (dTrap, "On", true);
 	xTrapReady = xInitAddBool (dTrap, "Ready", true);
-	xTrapReset = xInitAddInt(dTrap, "Reset time", 10);
+	xTrapReset = xInitAddInt(dTrap, "Reset delay", 10);
+	xTrapResetTime = xInitAddInt(dTrap, "Reset time", 10);
 	xTrapUnit = xInitAddInt (dTrap, "Trap unit ID");
+	xTrapStartVector = xInitAddVector(dTrap, "Start vector");
+	xTrapTargetVector = xInitAddVector(dTrap, "Target vector");
 }
 
 

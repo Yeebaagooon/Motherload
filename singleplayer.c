@@ -44,19 +44,18 @@ void PaintSP(){
 				trMutateSelected(kbGetProtoUnitID("Ragnorok SFX"));
 			}
 			if(z == RELIC_URANIUM){
-				trMutateSelected(kbGetProtoUnitID("Medusa"));
+				trMutateSelected(kbGetProtoUnitID("Acid Pool"));
+				trSetSelectedScale(0,0,0);
 				trUnitSelectByQV("RelicEffect"+z);
-				trBlockAllSounds();
-				trUnitOverrideAnimation(40,0,true,true,-1,0);
-				trUnblockAllSounds();
-				trUnitSelectByQV("RelicEffect"+z);
-				trSetSelectedScale(0.001,0.5,0);
+				trUnitSetAnimationPath("0,1,0,0,0,0,0");
 			}
 			if(z == RELIC_RUBY){
 				trMutateSelected(kbGetProtoUnitID("Einheriar Boost SFX"));
 			}
 			if(z == RELIC_SAPPHIRE){
-				trMutateSelected(kbGetProtoUnitID("Vortex Start Linked"));
+				trMutateSelected(kbGetProtoUnitID("Vortex Finish Linked"));
+				trUnitSelectByQV("RelicEffect"+z);
+				trUnitSetAnimationPath("0,0,1,0,0,0,0");
 			}
 			if(z == RELIC_DIAMOND){
 				trMutateSelected(kbGetProtoUnitID("Healing SFX"));
@@ -105,6 +104,8 @@ void PaintSP(){
 			if(z == RELIC_EMERALD){
 				trMutateSelected(kbGetProtoUnitID("Acid Pool"));
 				trSetSelectedScale(0,0,0);
+				trUnitSelectByQV("RelicEffect"+z);
+				trUnitSetAnimationPath("0,1,1,0,0,0,0");
 			}
 			if(z == RELIC_ICE){
 				trMutateSelected(kbGetProtoUnitID("Frost Giant"));

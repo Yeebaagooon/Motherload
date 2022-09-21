@@ -1494,6 +1494,8 @@ highFrequency
 			trUnitSelect(""+(temp+x));
 			trUnitChangeProtoUnit("Armor Glow Small");
 		}
+		trPlayerSetDiplomacy(cNumberNonGaiaPlayers,1,"Ally");
+		trPlayerSetDiplomacy(1,cNumberNonGaiaPlayers,"Ally");
 		sunColor(57,20,2);
 		ambientColor(57,55,40);
 		terrainAmbient(255,155,155);
@@ -1503,6 +1505,7 @@ highFrequency
 		Layout(17,2);
 		Layout(17,3);
 		trPaintTerrain(7,68,7,72,0,73,false);
+		//TRAP 1
 		xAddDatabaseBlock(dTrap);
 		xSetPointer(dTrap, xGetDatabaseCount(dTrap));
 		xSetInt(dTrap, xTrapXMin, 14);
@@ -1515,7 +1518,7 @@ highFrequency
 		xSetInt(dTrap, xTrapReset, 1000);
 		xSetInt(dTrap, xTrapUnit, 1*trGetNextUnitScenarioNameNumber());
 		temp = trGetNextUnitScenarioNameNumber();
-		trArmyDispatch("1,0", "Dwarf", 1, 24,3,70*2, 0, true);
+		trArmyDispatch("0,0", "Dwarf", 1, 24,3,70*2, 0, true);
 		trUnitSelectClear();
 		trUnitSelect(""+temp);
 		trUnitChangeProtoUnit("Spy Eye");
@@ -1531,6 +1534,29 @@ highFrequency
 		trUnitSelectClear();
 		trUnitSelect(""+temp);
 		trUnitSetAnimationPath("0,0,1,1,0,0");
+		//TRAP 2
+		trPaintTerrain(11,68,11,72,0,73,false);
+		xAddDatabaseBlock(dTrap);
+		xSetPointer(dTrap, xGetDatabaseCount(dTrap));
+		xSetInt(dTrap, xTrapXMin, 22);
+		xSetInt(dTrap, xTrapXMax, 24);
+		xSetInt(dTrap, xTrapZMin, 68*2);
+		xSetInt(dTrap, xTrapZMax, 72*2+2);
+		xSetInt(dTrap, xTrapType, 2);
+		xSetBool(dTrap, xTrapOn, true);
+		xSetBool(dTrap, xTrapReady, true);
+		xSetInt(dTrap, xTrapReset, 5000);
+		xSetVector(dTrap, xTrapStartVector, vector(20,3,140));
+		xSetVector(dTrap, xTrapTargetVector, vector(40,0,0));
+		xSetInt(dTrap, xTrapUnit, 1*trGetNextUnitScenarioNameNumber());
+		temp = trGetNextUnitScenarioNameNumber();
+		trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1, 24,3,70*2, 0, true);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitChangeProtoUnit("Lampades");
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trSetSelectedScale(0,0,0);
 	}
 	xsEnableRule("Ragnorok");
 	xsDisableSelf();
