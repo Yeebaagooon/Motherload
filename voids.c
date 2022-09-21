@@ -945,6 +945,11 @@ void FloatingUnitAnim2(string protounitname="", int xx = 0, int yy = 0, int zz =
 void FloatingUnitAnimIdle(string protounitname="", int xx = 0, int yy = 0, int zz = 0, int xheadingx = 0,
 	float scalex = 1, float scaley = 1, float scalez = 1, string anim="0,0,0,0,0", int animtype = 2){
 	//trArmyDispatch("0,0", "Revealer", 1, xx, yy, zz, xheadingx, true);
+	if(aiIsMultiplayer() == true){
+		zz = zz +2.5;
+		xx = xx +2.5;
+		//online offset, pretty much there to +-0.3
+	}
 	trQuestVarSet("BuildID", trQuestVarGet("BuildID") + 1);
 	trQuestVarSet("QVHero"+(1*trQuestVarGet("BuildID"))+"", trGetNextUnitScenarioNameNumber());
 	trQuestVarSet("QVHero", trGetNextUnitScenarioNameNumber());

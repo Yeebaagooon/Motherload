@@ -133,21 +133,6 @@ highFrequency
 		}
 		trMusicPlay();
 		trPlayNextMusicTrack();
-		if(Stage == 10){
-			//Drones
-			int z = trGetNextUnitScenarioNameNumber();
-			trArmyDispatch("1,0", "Dwarf", 1,5,0,5,0,true);
-			spyEffect(z, kbGetProtoUnitID("Implode Sphere"), vector(0,0,0), vector(2,2,2));
-			spyEffect(z, kbGetProtoUnitID("Implode Sphere Effect"), vector(0,0,0), vector(0.5,0.5,0.5), 18);
-			trUnitSelect();
-			trUnitSelect(""+z);
-			trUnitChangeProtoUnit("Raven");
-			trUnitSelect();
-			trUnitSelect(""+z);
-			trSetSelectedScale(0,0,0);
-			trTechGodPower(1, "vision", 1);
-			trQuestVarSet("Drone1", z);
-		}
 	}
 }
 

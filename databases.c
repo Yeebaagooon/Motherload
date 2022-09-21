@@ -37,6 +37,17 @@ int spyScale = 3;
 int spyActive = 4;
 int spyAnim = 5;
 
+//traps
+int dTrap = 0;
+int xTrapXMin = 0;
+int xTrapZMin = 0;
+int xTrapXMax = 0;
+int xTrapZMax = 0;
+int xTrapType = 0;
+int xTrapOn = 0;
+int xTrapReady = 0;
+int xTrapReset = 0;
+
 rule setup_databases
 active
 highFrequency
@@ -88,6 +99,17 @@ highFrequency
 	dDestroyMe = xInitDatabase("Destroy");
 	xDestroyName = xInitAddInt(dDestroyMe, "unitname");
 	xDestroyTime = xInitAddInt(dDestroyMe, "timetodie", 1500);
+	
+	//Trap DB
+	dTrap = xInitDatabase("Traps");
+	xTrapXMin = xInitAddInt(dTrap, "TrapXMin");
+	xTrapZMin = xInitAddInt(dTrap, "TrapZMin");
+	xTrapXMax = xInitAddInt(dTrap, "TrapXMax");
+	xTrapZMax = xInitAddInt(dTrap, "TrapZMax");
+	xTrapType = xInitAddInt (dTrap, "Trap type");
+	xTrapOn = xInitAddBool (dTrap, "On", true);
+	xTrapReady = xInitAddBool (dTrap, "Ready", true);
+	xTrapReset = xInitAddInt(dTrap, "Reset time", 10);
 }
 
 

@@ -476,6 +476,11 @@ void PaintPlanets(int x = 0, int z = 0, int offsetearth = 0){
 			xAddDatabaseBlock(dObelisks, true);
 			xSetInt(dObelisks, xObeliskName,next);
 			xSetInt(dObelisks, xObeliskStage, p);
+			if(xGetInt(dPlayerData, xStageUnlocked) < xGetInt(dObelisks, xObeliskStage)-1){
+				trUnitSelectClear();
+				trUnitSelect(""+next);
+				trUnitSetAnimationPath("0,1,0,0,0");
+			}
 		}
 		if(p == 10){
 			xSetPointer(dPlayerData, 1);
@@ -547,7 +552,7 @@ void PaintPlanets(int x = 0, int z = 0, int offsetearth = 0){
 	trSetUnitOrientation(xsVectorSet(trQuestVarGet("tempCosH"),0,trQuestVarGet("tempSinH")),xsVectorSet(trQuestVarGet("tempSinT")*trQuestVarGet("tempSinH"),
 			trQuestVarGet("tempCosT"),0.0-trQuestVarGet("tempSinT")*trQuestVarGet("tempCosH")),true);
 	//EYECANDY PLANET 5
-	FloatingUnitAnimIdle("Implode Sphere", x*2+60, 10, z*2+10, 0, 3,3,3);
+	FloatingUnitAnimIdle("Implode Sphere", x*2+60, 9, z*2+10, 0, 3,3,3);
 	//FloatingUnit("Implode Sphere", x*2+60, 8, z*2+10, 0, 2,2,2);
 	xAddDatabaseBlock(dPlanetEyecandy, true);
 	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVRelic"));
@@ -555,7 +560,7 @@ void PaintPlanets(int x = 0, int z = 0, int offsetearth = 0){
 	xAddDatabaseBlock(dPlanetEyecandy, true);
 	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVHero"));
 	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 5);
-	FloatingUnitAnimIdle("Gaia Forest effect", x*2+60, 9, z*2+10, 0, 1,1,1);
+	FloatingUnitAnimIdle("Gaia Forest effect", x*2+60, 8, z*2+10, 0, 1,1,1);
 	//FloatingUnit("Gaia Forest effect", x*2+60, 8, z*2+10, 0, 1,1,1);
 	xAddDatabaseBlock(dPlanetEyecandy, true);
 	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVRelic"));
@@ -563,7 +568,7 @@ void PaintPlanets(int x = 0, int z = 0, int offsetearth = 0){
 	xAddDatabaseBlock(dPlanetEyecandy, true);
 	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVHero"));
 	xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 5);
-	FloatingUnitAnimIdle("Valkyrie", x*2+60, 10, z*2+10, 0, 0,0,0);
+	FloatingUnitAnimIdle("Valkyrie", x*2+60, 9, z*2+10, 0, 0,0,0);
 	//FloatingUnit("Gaia Forest effect", x*2+60, 8, z*2+10, 0, 1,1,1);
 	xAddDatabaseBlock(dPlanetEyecandy, true);
 	xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVRelic"));
