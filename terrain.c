@@ -1540,7 +1540,34 @@ highFrequency
 				trUnitSetAnimationPath("0,0,1,1,0,0");
 			}
 		}
-		
+		Layout(16,24);
+		for(a=1; <=25){
+			Layout(15,a);
+		}
+		for(a=1; <=5){
+			temp = trGetNextUnitScenarioNameNumber();
+			trArmyDispatch("0,0", "Dwarf", 1, 182+a*2,3,126, 0, true);
+			trUnitSelectClear();
+			trUnitSelect(""+temp);
+			trUnitChangeProtoUnit("Wall Connector");
+			trUnitSelectClear();
+			trUnitSelect(""+temp);
+			trUnitSetAnimationPath("3,2,0,0,0,0");
+			trUnitSelectClear();
+			trUnitSelect(""+temp);
+			trSetSelectedScale(1.2,1,1.2);
+			xAddDatabaseBlock(dKey, true);
+			xSetInt(dKey, xKeyUnitName, temp);
+			xSetInt(dKey, xKey, RELIC_KEY_CHINA);
+		}
+		GVectorChinese = vector(188,3,126);
+		FloatingUnitAnimIdle("UI Range Indicator Chinese SFX", 188, 6.5, 126, 0, 1,1,1);
+		xAddDatabaseBlock(dKey, true);
+		xSetInt(dKey, xKeyUnitName, 1*trQuestVarGet("QVHero"));
+		xSetInt(dKey, xKey, RELIC_KEY_CHINA);
+		xAddDatabaseBlock(dKey, true);
+		xSetInt(dKey, xKeyUnitName, 1*trQuestVarGet("QVRelic"));
+		xSetInt(dKey, xKey, RELIC_KEY_CHINA);
 		//TRAP 1 a=3
 		
 		//--a=6
@@ -2049,7 +2076,12 @@ highFrequency
 				}
 				if(row == 17){
 					if(iModulo(3, col) == 0){
-						spawnRelicSpecific(v,22);
+						if(col == 6){
+							spawnRelicSpecific(v,22);
+						}
+						else {
+							spawnRelicSpecific(v,9);
+						}
 					}
 					/*else if((row >= 14) && (row <= 16)){
 						if(col >= 23){

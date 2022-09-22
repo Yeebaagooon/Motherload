@@ -55,6 +55,10 @@ int xTrapHitVector = 0;
 int xTrapHitboxX = 0;
 int xTrapHitboxZ = 0;
 
+int dKey = 0;
+int xKey = 0;
+int xKeyUnitName = 0;
+
 rule setup_databases
 active
 highFrequency
@@ -124,6 +128,11 @@ highFrequency
 	xTrapHitVector = xInitAddVector(dTrap, "Hitbox centre vector");
 	xTrapHitboxX = xInitAddInt (dTrap, "Hitbox X");
 	xTrapHitboxZ = xInitAddInt (dTrap, "Hitbox Z");
+	
+	//KEy DB
+	dKey = xInitDatabase("Key");
+	xKey = xInitAddInt(dKey, "Key ID");
+	xKeyUnitName = xInitAddInt(dKey, "Key eyecandy name");
 }
 
 

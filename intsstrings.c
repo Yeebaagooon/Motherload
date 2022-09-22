@@ -12,7 +12,8 @@ Search //VERSION OVERRIDE HERE for release to rewrite all data
 -Nick said something recently in SD about linking mousewheel to camera
 -Redo Natas unlock track
 
-*CHANGE vector to anim for trap 2 movement
+Sort out all keys
+Have room for bonus instant relics
 */
 
 
@@ -33,6 +34,7 @@ int MaxRows = 20;
 int MaxCols = 25;
 int GSeller = 0; //dont touch, does the player when selling minerals
 vector GVectorSellPos = vector(5,3,180);
+vector GVectorChinese = vector(0,0,0);
 int TERRAIN_TYPE = 2;
 int TERRAIN_SUBTYPE = 2;
 int OVERTERRAIN_TYPE = 5;

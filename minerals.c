@@ -23,6 +23,10 @@ const int RELIC_ANTIMATTER = 20;
 const int RELIC_YEEBIUM = 21;
 
 const int RELIC_KEY_CHINA = 22;
+const int RELIC_KEY_GREEK = 23;
+const int RELIC_KEY_NORSE = 24;
+const int RELIC_KEY_EGYPT = 25;
+const int RELIC_KEY_ATLANTEAN = 26;
 
 
 const int URANIUM_DAMAGE = 1;
@@ -33,95 +37,100 @@ const int ANTIMATTER_DAMAGE = 10;
 
 string relicName(int relic = 0) {
 	string msg = "WTF That's not a relic!";
-	switch(relic)
-	{
-		case RELIC_IRON:
+	if ((relic >= RELIC_KEY_CHINA) && (relic <= RELIC_KEY_ATLANTEAN)) {
+		msg = "A key that opens something";
+	}
+	else{
+		switch(relic)
 		{
-			msg = "Iron";
-		}
-		case RELIC_BRONZE:
-		{
-			msg = "Bronze";
-		}
-		case RELIC_SILVER:
-		{
-			msg = "Silver";
-		}
-		case RELIC_GOLD:
-		{
-			msg = "Gold";
-		}
-		case RELIC_PLATINUM:
-		{
-			msg = "Platinum";
-		}
-		case RELIC_URANIUM:
-		{
-			msg = "Uranium";
-		}
-		case RELIC_RUBY:
-		{
-			msg = "Ruby";
-		}
-		case RELIC_SAPPHIRE:
-		{
-			msg = "Sapphire";
-		}
-		case RELIC_DIAMOND:
-		{
-			msg = "Diamond";
-		}
-		case RELIC_PROMETHIUM:
-		{
-			msg = "Promethium";
-		}
-		case RELIC_EINSTEINIUM:
-		{
-			msg = "Einsteinium";
-		}
-		case RELIC_EMERALD:
-		{
-			msg = "Emerald";
-		}
-		case RELIC_AMETHYST:
-		{
-			msg = "Amethyst";
-		}
-		case RELIC_OBSIDIAN:
-		{
-			msg = "Obsidian";
-		}
-		case RELIC_TOPAZ:
-		{
-			msg = "Topaz";
-		}
-		case RELIC_ICE:
-		{
-			msg = "Ice Core";
-		}
-		case RELIC_QUARTZ:
-		{
-			msg = "Quartz";
-		}
-		case RELIC_OPAL:
-		{
-			msg = "Opal";
-		}
-		case RELIC_HYDROGEN:
-		{
-			msg = "Hydrogen Ice";
-		}
-		case RELIC_ANTIMATTER:
-		{
-			msg = "Antimatter";
-		}
-		case RELIC_YEEBIUM:
-		{
-			msg = "Yeebium";
-		}
-		case RELIC_KEY_CHINA:
-		{
-			msg = "Key";
+			case RELIC_IRON:
+			{
+				msg = "Iron";
+			}
+			case RELIC_BRONZE:
+			{
+				msg = "Bronze";
+			}
+			case RELIC_SILVER:
+			{
+				msg = "Silver";
+			}
+			case RELIC_GOLD:
+			{
+				msg = "Gold";
+			}
+			case RELIC_PLATINUM:
+			{
+				msg = "Platinum";
+			}
+			case RELIC_URANIUM:
+			{
+				msg = "Uranium";
+			}
+			case RELIC_RUBY:
+			{
+				msg = "Ruby";
+			}
+			case RELIC_SAPPHIRE:
+			{
+				msg = "Sapphire";
+			}
+			case RELIC_DIAMOND:
+			{
+				msg = "Diamond";
+			}
+			case RELIC_PROMETHIUM:
+			{
+				msg = "Promethium";
+			}
+			case RELIC_EINSTEINIUM:
+			{
+				msg = "Einsteinium";
+			}
+			case RELIC_EMERALD:
+			{
+				msg = "Emerald";
+			}
+			case RELIC_AMETHYST:
+			{
+				msg = "Amethyst";
+			}
+			case RELIC_OBSIDIAN:
+			{
+				msg = "Obsidian";
+			}
+			case RELIC_TOPAZ:
+			{
+				msg = "Topaz";
+			}
+			case RELIC_ICE:
+			{
+				msg = "Ice Core";
+			}
+			case RELIC_QUARTZ:
+			{
+				msg = "Quartz";
+			}
+			case RELIC_OPAL:
+			{
+				msg = "Opal";
+			}
+			case RELIC_HYDROGEN:
+			{
+				msg = "Hydrogen Ice";
+			}
+			case RELIC_ANTIMATTER:
+			{
+				msg = "Antimatter";
+			}
+			case RELIC_YEEBIUM:
+			{
+				msg = "Yeebium";
+			}
+			case RELIC_KEY_CHINA:
+			{
+				msg = "Key";
+			}
 		}
 	}
 	return(msg);
@@ -408,6 +417,22 @@ string relicIcon(int relic = 0) {
 			{
 				icon = "ui range indicator chinese";
 			}
+			case RELIC_KEY_NORSE:
+			{
+				icon = "ui range indicator norse";
+			}
+			case RELIC_KEY_ATLANTEAN:
+			{
+				icon = "ui range indicator atlantean";
+			}
+			case RELIC_KEY_EGYPT:
+			{
+				icon = "ui range indicator egyptian";
+			}
+			case RELIC_KEY_GREEK:
+			{
+				icon = "ui range indicator greek";
+			}
 		}
 		return(icon);
 	}
@@ -505,6 +530,22 @@ int relicProto(int relic = 0) {
 		{
 			proto = kbGetProtoUnitID("UI Range Indicator Chinese SFX");
 		}
+		case RELIC_KEY_NORSE:
+		{
+			proto = kbGetProtoUnitID("UI Range Indicator Norse SFX");
+		}
+		case RELIC_KEY_ATLANTEAN:
+		{
+			proto = kbGetProtoUnitID("UI Range Indicator Atlantean SFX");
+		}
+		case RELIC_KEY_EGYPT:
+		{
+			proto = kbGetProtoUnitID("UI Range Indicator Egyptian SFX");
+		}
+		case RELIC_KEY_GREEK:
+		{
+			proto = kbGetProtoUnitID("UI Range Indicator Greek SFX");
+		}
 	}
 	return(proto);
 }
@@ -595,8 +636,8 @@ void processFreeRelics(int count = 1) {
 						if(xGetInt(dFreeRelics, xRelicValue) <= RELIC_NUMBER){
 							ColouredChatToPlayer(p, RelicColour(xGetInt(dFreeRelics, xRelicValue)), relicName(xGetInt(dFreeRelics, xRelicValue)) + " stored in cargo hold!");
 						}
-						else{
-							ColouredChatToPlayer(p, RelicColour(xGetInt(dFreeRelics, xRelicValue)), relicName(xGetInt(dFreeRelics, xRelicValue)) + " stored in cargo hold! <icon=(20)("+relicIcon(xGetInt(dFreeRelics, xRelicValue))+")>");
+						else if ((xGetInt(dFreeRelics, xRelicValue) >= RELIC_KEY_CHINA) && (xGetInt(dFreeRelics, xRelicValue) <= RELIC_KEY_ATLANTEAN)) {
+							ColouredChatToPlayer(p, RelicColour(xGetInt(dFreeRelics, xRelicValue)), relicName(xGetInt(dFreeRelics, xRelicValue)) + "! <icon=(20)("+relicIcon(xGetInt(dFreeRelics, xRelicValue))+")>");
 						}
 						trSoundPlayFN("researchcomplete.wav","1",-1,"","");
 					}
@@ -646,6 +687,7 @@ void processHeldRelics(int count = 1) {
 	int dropper = 0;
 	int db = 0;
 	float currentDistance = 0;
+	float keyDistance = 0;
 	for (x=xsMin(count, xGetDatabaseCount(dHeldRelics)); > 0) {
 		amt = 0;
 		xDatabaseNext(dHeldRelics);
@@ -760,6 +802,53 @@ void processHeldRelics(int count = 1) {
 				xSetInt(dHeldRelics, xRelicTick,(trTimeMS()+50));
 			}
 		}
+		if(Stage == 10){
+			if ((xGetInt(dHeldRelics, xRelicValue) >= RELIC_KEY_CHINA) && (xGetInt(dHeldRelics, xRelicValue) <= RELIC_KEY_ATLANTEAN)) {
+				keyDistance = unitDistanceToVector(xGetInt(dHeldRelics, xRelicName), GVectorChinese);
+				if (keyDistance < 80) {
+					trUnitSelectClear();
+					xUnitSelect(dHeldRelics, xRelicName);
+					trUnitChangeProtoUnit("Osiris Box Glow");
+					xFreeDatabaseBlock(dHeldRelics);
+					playSoundCustom("\cinematics\13_in\jerrygarcia.mp3", "\Yeebaagooon\Motherload\DoorUnlock.mp3");
+					trDelayedRuleActivation("UnlockChinese");
+				}
+			}
+		}
+	}
+}
+
+rule UnlockChinese
+inactive
+highFrequency
+{
+	if(1*trQuestVarGet("ChineseProgress") == 0){
+		trQuestVarSet("ChineseProgress", trTimeMS()+50);
+	}
+	if(trTimeMS() > 1*trQuestVarGet("ChineseProgress")){
+		trQuestVarModify("ChineseAnim", "+", 1);
+		float scale = 1.00-(trQuestVarGet("ChineseAnim")/100);
+		for(x=xGetDatabaseCount(dKey); >0) {
+			xDatabaseNext(dKey);
+			if(xGetInt(dKey, xKey) == RELIC_KEY_CHINA){
+				trUnitSelectClear();
+				xUnitSelect(dKey, xKeyUnitName);
+				trSetSelectedScale(1.2,scale,1.2);
+			}
+		}
+	}
+	if(1*trQuestVarGet("ChineseAnim") >= 100){
+		for(x=xGetDatabaseCount(dKey); >0) {
+			xDatabaseNext(dKey);
+			if(xGetInt(dKey, xKey) == RELIC_KEY_CHINA){
+				trUnitSelectClear();
+				xUnitSelect(dKey, xKeyUnitName);
+				trUnitChangeProtoUnit("Dust Large");
+				xFreeDatabaseBlock(dKey);
+				playSoundCustom("\cinematics\14_in\Chimes.mp3");
+			}
+		}
+		xsDisableSelf();
 	}
 }
 
