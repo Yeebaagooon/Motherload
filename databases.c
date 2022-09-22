@@ -51,6 +51,9 @@ int xTrapResetTime = 0;
 int xTrapUnit = 0;
 int xTrapStartVector = 0;
 int xTrapTargetVector = 0;
+int xTrapHitVector = 0;
+int xTrapHitboxX = 0;
+int xTrapHitboxZ = 0;
 
 rule setup_databases
 active
@@ -118,6 +121,9 @@ highFrequency
 	xTrapUnit = xInitAddInt (dTrap, "Trap unit ID");
 	xTrapStartVector = xInitAddVector(dTrap, "Start vector");
 	xTrapTargetVector = xInitAddVector(dTrap, "Target vector");
+	xTrapHitVector = xInitAddVector(dTrap, "Hitbox centre vector");
+	xTrapHitboxX = xInitAddInt (dTrap, "Hitbox X");
+	xTrapHitboxZ = xInitAddInt (dTrap, "Hitbox Z");
 }
 
 

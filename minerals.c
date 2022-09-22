@@ -22,6 +22,8 @@ const int RELIC_HYDROGEN = 19;
 const int RELIC_ANTIMATTER = 20;
 const int RELIC_YEEBIUM = 21;
 
+const int RELIC_KEY_CHINA = 22;
+
 
 const int URANIUM_DAMAGE = 1;
 const int PROMETHIUM_DAMAGE = 2;
@@ -116,6 +118,10 @@ string relicName(int relic = 0) {
 		case RELIC_YEEBIUM:
 		{
 			msg = "Yeebium";
+		}
+		case RELIC_KEY_CHINA:
+		{
+			msg = "Key";
 		}
 	}
 	return(msg);
@@ -307,11 +313,11 @@ string RelicColour(int relic = 0) {
 
 string relicIcon(int relic = 0) {
 	string icon = "icons\infantry g hoplite icon 64";
-	if (1*trQuestVarGet("CustomContent") == 1){
+	if ((1*trQuestVarGet("CustomContent") == 1) && (relic <= RELIC_NUMBER)){
 		icon = "Yeebaagooon\Motherload\mineral" + relic;
 		return(icon);
 	}
-	else if (1*trQuestVarGet("CustomContent") == 0){
+	else{
 		switch(relic)
 		{
 			case RELIC_IRON:
@@ -397,6 +403,10 @@ string relicIcon(int relic = 0) {
 			case RELIC_YEEBIUM:
 			{
 				icon = "icons\special e son of osiris icon 64";
+			}
+			case RELIC_KEY_CHINA:
+			{
+				icon = "ui range indicator chinese";
 			}
 		}
 		return(icon);
@@ -491,18 +501,27 @@ int relicProto(int relic = 0) {
 		{
 			proto = kbGetProtoUnitID("Pharaoh of Osiris");
 		}
+		case RELIC_KEY_CHINA:
+		{
+			proto = kbGetProtoUnitID("UI Range Indicator Chinese SFX");
+		}
 	}
 	return(proto);
 }
 
 void relicDescription(int relic = 0) {
 	string icon = relicIcon(relic);
-	string msg = relicName(relic);
-	string textgap = " - Value = ";
 	string message = " ";
-	int price = relicCost(relic);
-	if (1*trQuestVarGet("CustomContent") == 0){
-		message = msg + textgap + price;
+	if(relic <= RELIC_NUMBER){
+		string msg = relicName(relic);
+		string textgap = " - Value = ";
+		int price = relicCost(relic);
+		if (1*trQuestVarGet("CustomContent") == 0){
+			message = msg + textgap + price;
+		}
+	}
+	else{
+		message = "A key that opens something";
 	}
 	trShowImageDialog(icon, message);
 }
@@ -566,12 +585,19 @@ void processFreeRelics(int count = 1) {
 		if (trUnitGetIsContained("Unit")) {
 			for(p=1; < cNumberNonGaiaPlayers) {
 				if (trUnitIsOwnedBy(p)) {
-					trSetSelectedScale(0,0,-1);
 					trMutateSelected(relicProto(xGetInt(dFreeRelics, xRelicValue)));
-					trUnitSetAnimationPath("1,0,1,1,0,0,0");
+					if(xGetInt(dFreeRelics, xRelicValue) <= RELIC_NUMBER){
+						trSetSelectedScale(0,0,-1);
+						trUnitSetAnimationPath("1,0,1,1,0,0,0");
+					}
 					if (trCurrentPlayer() == p) {
 						//trChatSend(0, relicName(xGetInt(dFreeRelics, xRelicValue)) + " stored in cargo hold!");
-						ColouredChatToPlayer(p, RelicColour(xGetInt(dFreeRelics, xRelicValue)), relicName(xGetInt(dFreeRelics, xRelicValue)) + " stored in cargo hold!");
+						if(xGetInt(dFreeRelics, xRelicValue) <= RELIC_NUMBER){
+							ColouredChatToPlayer(p, RelicColour(xGetInt(dFreeRelics, xRelicValue)), relicName(xGetInt(dFreeRelics, xRelicValue)) + " stored in cargo hold!");
+						}
+						else{
+							ColouredChatToPlayer(p, RelicColour(xGetInt(dFreeRelics, xRelicValue)), relicName(xGetInt(dFreeRelics, xRelicValue)) + " stored in cargo hold! <icon=(20)("+relicIcon(xGetInt(dFreeRelics, xRelicValue))+")>");
+						}
 						trSoundPlayFN("researchcomplete.wav","1",-1,"","");
 					}
 					/*
@@ -1058,17 +1084,41 @@ highFrequency
 							playSoundCustom("crocsnap.wav");
 							trUnitSelectClear();
 							trUnitSelect(""+1*xGetInt(dTrap, xTrapUnit)+"");
+							trMutateSelected(kbGetProtoUnitID("Lampades"));
+							trUnitSelectClear();
+							trUnitSelect(""+1*xGetInt(dTrap, xTrapUnit)+"");
 							trUnitMoveToPoint(xsVectorGetX(xGetVector(dTrap, xTrapStartVector)+xGetVector(dTrap, xTrapTargetVector)),3,xsVectorGetZ(xGetVector(dTrap, xTrapStartVector)+xGetVector(dTrap, xTrapTargetVector)),-1,false);
 						}
 					}
 				}
 			}
 			else if((xGetBool(dTrap, xTrapOn) == true) && (xGetBool(dTrap, xTrapReady) == false) && (trTimeMS() < xGetInt(dTrap, xTrapResetTime))){
+				if(xGetInt(dTrap, xTrapType) == 1){
+					//Trap 1, if within square hitbox
+					for(p=1; < cNumberNonGaiaPlayers) {
+						if((trVectorQuestVarGetX("P"+p+"Pos") >= xsVectorGetX(xGetVector(dTrap, xTrapHitVector))-xGetInt(dTrap, xTrapHitboxX)) && (trVectorQuestVarGetX("P"+p+"Pos") < xsVectorGetX(xGetVector(dTrap, xTrapHitVector))+xGetInt(dTrap, xTrapHitboxX)) && (trVectorQuestVarGetZ("P"+p+"Pos") >= xsVectorGetZ(xGetVector(dTrap, xTrapHitVector))-xGetInt(dTrap, xTrapHitboxZ)) && (trVectorQuestVarGetZ("P"+p+"Pos") <= xsVectorGetZ(xGetVector(dTrap, xTrapHitVector))+xGetInt(dTrap, xTrapHitboxZ))){
+							/*
+							trQuestVarSet("timeSinceLastHeal", trTimeMS() - yGetVar("creeps","lastHealed")); // get time that has passed since we last checked this creep
+							trQuestVarSet("healAmount", trQuestVarGet("timeSinceLastHeal") * trQuestVarGet("P"+1*yGetVar("creeps",
+										"player")+"Regen")); // multiply the time by the heal per second
+							trDamageUnit(-0.001*trQuestVarGet("healAmount")); // heal the unit
+							ySetVar("creeps", "lastHealed", trTimeMS()); // set last healed time to current time
+							*/
+							trUnitSelectByQV("P"+p+"Siphon");
+							trDamageUnit(10);
+						}
+					}
+				}
 				if(xGetInt(dTrap, xTrapType) == 2){
-					trVectorQuestVarSet("TrapV"+xGetInt(dTrap, xTrapUnit)+"", kbGetBlockPosition(""+1*xGetInt(dTrap, xTrapUnit)));
-					trChatHistoryClear();
-					trChatSend(0, ""+trVectorQuestVarGetX("TrapV"+xGetInt(dTrap, xTrapUnit)+""));
-					trChatSend(0, ""+xGetVector(dTrap, xTrapTargetVector)+xGetVector(dTrap, xTrapStartVector));
+					//Check missile status, QV needed as first frame is idle and this is our reset condition
+					if(kbUnitGetAnimationActionType(kbGetBlockID(""+xGetInt(dTrap, xTrapUnit)+"")) == 9){
+						if(trTimeMS() > 1*trQuestVarGet("Temp"+1*xGetInt(dTrap, xTrapUnit)+"")){
+							trQuestVarSet("Temp"+1*xGetInt(dTrap, xTrapUnit)+"", trTimeMS()+50);
+						}
+						else{
+							xSetInt(dTrap, xTrapResetTime, trTimeMS()-10);
+						}
+					}
 				}
 			}
 			else if((xGetBool(dTrap, xTrapOn) == true) && (xGetBool(dTrap, xTrapReady) == false) && (trTimeMS() > xGetInt(dTrap, xTrapResetTime))){
@@ -1090,9 +1140,6 @@ highFrequency
 						trUnitSelectClear();
 						trUnitSelect(""+1*xGetInt(dTrap, xTrapUnit)+"");
 						trUnitTeleport(xsVectorGetX(xGetVector(dTrap, xTrapStartVector)),3,xsVectorGetZ(xGetVector(dTrap, xTrapStartVector)));
-						trUnitSelectClear();
-						trUnitSelect(""+1*xGetInt(dTrap, xTrapUnit)+"");
-						trMutateSelected(kbGetProtoUnitID("Lampades"));
 					}
 				}
 			}

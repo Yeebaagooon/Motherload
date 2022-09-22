@@ -1500,16 +1500,56 @@ highFrequency
 		ambientColor(57,55,40);
 		terrainAmbient(255,155,155);
 		//This is the ship layout
-		Layout(18,2);
-		Layout(18,3);
-		Layout(17,2);
-		Layout(17,3);
-		trPaintTerrain(7,68,7,72,0,73,false);
-		//TRAP 1
+		for(a=1; <= 25){
+			Layout(18,a);
+			if(iModulo(3, a) == 0){
+				Layout(17,a);
+				trPaintTerrain(a*4-4,69,a*4-4,71,0,73,false);
+				trPaintTerrain(a*4-4,68,a*4-4,68,2,13,false);
+				trPaintTerrain(a*4-4,72,a*4-4,72,2,13,false);
+				xAddDatabaseBlock(dTrap);
+				xSetPointer(dTrap, xGetDatabaseCount(dTrap));
+				xSetInt(dTrap, xTrapXMin, a*8-8);
+				xSetInt(dTrap, xTrapXMax, a*8-6);
+				xSetInt(dTrap, xTrapZMin, 69*2);
+				xSetInt(dTrap, xTrapZMax, 71*2+2);
+				xSetInt(dTrap, xTrapType, 1);
+				xSetBool(dTrap, xTrapOn, true);
+				xSetBool(dTrap, xTrapReady, true);
+				xSetInt(dTrap, xTrapReset, 5000);
+				xSetInt(dTrap, xTrapUnit, 1*trGetNextUnitScenarioNameNumber());
+				xSetVector(dTrap, xTrapHitVector, xsVectorSet(a*8-4,3,132));
+				xSetInt(dTrap, xTrapHitboxX, 4);
+				xSetInt(dTrap, xTrapHitboxZ, 4);
+				temp = trGetNextUnitScenarioNameNumber();
+				trArmyDispatch("0,0", "Dwarf", 1, a*8-4,3,132, 0, true);
+				trUnitSelectClear();
+				trUnitSelect(""+temp);
+				trUnitChangeProtoUnit("Spy Eye");
+				trUnitSelectClear();
+				trUnitSelect(""+temp);
+				trMutateSelected(kbGetProtoUnitID("Tartarian Gate"));
+				trUnitSelectClear();
+				trUnitSelect(""+temp);
+				trSetSelectedScale(0.5,-0.5,0.5);
+				trUnitSelectClear();
+				trUnitSelect(""+temp);
+				trUnitOverrideAnimation(2,0,true,true,-1,-1);
+				trUnitSelectClear();
+				trUnitSelect(""+temp);
+				trUnitSetAnimationPath("0,0,1,1,0,0");
+			}
+		}
+		
+		//TRAP 1 a=3
+		
+		//--a=6
+		/*
+		trPaintTerrain(19,68,19,72,0,73,false);
 		xAddDatabaseBlock(dTrap);
 		xSetPointer(dTrap, xGetDatabaseCount(dTrap));
-		xSetInt(dTrap, xTrapXMin, 14);
-		xSetInt(dTrap, xTrapXMax, 16);
+		xSetInt(dTrap, xTrapXMin, 38);
+		xSetInt(dTrap, xTrapXMax, 40);
 		xSetInt(dTrap, xTrapZMin, 68*2);
 		xSetInt(dTrap, xTrapZMax, 72*2+2);
 		xSetInt(dTrap, xTrapType, 1);
@@ -1518,7 +1558,7 @@ highFrequency
 		xSetInt(dTrap, xTrapReset, 1000);
 		xSetInt(dTrap, xTrapUnit, 1*trGetNextUnitScenarioNameNumber());
 		temp = trGetNextUnitScenarioNameNumber();
-		trArmyDispatch("0,0", "Dwarf", 1, 24,3,70*2, 0, true);
+		trArmyDispatch("0,0", "Dwarf", 1, 44,3,132, 0, true);
 		trUnitSelectClear();
 		trUnitSelect(""+temp);
 		trUnitChangeProtoUnit("Spy Eye");
@@ -1527,13 +1567,13 @@ highFrequency
 		trMutateSelected(kbGetProtoUnitID("Tartarian Gate"));
 		trUnitSelectClear();
 		trUnitSelect(""+temp);
-		trSetSelectedScale(0.4,-0.4,0.4);
+		trSetSelectedScale(0.5,-0.5,0.5);
 		trUnitSelectClear();
 		trUnitSelect(""+temp);
 		trUnitOverrideAnimation(2,0,true,true,-1,-1);
 		trUnitSelectClear();
 		trUnitSelect(""+temp);
-		trUnitSetAnimationPath("0,0,1,1,0,0");
+		trUnitSetAnimationPath("0,0,1,1,0,0");*/
 		//TRAP 2
 		trPaintTerrain(11,68,11,72,0,73,false);
 		xAddDatabaseBlock(dTrap);
@@ -1545,7 +1585,7 @@ highFrequency
 		xSetInt(dTrap, xTrapType, 2);
 		xSetBool(dTrap, xTrapOn, true);
 		xSetBool(dTrap, xTrapReady, true);
-		xSetInt(dTrap, xTrapReset, 5000);
+		xSetInt(dTrap, xTrapReset, 20000);
 		xSetVector(dTrap, xTrapStartVector, vector(20,3,140));
 		xSetVector(dTrap, xTrapTargetVector, vector(40,0,0));
 		xSetInt(dTrap, xTrapUnit, 1*trGetNextUnitScenarioNameNumber());
@@ -2007,15 +2047,20 @@ highFrequency
 					trUnitSelectClear();
 					trQuestVarSet("HullR"+row+"C"+col+"", 1*trQuestVarGet("TEMPRELIC"));
 				}
-				/*else if((row >= 14) && (row <= 16)){
-					if(col >= 23){
-						trQuestVarSetFromRand("Temp",1,2);
-						trQuestVarSetFromRand("Temp2",7,9);
-						if(1*trQuestVarGet("Temp") <= 2){
-							spawnRelicSpecific(v,1*trQuestVarGet("Temp2"));
-						}
+				if(row == 17){
+					if(iModulo(3, col) == 0){
+						spawnRelicSpecific(v,22);
 					}
-				}*/
+					/*else if((row >= 14) && (row <= 16)){
+						if(col >= 23){
+							trQuestVarSetFromRand("Temp",1,2);
+							trQuestVarSetFromRand("Temp2",7,9);
+							if(1*trQuestVarGet("Temp") <= 2){
+								spawnRelicSpecific(v,1*trQuestVarGet("Temp2"));
+							}
+						}
+					}*/
+				}
 			}
 		}
 	}
