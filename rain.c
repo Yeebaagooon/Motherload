@@ -115,7 +115,7 @@ highFrequency
 				xSetFloat(dPlayerData, xFuel, xGetInt(dPlayerData, xFuelTank));
 				spawnRelicSpecific(vector(10,3,190), 15);
 				spawnRelicSpecific(vector(10,3,195), 16);
-				spawnRelicSpecific(vector(10,3,185), 17);
+				spawnRelicSpecific(vector(10,3,185), 27);
 				spawnRelicSpecific(vector(10,3,180), 20);
 				spawnRelicSpecific(vector(70,3,190), 21);
 			}

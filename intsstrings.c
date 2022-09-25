@@ -18,8 +18,8 @@ Have room for bonus instant relics
 
 //---Test controls
 int QuickStart = 1;
-int QuickStage = 7;
-bool OverrideSP = false;
+int QuickStage = 1;
+bool OverrideSP = true;
 bool OverrideStage = false;
 string displayz = "lol";
 

@@ -28,6 +28,8 @@ const int RELIC_KEY_NORSE = 24;
 const int RELIC_KEY_EGYPT = 25;
 const int RELIC_KEY_ATLANTEAN = 26;
 
+const int RELIC_RELIGION = 27;
+
 
 const int URANIUM_DAMAGE = 1;
 const int PROMETHIUM_DAMAGE = 2;
@@ -127,9 +129,9 @@ string relicName(int relic = 0) {
 			{
 				msg = "Yeebium";
 			}
-			case RELIC_KEY_CHINA:
+			case RELIC_RELIGION:
 			{
-				msg = "Key";
+				msg = "Religious artefact";
 			}
 		}
 	}
@@ -224,6 +226,10 @@ int relicCost(int relic = 0) {
 		{
 			price = 500;
 		}
+		case RELIC_RELIGION:
+		{
+			price = 10;
+		}
 	}
 	return(price);
 }
@@ -316,13 +322,17 @@ string RelicColour(int relic = 0) {
 		{
 			colour = "1,0.47,0";
 		}
+		case RELIC_RELIGION:
+		{
+			colour = "1,0,1";
+		}
 	}
 	return(colour);
 }
 
 string relicIcon(int relic = 0) {
 	string icon = "icons\infantry g hoplite icon 64";
-	if ((1*trQuestVarGet("CustomContent") == 1) && (relic <= RELIC_NUMBER)){
+	if ((1*trQuestVarGet("CustomContent") == 1) && ((relic <= RELIC_KEY_CHINA) || (relic >= RELIC_KEY_ATLANTEAN))){
 		icon = "Yeebaagooon\Motherload\mineral" + relic;
 		return(icon);
 	}
@@ -432,6 +442,10 @@ string relicIcon(int relic = 0) {
 			case RELIC_KEY_GREEK:
 			{
 				icon = "ui range indicator greek";
+			}
+			case RELIC_RELIGION:
+			{
+				icon = "ankh";
 			}
 		}
 		return(icon);
@@ -553,7 +567,7 @@ int relicProto(int relic = 0) {
 void relicDescription(int relic = 0) {
 	string icon = relicIcon(relic);
 	string message = " ";
-	if(relic <= RELIC_NUMBER){
+	if ((relic <= RELIC_KEY_CHINA) || (relic >= RELIC_KEY_ATLANTEAN)) {
 		string msg = relicName(relic);
 		string textgap = " - Value = ";
 		int price = relicCost(relic);
@@ -595,6 +609,20 @@ void spawnRelicSpecific(vector v = vector (0,0,0), int val = 1){
 	trUnitSelectClear();
 	trUnitSelectByQV("TEMPRELIC");
 	trUnitChangeProtoUnit("Relic");
+	if(val == RELIC_RELIGION){
+		trUnitSelectByQV("TEMPRELIC");
+		trUnitTeleport(xsVectorGetX(v),3,xsVectorGetZ(v));
+		trQuestVarSet("TEMPRELIC", trGetNextUnitScenarioNameNumber());
+		trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1,xsVectorGetX(v),0,xsVectorGetZ(v),0,true);
+		trUnitSelectByQV("TEMPRELIC");
+		trUnitTeleport(xsVectorGetX(v)+1,3,xsVectorGetZ(v));
+		trUnitSelectByQV("TEMPRELIC");
+		trUnitChangeProtoUnit("Spy Eye");
+		trUnitSelectByQV("TEMPRELIC");
+		trMutateSelected(kbGetProtoUnitID("Hero Birth"));
+		trUnitSelectByQV("TEMPRELIC");
+		trSetSelectedScale(0,0,0);
+	}
 	if(val == 0){
 		trChatSend(0, "ERROR AT" + v);
 	}
@@ -694,13 +722,13 @@ void processHeldRelics(int count = 1) {
 		xUnitSelect(dHeldRelics, xRelicName);
 		//If relic is dropped
 		currentDistance = unitDistanceToVector(xGetInt(dHeldRelics, xRelicName), GVectorSellPos);
-		if (trUnitGetIsContained("Unit") == false) {
-			for(p=1; < cNumberNonGaiaPlayers) {
-				if (trUnitIsOwnedBy(p)) {
-					//trChatSend(0, "Dropped by p"+p+""); //WHO DROPPED THE RELIC
-					dropper = p;
-				}
+		for(p=1; < cNumberNonGaiaPlayers) {
+			if (trUnitIsOwnedBy(p)) {
+				//trChatSend(0, "Dropped by p"+p+""); //WHO DROPPED THE RELIC
+				dropper = p;
 			}
+		}
+		if (trUnitGetIsContained("Unit") == false) {
 			if (currentDistance > 80) {
 				trUnitChangeProtoUnit("Relic");
 				xUnitSelect(dHeldRelics, xRelicName);
@@ -807,6 +835,17 @@ void processHeldRelics(int count = 1) {
 				}
 				xSetInt(dHeldRelics, xRelicTick,(trTimeMS()+50));
 			}
+		}
+		if(xGetInt(dHeldRelics, xRelicValue) == RELIC_RELIGION){
+			ColouredChatToPlayer(dropper, RelicColour(xGetInt(dHeldRelics, xRelicValue)), relicName(xGetInt(dHeldRelics, xRelicValue)) + " sold!");
+			xSetPointer(dPlayerData, dropper);
+			xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)+1*relicCost(1*xGetInt(dHeldRelics, xRelicValue)));
+			xSetInt(dPlayerData, xGoldStart, xGetInt(dPlayerData, xGoldStart)+1*relicCost(1*xGetInt(dHeldRelics, xRelicValue)));
+			trUnitSelectClear();
+			xUnitSelect(dHeldRelics, xRelicName);
+			trUnitChangeProtoUnit("Osiris Box Glow");
+			xFreeDatabaseBlock(dHeldRelics);
+			playSoundCustom("\cinematics\13_in\jerrygarcia.mp3", "\cinematics\13_in\jerrygarcia.mp3");
 		}
 		if(Stage == 10){
 			if ((xGetInt(dHeldRelics, xRelicValue) >= RELIC_KEY_CHINA) && (xGetInt(dHeldRelics, xRelicValue) <= RELIC_KEY_ATLANTEAN)) {
