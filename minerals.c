@@ -29,6 +29,7 @@ const int RELIC_KEY_EGYPT = 25;
 const int RELIC_KEY_ATLANTEAN = 26;
 
 const int RELIC_RELIGION = 27;
+const int RELIC_SKELETON = 28;
 
 
 const int URANIUM_DAMAGE = 1;
@@ -133,6 +134,10 @@ string relicName(int relic = 0) {
 			{
 				msg = "Religious artefact";
 			}
+			case RELIC_SKELETON:
+			{
+				msg = "A mysterious skeleton";
+			}
 		}
 	}
 	return(msg);
@@ -230,6 +235,10 @@ int relicCost(int relic = 0) {
 		{
 			price = 10;
 		}
+		case RELIC_SKELETON:
+		{
+			price = 25;
+		}
 	}
 	return(price);
 }
@@ -323,6 +332,10 @@ string RelicColour(int relic = 0) {
 			colour = "1,0.47,0";
 		}
 		case RELIC_RELIGION:
+		{
+			colour = "1,0,1";
+		}
+		case RELIC_SKELETON:
 		{
 			colour = "1,0,1";
 		}
@@ -446,6 +459,10 @@ string relicIcon(int relic = 0) {
 			case RELIC_RELIGION:
 			{
 				icon = "ankh";
+			}
+			case RELIC_SKELETON:
+			{
+				icon = "animal chicken corpse skeletona";
 			}
 		}
 		return(icon);
@@ -609,19 +626,85 @@ void spawnRelicSpecific(vector v = vector (0,0,0), int val = 1){
 	trUnitSelectClear();
 	trUnitSelectByQV("TEMPRELIC");
 	trUnitChangeProtoUnit("Relic");
-	if(val == RELIC_RELIGION){
-		trUnitSelectByQV("TEMPRELIC");
-		trUnitTeleport(xsVectorGetX(v),3,xsVectorGetZ(v));
-		trQuestVarSet("TEMPRELIC", trGetNextUnitScenarioNameNumber());
-		trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1,xsVectorGetX(v),0,xsVectorGetZ(v),0,true);
-		trUnitSelectByQV("TEMPRELIC");
-		trUnitTeleport(xsVectorGetX(v)+1,3,xsVectorGetZ(v));
-		trUnitSelectByQV("TEMPRELIC");
+	trVectorSetUnitPos("TempV", "TEMPRELIC");
+	//SPECIAL EFFECTS
+	/*if(val == RELIC_IRON){
+		trQuestVarSet("TempRelicSFX", trGetNextUnitScenarioNameNumber());
+		trArmyDispatch("0,0", "Dwarf", 1,xsVectorGetX(v),0,xsVectorGetZ(v),0,true);
+		trUnitSelectByQV("TempRelicSFX");
+		trUnitTeleport(trVectorQuestVarGetX("TempV"),3,trVectorQuestVarGetZ("TempV"));
+		trUnitSelectByQV("TempRelicSFX");
 		trUnitChangeProtoUnit("Spy Eye");
-		trUnitSelectByQV("TEMPRELIC");
+		trUnitSelectByQV("TempRelicSFX");
+		trMutateSelected(kbGetProtoUnitID("Rock Limestone Sprite"));
+		trUnitSelectByQV("TempRelicSFX");
+		trSetSelectedScale(2,2,2);
+	}
+	if(val == RELIC_BRONZE){
+		trQuestVarSet("TempRelicSFX", trGetNextUnitScenarioNameNumber());
+		trArmyDispatch("1,0", "Dwarf", 1,xsVectorGetX(v),0,xsVectorGetZ(v),0,true);
+		trUnitSelectByQV("TempRelicSFX");
+		trUnitTeleport(trVectorQuestVarGetX("TempV"),3,trVectorQuestVarGetZ("TempV"));
+		trUnitSelectByQV("TempRelicSFX");
+		trUnitChangeProtoUnit("Spy Eye");
+		trUnitSelectByQV("TempRelicSFX");
+		trMutateSelected(kbGetProtoUnitID("Rock Dirt Sprite"));
+		trUnitSelectByQV("TempRelicSFX");
+		trSetSelectedScale(2,2,2);
+	}
+	if(val == RELIC_SILVER){
+		trQuestVarSet("TempRelicSFX", trGetNextUnitScenarioNameNumber());
+		trArmyDispatch("1,0", "Dwarf", 1,(1*trVectorQuestVarGetX("TempV")+4),0,(1*trVectorQuestVarGetZ("TempV")+4),0,true);
+		trUnitSelectByQV("TempRelicSFX");
+		trUnitTeleport((1*trVectorQuestVarGetX("TempV")+4),3,(1*trVectorQuestVarGetZ("TempV")+4));
+		trUnitSelectByQV("TempRelicSFX");
+		trUnitChangeProtoUnit("Spy Eye");
+		trUnitSelectByQV("TempRelicSFX");
+		trMutateSelected(kbGetProtoUnitID("Rock Granite Sprite"));
+		trUnitSelectByQV("TempRelicSFX");
+		trSetSelectedScale(2,2,2);
+	}
+	if(val == RELIC_GOLD){
+		trQuestVarSet("TempRelicSFX", trGetNextUnitScenarioNameNumber());
+		trArmyDispatch("0,0", "Dwarf", 1,xsVectorGetX(v)+4,0,xsVectorGetZ(v)+4,0,true);
+		trUnitSelectByQV("TempRelicSFX");
+		trUnitTeleport(trVectorQuestVarGetX("TempV"),3,trVectorQuestVarGetZ("TempV"));
+		trUnitSelectByQV("TempRelicSFX");
+		trUnitChangeProtoUnit("Spy Eye");
+		trUnitSelectByQV("TempRelicSFX");
+		trMutateSelected(kbGetProtoUnitID("Rock Sandstone Sprite"));
+		trUnitSelectByQV("TempRelicSFX");
+		trSetSelectedScale(2,2,2);
+	}*/
+	if(val == RELIC_RELIGION){
+		trQuestVarSet("TempRelicSFX", trGetNextUnitScenarioNameNumber());
+		trArmyDispatch("0,0", "Dwarf", 1,xsVectorGetX(v)+4,0,xsVectorGetZ(v)+4,0,true);
+		trUnitSelectByQV("TempRelicSFX");
+		trUnitTeleport(trVectorQuestVarGetX("TempV"),3,trVectorQuestVarGetZ("TempV"));
+		//trUnitSelectByQV("TempRelicSFX");
+		//trUnitTeleport(xsVectorGetX(v),3,xsVectorGetZ(v));
+		trUnitSelectByQV("TempRelicSFX");
+		trUnitChangeProtoUnit("Spy Eye");
+		trUnitSelectByQV("TempRelicSFX");
 		trMutateSelected(kbGetProtoUnitID("Hero Birth"));
-		trUnitSelectByQV("TEMPRELIC");
+		trUnitSelectByQV("TempRelicSFX");
 		trSetSelectedScale(0,0,0);
+		xSetInt(dFreeRelics, xSFX, 1*trQuestVarGet("TempRelicSFX"));
+	}
+	if(val == RELIC_SKELETON){
+		trQuestVarSet("TempRelicSFX", trGetNextUnitScenarioNameNumber());
+		trArmyDispatch("0,0", "Dwarf", 1,xsVectorGetX(v)+2,0,xsVectorGetZ(v)+2,0,true);
+		trUnitSelectByQV("TempRelicSFX");
+		trUnitTeleport(trVectorQuestVarGetX("TempV"),3,trVectorQuestVarGetZ("TempV"));
+		//trUnitSelectByQV("TempRelicSFX");
+		//trUnitTeleport(xsVectorGetX(v),3,xsVectorGetZ(v));
+		//	trUnitSelectByQV("TempRelicSFX");
+		//	trUnitChangeProtoUnit("Spy Eye");
+		trUnitSelectByQV("TempRelicSFX");
+		trMutateSelected(kbGetProtoUnitID("Skeleton Giant"));
+		trUnitSelectByQV("TempRelicSFX");
+		trSetSelectedScale(2,2,2);
+		xSetInt(dFreeRelics, xSFX, 1*trQuestVarGet("TempRelicSFX"));
 	}
 	if(val == 0){
 		trChatSend(0, "ERROR AT" + v);
@@ -678,6 +761,7 @@ void processFreeRelics(int count = 1) {
 					xAddDatabaseBlock(dHeldRelics, true);
 					xSetInt(dHeldRelics, xRelicName, 1*xGetInt(dFreeRelics, xRelicName));
 					xSetInt(dHeldRelics, xRelicValue, 1*xGetInt(dFreeRelics, xRelicValue));
+					xSetInt(dHeldRelics, xSFX, 1*xGetInt(dFreeRelics, xSFX));
 					xSetInt(dHeldRelics, xRelicTick, (trTimeMS()+50));
 					if(xGetInt(dFreeRelics, xRelicValue) == RELIC_URANIUM){
 						xSetInt(dHeldRelics, xRelicDamage, URANIUM_DAMAGE);
@@ -836,11 +920,14 @@ void processHeldRelics(int count = 1) {
 				xSetInt(dHeldRelics, xRelicTick,(trTimeMS()+50));
 			}
 		}
-		if(xGetInt(dHeldRelics, xRelicValue) == RELIC_RELIGION){
+		if(xGetInt(dHeldRelics, xRelicValue) >= RELIC_RELIGION){
 			ColouredChatToPlayer(dropper, RelicColour(xGetInt(dHeldRelics, xRelicValue)), relicName(xGetInt(dHeldRelics, xRelicValue)) + " sold!");
 			xSetPointer(dPlayerData, dropper);
 			xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)+1*relicCost(1*xGetInt(dHeldRelics, xRelicValue)));
 			xSetInt(dPlayerData, xGoldStart, xGetInt(dPlayerData, xGoldStart)+1*relicCost(1*xGetInt(dHeldRelics, xRelicValue)));
+			trUnitSelectClear();
+			xUnitSelect(dHeldRelics, xSFX);
+			trUnitChangeProtoUnit("Olympus Temple SFX");
 			trUnitSelectClear();
 			xUnitSelect(dHeldRelics, xRelicName);
 			trUnitChangeProtoUnit("Osiris Box Glow");

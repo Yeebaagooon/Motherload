@@ -58,6 +58,7 @@ int xTrapHitboxZ = 0;
 int dKey = 0;
 int xKey = 0;
 int xKeyUnitName = 0;
+int xSFX = 0;
 
 rule setup_databases
 active
@@ -80,6 +81,8 @@ highFrequency
 	xRelicTick = xInitAddInt(dHiddenRelics, "tick", 50);
 	xRelicDamage = xInitAddInt(dHiddenRelics, "damage", 0);
 	xOwner = xInitAddInt(dHiddenRelics, "owner", 0); //value of the relic, default to 0
+	xSFX = xInitAddInt(dFreeRelics, "sfx id", 0);
+	xSFX = xInitAddInt(dHeldRelics, "sfx id", 0);
 	xsDisableSelf();
 	//Obelisk Stage DB
 	dObelisks = xInitDatabase("Obelisks");

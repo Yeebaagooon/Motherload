@@ -1626,6 +1626,15 @@ highFrequency
 		trUnitSelectClear();
 		trUnitSelect(""+temp);
 		trSetSelectedScale(0,0,0);
+		temp = trGetNextUnitScenarioNameNumber();
+		trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1, 171,3,124, 0, true);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		//WHY DOESNT THIS UNIT WORK?
+		trUnitChangeProtoUnit("Statue of Major God");
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitTeleport(171,3,124);
 	}
 	xsEnableRule("Ragnorok");
 	xsDisableSelf();

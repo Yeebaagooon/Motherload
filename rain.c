@@ -113,11 +113,11 @@ highFrequency
 				xSetInt(dPlayerData, xEnginePower ,1*trQuestVarGet("EngineCL"+xGetInt(dPlayerData, xEngineLevel)+""));
 				xSetInt(dPlayerData, xRadiator ,1*trQuestVarGet("RadiatorCL"+xGetInt(dPlayerData, xRadiatorLevel)+""));
 				xSetFloat(dPlayerData, xFuel, xGetInt(dPlayerData, xFuelTank));
-				spawnRelicSpecific(vector(10,3,190), 15);
+				/*spawnRelicSpecific(vector(10,3,190), 15);
 				spawnRelicSpecific(vector(10,3,195), 16);
-				spawnRelicSpecific(vector(10,3,185), 27);
+				spawnRelicSpecific(vector(10,3,185), 28);
 				spawnRelicSpecific(vector(10,3,180), 20);
-				spawnRelicSpecific(vector(70,3,190), 21);
+				spawnRelicSpecific(vector(70,3,190), 21);*/
 			}
 			//trChatSend(0, "P"+p+"gold is " + 1*trQuestVarGet("p"+p+"goldGrant"));
 			//trChatSend(0, "p"+p+"Drill level is " + xGetInt(dPlayerData, xDrillLevel));
