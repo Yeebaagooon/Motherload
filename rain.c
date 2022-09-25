@@ -208,8 +208,6 @@ highFrequency
 		if(Stage == 2){
 			StageTime = StageTime+480; //480
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
-			grantGodPowerNoRechargeNextPosition(1, "Audrey", 100);
-			xsEnableRule("AudreyL2");
 		}
 		if(Stage == 3){
 			StageTime = StageTime+480; //480

@@ -1271,11 +1271,26 @@ int npcDiag(int npc = 0, int dialog = 0) {
 			{
 				case 1:
 				{
-					uiMessageBox("Radiation resist.");
+					uiMessageBox("Radioactive minerals damage halved.");
 				}
 				case 2:
 				{
 					trShowChoiceDialog("Equip?", "Yes", 40, "No", -1);
+					dialog = 0;
+				}
+			}
+		}
+		case 719:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Grants +100 drill power.");
+				}
+				case 2:
+				{
+					trShowChoiceDialog("Equip?", "Yes", 41, "No", -1);
 					dialog = 0;
 				}
 			}
@@ -1504,6 +1519,17 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				case 1:
 				{
 					uiMessageBox("To unlock - sell " + RadiationBonus + " radioactives. Current = " + xGetInt(dPlayerData, xRadioactivesSold));
+					dialog = 0;
+				}
+			}
+		}
+		case 749:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("To unlock - drill " + SeaIceDrill + " super hard terrains. Current = " + xGetInt(dPlayerData, xIceDrill));
 					dialog = 0;
 				}
 			}

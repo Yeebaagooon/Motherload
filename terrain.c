@@ -1504,6 +1504,7 @@ highFrequency
 			Layout(18,a);
 			if(iModulo(3, a) == 0){
 				Layout(17,a);
+				//Trap 1
 				trPaintTerrain(a*4-4,69,a*4-4,71,0,73,false);
 				trPaintTerrain(a*4-4,68,a*4-4,68,2,13,false);
 				trPaintTerrain(a*4-4,72,a*4-4,72,2,13,false);
@@ -1602,22 +1603,23 @@ highFrequency
 		trUnitSelect(""+temp);
 		trUnitSetAnimationPath("0,0,1,1,0,0");*/
 		//TRAP 2
-		trPaintTerrain(11,68,11,72,0,73,false);
+		trPaintTerrain(85,56,85,59,0,73,false);
 		xAddDatabaseBlock(dTrap);
 		xSetPointer(dTrap, xGetDatabaseCount(dTrap));
-		xSetInt(dTrap, xTrapXMin, 22);
-		xSetInt(dTrap, xTrapXMax, 24);
-		xSetInt(dTrap, xTrapZMin, 68*2);
-		xSetInt(dTrap, xTrapZMax, 72*2+2);
+		xSetInt(dTrap, xTrapXMin, 85*2);
+		xSetInt(dTrap, xTrapXMax, 85*2+2);
+		xSetInt(dTrap, xTrapZMin, 56*2);
+		xSetInt(dTrap, xTrapZMax, 59*2+2);
 		xSetInt(dTrap, xTrapType, 2);
 		xSetBool(dTrap, xTrapOn, true);
 		xSetBool(dTrap, xTrapReady, true);
 		xSetInt(dTrap, xTrapReset, 20000);
-		xSetVector(dTrap, xTrapStartVector, vector(20,3,140));
-		xSetVector(dTrap, xTrapTargetVector, vector(40,0,0));
+		xSetVector(dTrap, xTrapStartVector, vector(171,3,124));
+		//Direction
+		xSetVector(dTrap, xTrapTargetVector, vector(0,0,-16));
 		xSetInt(dTrap, xTrapUnit, 1*trGetNextUnitScenarioNameNumber());
 		temp = trGetNextUnitScenarioNameNumber();
-		trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1, 24,3,70*2, 0, true);
+		trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1, 171,3,124, 0, true);
 		trUnitSelectClear();
 		trUnitSelect(""+temp);
 		trUnitChangeProtoUnit("Lampades");
@@ -2076,7 +2078,10 @@ highFrequency
 				}
 				if(row == 17){
 					if(iModulo(3, col) == 0){
-						if(col == 6){
+						if(1*trQuestVarGet("TEMPkey") == 0){
+							trQuestVarSetFromRand("TEMPkey", 1, 5, true);
+						}
+						if(col == 3*trQuestVarGet("TEMPkey")){
 							spawnRelicSpecific(v,22);
 						}
 						else {

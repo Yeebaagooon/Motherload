@@ -350,10 +350,14 @@ highFrequency
 		xsDisableSelf();
 		trPaintTerrain(0,0,100,100,5,4,true);
 		PaintPlanets(20,20, 1);
-		createCameraTrack(5500);
-		trCameraCut(vector(-41.022690,21.803864,60.732624), vector(0.984738,-0.167602,-0.046911), vector(0.167415,0.985854,-0.007975), vector(-0.047584,0.000000,-0.998867));
+		createCameraTrack(6000);
+		trCameraCut(vector(135.184204,18.803818,67.302444), vector(0.525215,-0.390706,-0.755976), vector(0.222924,0.920516,-0.320868), vector(-0.821253,0.000000,-0.570566));
 		addCameraTrackWaypoint();
-		trCameraCut(vector(112.058205,21.803864,62.570534), vector(0.967717,-0.247788,-0.046100), vector(0.247510,0.968814,-0.011791), vector(-0.047584,0.000000,-0.998867));
+		trCameraCut(vector(114.885735,32.723816,92.523201), vector(0.687415,-0.390706,-0.612217), vector(0.291768,0.920516,-0.259850), vector(-0.665080,0.000001,-0.746772));
+		addCameraTrackWaypoint();
+		trCameraCut(vector(72.329529,32.723816,85.053596), vector(0.948432,-0.165631,-0.270265), vector(0.159291,0.986188,-0.045390), vector(-0.274050,0.000001,-0.961716));
+		addCameraTrackWaypoint();
+		trCameraCut(vector(90.976700,37.763817,-31.971802), vector(0.634111,-0.165631,0.755295), vector(0.106500,0.986188,0.126852), vector(0.765873,-0.000001,-0.642992));
 		addCameraTrackWaypoint();
 		playCameraTrack();
 		for(p=1 ; < cNumberNonGaiaPlayers){

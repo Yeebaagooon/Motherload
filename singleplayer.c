@@ -725,7 +725,6 @@ highFrequency
 	trUIFadeToColor(0,0,0,1500,0,false);
 	uiZoomToProto("Pharaoh of Osiris XP");
 	uiClearSelection();
-	
 	PaintPlanets(8,35);
 	MainTitle(14,115);
 	//trChatSend(0, "Hull repair spend - " + xGetInt(dPlayerData, xHullSpend));
@@ -905,7 +904,7 @@ highFrequency
 	if((trTime()-cActivationTime) >= 1){
 		if(OverrideStage == true){
 			xSetPointer(dPlayerData, 1);
-			xSetInt(dPlayerData, xGold, 10000);
+			xSetInt(dPlayerData, xBonus+19, 0);
 			saveAllData();
 		}
 		xsDisableSelf();

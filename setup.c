@@ -264,6 +264,8 @@ highFrequency
 	*/
 	addSavedDataDB(dPlayerData, xRadioactivesSold, 13, 20+RadiationBonus);
 	//200
+	addSavedDataDB(dPlayerData, xIceDrill, 13, 1+SeaIceDrill);
+	//31
 	
 	/*
 	Slot 14

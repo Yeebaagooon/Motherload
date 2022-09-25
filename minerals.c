@@ -796,8 +796,14 @@ void processHeldRelics(int count = 1) {
 		if(xGetInt(dHeldRelics, xRelicValue) == RELIC_URANIUM || xGetInt(dHeldRelics, xRelicValue) == RELIC_PROMETHIUM || xGetInt(dHeldRelics, xRelicValue) == RELIC_EINSTEINIUM || xGetInt(dHeldRelics, xRelicValue) == RELIC_HYDROGEN || xGetInt(dHeldRelics, xRelicValue) == RELIC_ANTIMATTER){
 			if(trTimeMS() > xGetInt(dHeldRelics, xRelicTick)){
 				for(p=1; < cNumberNonGaiaPlayers) {
-					trDamageUnitsInArea(p,"Hero Greek Atalanta",4, xGetInt(dHeldRelics, xRelicDamage));
-					trDamageUnit(-1*xGetInt(dHeldRelics, xRelicDamage));
+					if(1*trQuestVarGet("P"+p+"B18") == 0){
+						trDamageUnitsInArea(p,"Hero Greek Atalanta",4, xGetInt(dHeldRelics, xRelicDamage));
+						trDamageUnit(-1*xGetInt(dHeldRelics, xRelicDamage));
+					}
+					if(1*trQuestVarGet("P"+p+"B18") == 1){
+						trDamageUnitsInArea(p,"Hero Greek Atalanta",4, 0.500*xGetInt(dHeldRelics, xRelicDamage));
+						trDamageUnit(-1*xGetInt(dHeldRelics, xRelicDamage));
+					}
 				}
 				xSetInt(dHeldRelics, xRelicTick,(trTimeMS()+50));
 			}
@@ -1200,6 +1206,11 @@ highFrequency
 				}
 				if(xGetInt(dTrap, xTrapType) == 2){
 					//Check missile status, QV needed as first frame is idle and this is our reset condition
+					trUnitSelectClear();
+					xUnitSelect(dTrap, xTrapUnit);
+					for(p=1; < cNumberNonGaiaPlayers) {
+						trDamageUnitsInArea(1, "Hero Greek Atalanta", 2, 40);
+					}
 					if(kbUnitGetAnimationActionType(kbGetBlockID(""+xGetInt(dTrap, xTrapUnit)+"")) == 9){
 						if(trTimeMS() > 1*trQuestVarGet("Temp"+1*xGetInt(dTrap, xTrapUnit)+"")){
 							trQuestVarSet("Temp"+1*xGetInt(dTrap, xTrapUnit)+"", trTimeMS()+50);

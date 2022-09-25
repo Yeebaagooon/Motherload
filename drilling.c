@@ -690,6 +690,25 @@ highFrequency
 					trQuestVarSet("StatusEffectP"+p+"", 3);
 					//BONUS 17
 				}
+				//HARD ICE - UnderwaterIceC/Hades9/HadesCliff
+				if((trGetTerrainSubType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
+							1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 8) && (trGetTerrainType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
+							1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 3)){
+					trQuestVarSet("StatusEffectP"+p+"", 4);
+					//BONUS 19
+				}
+				if((trGetTerrainSubType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
+							1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 9) && (trGetTerrainType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
+							1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 5)){
+					trQuestVarSet("StatusEffectP"+p+"", 4);
+					//BONUS 19
+				}
+				if((trGetTerrainSubType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
+							1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 11) && (trGetTerrainType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
+							1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 2)){
+					trQuestVarSet("StatusEffectP"+p+"", 4);
+					//BONUS 19
+				}
 				//Drill egyptian cliff to unlock bonus 3
 				if((trGetTerrainSubType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
 							1*trQuestVarGet("P"+p+"DrillTargetZ")/2-1) == 2) && (trGetTerrainType(1*trQuestVarGet("P"+p+"DrillTargetX")/2-1,
@@ -1004,6 +1023,22 @@ void UngarrisonDrill(int p = 1){
 						playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
 						saveAllData();
 					}
+				}
+			}
+		}
+	}
+	//Hard Ice
+	if(1*trQuestVarGet("StatusEffectP"+p+"") == 4){
+		trQuestVarSet("StatusEffectP"+p+"", 0);
+		xSetPointer(dPlayerData, p);
+		if (xGetInt(dPlayerData, xBonus+19) == 0){
+			xSetInt(dPlayerData, xIceDrill, 1*xGetInt(dPlayerData, xIceDrill)+1);
+			if (xGetInt(dPlayerData, xIceDrill) >= 1*SeaIceDrill){
+				xSetInt(dPlayerData, xBonus+19, 1);
+				if(trCurrentPlayer() == p){
+					ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked (19)!");
+					playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
+					saveAllData();
 				}
 			}
 		}

@@ -10,7 +10,6 @@ Search //VERSION OVERRIDE HERE for release to rewrite all data
 -Bonuses
 -Super relics (skeleton etc)
 -Nick said something recently in SD about linking mousewheel to camera
--Redo Natas unlock track
 
 Sort out all keys
 Have room for bonus instant relics
@@ -19,8 +18,8 @@ Have room for bonus instant relics
 
 //---Test controls
 int QuickStart = 1;
-int QuickStage = 11;
-bool OverrideSP = true;
+int QuickStage = 7;
+bool OverrideSP = false;
 bool OverrideStage = false;
 string displayz = "lol";
 
@@ -48,6 +47,7 @@ int MineST = 3;
 int FuelSpendForBonus = 3000;
 int HullSpendForBonus = 4000;
 int RadiationBonus = 200;
+int SeaIceDrill = 30;
 
 float FuelCost = 0;
 float FSOneXMin = 10;
@@ -134,6 +134,7 @@ int CinematicObelisk = 0;
 
 int xVersionControl = 0;
 int xSpyObject = 0;
+int xIceDrill = 0;
 
 int UnitObelisk1 = 0;
 int UnitObelisk2 = 0;
@@ -185,6 +186,7 @@ highFrequency
 	xVersionControl = xInitAddInt(dPlayerData, "version", 0);
 	xSpyObject = xInitAddInt(dPlayerData, "spy id", 0);
 	xRadioactivesSold = xInitAddInt(dPlayerData, "radioactives sold", 0);
+	xIceDrill = xInitAddInt(dPlayerData, "ice drilled", 0);
 	xsDisableSelf();
 	for(p=1; <= cNumberNonGaiaPlayers) {
 		xAddDatabaseBlock(dPlayerData, true);

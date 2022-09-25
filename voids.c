@@ -1388,7 +1388,7 @@ void PaintSellTerrain (int x =0, int z = 0){
 	trPaintTerrain(x, z, x, z, 0, 83, false);
 	trPaintTerrain(x+1, z, x+1, z, 0, 77, false);
 	trPaintTerrain(x+2, z, x+2, z, 0, 83, false);
-	trPaintTerrain(x+3, z, x+3, z, 0, 80, false);
+	trPaintTerrain(x+3, z, x+3, z, 0, 77, false);
 	trPaintTerrain(x+4, z, x+4, z, 0, 76, false);
 	//null
 	trPaintTerrain(x+6, z, x+6, z, 0, 76, false);
@@ -1397,7 +1397,7 @@ void PaintSellTerrain (int x =0, int z = 0){
 	trPaintTerrain(x, z-1, x, z-1, 0, 82, false);
 	trPaintTerrain(x+1, z-1, x+1, z-1, 0, 80, false);
 	trPaintTerrain(x+2, z-1, x+2, z-1, 0, 74, false);
-	trPaintTerrain(x+3, z-1, x+3, z-1, 0, 81, false);
+	trPaintTerrain(x+3, z-1, x+3, z-1, 0, 77, false);
 	trPaintTerrain(x+4, z-1, x+4, z-1, 0, 74, false);
 	//null
 	trPaintTerrain(x+6, z-1, x+6, z-1, 0, 74, false);
@@ -1419,7 +1419,7 @@ void PaintFuelTerrain (int x =0, int z = 0){
 	trPaintTerrain(x+2, z, x+2, z, 0, 76, false);
 	trPaintTerrain(x+3, z, x+3, z, 0, 76, false);
 	trPaintTerrain(x+4, z, x+4, z, 0, 83, false);
-	trPaintTerrain(x+5, z, x+5, z, 0, 80, false);
+	trPaintTerrain(x+5, z, x+5, z, 0, 77, false);
 	trPaintTerrain(x+6, z, x+6, z, 0, 76, false);
 	
 	//row two
@@ -1428,7 +1428,7 @@ void PaintFuelTerrain (int x =0, int z = 0){
 	trPaintTerrain(x+2, z-1, x+2, z-1, 0, 74, false);
 	trPaintTerrain(x+3, z-1, x+3, z-1, 0, 74, false);
 	trPaintTerrain(x+4, z-1, x+4, z-1, 0, 74, false);
-	trPaintTerrain(x+5, z-1, x+5, z-1, 0, 81, false);
+	trPaintTerrain(x+5, z-1, x+5, z-1, 0, 77, false);
 	trPaintTerrain(x+6, z-1, x+6, z-1, 0, 74, false);
 	//row three
 	trPaintTerrain(x, z-2, x, z-2, 0, 78, false);

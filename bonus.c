@@ -611,7 +611,7 @@ highFrequency
 		}
 		if(xGetInt(dPlayerData, xBonus+18) != 0){
 			trUnitSelectByQV("Bonus18");
-			trUnitChangeProtoUnit("Monk");
+			trUnitChangeProtoUnit("Hero Chinese Monk");
 			xAddDatabaseBlock(dSelectables, true);
 			xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus18"));
 			xSetInt(dSelectables, xSelectablesPrompt, 718);
@@ -619,7 +619,7 @@ highFrequency
 				trUnitSelectByQV("BonusEffect18");
 				trUnitChangeProtoUnit("Gaia Forest effect");
 				trUnitSelectByQV("BonusUnit");
-				trUnitChangeProtoUnit("Monk");
+				trUnitChangeProtoUnit("Hero Chinese Monk");
 			}
 		}
 		if(xGetInt(dPlayerData, xBonus+18) == 0){
@@ -638,6 +638,43 @@ highFrequency
 				xAddDatabaseBlock(dSelectables, true);
 				xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus18"));
 				xSetInt(dSelectables, xSelectablesPrompt, 748);
+			}
+		}
+		if(xGetInt(dPlayerData, xBonus+19) != 0){
+			trUnitSelectByQV("Bonus19");
+			trUnitChangeProtoUnit("Gate Ram");
+			trUnitSelectByQV("Bonus19");
+			trSetSelectedScale(0.4,0.4,0.4);
+			trUnitSelectByQV("Bonus19");
+			trUnitSetHeading(90);
+			xAddDatabaseBlock(dSelectables, true);
+			xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus19"));
+			xSetInt(dSelectables, xSelectablesPrompt, 719);
+			if(xGetInt(dPlayerData, xBonus+19) == 2){
+				trUnitSelectByQV("BonusEffect19");
+				trUnitChangeProtoUnit("Gaia Forest effect");
+				trUnitSelectByQV("BonusUnit");
+				trUnitChangeProtoUnit("Gate Ram");
+				trUnitSelectByQV("BonusUnit");
+				trSetSelectedScale(0.4,0.4,0.4);
+			}
+		}
+		if(xGetInt(dPlayerData, xBonus+19) == 0){
+			trUnitSelectByQV("Bonus19");
+			trUnitChangeProtoUnit("Outpost");
+			trUnitSelectByQV("Bonus19");
+			trSetSelectedScale(0.5,0.1,0.5);
+			if(xGetInt(dPlayerData, xIceDrill) < 5){
+				trUnitSelectByQV("Bonus19");
+				trUnitSetAnimationPath("0,1,0,0,0");
+				xAddDatabaseBlock(dSelectables, true);
+				xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus19"));
+				xSetInt(dSelectables, xSelectablesPrompt, 730);
+			}
+			else{
+				xAddDatabaseBlock(dSelectables, true);
+				xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus19"));
+				xSetInt(dSelectables, xSelectablesPrompt, 749);
 			}
 		}
 		if(xGetInt(dPlayerData, xBonus+20) != 0){
@@ -811,9 +848,16 @@ void Select_Bonus(int bonus = 0){
 			ColouredChat("1,0.5,0", "Lava resist equipped");
 		}
 		if(bonus == 18){
-			trUnitChangeProtoUnit("Monk");
+			trUnitChangeProtoUnit("Hero Chinese Monk");
 			trChatHistoryClear();
 			ColouredChat("1,0.5,0", "Radiation resist equipped");
+		}
+		if(bonus == 19){
+			trUnitChangeProtoUnit("Gate Ram");
+			trUnitSelectByQV("BonusUnit");
+			trSetSelectedScale(0.4,0.4,0.4);
+			trChatHistoryClear();
+			ColouredChat("1,0.5,0", "+100 drill power equipped");
 		}
 		if(bonus == 20){
 			trUnitChangeProtoUnit("Troy Wall Connector");
@@ -894,6 +938,12 @@ void Apply_Bonus(int s = -1){
 		}
 		if(xGetInt(dPlayerData, xBonus+17) == 2){
 			trQuestVarSet("P"+p+"B17", 1);
+		}
+		if(xGetInt(dPlayerData, xBonus+18) == 2){
+			trQuestVarSet("P"+p+"B18", 1);
+		}
+		if(xGetInt(dPlayerData, xBonus+19) == 2){
+			xSetFloat(dPlayerData, xDrillPower, xGetFloat(dPlayerData, xDrillPower)+100);
 		}
 		if(xGetInt(dPlayerData, xBonus+20) == 2){
 			xSetInt(dPlayerData, xHullHP, xGetInt(dPlayerData, xHullHP)+1500);
