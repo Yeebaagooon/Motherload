@@ -221,6 +221,38 @@ highFrequency
 	
 }
 
+rule ProfitChat
+inactive
+highFrequency
+{
+	for(p = 1; < cNumberNonGaiaPlayers){
+		xSetPointer(dPlayerData, p);
+		trQuestVarSet("P"+p+"Profit",xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart));
+		trQuestVarSet("P"+p+"Place",1);
+	}
+	for(p = 1; < cNumberNonGaiaPlayers){
+		for(x = 1; < cNumberNonGaiaPlayers){
+			if(1*trQuestVarGet("P"+p+"Profit") < 1*trQuestVarGet("P"+x+"Profit")){
+				trQuestVarModify("P"+p+"Place", "+", 1);
+			}
+		}
+	}
+	trChatSend(0, "<color=1,0.5,0><u>Mr Natas' " + stageName(Stage) + " Report:</u></color>");
+	for(p = 1; < cNumberNonGaiaPlayers){
+		for(x = 1; < cNumberNonGaiaPlayers){
+			if(1*trQuestVarGet("P"+p+"Place") == x){
+				if(x == 1){
+					trChatSend(0, "<color={PlayerColor("+p+")}><icon=(20)(icons/star)> Profit: "+1*trQuestVarGet("P"+p+"Profit")+"");
+				}
+				else{
+					trChatSend(0, "<color={PlayerColor("+p+")}>Profit: "+1*trQuestVarGet("P"+p+"Profit")+"");
+				}
+			}
+		}
+	}
+	xsDisableSelf();
+}
+
 rule End1
 inactive
 highFrequency
@@ -241,6 +273,9 @@ highFrequency
 			trUIFadeToColor(0,0,0,1500,1,false);
 		}
 		xsEnableRule("End2");
+		if(Stage != 10){
+			xsEnableRule("ProfitChat");
+		}
 		//BONUS CHECK AND UNLOCK
 		for(p=1; < cNumberNonGaiaPlayers) {
 			xSetPointer(dPlayerData, p);

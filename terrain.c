@@ -2085,6 +2085,9 @@ highFrequency
 					trUnitSelectClear();
 					trQuestVarSet("HullR"+row+"C"+col+"", 1*trQuestVarGet("TEMPRELIC"));
 				}
+				if((row == 18) && (col == 1)){
+					spawnFuelRelic(v,100);
+				}
 				if(row == 17){
 					if(iModulo(3, col) == 0){
 						if(1*trQuestVarGet("TEMPkey") == 0){
@@ -2110,8 +2113,55 @@ highFrequency
 			}
 		}
 	}
+	xsEnableRule("SecretRelics");
+}
+
+rule SecretRelics
+inactive
+highFrequency
+{
+	int col = 0;
+	int row = 0;
+	int temp = 0;
+	int relicsplaced = 0;
+	int relictarget = 1;
+	int ABORT = 0;
+	vector v = vector(0,0,0);
+	if(Stage == 1){
+		//void this up
+	while (relicsplaced != relictarget) {
+		trQuestVarSetFromRand("TempCol",1,25,true);
+		trQuestVarSetFromRand("TempRow",1,6,true);
+		col = 1*trQuestVarGet("TempCol");
+		row = 1*trQuestVarGet("TempRow");
+		v = xsVectorSet(col*8-4,0,row*8-4);
+		temp = trGetNextUnitScenarioNameNumber();
+		trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1,xsVectorGetX(v),0,xsVectorGetZ(v),0,true);
+		if(trCountUnitsInArea(""+temp, 0, "Relic", 4) != 0){
+			trUnitSelectClear();
+			trUnitSelect(""+temp);
+			trUnitChangeProtoUnit("Rocket");
+			//trChatSend(0, "Fail at R"+row+" C"+col+"");
+			ABORT = ABORT +1;
+		}
+		else if(trCountUnitsInArea(""+temp, 0, "Relic", 4) == 0){
+			trUnitSelectClear();
+			trUnitSelect(""+temp);
+			trUnitChangeProtoUnit("Rocket");
+			spawnRelicSpecific(v, 27);
+			//trChatSend(0, "Placed at R"+row+" C"+col+"");
+			relicsplaced = relicsplaced+1;
+		}
+		if(ABORT > 99){
+			//trChatSend(0, "ABORT");
+			break;
+		}
+		}
+	}
+	xsDisableSelf();
+	// DELETE THIS //BUG
+	trModifyProtounit("Hero Greek Atalanta", 1, 2, 1000);
 	xsEnableRule("WallUp");
-	trDelayedRuleActivation("ChangeRelics");
 }
 
 rule WallUp

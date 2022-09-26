@@ -149,11 +149,15 @@ string relicName(int relic = 0) {
 			}
 			case RELIC_SHIP:
 			{
-				msg = "Destroyed ship of an unfortunate player";
+				msg = "Destroyed ship of former player";
 			}
 			case RELIC_FUEL:
 			{
 				msg = "Spare fuel";
+			}
+			case RELIC_HULL:
+			{
+				msg = "Hull repair nanobots";
 			}
 		}
 	}
@@ -372,6 +376,14 @@ string RelicColour(int relic = 0) {
 		{
 			colour = "1,0,1";
 		}
+		case RELIC_FUEL:
+		{
+			colour = "0,1,0";
+		}
+		case RELIC_HULL:
+		{
+			colour = "0,1,0";
+		}
 	}
 	return(colour);
 }
@@ -516,9 +528,17 @@ string relicIcon(int relic = 0) {
 			{
 				icon = "ui\overlay_ruins_12";
 			}
-			case RELIC_RUINS:
+			case RELIC_SHIP:
 			{
 				icon = "siege x fire siphon corpse bodya";
+			}
+			case RELIC_FUEL:
+			{
+				icon = "icons\improvement murder holes icon 64";
+			}
+			case RELIC_HULL:
+			{
+				icon = "icons\improvement murder holes icon 64";
 			}
 		}
 		return(icon);
@@ -655,6 +675,10 @@ void relicDescription(int relic = 0) {
 		int fuelamount = xGetInt(dFreeRelics, xRelicTick);
 		message = ""+fuelamount+"L spare fuel";
 	}
+	if(relic == RELIC_HULL){
+		int hullamount = xGetInt(dFreeRelics, xRelicTick);
+		message = "Hull repair nanobots - "+hullamount+"hp";
+	}
 	trShowImageDialog(icon, message);
 }
 
@@ -668,11 +692,11 @@ void spawnFuelRelic(vector v = vector (0,0,0), int val = 100){
 	xSetInt(dFreeRelics, xRelicDamage, 0);
 	trUnitSelectClear();
 	trUnitSelectByQV("TEMPRELIC");
-	if(aiIsMultiplayer() == false){
+	if(aiIsMultiplayer() == true){
 		trUnitChangeProtoUnit("Titan Atlantean");
 	}
 	trUnitChangeProtoUnit("Relic");
-	if(aiIsMultiplayer() == false){
+	if(aiIsMultiplayer() == true){
 		yFindLatestReverse("TempRelicSFX", "Titan Gate Dead", cNumberNonGaiaPlayers);
 		xSetInt(dFreeRelics, xSFX, 1*trQuestVarGet("TempRelicSFX"));
 		//SPECIAL EFFECTS
@@ -680,7 +704,34 @@ void spawnFuelRelic(vector v = vector (0,0,0), int val = 100){
 		trUnitChangeProtoUnit("Spy Eye");
 		trUnitSelectByQV("TempRelicSFX");
 		trMutateSelected(kbGetProtoUnitID("Well of Urd"));
-		trSetSelectedScale(0,0.5,0);
+		trSetSelectedScale(0.1,0.5,0.1);
+	}
+}
+
+void spawnHullRelic(vector v = vector (0,0,0), int val = 100){
+	trQuestVarSet("TEMPRELIC", trGetNextUnitScenarioNameNumber());
+	trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1,xsVectorGetX(v),0,xsVectorGetZ(v),0,true);
+	xAddDatabaseBlock(dFreeRelics, true);
+	xSetInt(dFreeRelics, xRelicName, 1*trQuestVarGet("TEMPRELIC"));
+	xSetInt(dFreeRelics, xRelicValue, 32);
+	xSetInt(dFreeRelics, xRelicTick, val);
+	xSetInt(dFreeRelics, xRelicDamage, 0);
+	trUnitSelectClear();
+	trUnitSelectByQV("TEMPRELIC");
+	if(aiIsMultiplayer() == true){
+		trUnitChangeProtoUnit("Titan Atlantean");
+	}
+	trUnitChangeProtoUnit("Relic");
+	if(aiIsMultiplayer() == true){
+		yFindLatestReverse("TempRelicSFX", "Titan Gate Dead", cNumberNonGaiaPlayers);
+		xSetInt(dFreeRelics, xSFX, 1*trQuestVarGet("TempRelicSFX"));
+		//SPECIAL EFFECTS
+		trUnitSelectByQV("TempRelicSFX");
+		trUnitChangeProtoUnit("Spy Eye");
+		trUnitSelectByQV("TempRelicSFX");
+		trMutateSelected(kbGetProtoUnitID("Timeshift in"));
+		trUnitSelectByQV("TempRelicSFX");
+		trUnitSetAnimationPath("0,1,1,0,1,0,0");
 	}
 }
 
@@ -960,7 +1011,7 @@ void processFreeRelics(int count = 1) {
 					xSetInt(dHeldRelics, xRelicName, 1*xGetInt(dFreeRelics, xRelicName));
 					xSetInt(dHeldRelics, xRelicValue, 1*xGetInt(dFreeRelics, xRelicValue));
 					xSetInt(dHeldRelics, xSFX, 1*xGetInt(dFreeRelics, xSFX));
-					if(xGetInt(dFreeRelics, xRelicValue) < 30){
+					if(xGetInt(dFreeRelics, xRelicValue) <= 30){
 						xSetInt(dHeldRelics, xRelicTick, (trTimeMS()+50));
 					}
 					else{
@@ -1135,7 +1186,9 @@ void processHeldRelics(int count = 1) {
 			xUnitSelect(dHeldRelics, xRelicName);
 			trUnitChangeProtoUnit("Osiris Box Glow");
 			xFreeDatabaseBlock(dHeldRelics);
-			playSoundCustom("\cinematics\13_in\jerrygarcia.mp3", "\cinematics\13_in\jerrygarcia.mp3");
+			if (trCurrentPlayer() == dropper) {
+				playSoundCustom("\cinematics\13_in\jerrygarcia.mp3", "\cinematics\13_in\jerrygarcia.mp3");
+			}
 		}
 		if(xGetInt(dHeldRelics, xRelicValue) == RELIC_FUEL){
 			ColouredChatToPlayer(dropper, RelicColour(xGetInt(dHeldRelics, xRelicValue)), ""+xGetInt(dHeldRelics, xRelicTick)+"L fuel picked up!");
@@ -1143,12 +1196,33 @@ void processHeldRelics(int count = 1) {
 			xSetFloat(dPlayerData, xFuel, xGetFloat(dPlayerData, xFuel)+xGetInt(dHeldRelics, xRelicTick));
 			trUnitSelectClear();
 			xUnitSelect(dHeldRelics, xSFX);
-			trUnitChangeProtoUnit("Olympus Temple SFX");
+			trUnitChangeProtoUnit("Lightning Sparks Ground");
 			trUnitSelectClear();
 			xUnitSelect(dHeldRelics, xRelicName);
-			trUnitChangeProtoUnit("Osiris Box Glow");
+			trUnitChangeProtoUnit("Cinematic Block");
 			xFreeDatabaseBlock(dHeldRelics);
-			playSoundCustom("\cinematics\13_in\jerrygarcia.mp3", "\cinematics\13_in\jerrygarcia.mp3");
+			spyEffect(1*trQuestVarGet("P"+dropper+"Siphon"), kbGetProtoUnitID("Mountain Giant"), vector(0,0,0), vector(0,0,0), 18);
+			if (trCurrentPlayer() == dropper) {
+				playSoundCustom("\cinematics\13_in\jerrygarcia.mp3", "\cinematics\13_in\jerrygarcia.mp3");
+			}
+		}
+		if(xGetInt(dHeldRelics, xRelicValue) == RELIC_HULL){
+			ColouredChatToPlayer(dropper, RelicColour(xGetInt(dHeldRelics, xRelicValue)), ""+xGetInt(dHeldRelics, xRelicTick)+"hp hull repaired!");
+			xSetPointer(dPlayerData, dropper);
+			trUnitSelectClear();
+			trUnitSelectByQV("P"+dropper+"Siphon");
+			trDamageUnit(-1*xGetInt(dHeldRelics, xRelicTick));
+			trUnitSelectClear();
+			xUnitSelect(dHeldRelics, xSFX);
+			trUnitChangeProtoUnit("Lightning Sparks Ground");
+			trUnitSelectClear();
+			xUnitSelect(dHeldRelics, xRelicName);
+			trUnitChangeProtoUnit("Cinematic Block");
+			xFreeDatabaseBlock(dHeldRelics);
+			spyEffect(1*trQuestVarGet("P"+dropper+"Siphon"), kbGetProtoUnitID("White Tiger"), vector(0,0,0), vector(0,0,0), 18);
+			if (trCurrentPlayer() == dropper) {
+				playSoundCustom("\cinematics\13_in\jerrygarcia.mp3", "\cinematics\13_in\jerrygarcia.mp3");
+			}
 		}
 		if(Stage == 10){
 			if ((xGetInt(dHeldRelics, xRelicValue) >= RELIC_KEY_CHINA) && (xGetInt(dHeldRelics, xRelicValue) <= RELIC_KEY_ATLANTEAN)) {

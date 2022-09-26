@@ -113,10 +113,6 @@ highFrequency
 				xSetInt(dPlayerData, xEnginePower ,1*trQuestVarGet("EngineCL"+xGetInt(dPlayerData, xEngineLevel)+""));
 				xSetInt(dPlayerData, xRadiator ,1*trQuestVarGet("RadiatorCL"+xGetInt(dPlayerData, xRadiatorLevel)+""));
 				xSetFloat(dPlayerData, xFuel, xGetInt(dPlayerData, xFuelTank));
-				spawnFuelRelic(vector(10,3,190), 1250);
-				spawnFuelRelic(vector(10,3,185), 125);
-				spawnFuelRelic(vector(70,3,190), 250);
-				spawnFuelRelic(vector(70,3,185), 500);
 				/*spawnRelicSpecific(vector(10,3,195), 16);
 				spawnRelicSpecific(vector(10,3,185), 28);
 				spawnRelicSpecific(vector(10,3,180), 29);
@@ -131,6 +127,10 @@ highFrequency
 		unitTransform("Outpost", "Rocket");
 		trSetFogAndBlackmap(true, true);
 		xsEnableRule("BonusGo");
+		spawnFuelRelic(vector(10,3,190), 1250);
+		spawnFuelRelic(vector(10,3,185), 125);
+		spawnHullRelic(vector(70,3,190), 250);
+		spawnHullRelic(vector(70,3,185), 500);
 		if(Stage != 10){
 			trDelayedRuleActivation("FuelEconomy");
 		}
@@ -489,6 +489,7 @@ highFrequency
 							trUnitSelectByQV("P"+p+"Siphon");
 							if(trUnitPercentDamaged() != 0){
 								ColouredChatToPlayer(p, "1,0.5,0", "250hp hull repaired.");
+								spyEffect(1*trQuestVarGet("P"+p+"Siphon"), kbGetProtoUnitID("White Tiger"), vector(0,0,0), vector(0,0,0), 18);
 								xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*Shop4Cost);
 								if(xGetInt(dPlayerData, xHullSpend) < 4700){
 									xSetInt(dPlayerData, xHullSpend, xGetInt(dPlayerData, xHullSpend)+1*Shop4Cost);
@@ -520,6 +521,7 @@ highFrequency
 								trUnitSelectByQV("P"+p+"Siphon");
 								if(trUnitPercentDamaged() != 0){
 									ColouredChatToPlayer(p, "1,0.5,0", ""+250*GetHullShop(trVectorQuestVarGetX("P"+p+"Pos"))+"" + " hp hull repaired.");
+									spyEffect(1*trQuestVarGet("P"+p+"Siphon"), kbGetProtoUnitID("White Tiger"), vector(0,0,0), vector(0,0,0), 18);
 									xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*HullCost*GetHullShop(trVectorQuestVarGetX("P"+p+"Pos")));
 									if(xGetInt(dPlayerData, xHullSpend) < 4700){
 										xSetInt(dPlayerData, xHullSpend, xGetInt(dPlayerData, xHullSpend)+1*HullCost*GetHullShop(trVectorQuestVarGetX("P"+p+"Pos")));

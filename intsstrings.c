@@ -10,12 +10,6 @@ Search //VERSION OVERRIDE HERE for release to rewrite all data
 -Bonuses
 -Super relics (skeleton etc)
 -Nick said something recently in SD about linking mousewheel to camera
-
-Sort out all keys
-Have room for bonus instant relics
-
--Score at end for all players profit
--emergency tp bug if moving?
 */
 
 
