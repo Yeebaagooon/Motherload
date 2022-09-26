@@ -365,7 +365,7 @@ highFrequency
 			if(xGetInt(dPlayerData, xStageUnlocked) == 9){
 				trOverlayText(stageName(10) + " unlocked!", 8.0, 489, 300, 1000);
 			}
-			else if(xGetInt(dPlayerData, xStageUnlocked) == 10){
+			else if(xGetInt(dPlayerData, xStageUnlocked) >= 10){
 				trOverlayText(stageName(10) + "!", 8.0, 489, 300, 1000);
 			}
 			else{

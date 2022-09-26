@@ -13,12 +13,15 @@ Search //VERSION OVERRIDE HERE for release to rewrite all data
 
 Sort out all keys
 Have room for bonus instant relics
+
+-Score at end for all players profit
+-emergency tp bug if moving?
 */
 
 
 //---Test controls
 int QuickStart = 1;
-int QuickStage = 11;
+int QuickStage = 2;
 bool OverrideSP = true;
 bool OverrideStage = false;
 string displayz = "lol";

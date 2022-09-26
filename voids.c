@@ -1383,6 +1383,31 @@ void FuelLoss(int p = 0){
 	//	Fuel loss = (300-engine power)+(depth/radiator)*distance
 }
 
+void FuelLossNatas(int p = 0){
+	xSetPointer(dPlayerData, p);
+	int engine = xGetInt(dPlayerData, xEnginePower);
+	float radiator = xGetInt(dPlayerData, xRadiator);
+	int drilling = 1*trQuestVarGet("P"+p+"Drilling");
+	if(1*trQuestVarGet("P"+p+"Drilling") == 1){
+		//not drilling
+		xSetFloat(dPlayerData, xFuel, xGetFloat(dPlayerData, xFuel)-0.001*drilling*(((350-engine)+(1000)/radiator)));
+	}
+	else{
+		//drilling
+		xSetFloat(dPlayerData, xFuel, xGetFloat(dPlayerData, xFuel)-0.0005*drilling*(((300-engine)+(1000)/radiator)));
+	}
+	//trChatHistoryClear();
+	//trChatSend(0, "depth "+depth+"");
+	//trChatSend(0, "fuel "+xGetFloat(dPlayerData, xFuel)+"");
+	/*if(trCurrentPlayer() == p){
+		trCounterAbort("CDFuel");
+		trCounterAbort("CDDepth");
+		trCounterAddTime("CDFuel", -40, -30, "</color>Fuel:" + 1*xGetFloat(dPlayerData, xFuel) + " L", -1);
+		trCounterAddTime("CDDepth", -30, -20, "Depth: " + 1*xGetInt(dPlayerData, xDepth) + " metres", -1);
+	}*/
+	//	Fuel loss = (300-engine power)+(depth/radiator)*distance
+}
+
 void PaintSellTerrain (int x =0, int z = 0){
 	//row one
 	trPaintTerrain(x, z, x, z, 0, 83, false);

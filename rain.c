@@ -113,11 +113,14 @@ highFrequency
 				xSetInt(dPlayerData, xEnginePower ,1*trQuestVarGet("EngineCL"+xGetInt(dPlayerData, xEngineLevel)+""));
 				xSetInt(dPlayerData, xRadiator ,1*trQuestVarGet("RadiatorCL"+xGetInt(dPlayerData, xRadiatorLevel)+""));
 				xSetFloat(dPlayerData, xFuel, xGetInt(dPlayerData, xFuelTank));
-				/*spawnRelicSpecific(vector(10,3,190), 15);
-				spawnRelicSpecific(vector(10,3,195), 16);
+				spawnFuelRelic(vector(10,3,190), 1250);
+				spawnFuelRelic(vector(10,3,185), 125);
+				spawnFuelRelic(vector(70,3,190), 250);
+				spawnFuelRelic(vector(70,3,185), 500);
+				/*spawnRelicSpecific(vector(10,3,195), 16);
 				spawnRelicSpecific(vector(10,3,185), 28);
-				spawnRelicSpecific(vector(10,3,180), 20);
-				spawnRelicSpecific(vector(70,3,190), 21);*/
+				spawnRelicSpecific(vector(10,3,180), 29);
+				spawnRelicSpecific(vector(70,3,190), 30);*/
 			}
 			//trChatSend(0, "P"+p+"gold is " + 1*trQuestVarGet("p"+p+"goldGrant"));
 			//trChatSend(0, "p"+p+"Drill level is " + xGetInt(dPlayerData, xDrillLevel));
@@ -130,6 +133,9 @@ highFrequency
 		xsEnableRule("BonusGo");
 		if(Stage != 10){
 			trDelayedRuleActivation("FuelEconomy");
+		}
+		else{
+			trDelayedRuleActivation("FuelEconomyNatas");
 		}
 		trMusicPlay();
 		trPlayNextMusicTrack();
@@ -665,9 +671,73 @@ highFrequency
 				playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
 			}
 		}
-		if((Stage == 9) && (xGetInt(dPlayerData, xDepth) > 7900)){
+		if((Stage == 9) && (xGetInt(dPlayerData, xDepth) >= 7900)){
 			xsEnableRule("SednaWin");
 			xsDisableSelf();
+		}
+	}
+}
+
+rule FuelEconomyNatas
+inactive
+highFrequency
+//CHANGE condition to distance not time
+{
+	for(p = 1; < cNumberNonGaiaPlayers){
+		xSetPointer(dPlayerData, p);
+		if(xGetInt(dPlayerData, xPlayerActive) == 1){
+			if(trDistanceToVectorSquared("P"+p+"Siphon", "P"+p+"Pos") > 0){
+				trVectorSetUnitPos("P"+p+"Pos", "P"+p+"Siphon");
+				if(xGetInt(dPlayerData, xFuelCountdown) != 0){
+					xSetInt(dPlayerData, xFuelCountdown, 0);
+				}
+				if((trVectorQuestVarGetZ("P"+p+"Pos")) > MaxRows*8){
+					xSetInt(dPlayerData, xDepth, 0);
+					trQuestVarSet("P"+p+"Depth", 0);
+				}
+				else{
+					FuelLossNatas(p);
+				}
+			}
+		}
+		if(trCurrentPlayer() == p){
+			trCounterAbort("CDFuel");
+			if(cNumberNonGaiaPlayers > 2){
+				//coloured fuel function
+				if(xGetFloat(dPlayerData, xFuel) > xGetInt(dPlayerData, xFuelTank)*0.75){
+					trCounterAddTime("CDFuel", -40, -30, "<color={PlayerColor(3)}>Fuel:" + 1*xGetFloat(dPlayerData, xFuel) + " L", -1);
+				}
+				else if(xGetFloat(dPlayerData, xFuel) < 151){
+					trCounterAddTime("CDFuel", -40, -30, "<color={PlayerColor(2)}>Fuel:" + 1*xGetFloat(dPlayerData, xFuel) + " L", -1);
+				}
+				else{
+					trCounterAddTime("CDFuel", -40, -30, "</color>Fuel:" + 1*xGetFloat(dPlayerData, xFuel) + " L", -1);
+				}
+			}
+			else if(cNumberNonGaiaPlayers <= 2){
+				trCounterAddTime("CDFuel", -40, -30, "</color>Fuel:" + 1*xGetFloat(dPlayerData, xFuel) + " L", -1);
+			}
+		}
+		if((xGetFloat(dPlayerData, xFuel) <= 0) && (xGetInt(dPlayerData, xPlayerActive) == 1)){
+			if(trCurrentPlayer() == p){
+				trOverlayText("OUT OF FUEL!", 8.0, 508, 350, 1000);
+			}
+			trUnitSelectByQV("P"+p+"Siphon");
+			trUnitDestroy();
+			xSetInt(dPlayerData, xPlayerActive, 0);
+			trSetPlayerDefeated(p);
+		}
+		
+		if((xGetFloat(dPlayerData, xFuel) <= 200) && (1*trQuestVarGet("P"+p+"FuelWarning") == 0)){
+			if(trCurrentPlayer() == p){
+				trOverlayTextColour(200,0,0);
+				trOverlayText("LOW FUEL WARNING!", 8.0, 508, 350, 1000);
+				playSound("attackwarning.wav");
+			}
+			if (xGetInt(dPlayerData, xBonus+7) == 2){
+				trChatSendToPlayer(0, p, "<color=1,0.5,0>Consider using ragnorok (R) - your emergency fuel tank!</color>");
+			}
+			trQuestVarSet("P"+p+"FuelWarning", 1);
 		}
 	}
 }

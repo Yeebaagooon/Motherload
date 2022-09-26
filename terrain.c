@@ -1631,7 +1631,7 @@ highFrequency
 		trUnitSelectClear();
 		trUnitSelect(""+temp);
 		//WHY DOESNT THIS UNIT WORK?
-		trUnitChangeProtoUnit("Statue of Major God");
+		trUnitChangeProtoUnit("Wall Connector");
 		trUnitSelectClear();
 		trUnitSelect(""+temp);
 		trUnitTeleport(171,3,124);
@@ -1691,16 +1691,16 @@ highFrequency
 					xSetPointer(dPlayerData, p);
 					if(xGetInt(dPlayerData, xDrillLevel) >= 6){
 						if(col > 20){
-							trQuestVarSetFromRand("Temp",1,15);
+							trQuestVarSetFromRand("Temp",1,40);
 							if(1*trQuestVarGet("Temp") <= cNumberNonGaiaPlayers){
 								spawnRelicSpecific(v,16);
 							}
 						}
 						if(col < 5){
-							trQuestVarSetFromRand("Temp",1,15);
+							trQuestVarSetFromRand("Temp",1,40);
 							if(1*trQuestVarGet("Temp") <= cNumberNonGaiaPlayers){
-								trQuestVarSetFromRand("Temp2",1,3);
-								if(trQuestVarGet("Temp2") < 3){
+								trQuestVarSetFromRand("Temp2",1,8);
+								if(trQuestVarGet("Temp2") < 8){
 									spawnRelicSpecific(v,18);
 								}
 								else{

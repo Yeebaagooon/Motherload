@@ -1065,5 +1065,8 @@ void UngarrisonDrill(int p = 1){
 		saveAllData();
 		trOverlayText("Entire planet drilled!", 4.0, 579, 350, 1000);
 		playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
+		trCounterAbort("CDSTage");
+		StageTime = 30+trTime();
+		trCounterAddTime("CDSTage", 30, 0, "<color={PlayerColor(1)}>Time remaining", -1);
 	}
 }

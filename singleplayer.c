@@ -768,8 +768,8 @@ highFrequency
 
 void UpgradeDrill(int p = -1){
 	xsSetContextPlayer(0);
-	xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*trQuestVarGet("goldCost"));
 	xSetPointer(dPlayerData, 1);
+	xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*trQuestVarGet("goldCost"));
 	int DrillLevelDummy = xGetInt(dPlayerData, xDrillLevel);
 	xSetInt(dPlayerData, xDrillLevel, DrillLevelDummy+1);
 	xSetFloat(dPlayerData, xDrillPower, trQuestVarGet("DrillPowerL"+xGetInt(dPlayerData, xDrillLevel)+""));
@@ -787,8 +787,8 @@ void UpgradeDrill(int p = -1){
 
 void UpgradeHull(int p = -1){
 	xsSetContextPlayer(0);
-	xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*trQuestVarGet("goldCost"));
 	xSetPointer(dPlayerData, 1);
+	xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*trQuestVarGet("goldCost"));
 	int HullLevelDummy = xGetInt(dPlayerData, xHullLevel);
 	xSetInt(dPlayerData, xHullLevel, HullLevelDummy+1);
 	xSetInt(dPlayerData, xHullHP, trQuestVarGet("HullHPL"+xGetInt(dPlayerData, xHullLevel)+""));
@@ -806,8 +806,8 @@ void UpgradeHull(int p = -1){
 
 void UpgradeFuel(int p = -1){
 	xsSetContextPlayer(0);
-	xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*trQuestVarGet("goldCost"));
 	xSetPointer(dPlayerData, 1);
+	xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*trQuestVarGet("goldCost"));
 	int FuelLevelDummy = xGetInt(dPlayerData, xFuelLevel);
 	xSetInt(dPlayerData, xFuelLevel, FuelLevelDummy+1);
 	xSetInt(dPlayerData, xFuelTank, trQuestVarGet("FuelCL"+xGetInt(dPlayerData, xFuelLevel)+""));
@@ -825,8 +825,8 @@ void UpgradeFuel(int p = -1){
 
 void UpgradeCargo(int p = -1){
 	xsSetContextPlayer(0);
-	xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*trQuestVarGet("goldCost"));
 	xSetPointer(dPlayerData, 1);
+	xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*trQuestVarGet("goldCost"));
 	int CargoLevelDummy = xGetInt(dPlayerData, xCargoLevel);
 	xSetInt(dPlayerData, xCargoLevel, CargoLevelDummy+1);
 	xSetInt(dPlayerData, xCargoHold, trQuestVarGet("CargoCL"+xGetInt(dPlayerData, xCargoLevel)+""));
@@ -844,8 +844,8 @@ void UpgradeCargo(int p = -1){
 
 void UpgradeEngine(int p = -1){
 	xsSetContextPlayer(0);
-	xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*trQuestVarGet("goldCost"));
 	xSetPointer(dPlayerData, 1);
+	xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*trQuestVarGet("goldCost"));
 	int EngineLevelDummy = xGetInt(dPlayerData, xEngineLevel);
 	xSetInt(dPlayerData, xEngineLevel, EngineLevelDummy+1);
 	xSetInt(dPlayerData, xEnginePower, trQuestVarGet("EngineCL"+xGetInt(dPlayerData, xEngineLevel)+""));
@@ -863,8 +863,8 @@ void UpgradeEngine(int p = -1){
 
 void UpgradeRadiator(int p = -1){
 	xsSetContextPlayer(0);
-	xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*trQuestVarGet("goldCost"));
 	xSetPointer(dPlayerData, 1);
+	xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*trQuestVarGet("goldCost"));
 	int RadiatorLevelDummy = xGetInt(dPlayerData, xRadiatorLevel);
 	xSetInt(dPlayerData, xRadiatorLevel, RadiatorLevelDummy+1);
 	xSetInt(dPlayerData, xRadiator, trQuestVarGet("RadiatorCL"+xGetInt(dPlayerData, xRadiatorLevel)+""));

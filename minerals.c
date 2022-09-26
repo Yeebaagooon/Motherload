@@ -30,6 +30,11 @@ const int RELIC_KEY_ATLANTEAN = 26;
 
 const int RELIC_RELIGION = 27;
 const int RELIC_SKELETON = 28;
+const int RELIC_RUINS = 29;
+const int RELIC_SHIP = 30;
+
+const int RELIC_FUEL = 31;
+const int RELIC_HULL = 32;
 
 
 const int URANIUM_DAMAGE = 1;
@@ -138,6 +143,18 @@ string relicName(int relic = 0) {
 			{
 				msg = "A mysterious skeleton";
 			}
+			case RELIC_RUINS:
+			{
+				msg = "Ruins of an ancient civilisation";
+			}
+			case RELIC_SHIP:
+			{
+				msg = "Destroyed ship of an unfortunate player";
+			}
+			case RELIC_FUEL:
+			{
+				msg = "Spare fuel";
+			}
 		}
 	}
 	return(msg);
@@ -239,6 +256,14 @@ int relicCost(int relic = 0) {
 		{
 			price = 25;
 		}
+		case RELIC_RUINS:
+		{
+			price = 60;
+		}
+		case RELIC_SHIP:
+		{
+			price = 90;
+		}
 	}
 	return(price);
 }
@@ -339,14 +364,37 @@ string RelicColour(int relic = 0) {
 		{
 			colour = "1,0,1";
 		}
+		case RELIC_RUINS:
+		{
+			colour = "1,0,1";
+		}
+		case RELIC_SHIP:
+		{
+			colour = "1,0,1";
+		}
 	}
 	return(colour);
 }
 
 string relicIcon(int relic = 0) {
 	string icon = "icons\infantry g hoplite icon 64";
-	if ((1*trQuestVarGet("CustomContent") == 1) && ((relic <= RELIC_KEY_CHINA) || (relic >= RELIC_KEY_ATLANTEAN))){
+	if (1*trQuestVarGet("CustomContent") == 1){
 		icon = "Yeebaagooon\Motherload\mineral" + relic;
+		if(relic == RELIC_KEY_CHINA){
+			icon = "ui range indicator chinese";
+		}
+		if(relic == RELIC_KEY_NORSE){
+			icon = "ui range indicator norse";
+		}
+		if(relic == RELIC_KEY_ATLANTEAN){
+			icon = "ui range indicator atlantean";
+		}
+		if(relic == RELIC_KEY_EGYPT){
+			icon = "ui range indicator egyptian";
+		}
+		if(relic == RELIC_KEY_GREEK){
+			icon = "ui range indicator greek";
+		}
 		return(icon);
 	}
 	else{
@@ -463,6 +511,14 @@ string relicIcon(int relic = 0) {
 			case RELIC_SKELETON:
 			{
 				icon = "animal chicken corpse skeletona";
+			}
+			case RELIC_RUINS:
+			{
+				icon = "ui\overlay_ruins_12";
+			}
+			case RELIC_RUINS:
+			{
+				icon = "siege x fire siphon corpse bodya";
 			}
 		}
 		return(icon);
@@ -584,7 +640,7 @@ int relicProto(int relic = 0) {
 void relicDescription(int relic = 0) {
 	string icon = relicIcon(relic);
 	string message = " ";
-	if ((relic <= RELIC_KEY_CHINA) || (relic >= RELIC_KEY_ATLANTEAN)) {
+	if ((relic < RELIC_KEY_CHINA) || (relic > RELIC_KEY_ATLANTEAN)) {
 		string msg = relicName(relic);
 		string textgap = " - Value = ";
 		int price = relicCost(relic);
@@ -595,7 +651,37 @@ void relicDescription(int relic = 0) {
 	else{
 		message = "A key that opens something";
 	}
+	if(relic == RELIC_FUEL){
+		int fuelamount = xGetInt(dFreeRelics, xRelicTick);
+		message = ""+fuelamount+"L spare fuel";
+	}
 	trShowImageDialog(icon, message);
+}
+
+void spawnFuelRelic(vector v = vector (0,0,0), int val = 100){
+	trQuestVarSet("TEMPRELIC", trGetNextUnitScenarioNameNumber());
+	trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1,xsVectorGetX(v),0,xsVectorGetZ(v),0,true);
+	xAddDatabaseBlock(dFreeRelics, true);
+	xSetInt(dFreeRelics, xRelicName, 1*trQuestVarGet("TEMPRELIC"));
+	xSetInt(dFreeRelics, xRelicValue, 31);
+	xSetInt(dFreeRelics, xRelicTick, val);
+	xSetInt(dFreeRelics, xRelicDamage, 0);
+	trUnitSelectClear();
+	trUnitSelectByQV("TEMPRELIC");
+	if(aiIsMultiplayer() == false){
+		trUnitChangeProtoUnit("Titan Atlantean");
+	}
+	trUnitChangeProtoUnit("Relic");
+	if(aiIsMultiplayer() == false){
+		yFindLatestReverse("TempRelicSFX", "Titan Gate Dead", cNumberNonGaiaPlayers);
+		xSetInt(dFreeRelics, xSFX, 1*trQuestVarGet("TempRelicSFX"));
+		//SPECIAL EFFECTS
+		trUnitSelectByQV("TempRelicSFX");
+		trUnitChangeProtoUnit("Spy Eye");
+		trUnitSelectByQV("TempRelicSFX");
+		trMutateSelected(kbGetProtoUnitID("Well of Urd"));
+		trSetSelectedScale(0,0.5,0);
+	}
 }
 
 void spawnRelicSpecific(vector v = vector (0,0,0), int val = 1){
@@ -625,86 +711,195 @@ void spawnRelicSpecific(vector v = vector (0,0,0), int val = 1){
 	}
 	trUnitSelectClear();
 	trUnitSelectByQV("TEMPRELIC");
+	if(aiIsMultiplayer() == true){
+		trUnitChangeProtoUnit("Titan Atlantean");
+	}
 	trUnitChangeProtoUnit("Relic");
-	trVectorSetUnitPos("TempV", "TEMPRELIC");
-	//SPECIAL EFFECTS
-	/*if(val == RELIC_IRON){
-		trQuestVarSet("TempRelicSFX", trGetNextUnitScenarioNameNumber());
-		trArmyDispatch("0,0", "Dwarf", 1,xsVectorGetX(v),0,xsVectorGetZ(v),0,true);
-		trUnitSelectByQV("TempRelicSFX");
-		trUnitTeleport(trVectorQuestVarGetX("TempV"),3,trVectorQuestVarGetZ("TempV"));
-		trUnitSelectByQV("TempRelicSFX");
-		trUnitChangeProtoUnit("Spy Eye");
-		trUnitSelectByQV("TempRelicSFX");
-		trMutateSelected(kbGetProtoUnitID("Rock Limestone Sprite"));
-		trUnitSelectByQV("TempRelicSFX");
-		trSetSelectedScale(2,2,2);
-	}
-	if(val == RELIC_BRONZE){
-		trQuestVarSet("TempRelicSFX", trGetNextUnitScenarioNameNumber());
-		trArmyDispatch("1,0", "Dwarf", 1,xsVectorGetX(v),0,xsVectorGetZ(v),0,true);
-		trUnitSelectByQV("TempRelicSFX");
-		trUnitTeleport(trVectorQuestVarGetX("TempV"),3,trVectorQuestVarGetZ("TempV"));
-		trUnitSelectByQV("TempRelicSFX");
-		trUnitChangeProtoUnit("Spy Eye");
-		trUnitSelectByQV("TempRelicSFX");
-		trMutateSelected(kbGetProtoUnitID("Rock Dirt Sprite"));
-		trUnitSelectByQV("TempRelicSFX");
-		trSetSelectedScale(2,2,2);
-	}
-	if(val == RELIC_SILVER){
-		trQuestVarSet("TempRelicSFX", trGetNextUnitScenarioNameNumber());
-		trArmyDispatch("1,0", "Dwarf", 1,(1*trVectorQuestVarGetX("TempV")+4),0,(1*trVectorQuestVarGetZ("TempV")+4),0,true);
-		trUnitSelectByQV("TempRelicSFX");
-		trUnitTeleport((1*trVectorQuestVarGetX("TempV")+4),3,(1*trVectorQuestVarGetZ("TempV")+4));
-		trUnitSelectByQV("TempRelicSFX");
-		trUnitChangeProtoUnit("Spy Eye");
-		trUnitSelectByQV("TempRelicSFX");
-		trMutateSelected(kbGetProtoUnitID("Rock Granite Sprite"));
-		trUnitSelectByQV("TempRelicSFX");
-		trSetSelectedScale(2,2,2);
-	}
-	if(val == RELIC_GOLD){
-		trQuestVarSet("TempRelicSFX", trGetNextUnitScenarioNameNumber());
-		trArmyDispatch("0,0", "Dwarf", 1,xsVectorGetX(v)+4,0,xsVectorGetZ(v)+4,0,true);
-		trUnitSelectByQV("TempRelicSFX");
-		trUnitTeleport(trVectorQuestVarGetX("TempV"),3,trVectorQuestVarGetZ("TempV"));
-		trUnitSelectByQV("TempRelicSFX");
-		trUnitChangeProtoUnit("Spy Eye");
-		trUnitSelectByQV("TempRelicSFX");
-		trMutateSelected(kbGetProtoUnitID("Rock Sandstone Sprite"));
-		trUnitSelectByQV("TempRelicSFX");
-		trSetSelectedScale(2,2,2);
-	}*/
-	if(val == RELIC_RELIGION){
-		trQuestVarSet("TempRelicSFX", trGetNextUnitScenarioNameNumber());
-		trArmyDispatch("0,0", "Dwarf", 1,xsVectorGetX(v)+4,0,xsVectorGetZ(v)+4,0,true);
-		trUnitSelectByQV("TempRelicSFX");
-		trUnitTeleport(trVectorQuestVarGetX("TempV"),3,trVectorQuestVarGetZ("TempV"));
-		//trUnitSelectByQV("TempRelicSFX");
-		//trUnitTeleport(xsVectorGetX(v),3,xsVectorGetZ(v));
-		trUnitSelectByQV("TempRelicSFX");
-		trUnitChangeProtoUnit("Spy Eye");
-		trUnitSelectByQV("TempRelicSFX");
-		trMutateSelected(kbGetProtoUnitID("Hero Birth"));
-		trUnitSelectByQV("TempRelicSFX");
-		trSetSelectedScale(0,0,0);
+	if(aiIsMultiplayer() == true){
+		yFindLatestReverse("TempRelicSFX", "Titan Gate Dead", cNumberNonGaiaPlayers);
 		xSetInt(dFreeRelics, xSFX, 1*trQuestVarGet("TempRelicSFX"));
-	}
-	if(val == RELIC_SKELETON){
-		trQuestVarSet("TempRelicSFX", trGetNextUnitScenarioNameNumber());
-		trArmyDispatch("0,0", "Dwarf", 1,xsVectorGetX(v)+2,0,xsVectorGetZ(v)+2,0,true);
-		trUnitSelectByQV("TempRelicSFX");
-		trUnitTeleport(trVectorQuestVarGetX("TempV"),3,trVectorQuestVarGetZ("TempV"));
-		//trUnitSelectByQV("TempRelicSFX");
-		//trUnitTeleport(xsVectorGetX(v),3,xsVectorGetZ(v));
-		//	trUnitSelectByQV("TempRelicSFX");
-		//	trUnitChangeProtoUnit("Spy Eye");
-		trUnitSelectByQV("TempRelicSFX");
-		trMutateSelected(kbGetProtoUnitID("Skeleton Giant"));
-		trUnitSelectByQV("TempRelicSFX");
-		trSetSelectedScale(2,2,2);
-		xSetInt(dFreeRelics, xSFX, 1*trQuestVarGet("TempRelicSFX"));
+		//SPECIAL EFFECTS
+		if(val == RELIC_IRON){
+			trUnitSelectByQV("TempRelicSFX");
+			trUnitChangeProtoUnit("Spy Eye");
+			trUnitSelectByQV("TempRelicSFX");
+			trMutateSelected(kbGetProtoUnitID("Rock Limestone Sprite"));
+			trSetSelectedScale(2,2,2);
+		}
+		if(val == RELIC_BRONZE){
+			trUnitSelectByQV("TempRelicSFX");
+			trUnitChangeProtoUnit("Spy Eye");
+			trUnitSelectByQV("TempRelicSFX");
+			trMutateSelected(kbGetProtoUnitID("Rock Dirt Sprite"));
+			trSetSelectedScale(2,2,2);
+		}
+		if(val == RELIC_SILVER){
+			trUnitSelectByQV("TempRelicSFX");
+			trUnitChangeProtoUnit("Spy Eye");
+			trUnitSelectByQV("TempRelicSFX");
+			trMutateSelected(kbGetProtoUnitID("Rock Granite Sprite"));
+			trSetSelectedScale(2,2,2);
+		}
+		if(val == RELIC_GOLD){
+			trUnitSelectByQV("TempRelicSFX");
+			trUnitChangeProtoUnit("Spy Eye");
+			trUnitSelectByQV("TempRelicSFX");
+			trMutateSelected(kbGetProtoUnitID("Rock Sandstone Sprite"));
+			trSetSelectedScale(2,2,2);
+		}
+		if(val == RELIC_PLATINUM){
+			trUnitSelectByQV("TempRelicSFX");
+			trUnitChangeProtoUnit("Spy Eye");
+			trUnitSelectByQV("TempRelicSFX");
+			trMutateSelected(kbGetProtoUnitID("Ragnorok SFX"));
+		}
+		if(val == RELIC_URANIUM){
+			trUnitSelectByQV("TempRelicSFX");
+			trUnitChangeProtoUnit("Spy Eye");
+			trUnitSelectByQV("TempRelicSFX");
+			trMutateSelected(kbGetProtoUnitID("Acid Pool"));
+			trSetSelectedScale(0,0,0);
+			trUnitSelectByQV("TempRelicSFX");
+			trUnitSetAnimationPath("0,1,0,0,0,0,0");
+		}
+		if(val == RELIC_RUBY){
+			trUnitSelectByQV("TempRelicSFX");
+			trUnitChangeProtoUnit("Spy Eye");
+			trUnitSelectByQV("TempRelicSFX");
+			trMutateSelected(kbGetProtoUnitID("Einheriar Boost SFX"));
+		}
+		if(val == RELIC_SAPPHIRE){
+			trUnitSelectByQV("TempRelicSFX");
+			trUnitChangeProtoUnit("Spy Eye");
+			trUnitSelectByQV("TempRelicSFX");
+			trMutateSelected(kbGetProtoUnitID("Vortex Finish Linked"));
+			trUnitSelectByQV("TempRelicSFX");
+			trUnitSetAnimationPath("0,0,1,0,0,0,0");
+		}
+		if(val == RELIC_DIAMOND){
+			trUnitSelectByQV("TempRelicSFX");
+			trUnitChangeProtoUnit("Spy Eye");
+			trUnitSelectByQV("TempRelicSFX");
+			trMutateSelected(kbGetProtoUnitID("Healing SFX"));
+		}
+		if(val == RELIC_PROMETHIUM){
+			trUnitSelectByQV("TempRelicSFX");
+			trUnitChangeProtoUnit("Spy Eye");
+			trUnitSelectByQV("TempRelicSFX");
+			trMutateSelected(kbGetProtoUnitID("Poison SFX"));
+		}
+		if(val == RELIC_EINSTEINIUM){
+			trUnitSelectByQV("TempRelicSFX");
+			trUnitChangeProtoUnit("Spy Eye");
+			trUnitSelectByQV("TempRelicSFX");
+			trMutateSelected(kbGetProtoUnitID("Fire Giant"));
+			trSetSelectedScale(0,0,0);
+		}
+		if(val == RELIC_OBSIDIAN){
+			trUnitSelectByQV("TempRelicSFX");
+			trUnitChangeProtoUnit("Spy Eye");
+			trUnitSelectByQV("TempRelicSFX");
+			trMutateSelected(kbGetProtoUnitID("Smoke"));
+		}
+		if(val == RELIC_TOPAZ){
+			trUnitSelectByQV("TempRelicSFX");
+			trUnitChangeProtoUnit("Spy Eye");
+			trUnitSelectByQV("TempRelicSFX");
+			trMutateSelected(kbGetProtoUnitID("Hero Norse"));
+			trSetSelectedScale(0,0,0);
+		}
+		if(val == RELIC_QUARTZ){
+			trUnitSelectByQV("TempRelicSFX");
+			trUnitChangeProtoUnit("Spy Eye");
+			trUnitSelectByQV("TempRelicSFX");
+			trMutateSelected(kbGetProtoUnitID("Arkantosman"));
+			trSetSelectedScale(0,0,0);
+		}
+		if(val == RELIC_OPAL){
+			trUnitSelectByQV("TempRelicSFX");
+			trUnitChangeProtoUnit("Spy Eye");
+			trUnitSelectByQV("TempRelicSFX");
+			trMutateSelected(kbGetProtoUnitID("Flying Purple Hippo"));
+			trSetSelectedScale(0,0,0);
+			trUnitSelectByQV("TempRelicSFX");
+			trUnitOverrideAnimation(15,0,true,false,-1,0);
+		}
+		if(val == RELIC_AMETHYST){
+			trUnitSelectByQV("TempRelicSFX");
+			trUnitChangeProtoUnit("Spy Eye");
+			trMutateSelected(kbGetProtoUnitID("Pharaoh of Osiris XP"));
+			trSetSelectedScale(0.01,0.5,0);
+			trUnitSelectByQV("TempRelicSFX");
+			trUnitOverrideAnimation(50,0,true,false,-1,0);
+		}
+		if(val == RELIC_EMERALD){
+			trUnitSelectByQV("TempRelicSFX");
+			trUnitChangeProtoUnit("Spy Eye");
+			trUnitSelectByQV("TempRelicSFX");
+			trMutateSelected(kbGetProtoUnitID("Acid Pool"));
+			trUnitSelectByQV("TempRelicSFX");
+			trUnitSetAnimationPath("0,1,1,0,0,0,0");
+		}
+		if(val == RELIC_ICE){
+			trUnitSelectByQV("TempRelicSFX");
+			trUnitChangeProtoUnit("Spy Eye");
+			trUnitSelectByQV("TempRelicSFX");
+			trMutateSelected(kbGetProtoUnitID("Frost Giant"));
+			trSetSelectedScale(0,0,0);
+		}
+		if(val == RELIC_HYDROGEN){
+			trUnitSelectByQV("TempRelicSFX");
+			trUnitChangeProtoUnit("Spy Eye");
+			trUnitSelectByQV("TempRelicSFX");
+			trMutateSelected(kbGetProtoUnitID("Lighthouse"));
+			trSetSelectedScale(0,0,0);
+		}
+		if(val == RELIC_ANTIMATTER){
+			trUnitSelectByQV("TempRelicSFX");
+			trUnitChangeProtoUnit("Spy Eye");
+			trUnitSelectByQV("TempRelicSFX");
+			trMutateSelected(kbGetProtoUnitID("Tower Mirror"));
+			trSetSelectedScale(0,0,0);
+		}
+		if(val == RELIC_YEEBIUM){
+			trUnitSelectByQV("TempRelicSFX");
+			trUnitChangeProtoUnit("Spy Eye");
+			trUnitSelectByQV("TempRelicSFX");
+			trMutateSelected(kbGetProtoUnitID("Valkyrie"));
+			trSetSelectedScale(0,0,0);
+		}
+		if(val == RELIC_KEY_CHINA){
+			trUnitSelectByQV("TempRelicSFX");
+			trUnitChangeProtoUnit("Spy Eye");
+			trUnitSelectByQV("TempRelicSFX");
+			trMutateSelected(kbGetProtoUnitID("UI Range Indicator Chinese SFX"));
+		}
+		if(val == RELIC_RELIGION){
+			trUnitSelectByQV("TempRelicSFX");
+			trUnitChangeProtoUnit("Spy Eye");
+			trUnitSelectByQV("TempRelicSFX");
+			trMutateSelected(kbGetProtoUnitID("Hero Birth"));
+			xSetInt(dFreeRelics, xSFX, 1*trQuestVarGet("TempRelicSFX"));
+		}
+		if(val == RELIC_SKELETON){
+			trUnitSelectByQV("TempRelicSFX");
+			trUnitChangeProtoUnit("Skeleton Giant");
+			trSetSelectedScale(2,2,2);
+			xSetInt(dFreeRelics, xSFX, 1*trQuestVarGet("TempRelicSFX"));
+		}
+		if(val == RELIC_RUINS){
+			trUnitSelectByQV("TempRelicSFX");
+			trSetSelectedScale(0.8,0.8,0.8);
+			xSetInt(dFreeRelics, xSFX, 1*trQuestVarGet("TempRelicSFX"));
+		}
+		if(val == RELIC_SHIP){
+			trUnitSelectByQV("TempRelicSFX");
+			trUnitChangeProtoUnit("Cinematic Dead Bodies Xpack");
+			trSetSelectedScale(2,2,2);
+			trUnitChangeProtoUnit("Cinematic Dead Bodies Xpack");
+			trUnitSetAnimationPath("18,0,0,0,0,0,0");
+			xSetInt(dFreeRelics, xSFX, 1*trQuestVarGet("TempRelicSFX"));
+		}
 	}
 	if(val == 0){
 		trChatSend(0, "ERROR AT" + v);
@@ -758,11 +953,19 @@ void processFreeRelics(int count = 1) {
 					xSetInt(db, xRelicName, xGetInt(dFreeRelics, xRelicName));
 					xSetInt(db, xRelicType, xGetInt(dFreeRelics, xRelicType));
 					*/
+					trUnitSelectClear();
+					xUnitSelect(dFreeRelics, xSFX);
+					trUnitChangeProtoUnit("Rocket");
 					xAddDatabaseBlock(dHeldRelics, true);
 					xSetInt(dHeldRelics, xRelicName, 1*xGetInt(dFreeRelics, xRelicName));
 					xSetInt(dHeldRelics, xRelicValue, 1*xGetInt(dFreeRelics, xRelicValue));
 					xSetInt(dHeldRelics, xSFX, 1*xGetInt(dFreeRelics, xSFX));
-					xSetInt(dHeldRelics, xRelicTick, (trTimeMS()+50));
+					if(xGetInt(dFreeRelics, xRelicValue) < 30){
+						xSetInt(dHeldRelics, xRelicTick, (trTimeMS()+50));
+					}
+					else{
+						xSetInt(dHeldRelics, xRelicTick, 1*xGetInt(dFreeRelics, xRelicTick));
+					}
 					if(xGetInt(dFreeRelics, xRelicValue) == RELIC_URANIUM){
 						xSetInt(dHeldRelics, xRelicDamage, URANIUM_DAMAGE);
 					}
@@ -920,11 +1123,24 @@ void processHeldRelics(int count = 1) {
 				xSetInt(dHeldRelics, xRelicTick,(trTimeMS()+50));
 			}
 		}
-		if(xGetInt(dHeldRelics, xRelicValue) >= RELIC_RELIGION){
+		if((xGetInt(dHeldRelics, xRelicValue) >= RELIC_RELIGION) && (xGetInt(dHeldRelics, xRelicValue) <= RELIC_SHIP)){
 			ColouredChatToPlayer(dropper, RelicColour(xGetInt(dHeldRelics, xRelicValue)), relicName(xGetInt(dHeldRelics, xRelicValue)) + " sold!");
 			xSetPointer(dPlayerData, dropper);
 			xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)+1*relicCost(1*xGetInt(dHeldRelics, xRelicValue)));
 			xSetInt(dPlayerData, xGoldStart, xGetInt(dPlayerData, xGoldStart)+1*relicCost(1*xGetInt(dHeldRelics, xRelicValue)));
+			trUnitSelectClear();
+			xUnitSelect(dHeldRelics, xSFX);
+			trUnitChangeProtoUnit("Olympus Temple SFX");
+			trUnitSelectClear();
+			xUnitSelect(dHeldRelics, xRelicName);
+			trUnitChangeProtoUnit("Osiris Box Glow");
+			xFreeDatabaseBlock(dHeldRelics);
+			playSoundCustom("\cinematics\13_in\jerrygarcia.mp3", "\cinematics\13_in\jerrygarcia.mp3");
+		}
+		if(xGetInt(dHeldRelics, xRelicValue) == RELIC_FUEL){
+			ColouredChatToPlayer(dropper, RelicColour(xGetInt(dHeldRelics, xRelicValue)), ""+xGetInt(dHeldRelics, xRelicTick)+"L fuel picked up!");
+			xSetPointer(dPlayerData, dropper);
+			xSetFloat(dPlayerData, xFuel, xGetFloat(dPlayerData, xFuel)+xGetInt(dHeldRelics, xRelicTick));
 			trUnitSelectClear();
 			xUnitSelect(dHeldRelics, xSFX);
 			trUnitChangeProtoUnit("Olympus Temple SFX");
@@ -1272,10 +1488,6 @@ highFrequency
 		}
 	}
 	if(Stage == 10){
-		//TEMPORARY UNTIL FUEL ECONOMY REDONE
-		for(p=1; < cNumberNonGaiaPlayers) {
-			trVectorSetUnitPos("P"+p+"Pos", "P"+p+"Siphon");
-		}
 		/*trChatHistoryClear();
 		trChatSend(0, "Trap count = " + xGetDatabaseCount(dTrap));
 		xSetPointer(dTrap, xGetDatabaseCount(dTrap));
