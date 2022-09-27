@@ -1686,7 +1686,7 @@ highFrequency
 						}
 					}
 				}
-				int ExtraThule = 0;
+				//EXTRA THULE STUFF
 				for(p = 1; < cNumberNonGaiaPlayers){
 					xSetPointer(dPlayerData, p);
 					if(xGetInt(dPlayerData, xDrillLevel) >= 6){
@@ -1709,10 +1709,6 @@ highFrequency
 							}
 						}
 					}
-				}
-				if(ExtraThule == 1){
-					// THULE EXTRA STUFF
-					trChatSend(0, "Extra");
 				}
 			}
 			if(Stage == 2){
@@ -2116,22 +2112,16 @@ highFrequency
 	xsEnableRule("SecretRelics");
 }
 
-rule SecretRelics
-inactive
-highFrequency
-{
+void ExtraRelic(int colmin = 1, int colmax = 25, int rowmin = 1, int rowmax = 20, int value = 1, int number = 1, int extra = 0){
+	int relicsplaced = 0;
 	int col = 0;
 	int row = 0;
-	int temp = 0;
-	int relicsplaced = 0;
-	int relictarget = 1;
-	int ABORT = 0;
 	vector v = vector(0,0,0);
-	if(Stage == 1){
-		//void this up
-	while (relicsplaced != relictarget) {
-		trQuestVarSetFromRand("TempCol",1,25,true);
-		trQuestVarSetFromRand("TempRow",1,6,true);
+	int temp = 0;
+	int ABORT = 0;
+	while (relicsplaced != number) {
+		trQuestVarSetFromRand("TempCol",colmin,colmax,true);
+		trQuestVarSetFromRand("TempRow",rowmin,rowmax,true);
 		col = 1*trQuestVarGet("TempCol");
 		row = 1*trQuestVarGet("TempRow");
 		v = xsVectorSet(col*8-4,0,row*8-4);
@@ -2148,7 +2138,15 @@ highFrequency
 			trUnitSelectClear();
 			trUnitSelect(""+temp);
 			trUnitChangeProtoUnit("Rocket");
-			spawnRelicSpecific(v, 27);
+			if(value <= 30){
+				spawnRelicSpecific(v, value);
+			}
+			if(value == 31){
+				spawnFuelRelic(v, extra);
+			}
+			if(value == 32){
+				spawnHullRelic(v, extra);
+			}
 			//trChatSend(0, "Placed at R"+row+" C"+col+"");
 			relicsplaced = relicsplaced+1;
 		}
@@ -2156,11 +2154,223 @@ highFrequency
 			//trChatSend(0, "ABORT");
 			break;
 		}
+	}
+}
+
+rule SecretRelics
+inactive
+highFrequency
+{
+	if(Stage == 1){
+		trQuestVarSetFromRand("Temp", 1, 5, true);
+		if(1*trQuestVarGet("Temp") < 3){
+			ExtraRelic(6,19,1,10,27,1*trQuestVarGet("Temp"));
+		}
+		trQuestVarSetFromRand("Temp", 1, 47, true);
+		if(1*trQuestVarGet("Temp") == 1){
+			ExtraRelic(6,19,3,16,28,1);
+		}
+		for(p = 1; < cNumberNonGaiaPlayers){
+			xSetPointer(dPlayerData, p);
+			if(xGetInt(dPlayerData, xDrillLevel) >= 6){
+				//for every extra
+				trQuestVarSetFromRand("Temp", 1, 5, true);
+				if(1*trQuestVarGet("Temp") == 1){
+					ExtraRelic(1,5,1,10,30,1);
+				}
+				if(1*trQuestVarGet("Temp") == 2){
+					trQuestVarSetFromRand("Temp2", 1, 5, true);
+					ExtraRelic(1,5,1,10,32,1,50*trQuestVarGet("Temp2"));
+				}
+			}
+			else{
+				//for every normal
+				trQuestVarSetFromRand("Temp", 1, 2, true);
+				if(1*trQuestVarGet("Temp") == 1){
+					trQuestVarSetFromRand("Temp2", 1, 4, true);
+					ExtraRelic(6,19,10,18,31,1,50*trQuestVarGet("Temp2"));
+				}
+			}
+		}
+	}
+	if(Stage == 2){
+		trQuestVarSetFromRand("Temp", 1, 5, true);
+		if(1*trQuestVarGet("Temp") < 3){
+			ExtraRelic(1,25,5,15,27,1*trQuestVarGet("Temp"));
+		}
+		trQuestVarSetFromRand("Temp", 1, 47, true);
+		if(1*trQuestVarGet("Temp") == 1){
+			ExtraRelic(6,19,3,13,28,1);
+		}
+		for(p = 1; < cNumberNonGaiaPlayers){
+			xSetPointer(dPlayerData, p);
+			if(xGetInt(dPlayerData, xDrillLevel) >= 6){
+				//for every extra
+				trQuestVarSetFromRand("Temp", 1, 5, true);
+				if(1*trQuestVarGet("Temp") == 1){
+					ExtraRelic(1,25,1,3,30,1);
+				}
+			}
+			else{
+				//for every normal
+				trQuestVarSetFromRand("Temp", 1, 2, true);
+				if(1*trQuestVarGet("Temp") == 1){
+					trQuestVarSetFromRand("Temp2", 1, 4, true);
+					ExtraRelic(1,25,9,16,31,1,50*trQuestVarGet("Temp2"));
+				}
+			}
+		}
+	}
+	if(Stage == 3){
+		trQuestVarSetFromRand("Temp", 1, 5, true);
+		if(1*trQuestVarGet("Temp") < 3){
+			ExtraRelic(1,25,5,15,27,1*trQuestVarGet("Temp"));
+		}
+		trQuestVarSetFromRand("Temp", 1, 20, true);
+		if(1*trQuestVarGet("Temp") == 1){
+			ExtraRelic(6,19,3,13,28,1);
+		}
+		for(p = 1; < cNumberNonGaiaPlayers){
+			xSetPointer(dPlayerData, p);
+			if(xGetInt(dPlayerData, xDrillLevel) >= 6){
+				//for every extra
+				trQuestVarSetFromRand("Temp", 1, 5, true);
+				if(1*trQuestVarGet("Temp") == 1){
+					ExtraRelic(1,25,1,3,30,1);
+				}
+			}
+			else{
+				//for every normal
+				trQuestVarSetFromRand("Temp", 1, 3, true);
+				if(1*trQuestVarGet("Temp") == 1){
+					trQuestVarSetFromRand("Temp2", 1, 4, true);
+					ExtraRelic(1,25,3,13,31,1,100*trQuestVarGet("Temp2"));
+				}
+			}
+		}
+	}
+	if(Stage == 4){
+		trQuestVarSetFromRand("Temp", 1, 5, true);
+		if(1*trQuestVarGet("Temp") < 3){
+			ExtraRelic(1,25,5,15,27,1*trQuestVarGet("Temp"));
+		}
+		trQuestVarSetFromRand("Temp", 1, 5, true);
+		if(1*trQuestVarGet("Temp") < 2){
+			ExtraRelic(6,19,3,13,28,1*trQuestVarGet("Temp"));
+		}
+		for(p = 1; < cNumberNonGaiaPlayers){
+			xSetPointer(dPlayerData, p);
+			if(xGetInt(dPlayerData, xDrillLevel) >= 6){
+				//for every extra
+				trQuestVarSetFromRand("Temp", 1, 5, true);
+				if(1*trQuestVarGet("Temp") == 1){
+					ExtraRelic(1,25,1,3,30,1);
+				}
+			}
+			else{
+				//for every normal
+				trQuestVarSetFromRand("Temp", 1, 3, true);
+				if(1*trQuestVarGet("Temp") == 1){
+					trQuestVarSetFromRand("Temp2", 1, 4, true);
+					ExtraRelic(1,25,5,9,31,1,100*trQuestVarGet("Temp2"));
+				}
+			}
+		}
+	}
+	if(Stage == 5){
+		trQuestVarSetFromRand("Temp", 1, 5, true);
+		if(1*trQuestVarGet("Temp") < 3){
+			ExtraRelic(1,25,5,15,28,1*trQuestVarGet("Temp"));
+		}
+		trQuestVarSetFromRand("Temp", 1, 47, true);
+		if(1*trQuestVarGet("Temp") == 1){
+			ExtraRelic(6,19,3,13,29,1);
+		}
+		for(p = 1; < cNumberNonGaiaPlayers){
+			//for every normal
+			trQuestVarSetFromRand("Temp", 1, 3, true);
+			if(1*trQuestVarGet("Temp") == 1){
+				trQuestVarSetFromRand("Temp2", 1, 4, true);
+				ExtraRelic(1,25,10,16,31,1,100*trQuestVarGet("Temp2"));
+			}
+		}
+	}
+	if(Stage == 6){
+		trQuestVarSetFromRand("Temp", 1, 5, true);
+		if(1*trQuestVarGet("Temp") < 3){
+			ExtraRelic(1,25,3,15,28,1*trQuestVarGet("Temp"));
+		}
+		trQuestVarSetFromRand("Temp", 1, 47, true);
+		if(1*trQuestVarGet("Temp") == 1){
+			ExtraRelic(6,19,3,13,29,1);
+		}
+		if(1*trQuestVarGet("Temp") == 2){
+			ExtraRelic(6,19,1,6,30,1);
+		}
+		for(p = 1; < cNumberNonGaiaPlayers){
+			//for every normal
+			trQuestVarSetFromRand("Temp", 1, 3, true);
+			if(1*trQuestVarGet("Temp") == 1){
+				trQuestVarSetFromRand("Temp2", 1, 4, true);
+				ExtraRelic(1,25,10,16,31,1,100*trQuestVarGet("Temp2"));
+			}
+			if(1*trQuestVarGet("Temp") != 2){
+				trQuestVarSetFromRand("Temp2", 1, 10, true);
+				ExtraRelic(1,25,10,16,32,1,25*trQuestVarGet("Temp2"));
+			}
+		}
+	}
+	if(Stage == 7){
+		trQuestVarSetFromRand("Temp", 1, 5, true);
+		if(1*trQuestVarGet("Temp") < 3){
+			ExtraRelic(1,25,3,15,28,1*trQuestVarGet("Temp"));
+		}
+		trQuestVarSetFromRand("Temp", 1, 20, true);
+		if(1*trQuestVarGet("Temp") == 1){
+			ExtraRelic(6,19,3,13,29,1);
+		}
+		if(1*trQuestVarGet("Temp") == 2){
+			ExtraRelic(6,19,1,6,30,1);
+		}
+		for(p = 1; < cNumberNonGaiaPlayers){
+			//for every normal
+			trQuestVarSetFromRand("Temp", 1, 4, true);
+			if(1*trQuestVarGet("Temp") == 1){
+				trQuestVarSetFromRand("Temp2", 1, 10, true);
+				ExtraRelic(1,25,10,16,31,1,75*trQuestVarGet("Temp2"));
+			}
+			if(1*trQuestVarGet("Temp") != 2){
+				trQuestVarSetFromRand("Temp2", 1, 40, true);
+				ExtraRelic(1,25,10,16,32,1,25*trQuestVarGet("Temp2"));
+			}
+		}
+	}
+	if(Stage == 8){
+		trQuestVarSetFromRand("Temp", 1, 5, true);
+		if(1*trQuestVarGet("Temp") < 3){
+			ExtraRelic(1,25,5,15,29,1*trQuestVarGet("Temp"));
+		}
+		trQuestVarSetFromRand("Temp", 1, 10, true);
+		if(1*trQuestVarGet("Temp") == 1){
+			ExtraRelic(6,19,3,13,29,1);
+		}
+		if(1*trQuestVarGet("Temp") == 2){
+			ExtraRelic(6,19,1,6,30,1);
+		}
+		for(p = 1; < cNumberNonGaiaPlayers){
+			//for every normal
+			trQuestVarSetFromRand("Temp", 1, 4, true);
+			if(1*trQuestVarGet("Temp") != 1){
+				trQuestVarSetFromRand("Temp2", 1, 10, true);
+				ExtraRelic(1,25,10,16,31,1,50*trQuestVarGet("Temp2"));
+			}
+			if(1*trQuestVarGet("Temp") == 2){
+				trQuestVarSetFromRand("Temp2", 1, 20, true);
+				ExtraRelic(1,25,10,16,32,1,50*trQuestVarGet("Temp2"));
+			}
 		}
 	}
 	xsDisableSelf();
-	// DELETE THIS //BUG
-	trModifyProtounit("Hero Greek Atalanta", 1, 2, 1000);
 	xsEnableRule("WallUp");
 }
 

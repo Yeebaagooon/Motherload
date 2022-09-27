@@ -305,6 +305,7 @@ highFrequency
 		trUnitSelectByQV("MrNatas");
 		trUnitOverrideAnimation(25,0,false,false,-1,0);
 		playSound("cinematics\23_out\music 1.mp3");
+		playSoundCustom("waterfallloop.wav");
 	}
 }
 

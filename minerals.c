@@ -1146,7 +1146,7 @@ void processHeldRelics(int count = 1) {
 					trQuestVarSet("P"+p+"Invoice", 1*trQuestVarGet("P"+p+"Invoice") + 1*relicCost(1*xGetInt(dHeldRelics, xRelicValue)));
 					if (trCurrentPlayer() == dropper) {
 						//trChatSend(0, relicName(xGetInt(dHeldRelics, xRelicValue)) + " sold!");
-						trSoundPlayFN("favordump.wav","1",-1,"","");
+						playSoundCustom("tributereceived.wav", "\Yeebaagooon\Motherload\Sell.mp3");
 					}
 					GSeller = dropper;
 					trQuestVarModify("P"+dropper+"R"+1*xGetInt(dHeldRelics, xRelicValue)+"", "+", 1);
@@ -1187,7 +1187,7 @@ void processHeldRelics(int count = 1) {
 			trUnitChangeProtoUnit("Osiris Box Glow");
 			xFreeDatabaseBlock(dHeldRelics);
 			if (trCurrentPlayer() == dropper) {
-				playSoundCustom("\cinematics\13_in\jerrygarcia.mp3", "\cinematics\13_in\jerrygarcia.mp3");
+				playSoundCustom("plentybirth.wav", "\Yeebaagooon\Motherload\SellExtra.mp3");
 			}
 		}
 		if(xGetInt(dHeldRelics, xRelicValue) == RELIC_FUEL){
@@ -1203,7 +1203,7 @@ void processHeldRelics(int count = 1) {
 			xFreeDatabaseBlock(dHeldRelics);
 			spyEffect(1*trQuestVarGet("P"+dropper+"Siphon"), kbGetProtoUnitID("Mountain Giant"), vector(0,0,0), vector(0,0,0), 18);
 			if (trCurrentPlayer() == dropper) {
-				playSoundCustom("\cinematics\13_in\jerrygarcia.mp3", "\cinematics\13_in\jerrygarcia.mp3");
+				playSoundCustom("suckup1.wav", "\Yeebaagooon\Motherload\Refuel.mp3");
 			}
 		}
 		if(xGetInt(dHeldRelics, xRelicValue) == RELIC_HULL){
@@ -1221,7 +1221,7 @@ void processHeldRelics(int count = 1) {
 			xFreeDatabaseBlock(dHeldRelics);
 			spyEffect(1*trQuestVarGet("P"+dropper+"Siphon"), kbGetProtoUnitID("White Tiger"), vector(0,0,0), vector(0,0,0), 18);
 			if (trCurrentPlayer() == dropper) {
-				playSoundCustom("\cinematics\13_in\jerrygarcia.mp3", "\cinematics\13_in\jerrygarcia.mp3");
+				playSoundCustom("roll.wav", "\Yeebaagooon\Motherload\Repair.mp3");
 			}
 		}
 		if(Stage == 10){

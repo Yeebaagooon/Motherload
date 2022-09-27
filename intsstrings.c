@@ -8,7 +8,6 @@ Search //VERSION OVERRIDE HERE for release to rewrite all data
 --TO DO--
 -Trap stage
 -Bonuses
--Super relics (skeleton etc)
 -Nick said something recently in SD about linking mousewheel to camera
 */
 

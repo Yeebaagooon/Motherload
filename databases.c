@@ -238,8 +238,11 @@ highFrequency
 						trUnitOverrideAnimation(anim, 0, false, false, -1, 0);
 					}
 					if (aiPlanSetUserVariableInt(1*xsVectorGetX(dest),1*xsVectorGetY(dest),1*xsVectorGetZ(dest),spysearch) == false) {
-						//Zeno uses a vector as unit ID in an array
-						//debugLog("spy error N/A: " + 1*xsVectorGetX(dest) + "," + 1*xsVectorGetY(dest) + "," + 1*xsVectorGetZ(dest));
+						/*trUnitSelectClear();
+						xAddDatabaseBlock(dDestroyMe, true);
+						xSetInt(dDestroyMe, xDestroyName, id);
+						xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+5000);
+						debugLog("Added to destroy DB");*/
 					}
 				}
 			}

@@ -127,10 +127,10 @@ highFrequency
 		unitTransform("Outpost", "Rocket");
 		trSetFogAndBlackmap(true, true);
 		xsEnableRule("BonusGo");
-		spawnFuelRelic(vector(10,3,190), 1250);
+		/*spawnFuelRelic(vector(10,3,190), 1250);
 		spawnFuelRelic(vector(10,3,185), 125);
 		spawnHullRelic(vector(70,3,190), 250);
-		spawnHullRelic(vector(70,3,185), 500);
+		spawnHullRelic(vector(70,3,185), 500);*/
 		if(Stage != 10){
 			trDelayedRuleActivation("FuelEconomy");
 		}
@@ -402,6 +402,9 @@ void FuelBuy(int p = 0){
 				else if (xGetInt(dPlayerData, xFuelCountdown) == 1){
 					if(Stage == 1){
 						ColouredChatToPlayer(p, "0,1,0", "Refuel complete.");
+						if(trCurrentPlayer() == p){
+							playSoundCustom("suckup1.wav", "\Yeebaagooon\Motherload\Refuel.mp3");
+						}
 						xSetFloat(dPlayerData, xFuel, xGetInt(dPlayerData, xFuelTank));
 						xSetInt(dPlayerData, xFuelCountdown, 0);
 						spyEffect(1*trQuestVarGet("P"+p+"Siphon"), kbGetProtoUnitID("Mountain Giant"), vector(0,0,0), vector(0,0,0), 18);
@@ -422,6 +425,9 @@ void FuelBuy(int p = 0){
 							}
 						}
 						ColouredChatToPlayer(p, "0,1,0", "Refuel complete.");
+						if(trCurrentPlayer() == p){
+							playSoundCustom("suckup1.wav", "\Yeebaagooon\Motherload\Refuel.mp3");
+						}
 						spyEffect(1*trQuestVarGet("P"+p+"Siphon"), kbGetProtoUnitID("Mountain Giant"), vector(0,0,0), vector(0,0,0), 18);
 						if(xGetFloat(dPlayerData, xFuel) > xGetInt(dPlayerData,xFuelTank)){
 							xSetFloat(dPlayerData, xFuel, xGetInt(dPlayerData, xFuelTank));
@@ -453,6 +459,9 @@ highFrequency
 						}
 						else{
 							ColouredChatToPlayer(p, "1,0,0", "You do not have enough gold to buy this item!");
+							if(trCurrentPlayer() == p){
+								playSoundCustom("cantdothat.wav");
+							}
 						}
 					}
 					if((trVectorQuestVarGetX("P"+p+"Pos") > Shop2XMin*2) && (trVectorQuestVarGetX("P"+p+"Pos") < Shop2XMax*2)){
@@ -471,6 +480,9 @@ highFrequency
 						}
 						else{
 							ColouredChatToPlayer(p, "1,0,0", "You do not have enough gold to buy this item!");
+							if(trCurrentPlayer() == p){
+								playSoundCustom("cantdothat.wav");
+							}
 						}
 					}
 					if((trVectorQuestVarGetX("P"+p+"Pos") > Shop3XMin*2) && (trVectorQuestVarGetX("P"+p+"Pos") < Shop3XMax*2)){
@@ -489,6 +501,9 @@ highFrequency
 							trUnitSelectByQV("P"+p+"Siphon");
 							if(trUnitPercentDamaged() != 0){
 								ColouredChatToPlayer(p, "1,0.5,0", "250hp hull repaired.");
+								if(trCurrentPlayer() == p){
+									playSoundCustom("roll.wav", "\Yeebaagooon\Motherload\Repair.mp3");
+								}
 								spyEffect(1*trQuestVarGet("P"+p+"Siphon"), kbGetProtoUnitID("White Tiger"), vector(0,0,0), vector(0,0,0), 18);
 								xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*Shop4Cost);
 								if(xGetInt(dPlayerData, xHullSpend) < 4700){
@@ -508,10 +523,16 @@ highFrequency
 							}
 							else{
 								ColouredChatToPlayer(p, "1,0,0", "You are at full health.");
+								if(trCurrentPlayer() == p){
+									playSoundCustom("cantdothat.wav");
+								}
 							}
 						}
 						else{
 							ColouredChatToPlayer(p, "1,0,0", "You do not have enough gold to buy this item!");
+							if(trCurrentPlayer() == p){
+								playSoundCustom("cantdothat.wav");
+							}
 						}
 					}
 					if((trVectorQuestVarGetX("P"+p+"Pos") > Hull1XMin*2) && (trVectorQuestVarGetX("P"+p+"Pos") < 200)){
@@ -521,6 +542,9 @@ highFrequency
 								trUnitSelectByQV("P"+p+"Siphon");
 								if(trUnitPercentDamaged() != 0){
 									ColouredChatToPlayer(p, "1,0.5,0", ""+250*GetHullShop(trVectorQuestVarGetX("P"+p+"Pos"))+"" + " hp hull repaired.");
+									if(trCurrentPlayer() == p){
+										playSoundCustom("roll.wav", "\Yeebaagooon\Motherload\Repair.mp3");
+									}
 									spyEffect(1*trQuestVarGet("P"+p+"Siphon"), kbGetProtoUnitID("White Tiger"), vector(0,0,0), vector(0,0,0), 18);
 									xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*HullCost*GetHullShop(trVectorQuestVarGetX("P"+p+"Pos")));
 									if(xGetInt(dPlayerData, xHullSpend) < 4700){
