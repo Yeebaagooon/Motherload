@@ -13,9 +13,9 @@ Search //VERSION OVERRIDE HERE for release to rewrite all data
 
 
 //---Test controls
-int QuickStart = 1;
-int QuickStage = 2;
-bool OverrideSP = true;
+int QuickStart = 0;
+int QuickStage = 1;
+bool OverrideSP = false;
 bool OverrideStage = false;
 string displayz = "lol";
 

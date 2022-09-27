@@ -1630,11 +1630,209 @@ highFrequency
 		trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1, 171,3,124, 0, true);
 		trUnitSelectClear();
 		trUnitSelect(""+temp);
-		//WHY DOESNT THIS UNIT WORK?
 		trUnitChangeProtoUnit("Wall Connector");
 		trUnitSelectClear();
 		trUnitSelect(""+temp);
 		trUnitTeleport(171,3,124);
+		
+		//TRAP 2
+		trPaintTerrain(80,56,80,59,0,73,false);
+		xAddDatabaseBlock(dTrap);
+		xSetPointer(dTrap, xGetDatabaseCount(dTrap));
+		xSetInt(dTrap, xTrapXMin, 80*2);
+		xSetInt(dTrap, xTrapXMax, 80*2+2);
+		xSetInt(dTrap, xTrapZMin, 56*2);
+		xSetInt(dTrap, xTrapZMax, 59*2+2);
+		xSetInt(dTrap, xTrapType, 2);
+		xSetBool(dTrap, xTrapOn, true);
+		xSetBool(dTrap, xTrapReady, true);
+		xSetInt(dTrap, xTrapReset, 20000);
+		xSetVector(dTrap, xTrapStartVector, vector(151,3,124));
+		//Direction
+		xSetVector(dTrap, xTrapTargetVector, vector(0,0,-16));
+		xSetInt(dTrap, xTrapUnit, 1*trGetNextUnitScenarioNameNumber());
+		temp = trGetNextUnitScenarioNameNumber();
+		trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1, 151,3,124, 0, true);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitChangeProtoUnit("Lampades");
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trSetSelectedScale(0,0,0);
+		temp = trGetNextUnitScenarioNameNumber();
+		trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1, 151,3,124, 0, true);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitChangeProtoUnit("Wall Connector");
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitTeleport(151,3,124);
+		
+		//TRAP 2
+		trPaintTerrain(70,56,70,59,0,73,false);
+		xAddDatabaseBlock(dTrap);
+		xSetPointer(dTrap, xGetDatabaseCount(dTrap));
+		xSetInt(dTrap, xTrapXMin, 70*2);
+		xSetInt(dTrap, xTrapXMax, 70*2+2);
+		xSetInt(dTrap, xTrapZMin, 56*2);
+		xSetInt(dTrap, xTrapZMax, 59*2+2);
+		xSetInt(dTrap, xTrapType, 2);
+		xSetBool(dTrap, xTrapOn, true);
+		xSetBool(dTrap, xTrapReady, true);
+		xSetInt(dTrap, xTrapReset, 20000);
+		xSetVector(dTrap, xTrapStartVector, vector(131,3,108));
+		//Direction
+		xSetVector(dTrap, xTrapTargetVector, vector(0,0,16));
+		xSetInt(dTrap, xTrapUnit, 1*trGetNextUnitScenarioNameNumber());
+		temp = trGetNextUnitScenarioNameNumber();
+		trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1, 131,3,108, 0, true);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitChangeProtoUnit("Lampades");
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trSetSelectedScale(0,0,0);
+		temp = trGetNextUnitScenarioNameNumber();
+		trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1, 131,3,108, 0, true);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitChangeProtoUnit("Wall Connector");
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitTeleport(131,3,108);
+		
+		//TRAP 2
+		trPaintTerrain(60,56,60,59,0,73,false);
+		xAddDatabaseBlock(dTrap);
+		xSetPointer(dTrap, xGetDatabaseCount(dTrap));
+		xSetInt(dTrap, xTrapXMin, 60*2);
+		xSetInt(dTrap, xTrapXMax, 60*2+2);
+		xSetInt(dTrap, xTrapZMin, 56*2);
+		xSetInt(dTrap, xTrapZMax, 59*2+2);
+		xSetInt(dTrap, xTrapType, 2);
+		xSetBool(dTrap, xTrapOn, true);
+		xSetBool(dTrap, xTrapReady, true);
+		xSetInt(dTrap, xTrapReset, 20000);
+		xSetVector(dTrap, xTrapStartVector, vector(131,3,124));
+		//Direction
+		xSetVector(dTrap, xTrapTargetVector, vector(0,0,-16));
+		xSetInt(dTrap, xTrapUnit, 1*trGetNextUnitScenarioNameNumber());
+		temp = trGetNextUnitScenarioNameNumber();
+		trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1, 131,3,124, 0, true);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitChangeProtoUnit("Lampades");
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trSetSelectedScale(0,0,0);
+		temp = trGetNextUnitScenarioNameNumber();
+		trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1, 131,3,124, 0, true);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitChangeProtoUnit("Wall Connector");
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitTeleport(131,3,124);
+		
+		//TRAP 2
+		trPaintTerrain(53,56,54,57,0,73,false);
+		xAddDatabaseBlock(dTrap);
+		xSetPointer(dTrap, xGetDatabaseCount(dTrap));
+		xSetInt(dTrap, xTrapXMin, 53*2);
+		xSetInt(dTrap, xTrapXMax, 54*2+2);
+		xSetInt(dTrap, xTrapZMin, 56*2);
+		xSetInt(dTrap, xTrapZMax, 57*2+2);
+		xSetInt(dTrap, xTrapType, 2);
+		xSetBool(dTrap, xTrapOn, true);
+		xSetBool(dTrap, xTrapReady, true);
+		xSetInt(dTrap, xTrapReset, 20000);
+		xSetVector(dTrap, xTrapStartVector, vector(101,3,114));
+		//Direction
+		xSetVector(dTrap, xTrapTargetVector, vector(-100,0,0));
+		xSetInt(dTrap, xTrapUnit, 1*trGetNextUnitScenarioNameNumber());
+		temp = trGetNextUnitScenarioNameNumber();
+		trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1, 101,3,114, 0, true);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitChangeProtoUnit("Lampades");
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trSetSelectedScale(0,0,0);
+		temp = trGetNextUnitScenarioNameNumber();
+		trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1, 101,3,114, 0, true);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitChangeProtoUnit("Wall Connector");
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitTeleport(101,3,114);
+		
+		//Trap 1
+		trPaintTerrain(50,56,50,59,0,73,false);
+		xAddDatabaseBlock(dTrap);
+		xSetPointer(dTrap, xGetDatabaseCount(dTrap));
+		xSetInt(dTrap, xTrapXMin, 50*2);
+		xSetInt(dTrap, xTrapXMax, 50*2+2);
+		xSetInt(dTrap, xTrapZMin, 56*2);
+		xSetInt(dTrap, xTrapZMax, 59*2+2);
+		xSetInt(dTrap, xTrapType, 1);
+		xSetBool(dTrap, xTrapOn, true);
+		xSetBool(dTrap, xTrapReady, true);
+		xSetInt(dTrap, xTrapReset, 5000);
+		xSetInt(dTrap, xTrapUnit, 1*trGetNextUnitScenarioNameNumber());
+		xSetVector(dTrap, xTrapHitVector, xsVectorSet(115,3,117));
+		xSetInt(dTrap, xTrapHitboxX, 4);
+		xSetInt(dTrap, xTrapHitboxZ, 4);
+		temp = trGetNextUnitScenarioNameNumber();
+		trArmyDispatch("0,0", "Dwarf", 1, 115,3,117, 0, true);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitChangeProtoUnit("Spy Eye");
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trMutateSelected(kbGetProtoUnitID("Tartarian Gate"));
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trSetSelectedScale(0.5,-0.5,0.5);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitOverrideAnimation(2,0,true,true,-1,-1);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitSetAnimationPath("0,0,1,1,0,0");
+		
+		//TRAP 2
+		trPaintTerrain(23,58,24,59,0,73,false);
+		xAddDatabaseBlock(dTrap);
+		xSetPointer(dTrap, xGetDatabaseCount(dTrap));
+		xSetInt(dTrap, xTrapXMin, 23*2);
+		xSetInt(dTrap, xTrapXMax, 24*2+2);
+		xSetInt(dTrap, xTrapZMin, 58*2);
+		xSetInt(dTrap, xTrapZMax, 59*2+2);
+		xSetInt(dTrap, xTrapType, 2);
+		xSetBool(dTrap, xTrapOn, true);
+		xSetBool(dTrap, xTrapReady, true);
+		xSetInt(dTrap, xTrapReset, 20000);
+		xSetVector(dTrap, xTrapStartVector, vector(21,3,118));
+		//Direction
+		xSetVector(dTrap, xTrapTargetVector, vector(167,0,0));
+		xSetInt(dTrap, xTrapUnit, 1*trGetNextUnitScenarioNameNumber());
+		temp = trGetNextUnitScenarioNameNumber();
+		trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1, 21,3,118, 0, true);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitChangeProtoUnit("Lampades");
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trSetSelectedScale(0,0,0);
+		temp = trGetNextUnitScenarioNameNumber();
+		trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1, 21,3,118, 0, true);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitChangeProtoUnit("Wall Connector");
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitTeleport(21,3,118);
 	}
 	xsEnableRule("Ragnorok");
 	xsDisableSelf();
@@ -2082,6 +2280,9 @@ highFrequency
 					trQuestVarSet("HullR"+row+"C"+col+"", 1*trQuestVarGet("TEMPRELIC"));
 				}
 				if((row == 18) && (col == 1)){
+					spawnFuelRelic(v,100);
+				}
+				if((row == 15) && (col == 25)){
 					spawnFuelRelic(v,100);
 				}
 				if(row == 17){

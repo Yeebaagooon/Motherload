@@ -241,11 +241,11 @@ highFrequency
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
 		}
 		if(Stage == 9){
-			StageTime = StageTime+1200; //600
+			StageTime = StageTime+1000; //600
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
 		}
 		if(Stage == 10){
-			StageTime = StageTime+1200; //540
+			StageTime = StageTime+600; //540
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
 		}
 		xsDisableSelf();
@@ -460,7 +460,7 @@ highFrequency
 						else{
 							ColouredChatToPlayer(p, "1,0,0", "You do not have enough gold to buy this item!");
 							if(trCurrentPlayer() == p){
-								playSoundCustom("cantdothat.wav");
+								playSoundCustom("cantdothat.wav", "cantdothat.wav");
 							}
 						}
 					}
@@ -481,7 +481,7 @@ highFrequency
 						else{
 							ColouredChatToPlayer(p, "1,0,0", "You do not have enough gold to buy this item!");
 							if(trCurrentPlayer() == p){
-								playSoundCustom("cantdothat.wav");
+								playSoundCustom("cantdothat.wav", "cantdothat.wav");
 							}
 						}
 					}
@@ -524,14 +524,14 @@ highFrequency
 							else{
 								ColouredChatToPlayer(p, "1,0,0", "You are at full health.");
 								if(trCurrentPlayer() == p){
-									playSoundCustom("cantdothat.wav");
+									playSoundCustom("cantdothat.wav", "cantdothat.wav");
 								}
 							}
 						}
 						else{
 							ColouredChatToPlayer(p, "1,0,0", "You do not have enough gold to buy this item!");
 							if(trCurrentPlayer() == p){
-								playSoundCustom("cantdothat.wav");
+								playSoundCustom("cantdothat.wav", "cantdothat.wav");
 							}
 						}
 					}
@@ -564,6 +564,9 @@ highFrequency
 								}
 								else{
 									ColouredChatToPlayer(p, "1,0,0", "You are at full health.");
+									if(trCurrentPlayer() == p){
+										playSoundCustom("cantdothat.wav", "cantdothat.wav");
+									}
 								}
 							}
 							else{
@@ -802,3 +805,61 @@ highFrequency
 	}
 }
 
+/*
+//HELP - trigtemp a chat contains
+rule Helpers
+inactive
+highFrequency
+{
+	for(p=1; < cNumberNonGaiaPlayers) {
+		if(((trChatHistoryContains("help", p) == true) || ((trChatHistoryContains("instruct", p) == true) || ((trChatHistoryContains("how", p) == true) || ((trChatHistoryContains("what do", p) == true)){
+							if(xGetInt(dPlayerData, xStageUnlocked) < 3){
+								trChatHistoryClear();
+								if(aiIsMultiplayer() == true){
+									ColouredChat("1,0.5,0", "To mine the ground, place your cursor over an area of land.");
+									ColouredChat("1,0.5,0", "This must also be next to your fire siphon (no diagonals).");
+									ColouredChat("1,0.5,0", "Then press 'Q' to drill that square.");
+									ColouredChat("1,0.5,0", "Gather minerals and return them to the surface to sell them.");
+									ColouredChat("1,0.5,0", "You can carry x minerals at once.");
+									ColouredChat("1,0.5,0", "Use your profit to upgrade your stats in singleplayer.");
+								}
+								else{
+									ColouredChat("1,0.5,0", "Click an obelisk and you will be asked if you wish to upgrade.");
+									ColouredChat("1,0.5,0", "Remember to garrison in the underworld passage to save.");
+								}
+							}
+						}
+						
+						//CONDITION,PROGRESS
+						Lists conditions
+						
+						//UPGRADE,LEVEL,IMPROVE
+						if((trChatHistoryContains("help", p) || (trChatHistoryContains("instruct", p) || (trChatHistoryContains("how", p) || (trChatHistoryContains("what do", p)){
+											ColouredChat("1,0.5,0", "Use your profit to upgrade your stats in singleplayer.");
+											ColouredChat("1,0.5,0", "Just start this map from the singleplayer menu.");
+											ColouredChat("1,0.5,0", "(Singleplayer - Random map - Motherload)");
+										}
+										
+										//UPGRADE IN SP
+										
+										
+										//CONTROLS
+										//UPGRADE,LEVEL,IMPROVE
+										if((trChatHistoryContains("control", p) || (trChatHistoryContains("hotkey", p)){
+													ColouredChat("1,0.5,0", "Q - Drill to cursor");
+													ColouredChat("1,0.5,0", "W - Depends");
+													ColouredChat("1,0.5,0", "E - Emergency surface teleport");
+													ColouredChat("1,0.5,0", "R - Use backup fuel tank");
+													ColouredChat("1,0.5,0", "A - Activates antimatter bomb");
+													ColouredChat("1,0.5,0", "L - Activates mining laser (cursor)");
+												}
+												
+												//REPAIR
+												ColouredChat("1,0.5,0", "Go to the hull shop in the top right corner of the map to repair your ship.");
+												
+												//FUEL
+												ColouredChat("1,0.5,0", "To refuel, go to the fuel shop in the top right corner of the map.");
+												*/
+											}
+										}
+										/*

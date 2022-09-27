@@ -14,6 +14,7 @@ highFrequency
 					trOverlayText("Emergency surface teleport!", 4, -1,-1,-1);
 					uiZoomToProto("Hero Greek Atalanta");
 					trCameraCut(vector(107.841461,153.803818,55.919525), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
+					playSoundCustom("vortexstart.wav");
 				}
 			}
 		}

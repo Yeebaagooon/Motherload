@@ -862,8 +862,11 @@ void spawnRelicSpecific(vector v = vector (0,0,0), int val = 1){
 		if(val == RELIC_QUARTZ){
 			trUnitSelectByQV("TempRelicSFX");
 			trUnitChangeProtoUnit("Spy Eye");
+			trUnitSelectClear();
 			trUnitSelectByQV("TempRelicSFX");
 			trMutateSelected(kbGetProtoUnitID("Arkantosman"));
+			trUnitSelectClear();
+			trUnitSelectByQV("TempRelicSFX");
 			trSetSelectedScale(0,0,0);
 		}
 		if(val == RELIC_OPAL){

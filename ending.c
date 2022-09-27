@@ -242,10 +242,10 @@ highFrequency
 		for(x = 1; < cNumberNonGaiaPlayers){
 			if(1*trQuestVarGet("P"+p+"Place") == x){
 				if(x == 1){
-					trChatSend(0, "<color={PlayerColor("+p+")}><icon=(20)(icons/star)> Profit: "+1*trQuestVarGet("P"+p+"Profit")+"");
+					trChatSend(0, "<color={PlayerColor("+p+")}><icon=(20)(icons/star)> {Playername("+p+")} - "+1*trQuestVarGet("P"+p+"Profit")+"");
 				}
 				else{
-					trChatSend(0, "<color={PlayerColor("+p+")}>Profit: "+1*trQuestVarGet("P"+p+"Profit")+"");
+					trChatSend(0, "<color={PlayerColor("+p+")}>{Playername("+p+")} - "+1*trQuestVarGet("P"+p+"Profit")+"");
 				}
 			}
 		}

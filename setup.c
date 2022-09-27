@@ -883,6 +883,12 @@ highFrequency
 	ambientColor(0,0,0);
 	terrainAmbient(0,0,0);
 	trSoundPlayDialog("default", "1", -1, false, " : ", "");
+	trSetUnitIdleProcessing(false);
+	gadgetUnreal("ScoreDisplay");
+	gadgetUnreal("GodPowers");
+	gadgetUnreal("tributedlg-sendButton");
+	gadgetUnreal("tributedlg-clearButton");
+	trSetObscuredUnits(false);
 	xsDisableSelf();
 }
 
