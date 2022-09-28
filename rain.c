@@ -931,7 +931,7 @@ minInterval 2
 				
 			}
 		}
-		if((trChatHistoryContains("progression", p) == true) || (trChatHistoryContains("goal", p) == true) || (trChatHistoryContains("objective", p) == true) || (trChatHistoryContains("unlock", p) == true)){
+		if((trChatHistoryContains("progress", p) == true) || (trChatHistoryContains("goal", p) == true) || (trChatHistoryContains("objective", p) == true) || (trChatHistoryContains("unlock", p) == true)){
 			if(xGetInt(dPlayerData, xStageUnlocked) > Stage-1){
 				trChatHistoryClear();
 				ColouredChat("1,0.5,0", "You have already unlocked the next stage.");
@@ -967,6 +967,63 @@ minInterval 2
 					}
 					if((xGetInt(dPlayerData, xStageStatus) == 1) && (xGetInt(dPlayerData, xDrillLevel) < 2)){
 						trChatSend(0, "Once this game has ended you can unlock the next planet directly in singleplayer!");
+					}
+				}
+				if(Stage == 3){
+					ColouredChat("1,0.5,0", "<u>To win this planet:</u>");
+					if(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart) < 25){
+						ColouredIconChat("1,0,0", "cursors\cursor_no", "Make 25 profit ["+(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart))+"]");
+					}
+					if(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart) >= 25){
+						ColouredIconChat("0,1,0", "icons\star", "Make 25 profit ["+(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart))+"]");
+					}
+					if(xGetInt(dPlayerData, xHullLevel) < 3){
+						ColouredIconChat("1,0,0", "cursors\cursor_no", "Upgrade hull to level 3 (in singleplayer)");
+					}
+					if(xGetInt(dPlayerData, xHullLevel) >= 3){
+						ColouredIconChat("0,1,0", "icons\star", "Upgrade hull to level 3");
+					}
+					if((xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart) >= 25) && (xGetInt(dPlayerData, xDrillLevel) < 3)){
+						trChatSend(0, "Once this game has ended you can unlock the next planet directly in singleplayer!");
+					}
+				}
+				if(Stage == 4){
+					ColouredChat("1,0.5,0", "<u>To win this planet:</u>");
+					if(xGetInt(dPlayerData, xDrillLevel) < 3){
+						ColouredIconChat("1,0,0", "cursors\cursor_no", "Upgrade drill to level 3 <color=1,1,1>["+xGetInt(dPlayerData, xDrillLevel)+"]");
+					}
+					if(xGetInt(dPlayerData, xDrillLevel) >= 3){
+						ColouredIconChat("0,1,0", "icons\star", "Upgrade drill to level 3");
+					}
+					if(xGetInt(dPlayerData, xHullLevel) < 3){
+						ColouredIconChat("1,0,0", "cursors\cursor_no", "Upgrade hull to level 3 <color=1,1,1>["+xGetInt(dPlayerData, xHullLevel)+"]");
+					}
+					if(xGetInt(dPlayerData, xHullLevel) >= 3){
+						ColouredIconChat("0,1,0", "icons\star", "Upgrade hull to level 3");
+					}
+					if(xGetInt(dPlayerData, xFuelLevel) < 3){
+						ColouredIconChat("1,0,0", "cursors\cursor_no", "Upgrade fuel tank to level 3 <color=1,1,1>["+xGetInt(dPlayerData, xFuelLevel)+"]");
+					}
+					if(xGetInt(dPlayerData, xFuelLevel) >= 3){
+						ColouredIconChat("0,1,0", "icons\star", "Upgrade fuel tank to level 3");
+					}
+					if(xGetInt(dPlayerData, xCargoLevel) < 3){
+						ColouredIconChat("1,0,0", "cursors\cursor_no", "Upgrade cargo hold to level 3 <color=1,1,1>["+xGetInt(dPlayerData, xCargoLevel)+"]");
+					}
+					if(xGetInt(dPlayerData, xCargoLevel) >= 3){
+						ColouredIconChat("0,1,0", "icons\star", "Upgrade cargo hold to level 3");
+					}
+					if(xGetInt(dPlayerData, xEngineLevel) < 3){
+						ColouredIconChat("1,0,0", "cursors\cursor_no", "Upgrade engine to level 3 <color=1,1,1>["+xGetInt(dPlayerData, xEngineLevel)+"]");
+					}
+					if(xGetInt(dPlayerData, xEngineLevel) >= 3){
+						ColouredIconChat("0,1,0", "icons\star", "Upgrade engine to level 3");
+					}
+					if(xGetInt(dPlayerData, xRadiatorLevel) < 3){
+						ColouredIconChat("1,0,0", "cursors\cursor_no", "Upgrade radiator to level 3 <color=1,1,1>["+xGetInt(dPlayerData, xRadiatorLevel)+"]");
+					}
+					if(xGetInt(dPlayerData, xRadiatorLevel) >= 3){
+						ColouredIconChat("0,1,0", "icons\star", "Upgrade radiator to level 3");
 					}
 				}
 			}

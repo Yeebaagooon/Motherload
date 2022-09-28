@@ -906,7 +906,7 @@ highFrequency
 		if(OverrideStage == true){
 			xSetPointer(dPlayerData, 1);
 			xSetInt(dPlayerData, xStageStatus, 0);
-			xSetInt(dPlayerData, xStageUnlocked, 1);
+			xSetInt(dPlayerData, xStageUnlocked, 3);
 			saveAllData();
 		}
 		xsDisableSelf();
