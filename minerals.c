@@ -1373,11 +1373,14 @@ highFrequency
 	}
 	trChatSendToPlayer(0, GSeller, "<color=1,0.5,0>--------------------</color>");
 	if(xGetInt(dPlayerData, xStageUnlocked) == Stage-1){
-		if(CurrentProfit < goal){
+		if((CurrentProfit < goal) && (goal != 0)){
 			trChatSendToPlayer(0, GSeller, first + 1*trQuestVarGet("P"+GSeller+"Invoice") + seco + colred + CurrentProfit + outof + goal);
 		}
-		else{
+		else if((CurrentProfit >= goal) && (goal != 0)){
 			trChatSendToPlayer(0, GSeller, first + 1*trQuestVarGet("P"+GSeller+"Invoice") + seco + colgrn + CurrentProfit + outof + goal);
+		}
+		else if(goal == 0){
+			trChatSendToPlayer(0, GSeller, first + 1*trQuestVarGet("P"+GSeller+"Invoice") + seco + CurrentProfit);
 		}
 	}
 	else{

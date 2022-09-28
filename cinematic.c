@@ -159,6 +159,7 @@ highFrequency
 {
 	if((trTime()-cActivationTime) >= 2){
 		xsDisableSelf();
+		playSound("cinematics\22_out\music (wussy mix).mp3");
 		xsEnableRule("Cine_07");
 		characterDialog(" ", " ", " ");
 		trUIFadeToColor(255,255,255,1000,1,false);
@@ -196,7 +197,6 @@ highFrequency
 		xsDisableSelf();
 		characterDialog("Yeebaagooon", "Behold, the nine planets in this system.", "icons\special e son of osiris icon 64");
 		xsEnableRule("Cine_08");
-		playSound("cinematics\22_out\music (wussy mix).mp3");
 	}
 }
 
@@ -290,6 +290,7 @@ highFrequency
 		addCameraTrackWaypoint();
 		playCameraTrack();
 		xsEnableRule("Cine_12");
+		playSoundCustom("waterfallloop.wav");
 	}
 }
 
@@ -305,7 +306,6 @@ highFrequency
 		trUnitSelectByQV("MrNatas");
 		trUnitOverrideAnimation(25,0,false,false,-1,0);
 		playSound("cinematics\23_out\music 1.mp3");
-		playSoundCustom("waterfallloop.wav");
 	}
 }
 

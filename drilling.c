@@ -3,6 +3,7 @@ inactive
 highFrequency
 {
 	for(p = 1; <= cNumberNonGaiaPlayers){
+		int count = 0;
 		if(trCheckGPActive("Rain", p)){
 			if(trTime() > 1*trQuestVarGet("P"+p+"RainTime")){
 				trUnitSelectClear();
@@ -16,6 +17,13 @@ highFrequency
 					trCameraCut(vector(107.841461,153.803818,55.919525), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
 					playSoundCustom("vortexstart.wav");
 				}
+				count = 0;
+				for(x=0; < 4) {
+					if(trGetGPData(1,0,x) == 156){
+						count = count + trGetGPData(1,1,x);
+					}
+				}
+				ColouredChatToPlayer(p, "1,0.5,0", "Emergency teleports remaining - <color=1,1,1>"+count+"");
 			}
 		}
 	}
@@ -26,6 +34,7 @@ inactive
 highFrequency
 {
 	for(p = 1; <= cNumberNonGaiaPlayers){
+		int count = 0;
 		if(trCheckGPActive("Ragnorok", p)){
 			if(trTime() > 1*trQuestVarGet("P"+p+"RagnorokTime")){
 				xSetPointer(dPlayerData, p);
@@ -38,6 +47,13 @@ highFrequency
 				if(trCurrentPlayer() == p){
 					trOverlayText("Backup fuel tank used!", 4, -1,-1,-1);
 				}
+				count = 0;
+				for(x=0; < 4) {
+					if(trGetGPData(1,0,x) == 234){
+						count = count + trGetGPData(1,1,x);
+					}
+				}
+				ColouredChatToPlayer(p, "1,0.5,0", "Backup fuel tanks remaining - <color=1,1,1>"+count+"");
 			}
 		}
 	}
@@ -48,6 +64,7 @@ inactive
 highFrequency
 {
 	for(p = 1; <= cNumberNonGaiaPlayers){
+		int count = 0;
 		if (trPlayerUnitCountSpecific(p, "Audrey") == 1) {
 			yFindLatestReverse("p"+p+"DragonObject", "Audrey", p);
 			trVectorSetUnitPos("BombVector"+p+"", "p"+p+"DragonObject", true);
@@ -88,6 +105,15 @@ highFrequency
 				if(Row-startRow == 0){
 					if(trCurrentPlayer() == p){
 						playSoundCustom("earthdragonbirth.wav", "earthdragonbirth.wav");
+					}
+					count = 0;
+					for(x=0; < 4) {
+						if(trGetGPData(1,0,x) == 407){
+							count = count + trGetGPData(1,1,x);
+						}
+					}
+					if(count == 0){
+						trChatSendToPlayer(0, p, "<color=1,0,0>You have no dynamite remaining.</color>");
 					}
 					if((Col-startCol) == 1){
 						MineSquare(Row, Col);
@@ -449,6 +475,7 @@ inactive
 highFrequency
 {
 	for(p = 1; <= cNumberNonGaiaPlayers){
+		int count = 0;
 		if (trPlayerUnitCountSpecific(p, "Audrey") == 1) {
 			yFindLatestReverse("p"+p+"DragonObject", "Audrey", p);
 			trVectorSetUnitPos("BombVector"+p+"", "p"+p+"DragonObject", true);
@@ -513,6 +540,15 @@ highFrequency
 					RemoveBlack(Row-2, Col);
 					RemoveBlack(Row-2, Col-1);
 					RemoveBlack(Row-2, Col-2);
+				}
+				count = 0;
+				for(x=0; < 4) {
+					if(trGetGPData(1,0,x) == 407){
+						count = count + trGetGPData(1,1,x);
+					}
+				}
+				if(count == 0){
+					trChatSendToPlayer(0, p, "<color=1,0,0>You have no more heavy explosives left.</color>");
 				}
 				int temp = trGetNextUnitScenarioNameNumber();
 				trArmyDispatch("0,0","Dwarf",1,trVectorQuestVarGetX("P"+p+"Pos"),0,trVectorQuestVarGetZ("P"+p+"Pos"),0,true);
@@ -1068,6 +1104,11 @@ void UngarrisonDrill(int p = 1){
 		playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
 		trCounterAbort("CDSTage");
 		StageTime = 30+trTime();
-		trCounterAddTime("CDSTage", 30, 0, "<color={PlayerColor(1)}>Time remaining", -1);
+		if(cNumberNonGaiaPlayers >= 3){
+			trCounterAddTime("CDSTage", 30, 0, "<color={PlayerColor(3)}>Time remaining", -1);
+		}
+		else{
+			trCounterAddTime("CDSTage", 30, 0, "<color={PlayerColor(0)}>Time remaining", -1);
+		}
 	}
 }

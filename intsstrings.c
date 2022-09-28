@@ -9,13 +9,14 @@ Search //VERSION OVERRIDE HERE for release to rewrite all data
 -Trap stage
 -Bonuses
 -Nick said something recently in SD about linking mousewheel to camera
+-Continue helper goals
 */
 
 
 //---Test controls
 int QuickStart = 0;
-int QuickStage = 1;
-bool OverrideSP = false;
+int QuickStage = 6;
+bool OverrideSP = true;
 bool OverrideStage = false;
 string displayz = "lol";
 

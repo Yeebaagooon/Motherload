@@ -648,6 +648,7 @@ highFrequency
 	xSetInt(dSelectables, xSelectablesPrompt, 600);
 	xsEnableRule("Selectables");
 	xsEnableRule("SPLoops");
+	xsEnableRule("ChatHelpers");
 	
 	//SET Flags names
 	trQuestVarSet("UnitFlag1", UnitFlag1);
@@ -739,8 +740,8 @@ highFrequency
 	if((xGetInt(dPlayerData, xStageUnlocked) == 3) && (xGetInt(dPlayerData, xStageStatus) == 1)){
 		xsEnableRule("SPUnlock5");
 	}
-	if((xGetInt(dPlayerData, xStageUnlocked) == 4) && (xGetInt(dPlayerData, xStageStatus) == 1)){
-		xsEnableRule("SPUnlock6");
+	if((xGetInt(dPlayerData, xStageUnlocked) == 5) && (xGetInt(dPlayerData, xStageStatus) == 1)){
+		xsEnableRule("SPUnlock7");
 	}
 	
 	if(1*trQuestVarGet("CineStatus") == 0){
@@ -904,7 +905,8 @@ highFrequency
 	if((trTime()-cActivationTime) >= 1){
 		if(OverrideStage == true){
 			xSetPointer(dPlayerData, 1);
-			xSetInt(dPlayerData, xBonus+19, 0);
+			xSetInt(dPlayerData, xStageStatus, 0);
+			xSetInt(dPlayerData, xStageUnlocked, 1);
 			saveAllData();
 		}
 		xsDisableSelf();
@@ -922,6 +924,13 @@ highFrequency
 		xSetInt(dPlayerData, xStageUnlocked, xGetInt(dPlayerData, xStageUnlocked) + 1);
 		xSetInt(dPlayerData, xStageStatus, 0);
 		trShowImageDialog(stageIcon(3), "Next planet unlocked - " + stageName(3));
+		for(x=xGetDatabaseCount(dObelisks); >0) {
+			xDatabaseNext(dObelisks);
+			if(xGetInt(dObelisks, xObeliskStage) == 3){
+				xUnitSelect(dObelisks, xObeliskName);
+				trUnitSetAnimationPath("0,0,0,0,0");
+			}
+		}
 		xsDisableSelf();
 	}
 }
@@ -935,6 +944,13 @@ highFrequency
 		xSetInt(dPlayerData, xStageUnlocked, xGetInt(dPlayerData, xStageUnlocked) + 1);
 		xSetInt(dPlayerData, xStageStatus, 0);
 		trShowImageDialog(stageIcon(4), "Next planet unlocked - " + stageName(4));
+		for(x=xGetDatabaseCount(dObelisks); >0) {
+			xDatabaseNext(dObelisks);
+			if(xGetInt(dObelisks, xObeliskStage) == 4){
+				xUnitSelect(dObelisks, xObeliskName);
+				trUnitSetAnimationPath("0,0,0,0,0");
+			}
+		}
 		xsDisableSelf();
 	}
 }
@@ -948,11 +964,18 @@ highFrequency
 		xSetInt(dPlayerData, xStageUnlocked, xGetInt(dPlayerData, xStageUnlocked) + 1);
 		xSetInt(dPlayerData, xStageStatus, 0);
 		trShowImageDialog(stageIcon(5), "Next planet unlocked - " + stageName(5));
+		for(x=xGetDatabaseCount(dObelisks); >0) {
+			xDatabaseNext(dObelisks);
+			if(xGetInt(dObelisks, xObeliskStage) == 5){
+				xUnitSelect(dObelisks, xObeliskName);
+				trUnitSetAnimationPath("0,0,0,0,0");
+			}
+		}
 		xsDisableSelf();
 	}
 }
 
-rule SPUnlock6
+rule SPUnlock7
 inactive
 highFrequency
 {
@@ -960,7 +983,14 @@ highFrequency
 	if(xGetInt(dPlayerData, xDrillLevel) >= 5){
 		xSetInt(dPlayerData, xStageUnlocked, xGetInt(dPlayerData, xStageUnlocked) + 1);
 		xSetInt(dPlayerData, xStageStatus, 0);
-		trShowImageDialog(stageIcon(5), "Next planet unlocked - " + stageName(5));
+		trShowImageDialog(stageIcon(7), "Next planet unlocked - " + stageName(7));
+		for(x=xGetDatabaseCount(dObelisks); >0) {
+			xDatabaseNext(dObelisks);
+			if(xGetInt(dObelisks, xObeliskStage) == 7){
+				xUnitSelect(dObelisks, xObeliskName);
+				trUnitSetAnimationPath("0,0,0,0,0");
+			}
+		}
 		xsDisableSelf();
 	}
 }

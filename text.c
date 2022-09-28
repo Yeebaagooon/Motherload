@@ -551,6 +551,9 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				case 1:
 				{
 					uiMessageBox("The last of the gas giants!");
+					if(xGetInt(dPlayerData, xStageUnlocked) >= 9){
+						dialog = 0;
+					}
 				}
 				case 2:
 				{
@@ -575,6 +578,9 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				case 1:
 				{
 					uiMessageBox("It sure is chilly here!");
+					if(xGetInt(dPlayerData, xStageUnlocked) >= 9){
+						dialog = 0;
+					}
 				}
 				case 2:
 				{
