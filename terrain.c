@@ -1889,11 +1889,27 @@ highFrequency
 		}
 		xSetVector(dTrap, xTrapTargetVector, xsVectorSet(1*trGetNextUnitScenarioNameNumber()-xGetInt(dTrap, xTrapUnit),0,0));
 		
-		Trap3Horizontal(12, 16, 12, 9, 9, 43, 43, 7000);
+		Trap3Horizontal(12, 16, 12, 2, 2, 42, 42, 15000);
 		//TRAPS in first big room
-		Trap3Horizontal(12, 16, 20, 9, 9, 40, 40, 5000);
-		Trap3Horizontal(16, 20, 16, 7, 7, 40, 40, 5000);
-		Trap3Vertical(8, 20, 24, 6, 6, 38, 38, 5000);
+		//Trap3Horizontal(12, 16, 20, 9, 9, 40, 40, 5000);
+		//2 below are traps for bottom right corner
+		Trap3Horizontal(16, 20, 16, 18, 18, 42, 42, 15000);
+		Trap3Vertical(16, 12, 16, 18, 18, 42, 42, 15000);
+		//Trap3Vertical(8, 20, 24, 6, 6, 38, 38, 5000);
+		//2 below are traps for top right corner
+		Trap3Horizontal(16, 20, 40, 2, 2, 14, 14, 15000);
+		Trap3Vertical(16, 40, 44, 2, 2, 14, 14, 15000);
+		//2 below are traps for top left corner
+		Trap3Horizontal(0, 4, 40, 18, 18, 14, 14, 15000);
+		Trap3Vertical(4, 40, 44, 18, 18, 14, 14, 15000);
+		//2 below are traps for bottom left corner
+		Trap3Horizontal(0, 4, 16, 18, 18, 26, 26, 15000);
+		Trap3Vertical(4, 12, 16, 18, 18, 26, 26, 15000);
+		
+		Trap4Horizontal(4, 8, 40, 6, 6, 42, 42, 5000);
+		Trap4Vertical(8, 12, 16, 10, 10, 20, 20, 5000);
+		Trap4Horizontal(12, 16, 16, 2, 2, 42, 42, 12500);
+		Trap4Vertical(12, 12, 16, 2, 2, 42, 42, 12500);
 	}
 	xsEnableRule("Ragnorok");
 	xsDisableSelf();
