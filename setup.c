@@ -890,6 +890,53 @@ highFrequency
 	gadgetUnreal("tributedlg-clearButton");
 	trSetObscuredUnits(false);
 	xsDisableSelf();
+	//SPACE
+	/*for(n=1 ; <= 150){
+		trQuestVarSetFromRand("TempX", 30, 200, false);
+		trQuestVarSetFromRand("TempZ", 85, 120, false);
+		trQuestVarSet("TempUnit", trGetNextUnitScenarioNameNumber());
+		trArmyDispatch("0,0", "Victory Marker", 1, 1*trQuestVarGet("TempX"),0,1*trQuestVarGet("TempZ"),0,false);
+		trUnitSelectByQV("TempUnit");
+		trUnitChangeProtoUnit("Armor Glow Small");
+		xAddDatabaseBlock(dSpace, true);
+		xSetInt(dSpace, xSpaceName,1*trQuestVarGet("TempUnit"));
+	}
+	for(n=1 ; <= 20){
+		trQuestVarSetFromRand("TempX", 30, 200, false);
+		trQuestVarSetFromRand("TempZ", 85, 120, false);
+		trQuestVarSet("TempUnit", trGetNextUnitScenarioNameNumber());
+		trArmyDispatch("1,0", "Victory Marker", 1, 1*trQuestVarGet("TempX"),0,1*trQuestVarGet("TempZ"),0,false);
+		trUnitSelectByQV("TempUnit");
+		trUnitChangeProtoUnit("Relic");
+		trUnitSelectByQV("TempUnit");
+		trSetSelectedScale(0,0,0);
+		xAddDatabaseBlock(dSpace, true);
+		xSetInt(dSpace, xSpaceName,1*trQuestVarGet("TempUnit"));
+	}
+	for(n=1 ; <= 20){
+		trQuestVarSetFromRand("TempX", 30, 200, false);
+		trQuestVarSetFromRand("TempZ", 85, 120, false);
+		trQuestVarSet("TempUnit", trGetNextUnitScenarioNameNumber());
+		trArmyDispatch("1,0", "Victory Marker", 1, 1*trQuestVarGet("TempX"),0,1*trQuestVarGet("TempZ"),0,false);
+		trUnitSelectByQV("TempUnit");
+		trUnitChangeProtoUnit("Lampades");
+		trUnitSelectByQV("TempUnit");
+		trSetSelectedScale(0,0,0);
+		xAddDatabaseBlock(dSpace, true);
+		xSetInt(dSpace, xSpaceName,1*trQuestVarGet("TempUnit"));
+	}*/
+	for(n=1 ; <= 30){
+		trQuestVarSetFromRand("TempX", 30, 200, false);
+		trQuestVarSetFromRand("TempZ", 65, 120, false);
+		trQuestVarSet("TempUnit", trGetNextUnitScenarioNameNumber());
+		trArmyDispatch("0,0", "Victory Marker", 1, 1*trQuestVarGet("TempX"),0,1*trQuestVarGet("TempZ"),0,false);
+		trUnitSelectByQV("TempUnit");
+		trUnitChangeProtoUnit("Plenty Vault");
+		trUnitSelectByQV("TempUnit");
+		trSetSelectedScale(0,0,0);
+		xAddDatabaseBlock(dSpace, true);
+		xSetInt(dSpace, xSpaceName,1*trQuestVarGet("TempUnit"));
+	}
 }
 
 rule LoadMP3
@@ -943,6 +990,21 @@ highFrequency
 		trLetterBox(false);
 		xsDisableSelf();
 		xsEnableRule("choose_stage");
+		for(x=xGetDatabaseCount(dSpace); >0) {
+			xDatabaseNext(dSpace);
+			xUnitSelect(dSpace,xSpaceName);
+			trUnitDestroy();
+		}
+		for(n=1 ; <= 150){
+			trQuestVarSetFromRand("TempX", 20, 200, false);
+			trQuestVarSetFromRand("TempZ", 20, 120, false);
+			trQuestVarSet("TempUnit", trGetNextUnitScenarioNameNumber());
+			trArmyDispatch("0,0", "Victory Marker", 1, 1*trQuestVarGet("TempX"),0,1*trQuestVarGet("TempZ"),0,false);
+			trUnitSelectByQV("TempUnit");
+			trUnitChangeProtoUnit("Armor Glow Small");
+			xAddDatabaseBlock(dSpace, true);
+			xSetInt(dSpace, xSpaceName,1*trQuestVarGet("TempUnit"));
+		}
 		trCameraCut(vector(97.212753,163.322815,-63.585068), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619730,0.784813), vector(0.999997,-0.000000,-0.002398));
 		if(trCurrentPlayer() == 1){
 			trCameraCut(vector(100.463554,153.803818,-59.088593), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
@@ -976,6 +1038,12 @@ highFrequency
 		trUnitSelectClear();
 		trUnitSelectByQV("StageSelector", true);
 		trUnitChangeProtoUnit("Rocket");
+		createCameraTrack(1000);
+		addCameraTrackWaypoint();
+		trCameraCut(vector(124.973885,29.843842,40.108543), vector(0.001394,-0.813647,0.581357), vector(0.001951,0.581358,0.813645), vector(0.999997,0.000000,-0.002398));
+		uiLookAtUnitByName(""+n);
+		addCameraTrackWaypoint();
+		playCameraTrack();
 		for(x=xGetDatabaseCount(dObelisks); >0) {
 			xDatabaseNext(dObelisks);
 			xUnitSelect(dObelisks,xObeliskName);
@@ -1019,10 +1087,11 @@ highFrequency
 		xsDisableSelf();
 		for(x=xGetDatabaseCount(dPlanetEyecandy); >0) {
 			xDatabaseNext(dPlanetEyecandy);
-			xUnitSelect(dPlanetEyecandy,xPlanetEyecandyName);
-			trUnitDestroy();
+			if(xGetInt(dPlanetEyecandy, xPlanetEyecandyStage) != Stage){
+				xUnitSelect(dPlanetEyecandy,xPlanetEyecandyName);
+				trUnitDestroy();
+			}
 		}
-		aiPlanDestroy(dPlanetEyecandy);
 		if(Stage != 10){
 			xsEnableRule("BasicVC1");
 			xsEnableRule("BasicVC2");

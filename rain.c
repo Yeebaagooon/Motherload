@@ -82,6 +82,13 @@ inactive
 highFrequency
 {
 	if((trTime()-cActivationTime) >= 1){
+		trCameraCut(vector(97.212753,163.322815,-63.585068), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619730,0.784813), vector(0.999997,-0.000000,-0.002398));
+		for(x=xGetDatabaseCount(dPlanetEyecandy); >0) {
+			xDatabaseNext(dPlanetEyecandy);
+			xUnitSelect(dPlanetEyecandy,xPlanetEyecandyName);
+			trUnitDestroy();
+		}
+		aiPlanDestroy(dPlanetEyecandy);
 		for(p = 1; < cNumberNonGaiaPlayers){
 			xSetPointer(dPlayerData, p);
 			//trQuestVarSet("P"+p+"RadiationResist", 1.00);
@@ -140,6 +147,11 @@ highFrequency
 		}
 		trMusicPlay();
 		trPlayNextMusicTrack();
+		for(x=xGetDatabaseCount(dSpace); >0) {
+			xDatabaseNext(dSpace);
+			xUnitSelect(dSpace,xSpaceName);
+			trUnitDestroy();
+		}
 	}
 }
 
@@ -1025,6 +1037,70 @@ minInterval 2
 					if(xGetInt(dPlayerData, xRadiatorLevel) >= 3){
 						ColouredIconChat("0,1,0", "icons\star", "Upgrade radiator to level 3");
 					}
+				}
+				if(Stage == 5){
+					ColouredChat("1,0.5,0", "<u>To win this planet:</u>");
+					if(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart) < 50){
+						ColouredIconChat("1,0,0", "cursors\cursor_no", "Make 50 profit ["+(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart))+"]");
+					}
+					if(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart) >= 50){
+						ColouredIconChat("0,1,0", "icons\star", "Make 50 profit ["+(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart))+"]");
+					}
+					if(xGetInt(dPlayerData, xStageStatus) == 0){
+						ColouredIconChat("1,0,0", "cursors\cursor_no", "Reach 2km depth");
+					}
+					if(xGetInt(dPlayerData, xStageStatus) == 1){
+						ColouredIconChat("0,1,0", "icons\star", "Reach 2km depth");
+					}
+				}
+				if(Stage == 6){
+					ColouredChat("1,0.5,0", "<u>To win this planet:</u>");
+					if(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart) < 200){
+						ColouredIconChat("1,0,0", "cursors\cursor_no", "Make 200 profit ["+(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart))+"]");
+					}
+					if(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart) >= 200){
+						ColouredIconChat("0,1,0", "icons\star", "Make 200 profit ["+(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart))+"]");
+					}
+					if(xGetInt(dPlayerData, xStageStatus) == 0){
+						ColouredIconChat("1,0,0", "cursors\cursor_no", "Sell a diamond");
+					}
+					if(xGetInt(dPlayerData, xStageStatus) == 1){
+						ColouredIconChat("0,1,0", "icons\star", "Sell a diamond");
+					}
+					if(xGetInt(dPlayerData, xDrillLevel) < 5){
+						ColouredIconChat("1,0,0", "cursors\cursor_no", "Upgrade drill to level 5 <color=1,1,1>["+xGetInt(dPlayerData, xDrillLevel)+"]");
+					}
+					if(xGetInt(dPlayerData, xDrillLevel) >= 5){
+						ColouredIconChat("0,1,0", "icons\star", "Upgrade drill to level 5");
+					}
+				}
+				if(Stage == 7){
+					ColouredChat("1,0.5,0", "<u>To win this planet:</u>");
+					if(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart) < 150){
+						ColouredIconChat("1,0,0", "cursors\cursor_no", "Make 150 profit ["+(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart))+"]");
+					}
+					if(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart) >= 150){
+						ColouredIconChat("0,1,0", "icons\star", "Make 150 profit ["+(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart))+"]");
+					}
+					if(xGetInt(dPlayerData, xStageStatus) == 0){
+						ColouredIconChat("1,0,0", "cursors\cursor_no", "Sell a lump of obsidian");
+					}
+					if(xGetInt(dPlayerData, xStageStatus) == 1){
+						ColouredIconChat("0,1,0", "icons\star", "Sell a lump of obsidian");
+					}
+				}
+				if(Stage == 8){
+					ColouredChat("1,0.5,0", "<u>To win this planet:</u>");
+					if(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart) < 350){
+						ColouredIconChat("1,0,0", "cursors\cursor_no", "Make 350 profit ["+(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart))+"]");
+					}
+					if(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart) >= 350){
+						ColouredIconChat("0,1,0", "icons\star", "Make 350 profit ["+(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart))+"]");
+					}
+				}
+				if(Stage == 9){
+					ColouredChat("1,0.5,0", "<u>To win this planet:</u>");
+					ColouredIconChat("1,0,0", "cursors\cursor_no", "Reach maximum depth");
 				}
 			}
 		}

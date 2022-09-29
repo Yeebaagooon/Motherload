@@ -1578,6 +1578,22 @@ highFrequency
 			xDatabaseNext(dTrap);
 			if((xGetBool(dTrap, xTrapOn) == true) && (xGetBool(dTrap, xTrapReady) == true) && (trTimeMS() > xGetInt(dTrap, xTrapReset))){
 				//Trap active, on, and ready
+				if(xGetInt(dTrap, xTrapType) == 3){
+					//Trap 1, if within square hitbox
+					for(p=1; < cNumberNonGaiaPlayers) {
+						if((trVectorQuestVarGetX("P"+p+"Pos") >= xsVectorGetX(xGetVector(dTrap, xTrapHitVector))-xGetInt(dTrap, xTrapHitboxX)) && (trVectorQuestVarGetX("P"+p+"Pos") < xsVectorGetX(xGetVector(dTrap, xTrapHitVector))+xGetInt(dTrap, xTrapHitboxX)) && (trVectorQuestVarGetZ("P"+p+"Pos") >= xsVectorGetZ(xGetVector(dTrap, xTrapHitVector))-xGetInt(dTrap, xTrapHitboxZ)) && (trVectorQuestVarGetZ("P"+p+"Pos") <= xsVectorGetZ(xGetVector(dTrap, xTrapHitVector))+xGetInt(dTrap, xTrapHitboxZ))){
+							/*
+							trQuestVarSet("timeSinceLastHeal", trTimeMS() - yGetVar("creeps","lastHealed")); // get time that has passed since we last checked this creep
+							trQuestVarSet("healAmount", trQuestVarGet("timeSinceLastHeal") * trQuestVarGet("P"+1*yGetVar("creeps",
+										"player")+"Regen")); // multiply the time by the heal per second
+							trDamageUnit(-0.001*trQuestVarGet("healAmount")); // heal the unit
+							ySetVar("creeps", "lastHealed", trTimeMS()); // set last healed time to current time
+							*/
+							trUnitSelectByQV("P"+p+"Siphon");
+							trDamageUnit(10);
+						}
+					}
+				}
 				for(p=1; < cNumberNonGaiaPlayers) {
 					if((trVectorQuestVarGetX("P"+p+"Pos") >= xGetInt(dTrap, xTrapXMin)) && (trVectorQuestVarGetX("P"+p+"Pos") < xGetInt(dTrap, xTrapXMax)) && (trVectorQuestVarGetZ("P"+p+"Pos") >= xGetInt(dTrap, xTrapZMin)) && (trVectorQuestVarGetZ("P"+p+"Pos") <= xGetInt(dTrap, xTrapZMax))){
 						//Trap activate
@@ -1601,6 +1617,15 @@ highFrequency
 							trUnitSelectClear();
 							trUnitSelect(""+1*xGetInt(dTrap, xTrapUnit)+"");
 							trUnitMoveToPoint(xsVectorGetX(xGetVector(dTrap, xTrapStartVector)+xGetVector(dTrap, xTrapTargetVector)),3,xsVectorGetZ(xGetVector(dTrap, xTrapStartVector)+xGetVector(dTrap, xTrapTargetVector)),-1,false);
+						}
+						//trap 3 active
+						if(xGetInt(dTrap, xTrapType) == 3){
+							playSoundCustom("crocsnap.wav");
+							for(t=1*xGetInt(dTrap, xTrapUnit) ; < 1*xGetInt(dTrap, xTrapUnit)+xsVectorGetX(xGetVector(dTrap, xTrapTargetVector))){
+								trUnitSelectClear();
+								trUnitSelect(""+t+"");
+								trUnitChangeProtoUnit("Cinematic Block");
+							}
 						}
 					}
 				}
@@ -1658,6 +1683,15 @@ highFrequency
 						trUnitSelectClear();
 						trUnitSelect(""+1*xGetInt(dTrap, xTrapUnit)+"");
 						trUnitTeleport(xsVectorGetX(xGetVector(dTrap, xTrapStartVector)),3,xsVectorGetZ(xGetVector(dTrap, xTrapStartVector)));
+					}
+				}
+				if(xGetInt(dTrap, xTrapType) == 3){
+					//Reset trap to ready
+					playSoundCustom("crocsnap.wav");
+					for(t=1*xGetInt(dTrap, xTrapUnit) ; < 1*xGetInt(dTrap, xTrapUnit)+xsVectorGetX(xGetVector(dTrap, xTrapTargetVector))){
+						trUnitSelectClear();
+						trUnitSelect(""+t+"");
+						trUnitChangeProtoUnit("Garrison Flag Sky Passage");
 					}
 				}
 			}

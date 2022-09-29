@@ -442,6 +442,18 @@ highFrequency
 					if((row >= 19) && (row <= 20)){
 						RockType(33);
 					}
+					else if((row == 14) && (col == 8)){
+						RockType(33);
+					}
+					else if((row == 14) && (col == 2)){
+						RockType(41);
+					}
+					else if((row == 14) && (col == 24)){
+						RockType(33);
+					}
+					else if((row == 14) && (col == 25)){
+						RockType(33);
+					}
 					else{
 						RockType(36);
 					}
@@ -1561,6 +1573,21 @@ highFrequency
 			xSetInt(dKey, xKeyUnitName, temp);
 			xSetInt(dKey, xKey, RELIC_KEY_CHINA);
 		}
+		Layout(13,1);
+		Layout(13,2);
+		Layout(12,2);
+		Layout(13,3);
+		Layout(13,4);
+		Layout(13,5);
+		Layout(16,6); //DELETE ME SHORTCUT LAYOUT
+		for(a=4; <=11){
+			for(b=1; <=5){
+				Layout(a,b);
+			}
+		}
+		Layout(3,4);
+		PaintSellTerrain(11,51);
+		GVectorSellPos = vector(27,3,97);
 		GVectorChinese = vector(188,3,126);
 		FloatingUnitAnimIdle("UI Range Indicator Chinese SFX", 188, 6.5, 126, 0, 1,1,1);
 		xAddDatabaseBlock(dKey, true);
@@ -1833,6 +1860,91 @@ highFrequency
 		trUnitSelectClear();
 		trUnitSelect(""+temp);
 		trUnitTeleport(21,3,118);
+		
+		//TRAP 3
+		trPaintTerrain(34,57,34,59,0,71,false);
+		//gate effect
+		xAddDatabaseBlock(dTrap);
+		xSetPointer(dTrap, xGetDatabaseCount(dTrap));
+		//pressure pad
+		trPaintTerrain(38,58,38,58,0,73,false);
+		xSetInt(dTrap, xTrapXMin, 38*2);
+		xSetInt(dTrap, xTrapXMax, 38*2+2);
+		xSetInt(dTrap, xTrapZMin, 58*2);
+		xSetInt(dTrap, xTrapZMax, 58*2+2);
+		xSetInt(dTrap, xTrapType, 3);
+		xSetBool(dTrap, xTrapOn, true);
+		xSetBool(dTrap, xTrapReady, true);
+		xSetInt(dTrap, xTrapReset, 7000);
+		xSetInt(dTrap, xTrapUnit, 1*trGetNextUnitScenarioNameNumber());
+		xSetVector(dTrap, xTrapHitVector, xsVectorSet(34*2+1,3,117));
+		xSetInt(dTrap, xTrapHitboxX, 1);
+		xSetInt(dTrap, xTrapHitboxZ, 3.5);
+		for(x = 0 ; < 5){
+			temp = trGetNextUnitScenarioNameNumber();
+			trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1, 34*2+1,3,112+x*2, 0, true);
+			trUnitSelectClear();
+			trUnitSelect(""+temp);
+			trUnitChangeProtoUnit("Garrison Flag Sky Passage");
+		}
+		xSetVector(dTrap, xTrapTargetVector, xsVectorSet(1*trGetNextUnitScenarioNameNumber()-xGetInt(dTrap, xTrapUnit),0,0));
+		
+		//TRAP 3 - the exit to first big room
+		trPaintTerrain(13,12,15,12,0,71,false);
+		//gate effect
+		xAddDatabaseBlock(dTrap);
+		xSetPointer(dTrap, xGetDatabaseCount(dTrap));
+		//pressure pad
+		trPaintTerrain(7,42,7,42,0,73,false);
+		xSetInt(dTrap, xTrapXMin, 7*2);
+		xSetInt(dTrap, xTrapXMax, 7*2+2);
+		xSetInt(dTrap, xTrapZMin, 42*2);
+		xSetInt(dTrap, xTrapZMax, 42*2+2);
+		xSetInt(dTrap, xTrapType, 3);
+		xSetBool(dTrap, xTrapOn, true);
+		xSetBool(dTrap, xTrapReady, true);
+		xSetInt(dTrap, xTrapReset, 7000);
+		xSetInt(dTrap, xTrapUnit, 1*trGetNextUnitScenarioNameNumber());
+		xSetVector(dTrap, xTrapHitVector, xsVectorSet(29,3,12*2+1));
+		xSetInt(dTrap, xTrapHitboxX, 3.5);
+		xSetInt(dTrap, xTrapHitboxZ, 1);
+		for(x = 0 ; < 5){
+			temp = trGetNextUnitScenarioNameNumber();
+			trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1, 25+x*2,3,12*2+1, 0, true);
+			trUnitSelectClear();
+			trUnitSelect(""+temp);
+			trUnitChangeProtoUnit("Garrison Flag Sky Passage");
+		}
+		xSetVector(dTrap, xTrapTargetVector, xsVectorSet(1*trGetNextUnitScenarioNameNumber()-xGetInt(dTrap, xTrapUnit),0,0));
+		//TRAPS in first big room
+		
+		trPaintTerrain(17,16,19,16,0,71,false);
+		//gate effect
+		xAddDatabaseBlock(dTrap);
+		xSetPointer(dTrap, xGetDatabaseCount(dTrap));
+		//pressure pad
+		trPaintTerrain(7,44,7,44,0,73,false);
+		xSetInt(dTrap, xTrapXMin, 7*2);
+		xSetInt(dTrap, xTrapXMax, 7*2+2);
+		xSetInt(dTrap, xTrapZMin, 44*2);
+		xSetInt(dTrap, xTrapZMax, 44*2+2);
+		xSetInt(dTrap, xTrapType, 3);
+		xSetBool(dTrap, xTrapOn, true);
+		xSetBool(dTrap, xTrapReady, true);
+		xSetInt(dTrap, xTrapReset, 10000);
+		xSetInt(dTrap, xTrapUnit, 1*trGetNextUnitScenarioNameNumber());
+		xSetVector(dTrap, xTrapHitVector, xsVectorSet(37,3,16*2+1)); //37 = 16*2+1 = 33, 33+4=37
+		xSetInt(dTrap, xTrapHitboxX, 4);
+		xSetInt(dTrap, xTrapHitboxZ, 1);
+		for(x = 0 ; < 5){
+			temp = trGetNextUnitScenarioNameNumber();
+			trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1, 33+x*2,3,16*2+1, 0, true);
+			trUnitSelectClear();
+			trUnitSelect(""+temp);
+			trUnitChangeProtoUnit("Garrison Flag Sky Passage");
+		}
+		xSetVector(dTrap, xTrapTargetVector, xsVectorSet(1*trGetNextUnitScenarioNameNumber()-xGetInt(dTrap, xTrapUnit),0,0));
+		
 	}
 	xsEnableRule("Ragnorok");
 	xsDisableSelf();
@@ -2285,6 +2397,15 @@ highFrequency
 				if((row == 15) && (col == 25)){
 					spawnFuelRelic(v,100);
 				}
+				if((row == 15) && (col == 1)){
+					spawnHullRelic(v,500);
+				}
+				if((row == 14) && (col == 24)){
+					spawnFuelRelic(v,800);
+				}
+				if((row == 14) && (col == 25)){
+					spawnRelicSpecific(v, 30);
+				}
 				if(row == 17){
 					if(iModulo(3, col) == 0){
 						if(1*trQuestVarGet("TEMPkey") == 0){
@@ -2294,7 +2415,7 @@ highFrequency
 							spawnRelicSpecific(v,22);
 						}
 						else {
-							spawnRelicSpecific(v,9);
+							spawnRelicSpecific(v,18);
 						}
 					}
 					/*else if((row >= 14) && (row <= 16)){
@@ -2306,6 +2427,9 @@ highFrequency
 							}
 						}
 					}*/
+				}
+				if((row == 14) && (col == 8)){
+					spawnRelicSpecific(v,20);
 				}
 			}
 		}

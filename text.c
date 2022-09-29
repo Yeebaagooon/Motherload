@@ -420,6 +420,8 @@ int npcDiag(int npc = 0, int dialog = 0) {
 					if(xGetInt(dPlayerData, xStageUnlocked) == 3){
 						uiMessageBox("To unlock the next planet - upgrade all ship components to at least level 3.");
 					}
+					trChatSend(0, "<color=1,1,1>Type 'goal' to see win conditions for the current planet you are on.</color>");
+					trChatSend(0, "<color=1,1,1>Type 'hotkey' to be reminded of available game controls.</color>");
 					dialog = 0;
 				}
 			}
