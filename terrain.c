@@ -1889,62 +1889,11 @@ highFrequency
 		}
 		xSetVector(dTrap, xTrapTargetVector, xsVectorSet(1*trGetNextUnitScenarioNameNumber()-xGetInt(dTrap, xTrapUnit),0,0));
 		
-		//TRAP 3 - the exit to first big room
-		trPaintTerrain(13,12,15,12,0,71,false);
-		//gate effect
-		xAddDatabaseBlock(dTrap);
-		xSetPointer(dTrap, xGetDatabaseCount(dTrap));
-		//pressure pad
-		trPaintTerrain(7,42,7,42,0,73,false);
-		xSetInt(dTrap, xTrapXMin, 7*2);
-		xSetInt(dTrap, xTrapXMax, 7*2+2);
-		xSetInt(dTrap, xTrapZMin, 42*2);
-		xSetInt(dTrap, xTrapZMax, 42*2+2);
-		xSetInt(dTrap, xTrapType, 3);
-		xSetBool(dTrap, xTrapOn, true);
-		xSetBool(dTrap, xTrapReady, true);
-		xSetInt(dTrap, xTrapReset, 7000);
-		xSetInt(dTrap, xTrapUnit, 1*trGetNextUnitScenarioNameNumber());
-		xSetVector(dTrap, xTrapHitVector, xsVectorSet(29,3,12*2+1));
-		xSetInt(dTrap, xTrapHitboxX, 3.5);
-		xSetInt(dTrap, xTrapHitboxZ, 1);
-		for(x = 0 ; < 5){
-			temp = trGetNextUnitScenarioNameNumber();
-			trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1, 25+x*2,3,12*2+1, 0, true);
-			trUnitSelectClear();
-			trUnitSelect(""+temp);
-			trUnitChangeProtoUnit("Garrison Flag Sky Passage");
-		}
-		xSetVector(dTrap, xTrapTargetVector, xsVectorSet(1*trGetNextUnitScenarioNameNumber()-xGetInt(dTrap, xTrapUnit),0,0));
+		Trap3Horizontal(12, 16, 12, 9, 9, 43, 43, 7000);
 		//TRAPS in first big room
-		
-		trPaintTerrain(17,16,19,16,0,71,false);
-		//gate effect
-		xAddDatabaseBlock(dTrap);
-		xSetPointer(dTrap, xGetDatabaseCount(dTrap));
-		//pressure pad
-		trPaintTerrain(7,44,7,44,0,73,false);
-		xSetInt(dTrap, xTrapXMin, 7*2);
-		xSetInt(dTrap, xTrapXMax, 7*2+2);
-		xSetInt(dTrap, xTrapZMin, 44*2);
-		xSetInt(dTrap, xTrapZMax, 44*2+2);
-		xSetInt(dTrap, xTrapType, 3);
-		xSetBool(dTrap, xTrapOn, true);
-		xSetBool(dTrap, xTrapReady, true);
-		xSetInt(dTrap, xTrapReset, 10000);
-		xSetInt(dTrap, xTrapUnit, 1*trGetNextUnitScenarioNameNumber());
-		xSetVector(dTrap, xTrapHitVector, xsVectorSet(37,3,16*2+1)); //37 = 16*2+1 = 33, 33+4=37
-		xSetInt(dTrap, xTrapHitboxX, 4);
-		xSetInt(dTrap, xTrapHitboxZ, 1);
-		for(x = 0 ; < 5){
-			temp = trGetNextUnitScenarioNameNumber();
-			trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1, 33+x*2,3,16*2+1, 0, true);
-			trUnitSelectClear();
-			trUnitSelect(""+temp);
-			trUnitChangeProtoUnit("Garrison Flag Sky Passage");
-		}
-		xSetVector(dTrap, xTrapTargetVector, xsVectorSet(1*trGetNextUnitScenarioNameNumber()-xGetInt(dTrap, xTrapUnit),0,0));
-		
+		Trap3Horizontal(12, 16, 20, 9, 9, 40, 40, 5000);
+		Trap3Horizontal(16, 20, 16, 7, 7, 40, 40, 5000);
+		Trap3Vertical(8, 20, 24, 6, 6, 38, 38, 5000);
 	}
 	xsEnableRule("Ragnorok");
 	xsDisableSelf();
