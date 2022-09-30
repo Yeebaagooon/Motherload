@@ -1620,7 +1620,7 @@ highFrequency
 						}
 						//trap 3 active
 						if(xGetInt(dTrap, xTrapType) == 3){
-							playSoundCustom("crocsnap.wav");
+							playSoundCustom("crocsnap.wav", "\Yeebaagooon\Motherload\Forcefield Down.wav");
 							for(t=1*xGetInt(dTrap, xTrapUnit) ; < 1*xGetInt(dTrap, xTrapUnit)+xsVectorGetX(xGetVector(dTrap, xTrapTargetVector))){
 								trUnitSelectClear();
 								trUnitSelect(""+t+"");
@@ -1629,7 +1629,7 @@ highFrequency
 						}
 						//trap 4 active
 						if(xGetInt(dTrap, xTrapType) == 4){
-							playSoundCustom("crocsnap.wav");
+							playSoundCustom("crocsnap.wav", "\Yeebaagooon\Motherload\Forcefield Up.wav");
 							for(t=1*xGetInt(dTrap, xTrapUnit) ; < 1*xGetInt(dTrap, xTrapUnit)+xsVectorGetX(xGetVector(dTrap, xTrapTargetVector))){
 								trUnitSelectClear();
 								trUnitSelect(""+t+"");
@@ -1712,7 +1712,7 @@ highFrequency
 				}
 				if(xGetInt(dTrap, xTrapType) == 3){
 					//Reset trap to ready
-					playSoundCustom("crocsnap.wav");
+					playSoundCustom("crocsnap.wav", "\Yeebaagooon\Motherload\Forcefield Up.wav");
 					for(t=1*xGetInt(dTrap, xTrapUnit) ; < 1*xGetInt(dTrap, xTrapUnit)+xsVectorGetX(xGetVector(dTrap, xTrapTargetVector))){
 						trUnitSelectClear();
 						trUnitSelect(""+t+"");
@@ -1721,7 +1721,7 @@ highFrequency
 				}
 				if(xGetInt(dTrap, xTrapType) == 4){
 					//Reset trap to ready
-					playSoundCustom("crocsnap.wav");
+					playSoundCustom("crocsnap.wav", "\Yeebaagooon\Motherload\Forcefield Down.wav");
 					for(t=1*xGetInt(dTrap, xTrapUnit) ; < 1*xGetInt(dTrap, xTrapUnit)+xsVectorGetX(xGetVector(dTrap, xTrapTargetVector))){
 						trUnitSelectClear();
 						trUnitSelect(""+t+"");

@@ -1089,6 +1089,7 @@ void MainTitle(int x = 0, int z = 0){
 	xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+5000);
 }
 
+
 //	if((trGetTerrainSubType(col*4-2,row*4-2) != 13) && (trGetTerrainType(col*4-2,row*4-2) != 2)){
 //Doesnt stop black rock from being blown up ... wtf
 

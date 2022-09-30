@@ -1702,3 +1702,41 @@ void Trap4Vertical(int LZx = 0, int LZZmin = 0, int LZZmax = 0, int PPXmin = 0, 
 	}
 	xSetVector(dTrap, xTrapTargetVector, xsVectorSet(1*trGetNextUnitScenarioNameNumber()-xGetInt(dTrap, xTrapUnit),0,0));
 }
+
+void Trap2(int PPXmin = 0, int PPXmax = 0, int PPZmin = 0, int PPZmax = 0, int WallX = 0, int WallZ = 0, vector Vtarget = vector(0,0,0), int Timer = 20000){
+	int temp = 0;
+	trPaintTerrain(PPXmin,PPZmin,PPXmax,PPZmax,0,73,false);
+	xAddDatabaseBlock(dTrap);
+	xSetPointer(dTrap, xGetDatabaseCount(dTrap));
+	xSetInt(dTrap, xTrapXMin, PPXmin*2);
+	xSetInt(dTrap, xTrapXMax, PPXmax*2+2);
+	xSetInt(dTrap, xTrapZMin, PPZmin*2);
+	xSetInt(dTrap, xTrapZMax, PPZmax*2+2);
+	xSetInt(dTrap, xTrapType, 2);
+	xSetBool(dTrap, xTrapOn, true);
+	xSetBool(dTrap, xTrapReady, true);
+	xSetInt(dTrap, xTrapReset, Timer);
+	xSetVector(dTrap, xTrapStartVector, xsVectorSet(WallX,3,WallZ));
+	//Direction
+	xSetVector(dTrap, xTrapTargetVector, Vtarget);
+	xSetInt(dTrap, xTrapUnit, 1*trGetNextUnitScenarioNameNumber());
+	temp = trGetNextUnitScenarioNameNumber();
+	trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1, WallX,3,WallZ, 0, true);
+	trUnitSelectClear();
+	trUnitSelect(""+temp);
+	trUnitChangeProtoUnit("Lampades");
+	trUnitSelectClear();
+	trUnitSelect(""+temp);
+	trSetSelectedScale(0,0,0);
+	trUnitSelectClear();
+	trUnitSelect(""+temp);
+	trMutateSelected(kbGetProtoUnitID("Cinematic Block"));
+	temp = trGetNextUnitScenarioNameNumber();
+	trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1, WallX,3,WallZ, 0, true);
+	trUnitSelectClear();
+	trUnitSelect(""+temp);
+	trUnitChangeProtoUnit("Wall Connector");
+	trUnitSelectClear();
+	trUnitSelect(""+temp);
+	trUnitTeleport(WallX,3,WallZ);
+}

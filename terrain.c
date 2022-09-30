@@ -1629,170 +1629,15 @@ highFrequency
 		trUnitSelectClear();
 		trUnitSelect(""+temp);
 		trUnitSetAnimationPath("0,0,1,1,0,0");*/
-		//TRAP 2
-		trPaintTerrain(85,56,85,59,0,73,false);
-		xAddDatabaseBlock(dTrap);
-		xSetPointer(dTrap, xGetDatabaseCount(dTrap));
-		xSetInt(dTrap, xTrapXMin, 85*2);
-		xSetInt(dTrap, xTrapXMax, 85*2+2);
-		xSetInt(dTrap, xTrapZMin, 56*2);
-		xSetInt(dTrap, xTrapZMax, 59*2+2);
-		xSetInt(dTrap, xTrapType, 2);
-		xSetBool(dTrap, xTrapOn, true);
-		xSetBool(dTrap, xTrapReady, true);
-		xSetInt(dTrap, xTrapReset, 20000);
-		xSetVector(dTrap, xTrapStartVector, vector(171,3,124));
-		//Direction
-		xSetVector(dTrap, xTrapTargetVector, vector(0,0,-16));
-		xSetInt(dTrap, xTrapUnit, 1*trGetNextUnitScenarioNameNumber());
-		temp = trGetNextUnitScenarioNameNumber();
-		trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1, 171,3,124, 0, true);
-		trUnitSelectClear();
-		trUnitSelect(""+temp);
-		trUnitChangeProtoUnit("Lampades");
-		trUnitSelectClear();
-		trUnitSelect(""+temp);
-		trSetSelectedScale(0,0,0);
-		temp = trGetNextUnitScenarioNameNumber();
-		trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1, 171,3,124, 0, true);
-		trUnitSelectClear();
-		trUnitSelect(""+temp);
-		trUnitChangeProtoUnit("Wall Connector");
-		trUnitSelectClear();
-		trUnitSelect(""+temp);
-		trUnitTeleport(171,3,124);
 		
-		//TRAP 2
-		trPaintTerrain(80,56,80,59,0,73,false);
-		xAddDatabaseBlock(dTrap);
-		xSetPointer(dTrap, xGetDatabaseCount(dTrap));
-		xSetInt(dTrap, xTrapXMin, 80*2);
-		xSetInt(dTrap, xTrapXMax, 80*2+2);
-		xSetInt(dTrap, xTrapZMin, 56*2);
-		xSetInt(dTrap, xTrapZMax, 59*2+2);
-		xSetInt(dTrap, xTrapType, 2);
-		xSetBool(dTrap, xTrapOn, true);
-		xSetBool(dTrap, xTrapReady, true);
-		xSetInt(dTrap, xTrapReset, 20000);
-		xSetVector(dTrap, xTrapStartVector, vector(151,3,124));
-		//Direction
-		xSetVector(dTrap, xTrapTargetVector, vector(0,0,-16));
-		xSetInt(dTrap, xTrapUnit, 1*trGetNextUnitScenarioNameNumber());
-		temp = trGetNextUnitScenarioNameNumber();
-		trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1, 151,3,124, 0, true);
-		trUnitSelectClear();
-		trUnitSelect(""+temp);
-		trUnitChangeProtoUnit("Lampades");
-		trUnitSelectClear();
-		trUnitSelect(""+temp);
-		trSetSelectedScale(0,0,0);
-		temp = trGetNextUnitScenarioNameNumber();
-		trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1, 151,3,124, 0, true);
-		trUnitSelectClear();
-		trUnitSelect(""+temp);
-		trUnitChangeProtoUnit("Wall Connector");
-		trUnitSelectClear();
-		trUnitSelect(""+temp);
-		trUnitTeleport(151,3,124);
-		
-		//TRAP 2
-		trPaintTerrain(70,56,70,59,0,73,false);
-		xAddDatabaseBlock(dTrap);
-		xSetPointer(dTrap, xGetDatabaseCount(dTrap));
-		xSetInt(dTrap, xTrapXMin, 70*2);
-		xSetInt(dTrap, xTrapXMax, 70*2+2);
-		xSetInt(dTrap, xTrapZMin, 56*2);
-		xSetInt(dTrap, xTrapZMax, 59*2+2);
-		xSetInt(dTrap, xTrapType, 2);
-		xSetBool(dTrap, xTrapOn, true);
-		xSetBool(dTrap, xTrapReady, true);
-		xSetInt(dTrap, xTrapReset, 20000);
-		xSetVector(dTrap, xTrapStartVector, vector(131,3,108));
-		//Direction
-		xSetVector(dTrap, xTrapTargetVector, vector(0,0,16));
-		xSetInt(dTrap, xTrapUnit, 1*trGetNextUnitScenarioNameNumber());
-		temp = trGetNextUnitScenarioNameNumber();
-		trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1, 131,3,108, 0, true);
-		trUnitSelectClear();
-		trUnitSelect(""+temp);
-		trUnitChangeProtoUnit("Lampades");
-		trUnitSelectClear();
-		trUnitSelect(""+temp);
-		trSetSelectedScale(0,0,0);
-		temp = trGetNextUnitScenarioNameNumber();
-		trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1, 131,3,108, 0, true);
-		trUnitSelectClear();
-		trUnitSelect(""+temp);
-		trUnitChangeProtoUnit("Wall Connector");
-		trUnitSelectClear();
-		trUnitSelect(""+temp);
-		trUnitTeleport(131,3,108);
-		
-		//TRAP 2
-		trPaintTerrain(60,56,60,59,0,73,false);
-		xAddDatabaseBlock(dTrap);
-		xSetPointer(dTrap, xGetDatabaseCount(dTrap));
-		xSetInt(dTrap, xTrapXMin, 60*2);
-		xSetInt(dTrap, xTrapXMax, 60*2+2);
-		xSetInt(dTrap, xTrapZMin, 56*2);
-		xSetInt(dTrap, xTrapZMax, 59*2+2);
-		xSetInt(dTrap, xTrapType, 2);
-		xSetBool(dTrap, xTrapOn, true);
-		xSetBool(dTrap, xTrapReady, true);
-		xSetInt(dTrap, xTrapReset, 20000);
-		xSetVector(dTrap, xTrapStartVector, vector(131,3,124));
-		//Direction
-		xSetVector(dTrap, xTrapTargetVector, vector(0,0,-16));
-		xSetInt(dTrap, xTrapUnit, 1*trGetNextUnitScenarioNameNumber());
-		temp = trGetNextUnitScenarioNameNumber();
-		trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1, 131,3,124, 0, true);
-		trUnitSelectClear();
-		trUnitSelect(""+temp);
-		trUnitChangeProtoUnit("Lampades");
-		trUnitSelectClear();
-		trUnitSelect(""+temp);
-		trSetSelectedScale(0,0,0);
-		temp = trGetNextUnitScenarioNameNumber();
-		trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1, 131,3,124, 0, true);
-		trUnitSelectClear();
-		trUnitSelect(""+temp);
-		trUnitChangeProtoUnit("Wall Connector");
-		trUnitSelectClear();
-		trUnitSelect(""+temp);
-		trUnitTeleport(131,3,124);
-		
-		//TRAP 2
-		trPaintTerrain(53,56,54,57,0,73,false);
-		xAddDatabaseBlock(dTrap);
-		xSetPointer(dTrap, xGetDatabaseCount(dTrap));
-		xSetInt(dTrap, xTrapXMin, 53*2);
-		xSetInt(dTrap, xTrapXMax, 54*2+2);
-		xSetInt(dTrap, xTrapZMin, 56*2);
-		xSetInt(dTrap, xTrapZMax, 57*2+2);
-		xSetInt(dTrap, xTrapType, 2);
-		xSetBool(dTrap, xTrapOn, true);
-		xSetBool(dTrap, xTrapReady, true);
-		xSetInt(dTrap, xTrapReset, 20000);
-		xSetVector(dTrap, xTrapStartVector, vector(101,3,114));
-		//Direction
-		xSetVector(dTrap, xTrapTargetVector, vector(-100,0,0));
-		xSetInt(dTrap, xTrapUnit, 1*trGetNextUnitScenarioNameNumber());
-		temp = trGetNextUnitScenarioNameNumber();
-		trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1, 101,3,114, 0, true);
-		trUnitSelectClear();
-		trUnitSelect(""+temp);
-		trUnitChangeProtoUnit("Lampades");
-		trUnitSelectClear();
-		trUnitSelect(""+temp);
-		trSetSelectedScale(0,0,0);
-		temp = trGetNextUnitScenarioNameNumber();
-		trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1, 101,3,114, 0, true);
-		trUnitSelectClear();
-		trUnitSelect(""+temp);
-		trUnitChangeProtoUnit("Wall Connector");
-		trUnitSelectClear();
-		trUnitSelect(""+temp);
-		trUnitTeleport(101,3,114);
+		//2nd row traps
+		Trap2(85,85,56,59,171,124,vector(0,0,-16));
+		Trap2(80,80,56,59,151,124,vector(0,0,-16));
+		Trap2(70,70,56,59,131,108,vector(0,0,16));
+		Trap2(60,60,56,59,131,124,vector(0,0,-16));
+		Trap2(53,54,56,57,101,114,vector(-100,0,0));
+		Trap2(23,24,58,59,21,118, vector(167,0,0));
+		trPaintTerrain(34,57,34,59,0,71,false);
 		
 		//Trap 1
 		trPaintTerrain(50,56,50,59,0,73,false);
@@ -1828,41 +1673,6 @@ highFrequency
 		trUnitSelect(""+temp);
 		trUnitSetAnimationPath("0,0,1,1,0,0");
 		
-		//TRAP 2
-		trPaintTerrain(23,58,24,59,0,73,false);
-		xAddDatabaseBlock(dTrap);
-		xSetPointer(dTrap, xGetDatabaseCount(dTrap));
-		xSetInt(dTrap, xTrapXMin, 23*2);
-		xSetInt(dTrap, xTrapXMax, 24*2+2);
-		xSetInt(dTrap, xTrapZMin, 58*2);
-		xSetInt(dTrap, xTrapZMax, 59*2+2);
-		xSetInt(dTrap, xTrapType, 2);
-		xSetBool(dTrap, xTrapOn, true);
-		xSetBool(dTrap, xTrapReady, true);
-		xSetInt(dTrap, xTrapReset, 20000);
-		xSetVector(dTrap, xTrapStartVector, vector(21,3,118));
-		//Direction
-		xSetVector(dTrap, xTrapTargetVector, vector(167,0,0));
-		xSetInt(dTrap, xTrapUnit, 1*trGetNextUnitScenarioNameNumber());
-		temp = trGetNextUnitScenarioNameNumber();
-		trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1, 21,3,118, 0, true);
-		trUnitSelectClear();
-		trUnitSelect(""+temp);
-		trUnitChangeProtoUnit("Lampades");
-		trUnitSelectClear();
-		trUnitSelect(""+temp);
-		trSetSelectedScale(0,0,0);
-		temp = trGetNextUnitScenarioNameNumber();
-		trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1, 21,3,118, 0, true);
-		trUnitSelectClear();
-		trUnitSelect(""+temp);
-		trUnitChangeProtoUnit("Wall Connector");
-		trUnitSelectClear();
-		trUnitSelect(""+temp);
-		trUnitTeleport(21,3,118);
-		
-		//TRAP 3
-		trPaintTerrain(34,57,34,59,0,71,false);
 		//gate effect
 		xAddDatabaseBlock(dTrap);
 		xSetPointer(dTrap, xGetDatabaseCount(dTrap));
@@ -1910,6 +1720,14 @@ highFrequency
 		Trap4Vertical(8, 12, 16, 10, 10, 20, 20, 5000);
 		Trap4Horizontal(12, 16, 16, 2, 2, 42, 42, 12500);
 		Trap4Vertical(12, 12, 16, 2, 2, 42, 42, 12500);
+		
+		//void Trap2(int PPXmin = 0, int PPXmax = 0, int PPZmin = 0, int PPZmax = 0, int WallX = 0, int WallZ = 0, vector Vtarget = vector(0,0,0), int Timer = 20000){
+		Trap2(9,10,41,42, 0, 38*2, vector(46,0,0));
+		
+		Trap2(8,12,28,32, 21, 61, vector(20,0,0));
+		Trap2(8,12,28,32, 21, 61, vector(-20,0,0));
+		Trap2(8,12,28,32, 21, 61, vector(0,0,30));
+		Trap2(8,12,28,32, 21, 61, vector(0,0,-30));
 	}
 	xsEnableRule("Ragnorok");
 	xsDisableSelf();
