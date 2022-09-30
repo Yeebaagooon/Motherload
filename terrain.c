@@ -1611,17 +1611,48 @@ highFrequency
 		trPaintTerrain(37,14,39,16,0,73,false);
 		trPaintTerrain(28,17,39,18,0,73,false);
 		trPaintTerrain(28,19,29,20,0,73,false);
-		trPaintTerrain(28,21,49,22,0,73,false);
-		trPaintTerrain(48,23,49,25,0,73,false);
-		trPaintTerrain(28,25,49,26,0,73,false);
+		trPaintTerrain(28,21,47,22,0,73,false);
+		trPaintTerrain(46,23,47,25,0,73,false);
+		trPaintTerrain(28,25,47,26,0,73,false);
 		trPaintTerrain(28,27,29,28,0,73,false);
-		trPaintTerrain(28,29,49,30,0,73,false);
-		trPaintTerrain(48,31,49,32,0,73,false);
-		trPaintTerrain(28,33,49,34,0,73,false);
+		trPaintTerrain(28,29,47,30,0,73,false);
+		trPaintTerrain(46,31,47,32,0,73,false);
+		trPaintTerrain(28,33,47,34,0,73,false);
 		trPaintTerrain(28,35,29,36,0,73,false);
 		trPaintTerrain(28,37,39,38,0,73,false);
 		trPaintTerrain(37,39,39,40,0,73,false);
-		//above removes black bits from key command room
+		//Paint key command room mask, passability done in setup
+		for(x = 28 ; <= 47){
+			for(z = 14; <= 40){
+				if((trGetTerrainSubType(x,z) == 73) && (trGetTerrainType(x,z) == 0)){
+					temp = trGetNextUnitScenarioNameNumber();
+					trArmyDispatch("0,0", "Dwarf", 1, x*2,3,z*2, 0, true);
+					trUnitSelectClear();
+					trUnitSelect(""+temp);
+					trUnitChangeProtoUnit("Statue of Automaton Base");
+					trUnitSelectClear();
+					trUnitSelect(""+temp);
+					trSetSelectedScale(2,2,2);
+					if((x == 30) || (x == 34) || (x == 41) || (x == 45)){
+						temp = trGetNextUnitScenarioNameNumber();
+						trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1, x*2,3,z*2, 0, true);
+						trUnitSelectClear();
+						trUnitSelect(""+temp);
+						trUnitChangeProtoUnit("Garrison Flag Sky Passage");
+						//add to DB - x as state
+						xAddDatabaseBlock(dT5, true);
+						xSetInt(dT5, xT5XPos, x);
+						xSetInt(dT5, xT5Name, temp);
+					}
+				}
+			}
+		}
+		//above does automaton floor from key command room
+		trPaintTerrain(30,10,30,10,10,10,false);
+		trPaintTerrain(34,10,34,10,10,10,false);
+		trPaintTerrain(41,10,41,10,10,10,false);
+		trPaintTerrain(45,10,45,10,10,10,false);
+		
 		for(a=1; <=5){
 			temp = trGetNextUnitScenarioNameNumber();
 			trArmyDispatch("0,0", "Dwarf", 1, 70+a*2,3,82, 0, true);

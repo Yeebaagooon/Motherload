@@ -1232,16 +1232,16 @@ void processHeldRelics(int count = 1) {
 			if ((xGetInt(dHeldRelics, xRelicValue) >= RELIC_KEY_CHINA) && (xGetInt(dHeldRelics, xRelicValue) <= RELIC_KEY_ATLANTEAN)) {
 				keyDistance = unitDistanceToVector(xGetInt(dHeldRelics, xRelicName), GVectorChinese);
 				keyDistance2 = unitDistanceToVector(xGetInt(dHeldRelics, xRelicName), GVectorNorse);
-				if ((keyDistance < 80) || (keyDistance2 < 80)) {
+				if ((keyDistance < 50) || (keyDistance2 < 50)) {
 					trUnitSelectClear();
 					xUnitSelect(dHeldRelics, xRelicName);
 					trUnitChangeProtoUnit("Osiris Box Glow");
 					xFreeDatabaseBlock(dHeldRelics);
 					playSoundCustom("\cinematics\13_in\jerrygarcia.mp3", "\Yeebaagooon\Motherload\DoorUnlock.mp3");
-					if (keyDistance < 80){
+					if (keyDistance < 50){
 						trDelayedRuleActivation("UnlockChinese");
 					}
-					if (keyDistance2 < 80){
+					if (keyDistance2 < 50){
 						trDelayedRuleActivation("UnlockNorse");
 					}
 				}

@@ -60,6 +60,10 @@ int xKey = 0;
 int xKeyUnitName = 0;
 int xSFX = 0;
 
+int dT5 = 0;
+int xT5XPos = 0;
+int xT5Name = 0;
+
 rule setup_databases
 active
 highFrequency
@@ -136,6 +140,10 @@ highFrequency
 	dKey = xInitDatabase("Key");
 	xKey = xInitAddInt(dKey, "Key ID");
 	xKeyUnitName = xInitAddInt(dKey, "Key eyecandy name");
+	
+	dT5 = xInitDatabase("Trap 5 stuff");
+	xT5XPos = xInitAddInt(dT5, "Trap 5 X position");
+	xT5Name = xInitAddInt(dT5, "T5 name");
 }
 
 

@@ -1096,6 +1096,23 @@ highFrequency
 			xsEnableRule("BasicVC1");
 			xsEnableRule("BasicVC2");
 		}
+		if(Stage == 10){
+			trPaintTerrain(29,16,48,39,2,13,false);
+			trPaintTerrain(37,14,39,16,0,73,false);
+			trPaintTerrain(28,17,39,18,0,73,false);
+			trPaintTerrain(28,19,29,20,0,73,false);
+			trPaintTerrain(28,21,47,22,0,73,false);
+			trPaintTerrain(46,23,47,25,0,73,false);
+			trPaintTerrain(28,25,47,26,0,73,false);
+			trPaintTerrain(28,27,29,28,0,73,false);
+			trPaintTerrain(28,29,47,30,0,73,false);
+			trPaintTerrain(46,31,47,32,0,73,false);
+			trPaintTerrain(28,33,47,34,0,73,false);
+			trPaintTerrain(28,35,29,36,0,73,false);
+			trPaintTerrain(28,37,39,38,0,73,false);
+			trPaintTerrain(37,39,39,40,0,73,true);
+			//Paint key command room outline
+		}
 		aiSet("NoAI", cNumberNonGaiaPlayers);
 		/*int limit = trGetNextUnitScenarioNameNumber()-1;
 		for(x = cNumberNonGaiaPlayers+1; < limit){
