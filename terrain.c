@@ -1579,7 +1579,10 @@ highFrequency
 		Layout(13,3);
 		Layout(13,4);
 		Layout(13,5);
-		Layout(16,6); //DELETE ME SHORTCUT LAYOUT
+		if(QuickStart == 1){
+			Layout(16,6); //DELETE ME SHORTCUT LAYOUT
+			Layout(14,10); //DELETE ME SHORTCUT LAYOUT
+		}
 		for(a=4; <=11){
 			for(b=1; <=5){
 				Layout(a,b);
@@ -1607,6 +1610,7 @@ highFrequency
 		Layout(11,10);
 		Layout(12,10);
 		Layout(13,10);
+		Layout(13,11);
 		trPaintTerrain(29,16,48,39,2,13,false);
 		trPaintTerrain(37,14,39,16,0,73,false);
 		trPaintTerrain(28,17,39,18,0,73,false);
@@ -1652,6 +1656,10 @@ highFrequency
 		trPaintTerrain(34,10,34,10,10,10,false);
 		trPaintTerrain(41,10,41,10,10,10,false);
 		trPaintTerrain(45,10,45,10,10,10,false);
+		Trap5(30,30,10);
+		Trap5(34,34,10);
+		Trap5(41,41,10);
+		Trap5(45,45,10);
 		
 		for(a=1; <=5){
 			temp = trGetNextUnitScenarioNameNumber();
@@ -1677,6 +1685,19 @@ highFrequency
 		xAddDatabaseBlock(dKey, true);
 		xSetInt(dKey, xKeyUnitName, 1*trQuestVarGet("QVRelic"));
 		xSetInt(dKey, xKey, RELIC_KEY_NORSE);
+		
+		xAddDatabaseBlock(dTrap);
+		xSetPointer(dTrap, xGetDatabaseCount(dTrap));
+		//pressure pad
+		xSetInt(dTrap, xTrapXMin, 37);
+		xSetInt(dTrap, xTrapXMax, 39*2+2);
+		xSetInt(dTrap, xTrapZMin, 44*2);
+		xSetInt(dTrap, xTrapZMax, 46*2+2);
+		xSetInt(dTrap, xTrapType, 6);
+		xSetBool(dTrap, xTrapOn, true);
+		xSetBool(dTrap, xTrapReady, true);
+		PaintAtlantisArea(37,44,39,46,"black");
+		trPaintTerrain(38,45,38,45,10,2,false);
 		
 		
 		//key command
@@ -2378,6 +2399,10 @@ highFrequency
 				if((row == 4) && (col == 10)){
 					spawnRelicSpecific(v,24);
 					//command room key
+				}
+				if((row == 10) && (col == 10)){
+					spawnFuelRelic(v,150);
+					//command room fuel
 				}
 			}
 		}

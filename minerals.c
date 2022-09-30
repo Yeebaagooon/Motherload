@@ -1677,6 +1677,46 @@ highFrequency
 								trUnitChangeProtoUnit("Garrison Flag Sky Passage");
 							}
 						}
+						//trap 5 active
+						if(xGetInt(dTrap, xTrapType) == 5){
+							playSoundCustom("crocsnap.wav", "\Yeebaagooon\Motherload\Forcefield Down.wav");
+							xSetBool(dTrap, xTrapOn, false);
+							for(t=xGetDatabaseCount(dT5); >0) {
+								xDatabaseNext(dT5);
+								if(xGetInt(dT5, xT5XPos) == xGetInt(dTrap, xTrapXMin)/2){
+									trUnitSelectClear();
+									xUnitSelect(dT5,xT5Name);
+									trUnitChangeProtoUnit("Cinematic Block");
+								}
+							}
+						}
+						//trap 6 active
+						if(xGetInt(dTrap, xTrapType) == 6){
+							playSoundCustom("crocsnap.wav", "\Yeebaagooon\Motherload\Forcefield Down.wav");
+							xSetBool(dTrap, xTrapOn, false);
+							for(t=xGetDatabaseCount(dT5); >0) {
+								xDatabaseNext(dT5);
+								trUnitSelectClear();
+								xUnitSelect(dT5,xT5Name);
+								trUnitDestroy();
+							}
+							for (u= xGetDatabaseCount(dTrap); > 0) {
+								xDatabaseNext(dTrap);
+								if(xGetInt(dTrap, xTrapType) == 5){
+									xSetBool(dTrap, xTrapOn, false);
+									xSetBool(dTrap, xTrapReady, true);
+								}
+							}
+							//trPaintTerrain(37,14,39,40,0,73,true);
+							//Win key command - terrain refresh disables drilling - you get trapped after a drill because of the black rock between squares
+						}
+					}
+					//trap 5 dmg
+					if(xGetInt(dTrap, xTrapType) == 5){
+						if((trVectorQuestVarGetX("P"+p+"Pos") >= xsVectorGetX(xGetVector(dTrap, xTrapHitVector))-xGetInt(dTrap, xTrapHitboxX)) && (trVectorQuestVarGetX("P"+p+"Pos") < xsVectorGetX(xGetVector(dTrap, xTrapHitVector))+xGetInt(dTrap, xTrapHitboxX)) && (trVectorQuestVarGetZ("P"+p+"Pos") >= xsVectorGetZ(xGetVector(dTrap, xTrapHitVector))-xGetInt(dTrap, xTrapHitboxZ)) && (trVectorQuestVarGetZ("P"+p+"Pos") <= xsVectorGetZ(xGetVector(dTrap, xTrapHitVector))+xGetInt(dTrap, xTrapHitboxZ))){
+							trUnitSelectByQV("P"+p+"Siphon");
+							trDamageUnit(10);
+						}
 					}
 				}
 			}
@@ -1717,13 +1757,6 @@ highFrequency
 					//Trap 4, if within square hitbox
 					for(p=1; < cNumberNonGaiaPlayers) {
 						if((trVectorQuestVarGetX("P"+p+"Pos") >= xsVectorGetX(xGetVector(dTrap, xTrapHitVector))-xGetInt(dTrap, xTrapHitboxX)) && (trVectorQuestVarGetX("P"+p+"Pos") < xsVectorGetX(xGetVector(dTrap, xTrapHitVector))+xGetInt(dTrap, xTrapHitboxX)) && (trVectorQuestVarGetZ("P"+p+"Pos") >= xsVectorGetZ(xGetVector(dTrap, xTrapHitVector))-xGetInt(dTrap, xTrapHitboxZ)) && (trVectorQuestVarGetZ("P"+p+"Pos") <= xsVectorGetZ(xGetVector(dTrap, xTrapHitVector))+xGetInt(dTrap, xTrapHitboxZ))){
-							/*
-							trQuestVarSet("timeSinceLastHeal", trTimeMS() - yGetVar("creeps","lastHealed")); // get time that has passed since we last checked this creep
-							trQuestVarSet("healAmount", trQuestVarGet("timeSinceLastHeal") * trQuestVarGet("P"+1*yGetVar("creeps",
-										"player")+"Regen")); // multiply the time by the heal per second
-							trDamageUnit(-0.001*trQuestVarGet("healAmount")); // heal the unit
-							ySetVar("creeps", "lastHealed", trTimeMS()); // set last healed time to current time
-							*/
 							trUnitSelectByQV("P"+p+"Siphon");
 							trDamageUnit(10);
 						}
@@ -1767,6 +1800,26 @@ highFrequency
 						trUnitSelectClear();
 						trUnitSelect(""+t+"");
 						trUnitChangeProtoUnit("Cinematic Block");
+					}
+				}
+			}
+			else if((xGetBool(dTrap, xTrapOn) == false) && (xGetBool(dTrap, xTrapReady) == false) && (xGetInt(dTrap, xTrapType) == 5)){
+				for(p=1; < cNumberNonGaiaPlayers) {
+					if((trVectorQuestVarGetX("P"+p+"Pos") >= xGetInt(dTrap, xTrapXMin)) && (trVectorQuestVarGetX("P"+p+"Pos") < xGetInt(dTrap, xTrapXMax)) && (trVectorQuestVarGetZ("P"+p+"Pos") >= xGetInt(dTrap, xTrapZMin)) && (trVectorQuestVarGetZ("P"+p+"Pos") <= xGetInt(dTrap, xTrapZMax))){
+						break;
+					}
+					else{
+						playSoundCustom("crocsnap.wav", "\Yeebaagooon\Motherload\Forcefield Up.wav");
+						xSetBool(dTrap, xTrapOn, true);
+						xSetBool(dTrap, xTrapReady, true);
+						for(t=xGetDatabaseCount(dT5); >0) {
+							xDatabaseNext(dT5);
+							if(xGetInt(dT5, xT5XPos) == xGetInt(dTrap, xTrapXMin)/2){
+								trUnitSelectClear();
+								xUnitSelect(dT5,xT5Name);
+								trUnitChangeProtoUnit("Garrison Flag Sky Passage");
+							}
+						}
 					}
 				}
 			}

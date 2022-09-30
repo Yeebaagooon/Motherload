@@ -1751,3 +1751,24 @@ void Trap2(int PPXmin = 0, int PPXmax = 0, int PPZmin = 0, int PPZmax = 0, int W
 		trPaintTerrain(PPXmax,PPZmax,PPXmax,PPZmax,0,80,false);
 	}
 }
+
+void Trap5(int LZx = 0, int PPXmin = 0, int PPZmin = 0, int Timer = 0){
+	int temp = 0;
+	int PPXmax = PPXmin;
+	int PPZmax = PPZmin;
+	//gate effect
+	xAddDatabaseBlock(dTrap);
+	xSetPointer(dTrap, xGetDatabaseCount(dTrap));
+	//pressure pad
+	xSetInt(dTrap, xTrapXMin, PPXmin*2);
+	xSetInt(dTrap, xTrapXMax, PPXmax*2+2);
+	xSetInt(dTrap, xTrapZMin, PPZmin*2);
+	xSetInt(dTrap, xTrapZMax, PPZmax*2+2);
+	xSetInt(dTrap, xTrapType, 5);
+	xSetBool(dTrap, xTrapOn, true);
+	xSetBool(dTrap, xTrapReady, true);
+	xSetInt(dTrap, xTrapReset, Timer);
+	xSetVector(dTrap, xTrapHitVector, xsVectorSet(LZx*2+1,3,PPZmin*2+40));
+	xSetInt(dTrap, xTrapHitboxX, 1);
+	xSetInt(dTrap, xTrapHitboxZ, 34);
+}

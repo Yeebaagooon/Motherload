@@ -11,6 +11,8 @@ highFrequency
 	trOverlayTextColour(255,125,0);
 	trSetFogAndBlackmap(false, false);
 	trLetterBox(true);
+	playSoundCustom("vortexstart.wav", "\Yeebaagooon\Motherload\Beam Up.mp3");
+	int temp = 0;
 	for (x=xGetDatabaseCount(dHeldRelics); > 0) {
 		xDatabaseNext(dHeldRelics);
 		for(p=1; < cNumberNonGaiaPlayers) {
@@ -30,6 +32,16 @@ highFrequency
 		}
 	}
 	for(p = 1; < cNumberNonGaiaPlayers){
+		temp = trGetNextUnitScenarioNameNumber();
+		trArmyDispatch("0,0", "Dwarf", 1, trVectorQuestVarGetX("P"+p+"Pos"), 0, trVectorQuestVarGetZ("P"+p+"Pos"), 0, false);
+		trUnitSelect(""+temp);
+		trUnitTeleport(trVectorQuestVarGetX("P"+p+"Pos"), 0, trVectorQuestVarGetZ("P"+p+"Pos"));
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trMutateSelected(kbGetProtoUnitID("Deconstruct Unit"));
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitOverrideAnimation(18,0,false,false,-1);
 		trUnitSelectByQV("P"+p+"Siphon");
 		trUnitChangeProtoUnit("Hero Death");
 		trUIFadeToColor(0,0,0,2000,1,true);
