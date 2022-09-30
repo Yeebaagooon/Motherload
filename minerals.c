@@ -928,6 +928,30 @@ void spawnRelicSpecific(vector v = vector (0,0,0), int val = 1){
 			trUnitSelectByQV("TempRelicSFX");
 			trMutateSelected(kbGetProtoUnitID("UI Range Indicator Chinese SFX"));
 		}
+		if(val == RELIC_KEY_NORSE){
+			trUnitSelectByQV("TempRelicSFX");
+			trUnitChangeProtoUnit("Spy Eye");
+			trUnitSelectByQV("TempRelicSFX");
+			trMutateSelected(kbGetProtoUnitID("UI Range Indicator Norse SFX"));
+		}
+		if(val == RELIC_KEY_GREEK){
+			trUnitSelectByQV("TempRelicSFX");
+			trUnitChangeProtoUnit("Spy Eye");
+			trUnitSelectByQV("TempRelicSFX");
+			trMutateSelected(kbGetProtoUnitID("UI Range Indicator Greek SFX"));
+		}
+		if(val == RELIC_KEY_ATLANTEAN){
+			trUnitSelectByQV("TempRelicSFX");
+			trUnitChangeProtoUnit("Spy Eye");
+			trUnitSelectByQV("TempRelicSFX");
+			trMutateSelected(kbGetProtoUnitID("UI Range Indicator Atlantean SFX"));
+		}
+		if(val == RELIC_KEY_EGYPT){
+			trUnitSelectByQV("TempRelicSFX");
+			trUnitChangeProtoUnit("Spy Eye");
+			trUnitSelectByQV("TempRelicSFX");
+			trMutateSelected(kbGetProtoUnitID("UI Range Indicator Egyptian SFX"));
+		}
 		if(val == RELIC_RELIGION){
 			trUnitSelectByQV("TempRelicSFX");
 			trUnitChangeProtoUnit("Spy Eye");

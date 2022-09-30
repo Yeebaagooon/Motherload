@@ -446,6 +446,7 @@ highFrequency
 	xsDisableSelf();
 	//xsEnableRule("SPCineChoice");
 	xsEnableRule("UpgradeSFX");
+	trPlayerSetDiplomacy(0,1,"Ally");
 	PaintSP();
 	trQuestVarSet("MainSiphon", trGetNextUnitScenarioNameNumber());
 	UnitCreate(0, "Fire Siphon", 68, 28, 180); //main siphon

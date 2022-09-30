@@ -9,15 +9,21 @@ Search //VERSION OVERRIDE HERE for release to rewrite all data
 -Trap stage
 -Bonuses
 -Nick said something recently in SD about linking mousewheel to camera
--Continue helper goals
+-Siphon stats reflect upgrades
+-100% complete reward? (10 stages, 21 relics, 48 levels, 21 bonsues, ?6SPs, 4 something else for % (cine,use AMB, use laser, ?))
+-Pass Stage 10 to unlock this
+-Migdol and wonder for Natas ship selectable DB
+-Something with main siphon in SP
+-SP exit effect
+-SP exit and go to main menu with map on (modeEnter("Campaign"); modeEnter("Pregame");) trIsGadgetVisible to detect anbd do sequence
 */
 
 
 //---Test controls
 //\Yeebaagooon\Motherload\Test sound.mp3
 int QuickStart = 1;
-int QuickStage = 11;
-bool OverrideSP = true;
+int QuickStage = 10;
+bool OverrideSP = false;
 bool OverrideStage = false;
 string displayz = "lol";
 
