@@ -1586,6 +1586,69 @@ highFrequency
 			}
 		}
 		Layout(3,4);
+		Layout(2,4);
+		Layout(1,4);
+		Layout(1,5);
+		Layout(1,6);
+		//Builds key command room
+		for(a=7; <=7+3){
+			Layout(1,a);
+		}
+		Layout(2,10);
+		for(a=8; <=12){
+			Layout(3,a);
+		}
+		Layout(4,10);
+		for(a=5; <=10){
+			for(b=8; <=12){
+				Layout(a,b);
+			}
+		}
+		Layout(11,10);
+		Layout(12,10);
+		Layout(13,10);
+		trPaintTerrain(29,16,48,39,2,13,false);
+		trPaintTerrain(37,14,39,16,0,73,false);
+		trPaintTerrain(28,17,39,18,0,73,false);
+		trPaintTerrain(28,19,29,20,0,73,false);
+		trPaintTerrain(28,21,49,22,0,73,false);
+		trPaintTerrain(48,23,49,25,0,73,false);
+		trPaintTerrain(28,25,49,26,0,73,false);
+		trPaintTerrain(28,27,29,28,0,73,false);
+		trPaintTerrain(28,29,49,30,0,73,false);
+		trPaintTerrain(48,31,49,32,0,73,false);
+		trPaintTerrain(28,33,49,34,0,73,false);
+		trPaintTerrain(28,35,29,36,0,73,false);
+		trPaintTerrain(28,37,39,38,0,73,false);
+		trPaintTerrain(37,39,39,40,0,73,false);
+		//above removes black bits from key command room
+		for(a=1; <=5){
+			temp = trGetNextUnitScenarioNameNumber();
+			trArmyDispatch("0,0", "Dwarf", 1, 70+a*2,3,82, 0, true);
+			trUnitSelectClear();
+			trUnitSelect(""+temp);
+			trUnitChangeProtoUnit("Wall Connector");
+			trUnitSelectClear();
+			trUnitSelect(""+temp);
+			trUnitSetAnimationPath("3,2,0,0,0,0");
+			trUnitSelectClear();
+			trUnitSelect(""+temp);
+			trSetSelectedScale(1.2,1,1.2);
+			xAddDatabaseBlock(dKey, true);
+			xSetInt(dKey, xKeyUnitName, temp);
+			xSetInt(dKey, xKey, RELIC_KEY_NORSE);
+		}
+		GVectorNorse = vector(76,3,82);
+		FloatingUnitAnimIdle("UI Range Indicator Norse SFX", 76, 6.5, 82, 0, 1,1,1);
+		xAddDatabaseBlock(dKey, true);
+		xSetInt(dKey, xKeyUnitName, 1*trQuestVarGet("QVHero"));
+		xSetInt(dKey, xKey, RELIC_KEY_NORSE);
+		xAddDatabaseBlock(dKey, true);
+		xSetInt(dKey, xKeyUnitName, 1*trQuestVarGet("QVRelic"));
+		xSetInt(dKey, xKey, RELIC_KEY_NORSE);
+		
+		
+		//key command
 		PaintSellTerrain(11,51);
 		GVectorSellPos = vector(27,3,97);
 		GVectorChinese = vector(188,3,126);
@@ -1596,6 +1659,8 @@ highFrequency
 		xAddDatabaseBlock(dKey, true);
 		xSetInt(dKey, xKeyUnitName, 1*trQuestVarGet("QVRelic"));
 		xSetInt(dKey, xKey, RELIC_KEY_CHINA);
+		trPaintTerrain(1,12,20,43,0,70,false);
+		//above removes black bits from 4x4 leftover 1st room
 		//TRAP 1 a=3
 		
 		//--a=6
@@ -1703,8 +1768,9 @@ highFrequency
 		//TRAPS in first big room
 		//Trap3Horizontal(12, 16, 20, 9, 9, 40, 40, 5000);
 		//2 below are traps for bottom right corner
-		Trap3Horizontal(16, 20, 16, 18, 18, 42, 42, 15000);
-		Trap3Vertical(16, 12, 16, 18, 18, 42, 42, 15000);
+		Trap3Horizontal(16, 20, 16, 17, 17, 42, 42, 15000);
+		Trap3Vertical(16, 12, 16, 17, 17, 42, 42, 15000);
+		//Sometimes this one vanishes?
 		//Trap3Vertical(8, 20, 24, 6, 6, 38, 38, 5000);
 		//2 below are traps for top right corner
 		Trap3Horizontal(16, 20, 40, 2, 2, 14, 14, 15000);
@@ -1713,8 +1779,8 @@ highFrequency
 		Trap3Horizontal(0, 4, 40, 18, 18, 14, 14, 15000);
 		Trap3Vertical(4, 40, 44, 18, 18, 14, 14, 15000);
 		//2 below are traps for bottom left corner
-		Trap3Horizontal(0, 4, 16, 18, 18, 26, 26, 15000);
-		Trap3Vertical(4, 12, 16, 18, 18, 26, 26, 15000);
+		Trap3Horizontal(0, 4, 16, 18, 18, 23, 23, 15000);
+		Trap3Vertical(4, 12, 16, 18, 18, 23, 23, 15000);
 		
 		Trap4Horizontal(4, 8, 40, 6, 6, 42, 42, 5000);
 		Trap4Vertical(8, 12, 16, 10, 10, 20, 20, 5000);
@@ -1728,6 +1794,51 @@ highFrequency
 		Trap2(8,12,28,32, 21, 61, vector(-20,0,0));
 		Trap2(8,12,28,32, 21, 61, vector(0,0,30));
 		Trap2(8,12,28,32, 21, 61, vector(0,0,-30));
+		
+		Trap2(14,15,22,23, 38, 22, vector(0,0,65));
+		Trap2(3,4,19,20, 6, 22, vector(0,0,65));
+		Trap2(13,14,37,38, 0, 34*2, vector(46,0,0));
+		Trap2(9,10,33,34, 0, 30*2, vector(46,0,0));
+		Trap2(5,6,29,30, 0, 26*2, vector(46,0,0));
+		Trap2(8,9,25,26, 0, 22*2, vector(46,0,0));
+		Trap4Horizontal(12, 16, 24, 18, 18, 37, 37, 15000);
+		Trap4Horizontal(8, 12, 24, 18, 18, 37, 37, 15000);
+		Trap4Horizontal(4, 8, 24, 18, 18, 37, 37, 15000);
+		Trap4Horizontal(12, 16, 36, 2, 2, 23, 23, 15000);
+		Trap4Horizontal(8, 12, 36, 2, 2, 23, 23, 15000);
+		Trap4Horizontal(4, 8, 36, 2, 2, 23, 23, 15000);
+		Trap2(5,6,37,38, 0, 18*2, vector(46,0,0));
+		Trap2(6,7,14,15, 0, 14*2, vector(46,0,0));
+		Trap2(9,10,13,14, 45, 14*2, vector(-44,0,0));
+		Trap2(9,10,13,14, 45, 18*2, vector(-44,0,0));
+		Trap2(17,18,34,35, 45, 22*2, vector(-44,0,0));
+		Trap2(2,3,34,35, 45, 26*2, vector(-44,0,0));
+		Trap2(18,19,29,30, 45, 30*2, vector(-44,0,0));
+		Trap2(2,3,29,30, 45, 34*2, vector(-44,0,0));
+		Trap2(18,19,25,26, 45, 38*2, vector(-44,0,0));
+		Trap4Vertical(4, 24, 28, 10, 10, 18, 18, 15000);
+		Trap4Vertical(4, 28, 32, 10, 10, 18, 18, 15000);
+		Trap4Vertical(4, 32, 36, 10, 10, 18, 18, 15000);
+		Trap4Vertical(16, 24, 28, 14, 14, 26, 26, 15000);
+		Trap4Vertical(16, 28, 32, 14, 14, 26, 26, 15000);
+		Trap4Vertical(16, 32, 36, 14, 14, 26, 26, 15000);
+		for(x = 1 ; <= 20){
+			for(z = 12; <= 43){
+				if((trGetTerrainSubType(x,z) == 70) && (trGetTerrainType(x,z) == 0)){
+					temp = trGetNextUnitScenarioNameNumber();
+					trArmyDispatch("0,0", "Dwarf", 1, x*2,3,z*2, 0, true);
+					trUnitSelectClear();
+					trUnitSelect(""+temp);
+					trUnitChangeProtoUnit("Statue of Automaton Base");
+					trUnitSelectClear();
+					trUnitSelect(""+temp);
+					trSetSelectedScale(2,2,2);
+					
+				}
+			}
+		}
+		PaintAtlantisArea(8,28,12,32,"BlackRock");
+		
 	}
 	xsEnableRule("Ragnorok");
 	xsDisableSelf();
@@ -2196,6 +2307,7 @@ highFrequency
 						}
 						if(col == 3*trQuestVarGet("TEMPkey")){
 							spawnRelicSpecific(v,22);
+							//chinese key
 						}
 						else {
 							spawnRelicSpecific(v,18);
@@ -2213,6 +2325,28 @@ highFrequency
 				}
 				if((row == 14) && (col == 8)){
 					spawnRelicSpecific(v,20);
+				}
+				if((row >= 4) && (row <= 11) && (col >= 2) && (col <= 4)){
+					trQuestVarSetFromRand("Temp2",12,15);
+					spawnRelicSpecific(v,1*trQuestVarGet("Temp2"));
+				}
+				if((row >= 5) && (row <= 10) && (col == 1)){
+					trQuestVarSetFromRand("Temp2",1,cNumberNonGaiaPlayers);
+					spawnFuelRelic(v,50*trQuestVarGet("Temp2"));
+				}
+				if((row >= 5) && (row <= 10) && (col == 5)){
+					trQuestVarSetFromRand("Temp2",1,cNumberNonGaiaPlayers);
+					spawnFuelRelic(v,50*trQuestVarGet("Temp2"));
+				}
+				if((row == 8) && (col == 3)){
+					spawnFuelRelic(v,1000);
+					spawnRelicSpecific(v, 18);
+					spawnRelicSpecific(v, 28);
+					spawnRelicSpecific(v, 27);
+				}
+				if((row == 4) && (col == 10)){
+					spawnRelicSpecific(v,24);
+					//command room key
 				}
 			}
 		}

@@ -1584,12 +1584,12 @@ void SPCineOption(){
 
 void Trap3Horizontal(int LZxx = 0, int LZxmax = 0, int ZLz = 0, int PPXmin = 0, int PPXmax = 0, int PPZmin = 0, int PPZmax = 0, int Timer = 0){
 	int temp = 0;
-	trPaintTerrain(LZxx,ZLz,LZxmax,ZLz,0,71,false); //17 and 19
+	trPaintTerrain(LZxx,ZLz,LZxmax,ZLz,0,71,false);
 	//gate effect
 	xAddDatabaseBlock(dTrap);
 	xSetPointer(dTrap, xGetDatabaseCount(dTrap));
 	//pressure pad
-	trPaintTerrain(PPXmin,PPZmin,PPXmax,PPZmax,0,73,false); //7 and 44
+	trPaintTerrain(PPXmin,PPZmin,PPXmax,PPZmax,10,2,false);
 	xSetInt(dTrap, xTrapXMin, PPXmin*2);
 	xSetInt(dTrap, xTrapXMax, PPXmax*2+2);
 	xSetInt(dTrap, xTrapZMin, PPZmin*2);
@@ -1599,7 +1599,7 @@ void Trap3Horizontal(int LZxx = 0, int LZxmax = 0, int ZLz = 0, int PPXmin = 0, 
 	xSetBool(dTrap, xTrapReady, true);
 	xSetInt(dTrap, xTrapReset, Timer);
 	xSetInt(dTrap, xTrapUnit, 1*trGetNextUnitScenarioNameNumber());
-	xSetVector(dTrap, xTrapHitVector, xsVectorSet(LZxx*2+4,3,ZLz*2+1)); //37 = 16*2+1 = 33, 33+4=37
+	xSetVector(dTrap, xTrapHitVector, xsVectorSet(LZxx*2+4,3,ZLz*2+1));
 	xSetInt(dTrap, xTrapHitboxX, 4);
 	xSetInt(dTrap, xTrapHitboxZ, 1);
 	for(x = 0 ; < 5){
@@ -1620,7 +1620,7 @@ void Trap3Vertical(int LZx = 0, int LZZmin = 0, int LZZmax = 0, int PPXmin = 0, 
 	xAddDatabaseBlock(dTrap);
 	xSetPointer(dTrap, xGetDatabaseCount(dTrap));
 	//pressure pad
-	trPaintTerrain(PPXmin,PPZmin,PPXmax,PPZmax,0,73,false);
+	trPaintTerrain(PPXmin,PPZmin,PPXmax,PPZmax,10,2,false);
 	xSetInt(dTrap, xTrapXMin, PPXmin*2);
 	xSetInt(dTrap, xTrapXMax, PPXmax*2+2);
 	xSetInt(dTrap, xTrapZMin, PPZmin*2);
@@ -1650,7 +1650,7 @@ void Trap4Horizontal(int LZxx = 0, int LZxmax = 0, int ZLz = 0, int PPXmin = 0, 
 	xAddDatabaseBlock(dTrap);
 	xSetPointer(dTrap, xGetDatabaseCount(dTrap));
 	//pressure pad
-	trPaintTerrain(PPXmin,PPZmin,PPXmax,PPZmax,0,73,false);
+	trPaintTerrain(PPXmin,PPZmin,PPXmax,PPZmax,10,2,false); // 0,73 for old
 	xSetInt(dTrap, xTrapXMin, PPXmin*2);
 	xSetInt(dTrap, xTrapXMax, PPXmax*2+2);
 	xSetInt(dTrap, xTrapZMin, PPZmin*2);
@@ -1673,14 +1673,19 @@ void Trap4Horizontal(int LZxx = 0, int LZxmax = 0, int ZLz = 0, int PPXmin = 0, 
 	xSetVector(dTrap, xTrapTargetVector, xsVectorSet(1*trGetNextUnitScenarioNameNumber()-xGetInt(dTrap, xTrapUnit),0,0));
 }
 
-void Trap4Vertical(int LZx = 0, int LZZmin = 0, int LZZmax = 0, int PPXmin = 0, int PPXmax = 0, int PPZmin = 0, int PPZmax = 0, int Timer = 0){
+void Trap4Vertical(int LZx = 0, int LZZmin = 0, int LZZmax = 0, int PPXmin = 0, int PPXmax = 0, int PPZmin = 0, int PPZmax = 0, int Timer = 0, int DEBUG = 0){
 	int temp = 0;
 	trPaintTerrain(LZx,LZZmin,LZx,LZZmax,0,66,false);
 	//gate effect
 	xAddDatabaseBlock(dTrap);
 	xSetPointer(dTrap, xGetDatabaseCount(dTrap));
 	//pressure pad
-	trPaintTerrain(PPXmin,PPZmin,PPXmax,PPZmax,0,73,false);
+	if(DEBUG == 0){
+		trPaintTerrain(PPXmin,PPZmin,PPXmax,PPZmax,10,2,false);
+	}
+	else{
+		trPaintTerrain(PPXmin,PPZmin,PPXmax,PPZmax,2,10,false);
+	}
 	xSetInt(dTrap, xTrapXMin, PPXmin*2);
 	xSetInt(dTrap, xTrapXMax, PPXmax*2+2);
 	xSetInt(dTrap, xTrapZMin, PPZmin*2);
@@ -1739,4 +1744,10 @@ void Trap2(int PPXmin = 0, int PPXmax = 0, int PPZmin = 0, int PPZmax = 0, int W
 	trUnitSelectClear();
 	trUnitSelect(""+temp);
 	trUnitTeleport(WallX,3,WallZ);
+	if((PPXmax - PPXmin == 1) && (PPZmax - PPZmin == 1)){
+		trPaintTerrain(PPXmin,PPZmin,PPXmin,PPZmin,0,82,false);
+		trPaintTerrain(PPXmax,PPZmin,PPXmax,PPZmin,0,81,false);
+		trPaintTerrain(PPXmin,PPZmax,PPXmin,PPZmax,0,83,false);
+		trPaintTerrain(PPXmax,PPZmax,PPXmax,PPZmax,0,80,false);
+	}
 }

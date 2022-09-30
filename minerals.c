@@ -1057,6 +1057,7 @@ void processHeldRelics(int count = 1) {
 	int db = 0;
 	float currentDistance = 0;
 	float keyDistance = 0;
+	float keyDistance2 = 0;
 	for (x=xsMin(count, xGetDatabaseCount(dHeldRelics)); > 0) {
 		amt = 0;
 		xDatabaseNext(dHeldRelics);
@@ -1230,13 +1231,19 @@ void processHeldRelics(int count = 1) {
 		if(Stage == 10){
 			if ((xGetInt(dHeldRelics, xRelicValue) >= RELIC_KEY_CHINA) && (xGetInt(dHeldRelics, xRelicValue) <= RELIC_KEY_ATLANTEAN)) {
 				keyDistance = unitDistanceToVector(xGetInt(dHeldRelics, xRelicName), GVectorChinese);
-				if (keyDistance < 80) {
+				keyDistance2 = unitDistanceToVector(xGetInt(dHeldRelics, xRelicName), GVectorNorse);
+				if ((keyDistance < 80) || (keyDistance2 < 80)) {
 					trUnitSelectClear();
 					xUnitSelect(dHeldRelics, xRelicName);
 					trUnitChangeProtoUnit("Osiris Box Glow");
 					xFreeDatabaseBlock(dHeldRelics);
 					playSoundCustom("\cinematics\13_in\jerrygarcia.mp3", "\Yeebaagooon\Motherload\DoorUnlock.mp3");
-					trDelayedRuleActivation("UnlockChinese");
+					if (keyDistance < 80){
+						trDelayedRuleActivation("UnlockChinese");
+					}
+					if (keyDistance2 < 80){
+						trDelayedRuleActivation("UnlockNorse");
+					}
 				}
 			}
 		}
@@ -1266,6 +1273,40 @@ highFrequency
 		for(x=xGetDatabaseCount(dKey); >0) {
 			xDatabaseNext(dKey);
 			if(xGetInt(dKey, xKey) == RELIC_KEY_CHINA){
+				trUnitSelectClear();
+				xUnitSelect(dKey, xKeyUnitName);
+				trUnitChangeProtoUnit("Dust Large");
+				xFreeDatabaseBlock(dKey);
+				playSoundCustom("\cinematics\14_in\Chimes.mp3");
+			}
+		}
+		xsDisableSelf();
+	}
+}
+
+rule UnlockNorse
+inactive
+highFrequency
+{
+	if(1*trQuestVarGet("NorseProgress") == 0){
+		trQuestVarSet("NorseProgress", trTimeMS()+50);
+	}
+	if(trTimeMS() > 1*trQuestVarGet("NorseProgress")){
+		trQuestVarModify("NorseAnim", "+", 1);
+		float scale = 1.00-(trQuestVarGet("NorseAnim")/100);
+		for(x=xGetDatabaseCount(dKey); >0) {
+			xDatabaseNext(dKey);
+			if(xGetInt(dKey, xKey) == RELIC_KEY_NORSE){
+				trUnitSelectClear();
+				xUnitSelect(dKey, xKeyUnitName);
+				trSetSelectedScale(1.2,scale,1.2);
+			}
+		}
+	}
+	if(1*trQuestVarGet("NorseAnim") >= 100){
+		for(x=xGetDatabaseCount(dKey); >0) {
+			xDatabaseNext(dKey);
+			if(xGetInt(dKey, xKey) == RELIC_KEY_NORSE){
 				trUnitSelectClear();
 				xUnitSelect(dKey, xKeyUnitName);
 				trUnitChangeProtoUnit("Dust Large");

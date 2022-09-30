@@ -31,6 +31,7 @@ int MaxCols = 25;
 int GSeller = 0; //dont touch, does the player when selling minerals
 vector GVectorSellPos = vector(5,3,180);
 vector GVectorChinese = vector(0,0,0);
+vector GVectorNorse = vector(0,0,0);
 int TERRAIN_TYPE = 2;
 int TERRAIN_SUBTYPE = 2;
 int OVERTERRAIN_TYPE = 5;
