@@ -1772,3 +1772,39 @@ void Trap5(int LZx = 0, int PPXmin = 0, int PPZmin = 0, int Timer = 0){
 	xSetInt(dTrap, xTrapHitboxX, 1);
 	xSetInt(dTrap, xTrapHitboxZ, 34);
 }
+
+void Trap1(int PPXmin = 0, int PPZmin = 0, int PPXmax = 0, int PPZmax = 0, vector VTarget = vector(0,0,0), int Timer = 5000){
+	int temp = 0;
+	trPaintTerrain(PPXmin,PPZmin,PPXmax,PPZmax,0,73,false);
+	xAddDatabaseBlock(dTrap);
+	xSetPointer(dTrap, xGetDatabaseCount(dTrap));
+	xSetInt(dTrap, xTrapXMin, PPXmin*2);
+	xSetInt(dTrap, xTrapXMax, PPXmax*2+2);
+	xSetInt(dTrap, xTrapZMin, PPZmin*2);
+	xSetInt(dTrap, xTrapZMax, PPZmax*2+2);
+	xSetInt(dTrap, xTrapType, 1);
+	xSetBool(dTrap, xTrapOn, true);
+	xSetBool(dTrap, xTrapReady, true);
+	xSetInt(dTrap, xTrapReset, Timer);
+	xSetInt(dTrap, xTrapUnit, 1*trGetNextUnitScenarioNameNumber());
+	xSetVector(dTrap, xTrapHitVector, VTarget);
+	xSetInt(dTrap, xTrapHitboxX, 4);
+	xSetInt(dTrap, xTrapHitboxZ, 4);
+	temp = trGetNextUnitScenarioNameNumber();
+	trArmyDispatch("0,0", "Dwarf", 1, xsVectorGetX(VTarget), 3, xsVectorGetZ(VTarget), 0, true);
+	trUnitSelectClear();
+	trUnitSelect(""+temp);
+	trUnitChangeProtoUnit("Spy Eye");
+	trUnitSelectClear();
+	trUnitSelect(""+temp);
+	trMutateSelected(kbGetProtoUnitID("Tartarian Gate"));
+	trUnitSelectClear();
+	trUnitSelect(""+temp);
+	trSetSelectedScale(0.5,-0.5,0.5);
+	trUnitSelectClear();
+	trUnitSelect(""+temp);
+	trUnitOverrideAnimation(2,0,true,true,-1,-1);
+	trUnitSelectClear();
+	trUnitSelect(""+temp);
+	trUnitSetAnimationPath("0,0,1,1,0,0");
+}

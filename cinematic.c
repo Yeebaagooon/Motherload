@@ -20,6 +20,9 @@ inactive
 highFrequency
 {
 	xsDisableSelf();
+	trUnitSelectByQV("ExitYeeb");
+	trUnitChangeProtoUnit("Cinematic Block");
+	trPlayerSetDiplomacy(0,1,"Enemy");
 	trLetterBox(true);
 	trUIFadeToColor(0,0,0,1,1,true);
 	trQuestVarSet("StarUnit", trGetNextUnitScenarioNameNumber());
@@ -548,7 +551,9 @@ highFrequency
 		PaintAtlantisArea(24,87,26,89,"GrassA");
 		trUnitSelectByQV("TempSiphon");
 		trUnitMoveToPoint(50,3,178,-1,false);
-		unitTransform("Dwarven Forge", "Rocket");
+		trUnitSelectByQV("TempSiphon");
+		trUnitChangeInArea(0,0,"Dwarven Forge", "Rocket",40);
+		//unitTransform("Dwarven Forge", "Rocket");
 		trUnitSelectClear();
 		xUnitSelect(dPlayerData, xSpyObject);
 		trUnitChangeProtoUnit("Rocket");
@@ -566,6 +571,8 @@ highFrequency
 		trUnitSelectByQV("TempSiphon");
 		trUnitChangeProtoUnit("Hero Death");
 		xsEnableRule("Cine_28");
+		trUnitSelectByQV("ExitYeeb");
+		trUnitChangeProtoUnit("Pharaoh of Osiris XP");
 	}
 }
 
@@ -606,13 +613,52 @@ highFrequency
 	if((trTime()-cActivationTime) >= 4){
 		xsDisableSelf();
 		characterDialog("Mr Natas", "And then garrison Yeeb in the underworld passage to save.", "icons\scenario g gargarensis icon 64");
-		xsEnableRule("Cine_31");
+		trPaintTerrain(0,32,60,80,5,4,false);
+		xsEnableRule("Cine_301");
 		trUnitSelectClear();
 		trUnitSelectByQV("ExitTunnel");
 		trUnitHighlight(4, true);
 		trUnitSelectClear();
 		trUnitSelectByQV("ExitYeeb");
 		trUnitHighlight(4, true);
+	}
+}
+
+rule Cine_301
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 4){
+		xsDisableSelf();
+		characterDialog("Mr Natas", "Keep coming back to check the bonus bar (flashing).", "icons\scenario g gargarensis icon 64");
+		trCameraCut(vector(30.535799,60.188759,3.073936), vector(0.000989,-0.707107,0.707106), vector(0.000988,0.707106,0.707107), vector(0.999999,0.000000,-0.001398));
+		xsEnableRule("Cine_302");
+		for(a=1 ; <13){
+			trUnitSelectByQV("Bonus"+a+"");
+			trUnitHighlight(5, true);
+		}
+	}
+}
+
+rule Cine_302
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 4){
+		xsDisableSelf();
+		characterDialog("Mr Natas", "Click an unlocked bonus to find out what it does and equip it.", "icons\scenario g gargarensis icon 64");
+		xsEnableRule("Cine_303");
+	}
+}
+
+rule Cine_303
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 4){
+		xsDisableSelf();
+		characterDialog("Mr Natas", "Click an obelisk that is lit up for instructions on how to unlock that bonus.", "icons\scenario g gargarensis icon 64");
+		xsEnableRule("Cine_31");
 	}
 }
 
@@ -646,6 +692,7 @@ highFrequency
 		trUnitSelectClear();
 		trUnitSelectByQV("MrNatas");
 		trUnitOverrideAnimation(25,11,false,false,-1,0);
+		playSound("xpack\xcinematics\7_out\music.mp3");
 	}
 }
 
@@ -809,6 +856,12 @@ highFrequency
 		xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 7);
 		trUnitSetVariation(trQuestVarGet("QVRelic"), 0);
 		xsEnableRule("Bonus_Display");
+		subModeEnter("Simulation", "Editor");
+		uiMessageBox("moo","restartCurrentGame()");
+		uiCycleCurrentActivate();
+		subModeLeave("Simulation", "Editor");
+		modeEnter("pregame");
+		modeEnter("Simulation");
 	}
 }
 

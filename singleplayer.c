@@ -296,6 +296,7 @@ highFrequency
 			if(1*trQuestVarGet("Path1") == 0){
 				trUnitSelectByQV("MainSiphon");
 				trUnitHighlight(1.0, false);
+				trDelayedRuleActivation("SPSiphonStats");
 			}
 		}
 		if(1*trQuestVarGet("Path2") == 12){
@@ -316,6 +317,7 @@ highFrequency
 			if(1*trQuestVarGet("Path2") == 0){
 				trUnitSelectByQV("MainSiphon");
 				trUnitHighlight(1.0, false);
+				trDelayedRuleActivation("SPSiphonStats");
 			}
 		}
 		if(1*trQuestVarGet("Path3") == 15){
@@ -348,6 +350,7 @@ highFrequency
 			if(1*trQuestVarGet("Path3") == 0){
 				trUnitSelectByQV("MainSiphon");
 				trUnitHighlight(1.0, false);
+				trDelayedRuleActivation("SPSiphonStats");
 			}
 		}
 		if(1*trQuestVarGet("Path4") == 15){
@@ -380,6 +383,7 @@ highFrequency
 			if(1*trQuestVarGet("Path4") == 0){
 				trUnitSelectByQV("MainSiphon");
 				trUnitHighlight(1.0, false);
+				trDelayedRuleActivation("SPSiphonStats");
 			}
 		}
 		if(1*trQuestVarGet("Path5") == 12){
@@ -400,6 +404,7 @@ highFrequency
 			if(1*trQuestVarGet("Path5") == 0){
 				trUnitSelectByQV("MainSiphon");
 				trUnitHighlight(1.0, false);
+				trDelayedRuleActivation("SPSiphonStats");
 			}
 		}
 		if(1*trQuestVarGet("Path6") == 15){
@@ -432,6 +437,7 @@ highFrequency
 			if(1*trQuestVarGet("Path6") == 0){
 				trUnitSelectByQV("MainSiphon");
 				trUnitHighlight(1.0, false);
+				trDelayedRuleActivation("SPSiphonStats");
 			}
 		}
 	}
@@ -765,6 +771,7 @@ highFrequency
 		trUnitChangeProtoUnit("Outpost");*/
 	}
 	xsEnableRule("Bonus_Display");
+	xsEnableRule("SPSiphonStats");
 	
 }
 

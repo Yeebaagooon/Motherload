@@ -214,6 +214,7 @@ int npcDiag(int npc = 0, int dialog = 0) {
 					xSetPointer(dPlayerData, p);
 					if(xGetInt(dPlayerData, xStageUnlocked) == 0){
 						uiMessageBox("Make 10 gold in 8 minutes to unlock the next planet.");
+						trChatSend(0, "<color=1,1,1>Type 'help' to be reminded of how this map works.</color>");
 					}
 					dialog = 0;
 				}
@@ -468,6 +469,8 @@ int npcDiag(int npc = 0, int dialog = 0) {
 					xSetPointer(dPlayerData, p);
 					if(xGetInt(dPlayerData, xStageUnlocked) == 4){
 						uiMessageBox("To unlock the next planet - reach a depth of 2km and make 50 profit in the same game.");
+						trChatSend(0, "<color=1,1,1>Type 'goal' to see win conditions for the current planet you are on.</color>");
+						trChatSend(0, "<color=1,1,1>Type 'hotkey' to be reminded of available game controls.</color>");
 					}
 					dialog = 0;
 				}
@@ -595,7 +598,7 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				case 4:
 				{
 					trCameraCut(vector(146.952896,98.965134,111.240631), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
-					uiMessageBox("Fuel profits are getting extortionate even out here now, must be Ukrainium.");
+					uiMessageBox("Fuel profits are getting extortionate even out here now, must be something to do with Ukrainium.");
 				}
 				case 5:
 				{

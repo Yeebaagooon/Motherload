@@ -881,7 +881,6 @@ highFrequency
 		trQuestVarSetFromRand("temp", 1, 20);
 		xSetInt(dGasPocket, xGasCol, 1*trQuestVarGet("temp"));
 		xSetInt(dGasPocket, xGasRow, 19);
-		trChatSend(0, "Gas is col "+1*trQuestVarGet("temp")+"");
 		for(x=2; < 5*cNumberNonGaiaPlayers){
 			xAddDatabaseBlock(dGasPocket, true);
 			xSetPointer(dGasPocket, x);
@@ -1516,41 +1515,7 @@ highFrequency
 			Layout(18,a);
 			if(iModulo(3, a) == 0){
 				Layout(17,a);
-				//Trap 1
-				trPaintTerrain(a*4-4,69,a*4-4,71,0,73,false);
-				trPaintTerrain(a*4-4,68,a*4-4,68,2,13,false);
-				trPaintTerrain(a*4-4,72,a*4-4,72,2,13,false);
-				xAddDatabaseBlock(dTrap);
-				xSetPointer(dTrap, xGetDatabaseCount(dTrap));
-				xSetInt(dTrap, xTrapXMin, a*8-8);
-				xSetInt(dTrap, xTrapXMax, a*8-6);
-				xSetInt(dTrap, xTrapZMin, 69*2);
-				xSetInt(dTrap, xTrapZMax, 71*2+2);
-				xSetInt(dTrap, xTrapType, 1);
-				xSetBool(dTrap, xTrapOn, true);
-				xSetBool(dTrap, xTrapReady, true);
-				xSetInt(dTrap, xTrapReset, 5000);
-				xSetInt(dTrap, xTrapUnit, 1*trGetNextUnitScenarioNameNumber());
-				xSetVector(dTrap, xTrapHitVector, xsVectorSet(a*8-4,3,132));
-				xSetInt(dTrap, xTrapHitboxX, 4);
-				xSetInt(dTrap, xTrapHitboxZ, 4);
-				temp = trGetNextUnitScenarioNameNumber();
-				trArmyDispatch("0,0", "Dwarf", 1, a*8-4,3,132, 0, true);
-				trUnitSelectClear();
-				trUnitSelect(""+temp);
-				trUnitChangeProtoUnit("Spy Eye");
-				trUnitSelectClear();
-				trUnitSelect(""+temp);
-				trMutateSelected(kbGetProtoUnitID("Tartarian Gate"));
-				trUnitSelectClear();
-				trUnitSelect(""+temp);
-				trSetSelectedScale(0.5,-0.5,0.5);
-				trUnitSelectClear();
-				trUnitSelect(""+temp);
-				trUnitOverrideAnimation(2,0,true,true,-1,-1);
-				trUnitSelectClear();
-				trUnitSelect(""+temp);
-				trUnitSetAnimationPath("0,0,1,1,0,0");
+				Trap1(a*4-4,69,a*4-4,71, xsVectorSet(a*8-4,3,132), 5000);
 			}
 		}
 		Layout(16,24);
@@ -1611,6 +1576,58 @@ highFrequency
 		Layout(12,10);
 		Layout(13,10);
 		Layout(13,11);
+		for(a=11; <=13){
+			for(b=12; <=20){
+				Layout(a,b);
+			}
+		}
+		//above is for flaming minefield
+		
+		//X row = 11
+		Trap1(11*4+1,12*4+1,11*4+3,12*4+3, xsVectorSet(12*8+5,3,12*8+5), 5000);
+		Trap1(11*4+1,11*4+1,11*4+3,11*4+3, xsVectorSet(11*8+5,3,10*8+5), 5000);
+		Trap1(11*4+1,10*4+1,11*4+3,10*4+3, xsVectorSet(13*8+5,3,10*8+5), 5000);
+		//X row = 12
+		Trap1(12*4+1,12*4+1,12*4+3,12*4+3, xsVectorSet(14*8+5,3,12*8+5), 5000);
+		Trap1(12*4+1,11*4+1,12*4+3,11*4+3, xsVectorSet(11*8+5,3,11*8+5), 5000);
+		Trap1(12*4+1,10*4+1,12*4+3,10*4+3, xsVectorSet(19*8+5,3,10*8+5), 5000);
+		
+		//X row = 13
+		Trap1(13*4+1,12*4+1,13*4+3,12*4+3, xsVectorSet(15*8+5,3,12*8+5), 5000);
+		Trap1(13*4+1,11*4+1,13*4+3,11*4+3, xsVectorSet(16*8+5,3,11*8+5), 5000);
+		Trap1(13*4+1,10*4+1,13*4+3,10*4+3, xsVectorSet(18*8+5,3,10*8+5), 5000);
+		
+		//X row = 14
+		Trap1(14*4+1,12*4+1,14*4+3,12*4+3, xsVectorSet(11*8+5,3,12*8+5), 5000);
+		Trap1(14*4+1,11*4+1,14*4+3,11*4+3, xsVectorSet(12*8+5,3,11*8+5), 5000);
+		Trap1(14*4+1,10*4+1,14*4+3,10*4+3, xsVectorSet(16*8+5,3,10*8+5), 5000);
+		
+		//X row = 15
+		Trap1(15*4+1,10*4+1,15*4+3,10*4+3, xsVectorSet(14*8+5,3,10*8+5), 5000);
+		Trap1(15*4+1,11*4+1,15*4+3,11*4+3, xsVectorSet(15*8+5,3,11*8+5), 5000);
+		Trap1(15*4+1,12*4+1,15*4+3,12*4+3, xsVectorSet(16*8+5,3,12*8+5), 5000);
+		
+		//X row = 16
+		Trap1(16*4+1,12*4+1,16*4+3,12*4+3, xsVectorSet(13*8+5,3,12*8+5), 5000);
+		Trap1(16*4+1,11*4+1,16*4+3,11*4+3, xsVectorSet(14*8+5,3,11*8+5), 5000);
+		Trap1(16*4+1,10*4+1,16*4+3,10*4+3, xsVectorSet(15*8+5,3,10*8+5), 5000);
+		
+		//X row = 17
+		Trap1(17*4+1,12*4+1,17*4+3,12*4+3, xsVectorSet(19*8+5,3,12*8+5), 5000);
+		Trap1(17*4+1,11*4+1,17*4+3,11*4+3, xsVectorSet(18*8+5,3,11*8+5), 5000);
+		Trap1(17*4+1,10*4+1,17*4+3,10*4+3, xsVectorSet(19*8+5,3,11*8+5), 5000);
+		
+		//X row = 18
+		Trap1(18*4+1,12*4+1,18*4+3,12*4+3, xsVectorSet(17*8+5,3,12*8+5), 5000);
+		Trap1(18*4+1,11*4+1,18*4+3,11*4+3, xsVectorSet(17*8+5,3,11*8+5), 5000);
+		Trap1(18*4+1,10*4+1,18*4+3,10*4+3, xsVectorSet(17*8+5,3,10*8+5), 5000);
+		
+		//X row = 19
+		Trap1(19*4+1,12*4+1,19*4+3,12*4+3, xsVectorSet(18*8+5,3,12*8+5), 5000);
+		Trap1(19*4+1,11*4+1,19*4+3,11*4+3, xsVectorSet(13*8+5,3,11*8+5), 5000);
+		Trap1(19*4+1,10*4+1,19*4+3,10*4+3, xsVectorSet(12*8+5,3,10*8+5), 5000);
+		
+		
 		trPaintTerrain(29,16,48,39,2,13,false);
 		trPaintTerrain(37,14,39,16,0,73,false);
 		trPaintTerrain(28,17,39,18,0,73,false);
@@ -1757,44 +1774,13 @@ highFrequency
 		trPaintTerrain(34,57,34,59,0,71,false);
 		
 		//Trap 1
-		trPaintTerrain(50,56,50,59,0,73,false);
-		xAddDatabaseBlock(dTrap);
-		xSetPointer(dTrap, xGetDatabaseCount(dTrap));
-		xSetInt(dTrap, xTrapXMin, 50*2);
-		xSetInt(dTrap, xTrapXMax, 50*2+2);
-		xSetInt(dTrap, xTrapZMin, 56*2);
-		xSetInt(dTrap, xTrapZMax, 59*2+2);
-		xSetInt(dTrap, xTrapType, 1);
-		xSetBool(dTrap, xTrapOn, true);
-		xSetBool(dTrap, xTrapReady, true);
-		xSetInt(dTrap, xTrapReset, 5000);
-		xSetInt(dTrap, xTrapUnit, 1*trGetNextUnitScenarioNameNumber());
-		xSetVector(dTrap, xTrapHitVector, xsVectorSet(115,3,117));
-		xSetInt(dTrap, xTrapHitboxX, 4);
-		xSetInt(dTrap, xTrapHitboxZ, 4);
-		temp = trGetNextUnitScenarioNameNumber();
-		trArmyDispatch("0,0", "Dwarf", 1, 115,3,117, 0, true);
-		trUnitSelectClear();
-		trUnitSelect(""+temp);
-		trUnitChangeProtoUnit("Spy Eye");
-		trUnitSelectClear();
-		trUnitSelect(""+temp);
-		trMutateSelected(kbGetProtoUnitID("Tartarian Gate"));
-		trUnitSelectClear();
-		trUnitSelect(""+temp);
-		trSetSelectedScale(0.5,-0.5,0.5);
-		trUnitSelectClear();
-		trUnitSelect(""+temp);
-		trUnitOverrideAnimation(2,0,true,true,-1,-1);
-		trUnitSelectClear();
-		trUnitSelect(""+temp);
-		trUnitSetAnimationPath("0,0,1,1,0,0");
+		Trap1(50,56,50,59, vector(115,3,117), 5000);
 		
 		//gate effect
 		xAddDatabaseBlock(dTrap);
 		xSetPointer(dTrap, xGetDatabaseCount(dTrap));
 		//pressure pad
-		trPaintTerrain(38,58,38,58,0,73,false);
+		trPaintTerrain(38,58,38,58,10,10,false);
 		xSetInt(dTrap, xTrapXMin, 38*2);
 		xSetInt(dTrap, xTrapXMax, 38*2+2);
 		xSetInt(dTrap, xTrapZMin, 58*2);

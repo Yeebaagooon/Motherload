@@ -555,13 +555,13 @@ int GetRockType(int t = 0, int st = 0){
 		if(st == 0){
 			return(IceA);
 		}
-		if(st == 5){
+		if(st == 7){
 			return(Hades4Passable);
 		}
-		if(st == 6){
+		if(st == 5){
 			return(Hades1);
 		}
-		if(st == 7){
+		if(st == 6){
 			return(Hades2);
 		}
 		if(st == 9){

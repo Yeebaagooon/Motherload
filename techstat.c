@@ -66,7 +66,23 @@ highFrequency
 		modifyProtounitAbsolute("Hero Greek Atalanta", p, 0, xGetInt(dPlayerData, xHullHP));
 		modifyProtounitAbsolute("Heka Shockwave SFX", p, 0, xGetInt(dPlayerData, xHullHP));
 		modifyProtounitAbsolute("Wadjet Spit", p, 0, xGetInt(dPlayerData, xHullHP));
+		modifyProtounitAbsolute("Hero Greek Atalanta", p, 29, xGetFloat(dPlayerData, xDrillPower));
+		modifyProtounitAbsolute("Hero Greek Atalanta", p, 24, 0.01*xGetInt(dPlayerData, xRadiator)+0.01);
+		modifyProtounitAbsolute("Hero Greek Atalanta", p, 25, 0.01*xGetInt(dPlayerData, xRadiator)+0.01);
 	}
+	xsDisableSelf();
+}
+
+rule SPSiphonStats
+inactive
+highFrequency
+{
+	xSetPointer(dPlayerData, 1);
+	modifyProtounitAbsolute("Fire Siphon", 0, 0, xGetInt(dPlayerData, xHullHP));
+	modifyProtounitAbsolute("Fire Siphon", 0, 32, xGetFloat(dPlayerData, xDrillPower));
+	modifyProtounitAbsolute("Fire Siphon", 0, 24, 0.01*xGetInt(dPlayerData, xRadiator)+0.01);
+	modifyProtounitAbsolute("Fire Siphon", 0, 25, 0.01*xGetInt(dPlayerData, xRadiator)+0.01);
+	modifyProtounitAbsolute("Fire Siphon", 0, 11, xGetInt(dPlayerData, xEnginePower));
 	xsDisableSelf();
 }
 
