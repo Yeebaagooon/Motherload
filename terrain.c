@@ -1581,7 +1581,10 @@ highFrequency
 				Layout(a,b);
 			}
 		}
+		Layout(12,21);
+		Layout(12,20);
 		//above is for flaming minefield
+		//trPaintTerrain(48,42,76,49,2,13,false);
 		
 		//X row = 11
 		Trap1(11*4+1,12*4+1,11*4+3,12*4+3, xsVectorSet(12*8+5,3,12*8+5), 5000);
@@ -1614,12 +1617,16 @@ highFrequency
 		
 		//X row = 17
 		Trap1(17*4+1,12*4+1,17*4+3,12*4+3, xsVectorSet(19*8+5,3,12*8+5), 5000);
-		Trap1(17*4+1,11*4+1,17*4+3,11*4+3, xsVectorSet(18*8+5,3,11*8+5), 5000);
+		//Manual fix
+		Trap1(17*4+1,11*4+1,17*4+3,11*4+3, xsVectorSet(18*8+5,3,11*8+5), 5000, 1);
+		//Manual fix
 		Trap1(17*4+1,10*4+1,17*4+3,10*4+3, xsVectorSet(19*8+5,3,11*8+5), 5000);
 		
 		//X row = 18
 		Trap1(18*4+1,12*4+1,18*4+3,12*4+3, xsVectorSet(17*8+5,3,12*8+5), 5000);
-		Trap1(18*4+1,11*4+1,18*4+3,11*4+3, xsVectorSet(17*8+5,3,11*8+5), 5000);
+		//Manual fix
+		Trap1(18*4+1,11*4+1,18*4+3,11*4+3, xsVectorSet(17*8+5,3,11*8+5), 5000, 1);
+		//Manual fix
 		Trap1(18*4+1,10*4+1,18*4+3,10*4+3, xsVectorSet(17*8+5,3,10*8+5), 5000);
 		
 		//X row = 19
@@ -1876,6 +1883,21 @@ highFrequency
 			}
 		}
 		PaintAtlantisArea(8,28,12,32,"BlackRock");
+		
+		Layout(12,21);
+		Layout(12,22);
+		Layout(12,23);
+		Layout(12,24);
+		Layout(12,25);
+		Layout(11,23);
+		Layout(11,24);
+		Layout(11,25);
+		Layout(10,23);
+		Layout(10,24);
+		Layout(10,25);
+		Layout(1,23);
+		Layout(1,24);
+		Layout(1,25);
 		
 	}
 	xsEnableRule("Ragnorok");

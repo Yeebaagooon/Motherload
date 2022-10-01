@@ -1773,7 +1773,7 @@ void Trap5(int LZx = 0, int PPXmin = 0, int PPZmin = 0, int Timer = 0){
 	xSetInt(dTrap, xTrapHitboxZ, 34);
 }
 
-void Trap1(int PPXmin = 0, int PPZmin = 0, int PPXmax = 0, int PPZmax = 0, vector VTarget = vector(0,0,0), int Timer = 5000){
+void Trap1(int PPXmin = 0, int PPZmin = 0, int PPXmax = 0, int PPZmax = 0, vector VTarget = vector(0,0,0), int Timer = 5000, int DEBUG = 0){
 	int temp = 0;
 	trPaintTerrain(PPXmin,PPZmin,PPXmax,PPZmax,0,73,false);
 	xAddDatabaseBlock(dTrap);
@@ -1807,4 +1807,13 @@ void Trap1(int PPXmin = 0, int PPZmin = 0, int PPXmax = 0, int PPZmax = 0, vecto
 	trUnitSelectClear();
 	trUnitSelect(""+temp);
 	trUnitSetAnimationPath("0,0,1,1,0,0");
+	if(DEBUG == 1){
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitTeleport(xsVectorGetX(VTarget), 3, xsVectorGetZ(VTarget));
+	}
+	if((PPXmax - PPXmin == 2) && (PPZmax - PPZmin == 2)){
+		PaintAtlantisArea(PPXmin,PPZmin,PPXmax,PPZmax,"black");
+		trPaintTerrain(PPXmin+1,PPZmin+1,PPXmax-1,PPZmax-1,10,10,false);
+	}
 }
