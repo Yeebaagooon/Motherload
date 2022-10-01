@@ -13,6 +13,7 @@ Search //VERSION OVERRIDE HERE for release to rewrite all data
 -Migdol and wonder for Natas ship selectable DB
 -SP exit effect
 -SP exit and go to main menu with map on (modeEnter("Campaign"); modeEnter("Pregame");) trIsGadgetVisible to detect anbd do sequence
+-??Immunity relics for S10
 */
 
 

@@ -1739,6 +1739,9 @@ highFrequency
 									xSetBool(dTrap, xTrapReady, true);
 								}
 							}
+							PaintSellTerrain(81,3);
+							GVectorSellPos = vector(170,1,9);
+							trPaintTerrain(11,49,18,51,0,70,false);
 							//trPaintTerrain(37,14,39,40,0,73,true);
 							//Win key command - terrain refresh disables drilling - you get trapped after a drill because of the black rock between squares
 						}
@@ -1880,6 +1883,7 @@ highFrequency
 						xSetBool(dTrap, xTrapOn, true);
 						xSetBool(dTrap, xTrapReady, true);
 						xSetInt(dTrap, xTrapUnit, xGetInt(dTrap, xTrapHitboxX));
+						trPaintTerrain(90,0,100,0,5,4,false);
 					}
 				}
 			}

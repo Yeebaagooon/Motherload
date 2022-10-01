@@ -251,7 +251,7 @@ highFrequency
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
 		}
 		if(Stage == 10){
-			StageTime = StageTime+600; //540
+			StageTime = StageTime+1200; //1200
 			trCounterAddTime("CDSTage", StageTime, 0, "<color={PlayerColor(1)}>Time remaining", -1);
 		}
 		xsDisableSelf();

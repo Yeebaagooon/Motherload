@@ -1886,17 +1886,32 @@ highFrequency
 		
 		Layout(12,21);
 		Layout(12,22);
-		Layout(1,23);
-		Layout(1,24);
-		Layout(1,25);
 		for(a = 1 ; <= 12){
 			for(b = 23; <= 25){
 				Layout(a,b);
 			}
 		}
+		for(b = 17; <= 25){
+			Layout(1,b);
+		}
 		trPaintTerrain(88,5,100,34,2,10,false);
 		Trap7(90,42,90,42, 92);
 		Trap7(98,42,98,42, 94);
+		Layout(2,17);
+		//could be 21
+		for(b = 14; <= 20){
+			for(a = 3; <= 8){
+				//could be 9 - if not use for Yeebium
+				Layout(a,b);
+			}
+		}
+		
+		trQuestVarSet("MrNatas", trGetNextUnitScenarioNameNumber());
+		trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1,132,0,67,180,true);
+		trUnitSelectClear();
+		trUnitSelectByQV("MrNatas");
+		trUnitChangeProtoUnit("Gargarensis");
+		
 		
 	}
 	xsEnableRule("Ragnorok");

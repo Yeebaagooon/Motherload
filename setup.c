@@ -982,6 +982,8 @@ highFrequency
 		PaintPlanets(20,20, 1);
 		trQuestVarSet("StageSelector", trGetNextUnitScenarioNameNumber());
 		UnitCreate(1, "Athena", 40, 60, 90);
+		//spyEffect(1*trQuestVarGet("StageSelector"), kbGetProtoUnitID("Hero Birth"), vector(0,0,0), vector(0,0,0), 18);
+		//StageSelector
 		if(QuickStart == 1){
 			trUnitSelectByQV("StageSelector");
 			trUnitTeleport(50+10*QuickStage,3,60);
