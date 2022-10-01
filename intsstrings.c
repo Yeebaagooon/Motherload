@@ -14,6 +14,11 @@ Search //VERSION OVERRIDE HERE for release to rewrite all data
 -SP exit effect
 -SP exit and go to main menu with map on (modeEnter("Campaign"); modeEnter("Pregame");) trIsGadgetVisible to detect anbd do sequence
 -??Immunity relics for S10
+
+-Vector set to 0 on death already done
+
+Player active != 1, dont set vector, set as 0,0,0
+if all dead - end game
 */
 
 
@@ -21,7 +26,7 @@ Search //VERSION OVERRIDE HERE for release to rewrite all data
 //\Yeebaagooon\Motherload\Test sound.mp3
 int QuickStart = 0;
 int QuickStage = 1;
-bool OverrideSP = true;
+bool OverrideSP = false;
 bool OverrideStage = false;
 string displayz = "lol";
 

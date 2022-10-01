@@ -99,6 +99,9 @@ highFrequency
 				if(Stage <= 2){
 					UnitCreate(p, "Hero Greek Atalanta", 75+5*p, 180, 180);
 				}
+				/*else if(Stage == 10){
+					UnitCreate(p, "Hero Greek Atalanta", 75+1*p, 10, 180);
+				}*/
 				else{
 					UnitCreate(p, "Hero Greek Atalanta", 35+5*p, 168, 180);
 				}
@@ -284,6 +287,7 @@ highFrequency
 					trSetPlayerDefeated(p);
 					xSetInt(dPlayerData, xPlayerActive, 0);
 					trPlayerKillAllGodPowers(p);
+					trVectorQuestVarSet("P"+p+"Pos", xsVectorSet(0,0,0));
 				}
 				if(xGetInt(dPlayerData, xPlayerActive) == 1){
 					if(kbIsPlayerResigned(p) == true){
@@ -292,6 +296,7 @@ highFrequency
 						trSetPlayerDefeated(p);
 						xSetInt(dPlayerData, xPlayerActive, 0);
 						trPlayerKillAllGodPowers(p);
+						trVectorQuestVarSet("P"+p+"Pos", xsVectorSet(0,0,0));
 					}
 				}
 				if(xGetInt(dPlayerData, xPlayerActive) == 1){
@@ -300,9 +305,13 @@ highFrequency
 					if(trUnitDead()==true){
 						trPlayerKillAllUnits(p);
 						trPlayerKillAllBuildings(p);
-						trSetPlayerDefeated(p);
+						//trSetPlayerDefeated(p);
+						//So can chat
 						xSetInt(dPlayerData, xPlayerActive, 0);
 						trPlayerKillAllGodPowers(p);
+						trShowWinLose("You have been destroyed!", "xlose.wav");
+						trVectorQuestVarSet("P"+p+"Pos", xsVectorSet(0,0,0));
+						trArmyDispatch(""+p+",0","Victory Marker", 1, 0,0,0,0);
 						if (xGetInt(dPlayerData, xBonus+9) == 0){
 							xSetInt(dPlayerData, xBonus+9, 1);
 							if(trCurrentPlayer() == p){
@@ -820,7 +829,7 @@ highFrequency
 }
 
 
-
+/*
 rule fuckssake
 active
 highFrequency
@@ -851,7 +860,7 @@ highFrequency
 		//xsDisableSelf();
 		
 	}
-}
+}*/
 
 
 //HELP - trigtemp a chat contains

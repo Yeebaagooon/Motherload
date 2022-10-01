@@ -1528,6 +1528,7 @@ rule eternal_loops
 active
 highFrequency
 {
+	int T5Temp = 0;
 	processFreeRelics(10);
 	processHeldRelics(10);
 	if((Stage != 0) || (aiIsMultiplayer() == false)){
@@ -1670,7 +1671,7 @@ highFrequency
 				for(p=1; < cNumberNonGaiaPlayers) {
 					if((trVectorQuestVarGetX("P"+p+"Pos") >= xGetInt(dTrap, xTrapXMin)) && (trVectorQuestVarGetX("P"+p+"Pos") < xGetInt(dTrap, xTrapXMax)) && (trVectorQuestVarGetZ("P"+p+"Pos") >= xGetInt(dTrap, xTrapZMin)) && (trVectorQuestVarGetZ("P"+p+"Pos") <= xGetInt(dTrap, xTrapZMax))){
 						//Trap activate
-						trChatSend(0, "Trap activated!");
+						//trChatSend(0, "Trap activated!");
 						xSetInt(dTrap, xTrapResetTime, trTimeMS()+xGetInt(dTrap, xTrapReset));
 						xSetBool(dTrap, xTrapReady, false);
 						if(xGetInt(dTrap, xTrapType) == 1){
@@ -1713,6 +1714,7 @@ highFrequency
 						if(xGetInt(dTrap, xTrapType) == 5){
 							playSoundCustom("crocsnap.wav", "\Yeebaagooon\Motherload\Forcefield Down.wav");
 							xSetBool(dTrap, xTrapOn, false);
+							trChatSend(0, "Trap activated by P" +p);
 							for(t=xGetDatabaseCount(dT5); >0) {
 								xDatabaseNext(dT5);
 								if(xGetInt(dT5, xT5XPos) == xGetInt(dTrap, xTrapXMin)/2){
@@ -1836,7 +1838,7 @@ highFrequency
 					}
 				}
 				if(xGetInt(dTrap, xTrapType) == 4){
-					//Reset trap to ready
+					//Reset trap to ready - next 2 lines added ???forplayer
 					playSoundCustom("crocsnap.wav", "\Yeebaagooon\Motherload\Forcefield Down.wav");
 					for(t=1*xGetInt(dTrap, xTrapUnit) ; < 1*xGetInt(dTrap, xTrapUnit)+xsVectorGetX(xGetVector(dTrap, xTrapTargetVector))){
 						trUnitSelectClear();
@@ -1846,21 +1848,25 @@ highFrequency
 				}
 			}
 			else if((xGetBool(dTrap, xTrapOn) == false) && (xGetBool(dTrap, xTrapReady) == false) && (xGetInt(dTrap, xTrapType) == 5)){
+				T5Temp = 0;
 				for(p=1; < cNumberNonGaiaPlayers) {
 					if((trVectorQuestVarGetX("P"+p+"Pos") >= xGetInt(dTrap, xTrapXMin)) && (trVectorQuestVarGetX("P"+p+"Pos") < xGetInt(dTrap, xTrapXMax)) && (trVectorQuestVarGetZ("P"+p+"Pos") >= xGetInt(dTrap, xTrapZMin)) && (trVectorQuestVarGetZ("P"+p+"Pos") <= xGetInt(dTrap, xTrapZMax))){
-						break;
+						T5Temp = 1;
+						trChatSend(0, "Trap deactivation prevented " +p);
 					}
-					else{
-						playSoundCustom("crocsnap.wav", "\Yeebaagooon\Motherload\Forcefield Up.wav");
-						xSetBool(dTrap, xTrapOn, true);
-						xSetBool(dTrap, xTrapReady, true);
-						for(t=xGetDatabaseCount(dT5); >0) {
-							xDatabaseNext(dT5);
-							if(xGetInt(dT5, xT5XPos) == xGetInt(dTrap, xTrapXMin)/2){
-								trUnitSelectClear();
-								xUnitSelect(dT5,xT5Name);
-								trUnitChangeProtoUnit("Garrison Flag Sky Passage");
-							}
+					
+				}
+				if(T5Temp == 0){
+					trChatSend(0, "Trap deactivated");
+					playSoundCustom("crocsnap.wav", "\Yeebaagooon\Motherload\Forcefield Up.wav");
+					xSetBool(dTrap, xTrapOn, true);
+					xSetBool(dTrap, xTrapReady, true);
+					for(t=xGetDatabaseCount(dT5); >0) {
+						xDatabaseNext(dT5);
+						if(xGetInt(dT5, xT5XPos) == xGetInt(dTrap, xTrapXMin)/2){
+							trUnitSelectClear();
+							xUnitSelect(dT5,xT5Name);
+							trUnitChangeProtoUnit("Garrison Flag Sky Passage");
 						}
 					}
 				}
