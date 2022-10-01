@@ -1633,6 +1633,14 @@ highFrequency
 		}
 	}
 	if(Stage == 10){
+		xsSetContextPlayer(0);
+		for(p=1; < cNumberNonGaiaPlayers) {
+			if((trGetTerrainSubType(1*trVectorQuestVarGetX("P"+p+"Pos")/2,1*trVectorQuestVarGetZ("P"+p+"Pos")/2) == 10) && (trGetTerrainType(1*trVectorQuestVarGetX("P"+p+"Pos")/2,1*trVectorQuestVarGetZ("P"+p+"Pos")/2) == 2)){
+				trChatSendToPlayer(0, p, "LAVA DMG");
+				trUnitSelectByQV("P"+p+"Siphon");
+				trDamageUnit(10);
+			}
+		}
 		/*trChatHistoryClear();
 		trChatSend(0, "Trap count = " + xGetDatabaseCount(dTrap));
 		xSetPointer(dTrap, xGetDatabaseCount(dTrap));
@@ -1733,6 +1741,13 @@ highFrequency
 							}
 							//trPaintTerrain(37,14,39,40,0,73,true);
 							//Win key command - terrain refresh disables drilling - you get trapped after a drill because of the black rock between squares
+						}
+						//trap 7 active
+						if(xGetInt(dTrap, xTrapType) == 7){
+							playSoundCustom("crocsnap.wav", "\Yeebaagooon\Motherload\Forcefield Up.wav");
+							xSetBool(dTrap, xTrapOn, false);
+							xSetInt(dTrap, xTrapResetTime, trTimeMS()+500);
+							xSetInt(dTrap, xTrapUnit, xGetInt(dTrap, xTrapHitboxX));
 						}
 					}
 					//trap 5 dmg
@@ -1844,6 +1859,27 @@ highFrequency
 								trUnitChangeProtoUnit("Garrison Flag Sky Passage");
 							}
 						}
+					}
+				}
+			}
+			else if((xGetBool(dTrap, xTrapOn) == false) && (xGetBool(dTrap, xTrapReady) == false) && (xGetInt(dTrap, xTrapType) == 7)){
+				if(trTimeMS() > xGetInt(dTrap, xTrapResetTime)){
+					//trChatSend(0, "DEBUG - " + xGetInt(dTrap, xTrapUnit));
+					xSetInt(dTrap, xTrapResetTime, trTimeMS()+500);
+					xSetInt(dTrap, xTrapUnit, xGetInt(dTrap, xTrapUnit)-1);
+					trPaintTerrain(xGetInt(dTrap, xTrapHitboxZ),xGetInt(dTrap, xTrapUnit),xGetInt(dTrap, xTrapHitboxZ)+1,xGetInt(dTrap, xTrapUnit)-2,0,73,false);
+					//black divder = 39
+					if(xGetInt(dTrap, xTrapUnit) <= 31){
+						trPaintTerrain(xGetInt(dTrap, xTrapHitboxZ),xGetInt(dTrap, xTrapUnit)+3,xGetInt(dTrap, xTrapHitboxZ)+1,xGetInt(dTrap, xTrapUnit)+2,2,10,false);
+					}
+					else{
+						trPaintTerrain(xGetInt(dTrap, xTrapHitboxZ),xGetInt(dTrap, xTrapUnit)+3,xGetInt(dTrap, xTrapHitboxZ)+1,xGetInt(dTrap, xTrapUnit)+2,0,70,false);
+					}
+					if(xGetInt(dTrap, xTrapUnit) <= 1){
+						trPaintTerrain(xGetInt(dTrap, xTrapHitboxZ),1,xGetInt(dTrap, xTrapHitboxZ)+1,4,0,70,false);
+						xSetBool(dTrap, xTrapOn, true);
+						xSetBool(dTrap, xTrapReady, true);
+						xSetInt(dTrap, xTrapUnit, xGetInt(dTrap, xTrapHitboxX));
 					}
 				}
 			}

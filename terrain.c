@@ -1886,18 +1886,17 @@ highFrequency
 		
 		Layout(12,21);
 		Layout(12,22);
-		Layout(12,23);
-		Layout(12,24);
-		Layout(12,25);
-		Layout(11,23);
-		Layout(11,24);
-		Layout(11,25);
-		Layout(10,23);
-		Layout(10,24);
-		Layout(10,25);
 		Layout(1,23);
 		Layout(1,24);
 		Layout(1,25);
+		for(a = 1 ; <= 12){
+			for(b = 23; <= 25){
+				Layout(a,b);
+			}
+		}
+		trPaintTerrain(88,5,100,34,2,10,false);
+		Trap7(90,42,90,42, 92);
+		Trap7(98,42,98,42, 94);
 		
 	}
 	xsEnableRule("Ragnorok");
