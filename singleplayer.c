@@ -208,12 +208,12 @@ void PaintSP(){
 		trPaintTerrain(21,y*5+4,21,y*5+4,0,77,false);  //3x frill to obelisk L
 		trPaintTerrain(20,y*5+4,20,y*5+4,0,75,false);
 		trPaintTerrain(19,y*5+4,19,y*5+4,0,79,false);
-		PaintAtlantisArea(5,y*5+3,17,y*5+5, "GrassA"); // square
+		PaintAtlantisArea(5,y*5+3,16,y*5+5, "black"); // square
 		
 		trPaintTerrain(47,y*5+4,47,y*5+4,0,79,false); //3x frill to obelisk R
 		trPaintTerrain(48,y*5+4,48,y*5+4,0,75,false);
 		trPaintTerrain(49,y*5+4,49,y*5+4,0,77,false);
-		PaintAtlantisArea(51,y*5+3,63,y*5+5, "GrassA"); // square
+		PaintAtlantisArea(51,y*5+3,62,y*5+5, "black"); // square
 	}
 }
 
@@ -735,6 +735,7 @@ highFrequency
 	uiClearSelection();
 	PaintPlanets(8,35);
 	MainTitle(14,115);
+	xsEnableRule("BronzeUp");
 	//trChatSend(0, "Hull repair spend - " + xGetInt(dPlayerData, xHullSpend));
 	//trChatSend(0, "Fuel spend - " + xGetInt(dPlayerData, xFuelSpend));
 	xsEnableRule("choose_stage");
@@ -772,7 +773,105 @@ highFrequency
 	}
 	xsEnableRule("Bonus_Display");
 	xsEnableRule("SPSiphonStats");
-	
+	xsEnableRule("CompletionObelisk");
+}
+
+rule CompletionObelisk
+inactive
+highFrequency
+{
+	if(trTime() > cActivationTime+1){
+		xSetPointer(dPlayerData, 1);
+		int a = 0;
+		a = trGetNextUnitScenarioNameNumber();
+		UnitCreate(1,"Dwarf", 100,1,0);
+		trQuestVarSet("CompletionFlag1", a);
+		a = trGetNextUnitScenarioNameNumber();
+		UnitCreate(1,"Dwarf", 100,1,0);
+		trQuestVarSet("CompletionFlag2", a);
+		trUnitSelectByQV("CompletionFlag1");
+		trUnitTeleport(67,3,66);
+		trUnitSelectByQV("CompletionFlag1");
+		trUnitChangeProtoUnit("Spy Eye");
+		trUnitSelectByQV("CompletionFlag1");
+		trMutateSelected(kbGetProtoUnitID("Flag Numbered"));
+		trUnitSelectByQV("CompletionFlag1");
+		trSetSelectedScale(2,3,2);
+		trUnitSelectByQV("CompletionFlag2");
+		trUnitTeleport(71,3,66);
+		trUnitSelectByQV("CompletionFlag2");
+		trUnitChangeProtoUnit("Spy Eye");
+		trUnitSelectByQV("CompletionFlag2");
+		trMutateSelected(kbGetProtoUnitID("Flag Numbered"));
+		trUnitSelectByQV("CompletionFlag2");
+		trSetSelectedScale(2,3,2);
+		xsDisableSelf();
+		//Calculate Completion
+		Completion = 0;
+		Completion = Completion+xGetInt(dPlayerData, xStageUnlocked);
+		for(x = 1; < 22){
+			if(xGetInt(dPlayerData, xBonus+x) != 0){
+				Completion = Completion+1;
+			}
+			if(xGetInt(dPlayerData, xRelicCollected+x) == 1){
+				Completion = Completion+1;
+			}
+		}
+		if(1*xGetInt(dPlayerData, xDrillLevel) > 8){
+			Completion = Completion+8;
+		}
+		else{
+			Completion = Completion+xGetInt(dPlayerData, xDrillLevel);
+		}
+		if(1*xGetInt(dPlayerData, xFuelLevel) > 8){
+			Completion = Completion+8;
+		}
+		else{
+			Completion = Completion+xGetInt(dPlayerData, xFuelLevel);
+		}
+		if(1*xGetInt(dPlayerData, xHullLevel) > 8){
+			Completion = Completion+8;
+		}
+		else{
+			Completion = Completion+xGetInt(dPlayerData, xHullLevel);
+		}
+		if(1*xGetInt(dPlayerData, xCargoLevel) > 8){
+			Completion = Completion+8;
+		}
+		else{
+			Completion = Completion+xGetInt(dPlayerData, xCargoLevel);
+		}
+		if(1*xGetInt(dPlayerData, xEngineLevel) > 8){
+			Completion = Completion+8;
+		}
+		else{
+			Completion = Completion+xGetInt(dPlayerData, xEngineLevel);
+		}
+		if(1*xGetInt(dPlayerData, xRadiatorLevel) > 8){
+			Completion = Completion+8;
+		}
+		else{
+			Completion = Completion+xGetInt(dPlayerData, xRadiatorLevel);
+		}
+		//End completion calculation, below does flags and works with decimals (if needed, currently actually = 100)
+		trUnitSetVariation(1*trQuestVarGet("CompletionFlag1"), (Completion/10)-1);
+		trUnitSetVariation(1*trQuestVarGet("CompletionFlag2"), (Completion-((Completion/10)*10)-1));
+		xAddDatabaseBlock(dSelectables, true);
+		xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("CompletionObelisk"));
+		xSetInt(dSelectables, xSelectablesPrompt, 24);
+		if(Completion < 11){
+			if(Completion == 100){
+				Completion = 99;
+				//Fire the 100 percent complete cinematic
+			}
+			trUnitSelectByQV("CompletionFlag1");
+			trUnitDestroy();
+			trUnitSelectByQV("CompletionFlag2");
+			trUnitDestroy();
+			trUnitSelectByQV("CompletionObelisk");
+			trUnitDestroy();
+		}
+	}
 }
 
 void UpgradeDrill(int p = -1){
@@ -898,11 +997,66 @@ highFrequency
 	if (trUnitGetContained() == 1) {
 		xsSetContextPlayer(0);
 		xsDisableSelf();
+		xsEnableRule("ExitAnim");
 		saveAllData();
 		xsEnableRule("SPExit");
+		trUnitSelectByQV("ExitYeeb");
+		trUnitChangeProtoUnit("Underworld Smoke");
+		FloatingUnit("Fire Siphon", 68, 3, 7, 0,1,1,1);
+		trQuestVarSet("Flight", 3);
+		trQuestVarSet("FUnit", 1*trQuestVarGet("QVHero"));
+		trUnitSelectByQV("QVHero");
+		trSetUnitOrientation(xsVectorSet(trQuestVarGet("tempCosH"),90,trQuestVarGet("tempSinH")),xsVectorSet(trQuestVarGet("tempSinT")*trQuestVarGet("tempSinH"),
+				trQuestVarGet("tempCosT"),0.0-trQuestVarGet("tempSinT")*trQuestVarGet("tempCosH")),true);
+		trUnitSelectByQV("MainSiphon");
+		trUnitChangeProtoUnit("Rocket");
+		FloatingUnitAnimIdle("Vortex Finish Linked", 68, 3, 7, 0,1,1,1,"0,0,0,0,0",2);
+		trQuestVarSet("FObject1", 1*trQuestVarGet("QVHero"));
+		for (x=2 ; < 15){
+			FloatingUnitAnimIdle("Vortex Finish Linked", 68, 3, 7, 0,1,1,1,"0,0,0,0,0",2);
+			trQuestVarSet("FObject"+x+"", 1*trQuestVarGet("QVHero"));
+		}
+		FloatingUnit("Columns", 68, -1, 7, 0,2,2,2);
+		trQuestVarSet("FObjectCol", 1*trQuestVarGet("QVHero"));
+		int temp = trGetNextUnitScenarioNameNumber();
+		UnitCreate(0, "Tartarian Gate", 68,7,0);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitTeleport(68,3,7);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitOverrideAnimation(18,0,false,false,-1,-1);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trSetSelectedScale(0,0,0);
+		trUIFadeToColor(255,255,255,500,2500,true);
+		trCameraShake(5,0.3);
+		trOverlayText(MapName, 8.0, 579, 35, 1000);
 	} else if (trUnitIsSelected()) {
 		uiClearSelection();
 		uiMessageBox("Garrison in me to save your progress!");
+	}
+}
+
+rule ExitAnim
+inactive
+highFrequency
+{
+	if(trTimeMS() > CheckTime){
+		trUnitSelectByQV("FUnit");
+		trUnitTeleport(68,trQuestVarGet("Flight"),7);
+		trUnitSelectByQV("FObject1");
+		trUnitTeleport(68,trQuestVarGet("Flight")-10,7);
+		for (x=2 ; < 15){
+			trUnitSelectByQV("FObject"+x+"");
+			trUnitTeleport(68,trQuestVarGet("Flight")-9-x,7);
+		}
+		trUnitSelectByQV("FObjectCol");
+		trUnitTeleport(68,trQuestVarGet("Flight")-6,7);
+		trQuestVarSet("Flight", trQuestVarGet("Flight")+trQuestVarGet("FlightAdd"));
+		trQuestVarSet("FlightAdd", 0.005+trQuestVarGet("FlightAdd"));
+		CheckTime = CheckTime +25;
+		//trChatSend(0, ""+1*trQuestVarGet("Flight"));
 	}
 }
 
@@ -910,7 +1064,7 @@ rule SPExit
 inactive
 highFrequency
 {
-	if((trTime()-cActivationTime) >= 1){
+	if((trTime()-cActivationTime) >= 4){
 		if(OverrideStage == true){
 			xSetPointer(dPlayerData, 1);
 			xSetInt(dPlayerData, xStageStatus, 0);

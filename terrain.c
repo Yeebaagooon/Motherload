@@ -1905,9 +1905,9 @@ highFrequency
 				Layout(a,b);
 			}
 		}
-		Layout(9,17); //final Square
+		
 		trQuestVarSet("MrNatas", trGetNextUnitScenarioNameNumber());
-		trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1,132,0,75,180,true);
+		trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1,132,0,67,180,true);
 		trUnitSelectClear();
 		trUnitSelectByQV("MrNatas");
 		trUnitChangeProtoUnit("Gargarensis");

@@ -278,11 +278,18 @@ highFrequency
 {
 	if((trTime()-cActivationTime) >= CheckTime){
 		CheckTime = CheckTime+1;
-		int PlayersDead = 0;
 		for(p = 1; < cNumberNonGaiaPlayers){
 			xSetPointer(dPlayerData, p);
+			if(kbIsPlayerHuman(p) == false){
+				trPlayerKillAllUnits(p);
+				trPlayerKillAllBuildings(p);
+				trSetPlayerDefeated(p);
+				xSetInt(dPlayerData, xPlayerActive, 0);
+				trPlayerKillAllGodPowers(p);
+				trVectorQuestVarSet("P"+p+"Pos", xsVectorSet(0,0,0));
+			}
 			if(xGetInt(dPlayerData, xPlayerActive) == 1){
-				if(kbIsPlayerHuman(p) == false){
+				if(kbIsPlayerResigned(p) == true){
 					trPlayerKillAllUnits(p);
 					trPlayerKillAllBuildings(p);
 					trSetPlayerDefeated(p);
@@ -290,48 +297,50 @@ highFrequency
 					trPlayerKillAllGodPowers(p);
 					trVectorQuestVarSet("P"+p+"Pos", xsVectorSet(0,0,0));
 				}
-				if(xGetInt(dPlayerData, xPlayerActive) == 1){
-					if(kbIsPlayerResigned(p) == true){
-						trPlayerKillAllUnits(p);
-						trPlayerKillAllBuildings(p);
-						trSetPlayerDefeated(p);
-						xSetInt(dPlayerData, xPlayerActive, 0);
-						trPlayerKillAllGodPowers(p);
-						trVectorQuestVarSet("P"+p+"Pos", xsVectorSet(0,0,0));
-					}
-				}
-				if(xGetInt(dPlayerData, xPlayerActive) == 1){
-					trUnitSelectClear();
-					trUnitSelectByQV("P"+p+"Siphon");
-					if(trUnitDead()==true){
-						trPlayerKillAllUnits(p);
-						trPlayerKillAllBuildings(p);
-						//trSetPlayerDefeated(p);
-						//So can chat
-						xSetInt(dPlayerData, xPlayerActive, 0);
-						trPlayerKillAllGodPowers(p);
+			}
+			if(xGetInt(dPlayerData, xPlayerActive) == 1){
+				trUnitSelectClear();
+				trUnitSelectByQV("P"+p+"Siphon");
+				if(trUnitDead()==true){
+					trPlayerKillAllUnits(p);
+					trPlayerKillAllBuildings(p);
+					//trSetPlayerDefeated(p);
+					//So can chat
+					xSetInt(dPlayerData, xPlayerActive, 0);
+					trPlayerKillAllGodPowers(p);
+					if(trCurrentPlayer() == p){
 						trShowWinLose("You have been destroyed!", "xlose.wav");
-						trVectorQuestVarSet("P"+p+"Pos", xsVectorSet(0,0,0));
-						trArmyDispatch(""+p+",0","Victory Marker", 1, 0,0,0,0);
-						if (xGetInt(dPlayerData, xBonus+9) == 0){
-							xSetInt(dPlayerData, xBonus+9, 1);
-							if(trCurrentPlayer() == p){
-								ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked (9)!");
-								saveAllData();
-								playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
-							}
+					}
+					trVectorQuestVarSet("P"+p+"Pos", xsVectorSet(0,0,0));
+					trArmyDispatch(""+p+",0","Victory Marker", 1, 0,0,0,0);
+					if (xGetInt(dPlayerData, xBonus+9) == 0){
+						xSetInt(dPlayerData, xBonus+9, 1);
+						if(trCurrentPlayer() == p){
+							ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked (9)!");
+							saveAllData();
+							playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
 						}
 					}
 				}
 			}
+		}
+		trQuestVarSet("LossCondition" ,0);
+		for(p = 1; < cNumberNonGaiaPlayers){
+			xSetPointer(dPlayerData, p);
 			if(xGetInt(dPlayerData, xPlayerActive) == 0){
-				PlayersDead = PlayersDead + 1;
+				trQuestVarModify("LossCondition", "+", 1);
 			}
 		}
-		if(PlayersDead == cNumberNonGaiaPlayers-1){
+		//	trChatHistoryClear();
+		//trChatSend(0, ""+1*trQuestVarGet("LossCondition")+"/"+(cNumberNonGaiaPlayers-1)+"");
+		if(1*trQuestVarGet("LossCondition") == cNumberNonGaiaPlayers-1){
+			for(p = 1; < cNumberNonGaiaPlayers){
+				trSetPlayerDefeated(p);
+			}
 			trEndGame();
 		}
 	}
+	
 }
 
 int GetFuelPump(float x = 0, float z = 0){
@@ -481,7 +490,7 @@ highFrequency
 							xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*Shop1Cost);
 							count = 0;
 							for(x=0; < 4) {
-								if(trGetGPData(p,0,x) == 234){
+								if(trGetGPData(1,0,x) == 234){
 									count = count + trGetGPData(1,1,x);
 								}
 							}
@@ -500,7 +509,7 @@ highFrequency
 							xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*Shop2Cost);
 							count = 0;
 							for(x=0; < 4) {
-								if(trGetGPData(p,0,x) == 407){
+								if(trGetGPData(1,0,x) == 407){
 									count = count + trGetGPData(1,1,x);
 								}
 							}
@@ -530,7 +539,7 @@ highFrequency
 							xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*Shop3Cost);
 							count = 0;
 							for(x=0; < 4) {
-								if(trGetGPData(p,0,x) == 156){
+								if(trGetGPData(1,0,x) == 156){
 									count = count + trGetGPData(1,1,x);
 								}
 							}
@@ -778,9 +787,6 @@ highFrequency
 {
 	for(p = 1; < cNumberNonGaiaPlayers){
 		xSetPointer(dPlayerData, p);
-		if(xGetInt(dPlayerData, xPlayerActive) == 0){
-			trVectorQuestVarSet("P"+p+"Pos", xsVectorSet(0,0,0));
-		}
 		if(xGetInt(dPlayerData, xPlayerActive) == 1){
 			if(trDistanceToVectorSquared("P"+p+"Siphon", "P"+p+"Pos") > 0){
 				trVectorSetUnitPos("P"+p+"Pos", "P"+p+"Siphon");
@@ -909,7 +915,7 @@ minInterval 2
 				ColouredChat("1,0.5,0", "Q - Drill to cursor");
 				count = 0;
 				for(x=0; < 4) {
-					if(trGetGPData(p,0,x) == 407){
+					if(trGetGPData(1,0,x) == 407){
 						count = count + trGetGPData(1,1,x);
 					}
 				}
@@ -926,7 +932,7 @@ minInterval 2
 				}
 				count = 0;
 				for(x=0; < 4) {
-					if(trGetGPData(p,0,x) == 156){
+					if(trGetGPData(1,0,x) == 156){
 						count = count + trGetGPData(1,1,x);
 					}
 				}
@@ -935,7 +941,7 @@ minInterval 2
 				}
 				count = 0;
 				for(x=0; < 4) {
-					if(trGetGPData(p,0,x) == 234){
+					if(trGetGPData(1,0,x) == 234){
 						count = count + trGetGPData(1,1,x);
 					}
 				}
@@ -944,7 +950,7 @@ minInterval 2
 				}
 				count = 0;
 				for(x=0; < 4) {
-					if(trGetGPData(p,0,x) == 220){
+					if(trGetGPData(1,0,x) == 220){
 						count = count + trGetGPData(1,1,x);
 					}
 				}
@@ -953,7 +959,7 @@ minInterval 2
 				}
 				count = 0;
 				for(x=0; < 4) {
-					if(trGetGPData(p,0,x) == 557){
+					if(trGetGPData(1,0,x) == 557){
 						count = count + trGetGPData(1,1,x);
 					}
 				}

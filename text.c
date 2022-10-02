@@ -214,7 +214,6 @@ int npcDiag(int npc = 0, int dialog = 0) {
 					xSetPointer(dPlayerData, p);
 					if(xGetInt(dPlayerData, xStageUnlocked) == 0){
 						uiMessageBox("Make 10 gold in 8 minutes to unlock the next planet.");
-						trChatSend(0, "<color=1,1,1>Type 'help' to be reminded of how this map works.</color>");
 					}
 					dialog = 0;
 				}
@@ -663,6 +662,17 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				{
 					uiZoomToProto("Hero Greek Atalanta");
 					uiMessageBox("MY RICHES ARE MINE!");
+					dialog = 0;
+				}
+			}
+		}
+		case 24:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Map percent complete = " + Completion);
 					dialog = 0;
 				}
 			}
