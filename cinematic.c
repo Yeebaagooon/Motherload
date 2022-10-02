@@ -141,6 +141,9 @@ highFrequency
 		xsDisableSelf();
 		characterDialog("Yeebaagooon", "Great riches and the chance of a stellar reputation beckon.", "icons\special e son of osiris icon 64");
 		xsEnableRule("Cine_05");
+		unitTransform("Wall Long", "Rocket");
+		unitTransform("Wall Medium", "Rocket");
+		unitTransform("Wall Short", "Rocket");
 	}
 }
 

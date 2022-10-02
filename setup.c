@@ -338,6 +338,7 @@ highFrequency
 	if(aiIsMultiplayer() == false){
 		if(OverrideSP == false){
 			trDelayedRuleActivation("LoadSP");
+			GoldTime = 88000;
 			trLetterBox(false);
 		}
 		else if(OverrideSP == true){
@@ -678,6 +679,9 @@ void PaintPlanets(int x = 0, int z = 0, int offsetearth = 0){
 		xAddDatabaseBlock(dPlanetEyecandy, true);
 		xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVHero"));
 		xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 10);
+		xAddDatabaseBlock(dObelisks, true);
+		xSetInt(dObelisks, xObeliskName,1*trQuestVarGet("QVRelic"));
+		xSetInt(dObelisks, xObeliskStage, 10);
 		trUnitSelectByQV("QVHero");
 		trUnitSetAnimationPath("2,0,0,0,0,0,0");
 		trUnitSelectByQV("QVRelic");
@@ -689,6 +693,9 @@ void PaintPlanets(int x = 0, int z = 0, int offsetearth = 0){
 		xAddDatabaseBlock(dPlanetEyecandy, true);
 		xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVHero"));
 		xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 10);
+		xAddDatabaseBlock(dObelisks, true);
+		xSetInt(dObelisks, xObeliskName,1*trQuestVarGet("QVRelic"));
+		xSetInt(dObelisks, xObeliskStage, 10);
 		FloatingUnit("Migdol Stronghold", x*2+120, 15, z*2+20, 90, 1,1,1.5);
 		xAddDatabaseBlock(dPlanetEyecandy, true);
 		xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVRelic"));
@@ -696,6 +703,9 @@ void PaintPlanets(int x = 0, int z = 0, int offsetearth = 0){
 		xAddDatabaseBlock(dPlanetEyecandy, true);
 		xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVHero"));
 		xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 10);
+		xAddDatabaseBlock(dObelisks, true);
+		xSetInt(dObelisks, xObeliskName,1*trQuestVarGet("QVRelic"));
+		xSetInt(dObelisks, xObeliskStage, 10);
 		FloatingUnitAnimIdle("Cinematic Wake", x*2+120, 12, z*2+20, 90, 1,1,1);
 		xAddDatabaseBlock(dPlanetEyecandy, true);
 		xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVRelic"));
@@ -866,6 +876,9 @@ void PaintPlanets(int x = 0, int z = 0, int offsetearth = 0){
 		xAddDatabaseBlock(dPlanetEyecandy, true);
 		xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVHero"));
 		xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 10);
+		xAddDatabaseBlock(dObelisks, true);
+		xSetInt(dObelisks, xObeliskName,1*trQuestVarGet("QVRelic"));
+		xSetInt(dObelisks, xObeliskStage, 10);
 	}
 	//END
 }
@@ -877,6 +890,7 @@ highFrequency
 	trCameraCut(vector(100.057152,219.744125,92.986107), vector(0.000006,-0.999997,0.002399), vector(0.002398,0.002398,0.999994), vector(0.999997,0.000000,-0.002398));
 	xsEnableRule("LoadMP2");
 	xsEnableRule("LoadMP3");
+	MainTitle(38,85);
 	trUIFadeToColor(0,0,0,1500,0,false);
 	trOverlayText("Yeebaagooon presents", 4.0, 518, 100, 1000);
 	sunColor(0,0,0);
@@ -944,7 +958,6 @@ inactive
 highFrequency
 {
 	if((trTime()-cActivationTime) >= 1){
-		MainTitle(38,85);
 		trSoundPlayDialog("default", "1", -1, false, " : ", "");
 		xsDisableSelf();
 		trSetLighting("Erebus", 1.0);

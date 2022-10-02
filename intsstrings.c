@@ -8,27 +8,27 @@ Search //VERSION OVERRIDE HERE for release to rewrite all data
 --TO DO--
 -Trap stage
 -Bonuses
--Nick said something recently in SD about linking mousewheel to camera
 -100% complete reward? (10 stages, 21 relics, 48 levels, 21 bonsues, ?6SPs, 4 something else for % (cine,use AMB, use laser, ?))
 -Migdol and wonder for Natas ship selectable DB
 -SP exit effect
--SP exit and go to main menu with map on (modeEnter("Campaign"); modeEnter("Pregame");) trIsGadgetVisible to detect anbd do sequence
+-SP exit and go to main menu with map on (modeEnter("Campaign"); modeEnter("Pregame");) trIsGadgetVisible to detect and do sequence
 -??Immunity relics for S10
-
+-Fix cine DB issue
 -Vector set to 0 on death already done
 
-Player active != 1, dont set vector, set as 0,0,0
+-GP counter broken audrey ?Fixed (1 to p)
+
 if all dead - end game
 */
 
 
 //---Test controls
-//\Yeebaagooon\Motherload\Test sound.mp3
 int QuickStart = 0;
 int QuickStage = 1;
 bool OverrideSP = false;
 bool OverrideStage = false;
 string displayz = "lol";
+//\Yeebaagooon\Motherload\Test sound.mp3
 
 //---
 int Stage = 0;
@@ -50,6 +50,8 @@ int CheckTime = 1;
 
 int MineT = 5;
 int MineST = 3;
+int BronzeNumber = 0;
+int GoldTime = 5500;
 
 //Max is 4800
 int FuelSpendForBonus = 3000;

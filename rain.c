@@ -278,6 +278,7 @@ highFrequency
 {
 	if((trTime()-cActivationTime) >= CheckTime){
 		CheckTime = CheckTime+1;
+		int PlayersDead = 0;
 		for(p = 1; < cNumberNonGaiaPlayers){
 			xSetPointer(dPlayerData, p);
 			if(xGetInt(dPlayerData, xPlayerActive) == 1){
@@ -323,6 +324,12 @@ highFrequency
 					}
 				}
 			}
+			if(xGetInt(dPlayerData, xPlayerActive) == 0){
+				PlayersDead = PlayersDead + 1;
+			}
+		}
+		if(PlayersDead == cNumberNonGaiaPlayers-1){
+			trEndGame();
 		}
 	}
 }
@@ -474,7 +481,7 @@ highFrequency
 							xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*Shop1Cost);
 							count = 0;
 							for(x=0; < 4) {
-								if(trGetGPData(1,0,x) == 234){
+								if(trGetGPData(p,0,x) == 234){
 									count = count + trGetGPData(1,1,x);
 								}
 							}
@@ -493,7 +500,7 @@ highFrequency
 							xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*Shop2Cost);
 							count = 0;
 							for(x=0; < 4) {
-								if(trGetGPData(1,0,x) == 407){
+								if(trGetGPData(p,0,x) == 407){
 									count = count + trGetGPData(1,1,x);
 								}
 							}
@@ -523,7 +530,7 @@ highFrequency
 							xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*Shop3Cost);
 							count = 0;
 							for(x=0; < 4) {
-								if(trGetGPData(1,0,x) == 156){
+								if(trGetGPData(p,0,x) == 156){
 									count = count + trGetGPData(1,1,x);
 								}
 							}
@@ -771,6 +778,9 @@ highFrequency
 {
 	for(p = 1; < cNumberNonGaiaPlayers){
 		xSetPointer(dPlayerData, p);
+		if(xGetInt(dPlayerData, xPlayerActive) == 0){
+			trVectorQuestVarSet("P"+p+"Pos", xsVectorSet(0,0,0));
+		}
 		if(xGetInt(dPlayerData, xPlayerActive) == 1){
 			if(trDistanceToVectorSquared("P"+p+"Siphon", "P"+p+"Pos") > 0){
 				trVectorSetUnitPos("P"+p+"Pos", "P"+p+"Siphon");
@@ -899,7 +909,7 @@ minInterval 2
 				ColouredChat("1,0.5,0", "Q - Drill to cursor");
 				count = 0;
 				for(x=0; < 4) {
-					if(trGetGPData(1,0,x) == 407){
+					if(trGetGPData(p,0,x) == 407){
 						count = count + trGetGPData(1,1,x);
 					}
 				}
@@ -916,7 +926,7 @@ minInterval 2
 				}
 				count = 0;
 				for(x=0; < 4) {
-					if(trGetGPData(1,0,x) == 156){
+					if(trGetGPData(p,0,x) == 156){
 						count = count + trGetGPData(1,1,x);
 					}
 				}
@@ -925,7 +935,7 @@ minInterval 2
 				}
 				count = 0;
 				for(x=0; < 4) {
-					if(trGetGPData(1,0,x) == 234){
+					if(trGetGPData(p,0,x) == 234){
 						count = count + trGetGPData(1,1,x);
 					}
 				}
@@ -934,7 +944,7 @@ minInterval 2
 				}
 				count = 0;
 				for(x=0; < 4) {
-					if(trGetGPData(1,0,x) == 220){
+					if(trGetGPData(p,0,x) == 220){
 						count = count + trGetGPData(1,1,x);
 					}
 				}
@@ -943,7 +953,7 @@ minInterval 2
 				}
 				count = 0;
 				for(x=0; < 4) {
-					if(trGetGPData(1,0,x) == 557){
+					if(trGetGPData(p,0,x) == 557){
 						count = count + trGetGPData(1,1,x);
 					}
 				}
