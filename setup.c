@@ -678,11 +678,17 @@ void PaintPlanets(int x = 0, int z = 0, int offsetearth = 0){
 		xAddDatabaseBlock(dPlanetEyecandy, true);
 		xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVHero"));
 		xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 10);
+		xAddDatabaseBlock(dObelisks, true);
+		xSetInt(dObelisks, xObeliskName,1*trQuestVarGet("QVRelic"));
+		xSetInt(dObelisks, xObeliskStage, 10);
 		trUnitSelectByQV("QVHero");
 		trUnitSetAnimationPath("2,0,0,0,0,0,0");
 		trUnitSelectByQV("QVRelic");
 		trUnitSetAnimationPath("2,0,0,0,0,0,0");
 		FloatingUnit("Migdol Stronghold", x*2+120, 9, z*2+20, 270, 1.5,1,1.5);
+		xAddDatabaseBlock(dObelisks, true);
+		xSetInt(dObelisks, xObeliskName,1*trQuestVarGet("QVRelic"));
+		xSetInt(dObelisks, xObeliskStage, 10);
 		xAddDatabaseBlock(dPlanetEyecandy, true);
 		xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVRelic"));
 		xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 10);
@@ -690,6 +696,9 @@ void PaintPlanets(int x = 0, int z = 0, int offsetearth = 0){
 		xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVHero"));
 		xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 10);
 		FloatingUnit("Migdol Stronghold", x*2+120, 15, z*2+20, 90, 1,1,1.5);
+		xAddDatabaseBlock(dObelisks, true);
+		xSetInt(dObelisks, xObeliskName,1*trQuestVarGet("QVRelic"));
+		xSetInt(dObelisks, xObeliskStage, 10);
 		xAddDatabaseBlock(dPlanetEyecandy, true);
 		xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVRelic"));
 		xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 10);
@@ -866,6 +875,9 @@ void PaintPlanets(int x = 0, int z = 0, int offsetearth = 0){
 		xAddDatabaseBlock(dPlanetEyecandy, true);
 		xSetInt(dPlanetEyecandy, xPlanetEyecandyName,1*trQuestVarGet("QVHero"));
 		xSetInt(dPlanetEyecandy, xPlanetEyecandyStage, 10);
+		xAddDatabaseBlock(dObelisks, true);
+		xSetInt(dObelisks, xObeliskName,1*trQuestVarGet("QVRelic"));
+		xSetInt(dObelisks, xObeliskStage, 10);
 	}
 	//END
 }

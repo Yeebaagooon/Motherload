@@ -1895,6 +1895,7 @@ highFrequency
 			Layout(1,b);
 		}
 		trPaintTerrain(88,5,100,34,2,10,false);
+		//lava room
 		Trap7(90,42,90,42, 92);
 		Trap7(98,42,98,42, 94);
 		Layout(2,17);
@@ -1905,13 +1906,48 @@ highFrequency
 				Layout(a,b);
 			}
 		}
-		
+		Layout(9,17);
 		trQuestVarSet("MrNatas", trGetNextUnitScenarioNameNumber());
-		trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1,132,0,67,180,true);
+		trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1,132,0,75,180,true);
 		trUnitSelectClear();
 		trUnitSelectByQV("MrNatas");
 		trUnitChangeProtoUnit("Gargarensis");
-		
+		trPaintTerrain(53,9,79,31,0,73,false);
+		//Natas room playable area
+		PaintAtlantisArea(65,33,67,35,"BlackRock");
+		trPaintTerrain(66,34,66,34,10,10,false);
+		trPaintTerrain(65,32,65,32,0,79,false);
+		trPaintTerrain(66,32,66,32,0,75,false);
+		trPaintTerrain(67,32,67,32,0,77,false);
+		//Victory Square and key door terrain
+		spawnRelicSpecific(vector(126,3,75), 21);
+		spawnRelicSpecific(vector(138,3,75), 21);
+		//Yeebiums
+		for(a=1; <=5){
+			temp = trGetNextUnitScenarioNameNumber();
+			trArmyDispatch("0,0", "Dwarf", 1, 126+a*2,3,65, 0, true);
+			trUnitSelectClear();
+			trUnitSelect(""+temp);
+			trUnitChangeProtoUnit("Wall Connector");
+			trUnitSelectClear();
+			trUnitSelect(""+temp);
+			trUnitSetAnimationPath("3,3,0,0,0,0");
+			trUnitSelectClear();
+			trUnitSelect(""+temp);
+			trSetSelectedScale(1.2,1,1.2);
+			xAddDatabaseBlock(dKey, true);
+			xSetInt(dKey, xKeyUnitName, temp);
+			xSetInt(dKey, xKey, RELIC_KEY_EGYPT);
+		}
+		GVectorEgypt = vector(132,3,64);
+		FloatingUnitAnimIdle("UI Range Indicator Egypt SFX", 132, 7.5, 64, 180, 1,1,1);
+		xAddDatabaseBlock(dKey, true);
+		xSetInt(dKey, xKeyUnitName, 1*trQuestVarGet("QVHero"));
+		xSetInt(dKey, xKey, RELIC_KEY_EGYPT);
+		xAddDatabaseBlock(dKey, true);
+		xSetInt(dKey, xKeyUnitName, 1*trQuestVarGet("QVRelic"));
+		xSetInt(dKey, xKey, RELIC_KEY_EGYPT);
+		spawnRelicSpecific(vector(132,3,35), RELIC_KEY_EGYPT);
 		
 	}
 	xsEnableRule("Ragnorok");

@@ -12,7 +12,6 @@ Search //VERSION OVERRIDE HERE for release to rewrite all data
 -Skillpoints
 -100% complete reward? (10 stages, 21 relics, 48 levels, 21 bonsues, ?6SPs, 4 something else for % (cine,use AMB, use laser, ?))
 -Migdol and wonder for Natas ship selectable DB (done but removes at stage choosen)
--SP exit effect
 -SP exit and go to main menu with map on (modeEnter("Campaign"); modeEnter("Pregame");) trIsGadgetVisible to detect anbd do sequence
 -??Immunity relics for S10
 
@@ -20,13 +19,14 @@ Search //VERSION OVERRIDE HERE for release to rewrite all data
 
 Player active != 1, dont set vector, set as 0,0,0
 if all dead - end game
+Instant animate eggy key?
 */
 
 
 //---Test controls
 //\Yeebaagooon\Motherload\Test sound.mp3
-int QuickStart = 0;
-int QuickStage = 1;
+int QuickStart = 1;
+int QuickStage = 11;
 bool OverrideSP = false;
 bool OverrideStage = false;
 string displayz = "lol";
@@ -43,6 +43,7 @@ int GSeller = 0; //dont touch, does the player when selling minerals
 vector GVectorSellPos = vector(5,3,180);
 vector GVectorChinese = vector(0,0,0);
 vector GVectorNorse = vector(0,0,0);
+vector GVectorEgypt = vector(0,0,0);
 int TERRAIN_TYPE = 2;
 int TERRAIN_SUBTYPE = 2;
 int OVERTERRAIN_TYPE = 5;
@@ -136,6 +137,7 @@ int xGold = 0;
 int xGoldStart = 0;
 int xStageUnlocked = 0;
 int xStageStatus = 0;
+int xSpySiphonID = 0;
 
 int xBonus = 0;
 int xRelicCollected = 0;
@@ -200,6 +202,7 @@ highFrequency
 	xSpyObject = xInitAddInt(dPlayerData, "spy id", 0);
 	xRadioactivesSold = xInitAddInt(dPlayerData, "radioactives sold", 0);
 	xIceDrill = xInitAddInt(dPlayerData, "ice drilled", 0);
+	xSpySiphonID = xInitAddInt(dPlayerData, "Spy siphon main id", 0);
 	xsDisableSelf();
 	for(p=1; <= cNumberNonGaiaPlayers) {
 		xAddDatabaseBlock(dPlayerData, true);

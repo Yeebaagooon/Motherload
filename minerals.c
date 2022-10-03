@@ -510,7 +510,7 @@ string relicIcon(int relic = 0) {
 			}
 			case RELIC_KEY_EGYPT:
 			{
-				icon = "ui range indicator egyptian";
+				icon = "ui range indicator egypt";
 			}
 			case RELIC_KEY_GREEK:
 			{
@@ -647,7 +647,7 @@ int relicProto(int relic = 0) {
 		}
 		case RELIC_KEY_EGYPT:
 		{
-			proto = kbGetProtoUnitID("UI Range Indicator Egyptian SFX");
+			proto = kbGetProtoUnitID("UI Range Indicator Egypt SFX");
 		}
 		case RELIC_KEY_GREEK:
 		{
@@ -950,7 +950,7 @@ void spawnRelicSpecific(vector v = vector (0,0,0), int val = 1){
 			trUnitSelectByQV("TempRelicSFX");
 			trUnitChangeProtoUnit("Spy Eye");
 			trUnitSelectByQV("TempRelicSFX");
-			trMutateSelected(kbGetProtoUnitID("UI Range Indicator Egyptian SFX"));
+			trMutateSelected(kbGetProtoUnitID("UI Range Indicator Egypt SFX"));
 		}
 		if(val == RELIC_RELIGION){
 			trUnitSelectByQV("TempRelicSFX");
@@ -1082,6 +1082,7 @@ void processHeldRelics(int count = 1) {
 	float currentDistance = 0;
 	float keyDistance = 0;
 	float keyDistance2 = 0;
+	float keyDistance3 = 0;
 	for (x=xsMin(count, xGetDatabaseCount(dHeldRelics)); > 0) {
 		amt = 0;
 		xDatabaseNext(dHeldRelics);
@@ -1256,7 +1257,8 @@ void processHeldRelics(int count = 1) {
 			if ((xGetInt(dHeldRelics, xRelicValue) >= RELIC_KEY_CHINA) && (xGetInt(dHeldRelics, xRelicValue) <= RELIC_KEY_ATLANTEAN)) {
 				keyDistance = unitDistanceToVector(xGetInt(dHeldRelics, xRelicName), GVectorChinese);
 				keyDistance2 = unitDistanceToVector(xGetInt(dHeldRelics, xRelicName), GVectorNorse);
-				if ((keyDistance < 50) || (keyDistance2 < 50)) {
+				keyDistance3 = unitDistanceToVector(xGetInt(dHeldRelics, xRelicName), GVectorEgypt);
+				if ((keyDistance < 50) || (keyDistance2 < 50) || (keyDistance3 < 50)) {
 					trUnitSelectClear();
 					xUnitSelect(dHeldRelics, xRelicName);
 					trUnitChangeProtoUnit("Osiris Box Glow");
@@ -1267,6 +1269,9 @@ void processHeldRelics(int count = 1) {
 					}
 					if (keyDistance2 < 50){
 						trDelayedRuleActivation("UnlockNorse");
+					}
+					if (keyDistance3 < 50){
+						trDelayedRuleActivation("UnlockEgypt");
 					}
 				}
 			}
@@ -1340,6 +1345,23 @@ highFrequency
 		}
 		xsDisableSelf();
 	}
+}
+
+rule UnlockEgypt
+inactive
+highFrequency
+{
+	for(x=xGetDatabaseCount(dKey); >0) {
+		xDatabaseNext(dKey);
+		if(xGetInt(dKey, xKey) == RELIC_KEY_EGYPT){
+			trUnitSelectClear();
+			xUnitSelect(dKey, xKeyUnitName);
+			trUnitChangeProtoUnit("Dust Large");
+			xFreeDatabaseBlock(dKey);
+			playSoundCustom("\cinematics\14_in\Chimes.mp3");
+		}
+	}
+	xsDisableSelf();
 }
 
 rule SellMinerals
@@ -1637,9 +1659,29 @@ highFrequency
 		xsSetContextPlayer(0);
 		for(p=1; < cNumberNonGaiaPlayers) {
 			if((trGetTerrainSubType(1*trVectorQuestVarGetX("P"+p+"Pos")/2,1*trVectorQuestVarGetZ("P"+p+"Pos")/2) == 10) && (trGetTerrainType(1*trVectorQuestVarGetX("P"+p+"Pos")/2,1*trVectorQuestVarGetZ("P"+p+"Pos")/2) == 2)){
-				trChatSendToPlayer(0, p, "LAVA DMG");
 				trUnitSelectByQV("P"+p+"Siphon");
-				trDamageUnit(10);
+				if(trQuestVarGet("P"+p+"B17") == 1){
+					trDamageUnit(80);
+				}
+				else{
+					trDamageUnit(100);
+				}
+			}
+			if((trVectorQuestVarGetX("P"+p+"Pos") >= 130) && (trVectorQuestVarGetX("P"+p+"Pos") < 134) && (trVectorQuestVarGetZ("P"+p+"Pos") >= 66) && (trVectorQuestVarGetZ("P"+p+"Pos") <= 70)){
+				if(1*trQuestVarGet("P"+p+"WinNatas") == 0){
+					trUnitSelectByQV("P"+p+"Siphon");
+					trUnitChangeProtoUnit("Flag");
+					trUnitSelectByQV("P"+p+"Siphon");
+					trUnitSetAnimationPath("0,1,0,0,0,0");
+					trQuestVarSet("P"+p+"WinNatas", 1);
+					trQuestVarModify("TotalNatasWinners", "+", 1);
+					trChatSend(0, "Win");
+					trPlayerKillAllGodPowers(p);
+					xSetPointer(dPlayerData, p);
+					trUnitSelectClear();
+					xUnitSelect(dPlayerData, xSpySiphonID);
+					trMutateSelected(kbGetProtoUnitID("Hero Birth"));
+				}
 			}
 		}
 		/*trChatHistoryClear();
@@ -1714,7 +1756,6 @@ highFrequency
 						if(xGetInt(dTrap, xTrapType) == 5){
 							playSoundCustom("crocsnap.wav", "\Yeebaagooon\Motherload\Forcefield Down.wav");
 							xSetBool(dTrap, xTrapOn, false);
-							trChatSend(0, "Trap activated by P" +p);
 							for(t=xGetDatabaseCount(dT5); >0) {
 								xDatabaseNext(dT5);
 								if(xGetInt(dT5, xT5XPos) == xGetInt(dTrap, xTrapXMin)/2){
@@ -1852,12 +1893,10 @@ highFrequency
 				for(p=1; < cNumberNonGaiaPlayers) {
 					if((trVectorQuestVarGetX("P"+p+"Pos") >= xGetInt(dTrap, xTrapXMin)) && (trVectorQuestVarGetX("P"+p+"Pos") < xGetInt(dTrap, xTrapXMax)) && (trVectorQuestVarGetZ("P"+p+"Pos") >= xGetInt(dTrap, xTrapZMin)) && (trVectorQuestVarGetZ("P"+p+"Pos") <= xGetInt(dTrap, xTrapZMax))){
 						T5Temp = 1;
-						trChatSend(0, "Trap deactivation prevented " +p);
 					}
 					
 				}
 				if(T5Temp == 0){
-					trChatSend(0, "Trap deactivated");
 					playSoundCustom("crocsnap.wav", "\Yeebaagooon\Motherload\Forcefield Up.wav");
 					xSetBool(dTrap, xTrapOn, true);
 					xSetBool(dTrap, xTrapReady, true);

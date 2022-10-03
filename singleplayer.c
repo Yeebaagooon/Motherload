@@ -1010,7 +1010,7 @@ highFrequency
 				trQuestVarGet("tempCosT"),0.0-trQuestVarGet("tempSinT")*trQuestVarGet("tempCosH")),true);
 		trUnitSelectByQV("MainSiphon");
 		trUnitChangeProtoUnit("Rocket");
-		FloatingUnitAnimIdle("Vortex Finish Linked", 68, 3, 7, 0,1,1,1,"0,0,0,0,0",2);
+		FloatingUnitAnimIdle("Implode Sphere Effect", 68, 3, 7, 0,10,10,10,"0,0,0,0,0",2);
 		trQuestVarSet("FObject1", 1*trQuestVarGet("QVHero"));
 		for (x=2 ; < 15){
 			FloatingUnitAnimIdle("Vortex Finish Linked", 68, 3, 7, 0,1,1,1,"0,0,0,0,0",2);
@@ -1032,6 +1032,11 @@ highFrequency
 		trUIFadeToColor(255,255,255,500,2500,true);
 		trCameraShake(5,0.3);
 		trOverlayText(MapName, 8.0, 579, 35, 1000);
+		playSound("tartarianopen2.wav");
+		playSound("meteorwhoosh.wav");
+		playSound("meteordustcloud.wav");
+		playSound("lightthunder.wav");
+		playSound("lightningbirth.wav");
 	} else if (trUnitIsSelected()) {
 		uiClearSelection();
 		uiMessageBox("Garrison in me to save your progress!");

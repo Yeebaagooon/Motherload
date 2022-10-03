@@ -99,9 +99,9 @@ highFrequency
 				if(Stage <= 2){
 					UnitCreate(p, "Hero Greek Atalanta", 75+5*p, 180, 180);
 				}
-				/*else if(Stage == 10){
-					UnitCreate(p, "Hero Greek Atalanta", 75+1*p, 10, 180);
-				}*/
+				else if(Stage == 10){
+					UnitCreate(p, "Hero Greek Atalanta", 132, 10, 180);
+				}
 				else{
 					UnitCreate(p, "Hero Greek Atalanta", 35+5*p, 168, 180);
 				}
@@ -110,7 +110,7 @@ highFrequency
 				trUnitSelectClear();
 				trUnitSelectByQV("P"+p+"Siphon");
 				trSetSelectedScale(1,0.1,0);
-				spyEffect(1*trQuestVarGet("P"+p+"Siphon"), kbGetProtoUnitID("Fire Siphon"), vector(0,0,0), vector(1,1,1));
+				spyEffect(1*trQuestVarGet("P"+p+"Siphon"), kbGetProtoUnitID("Fire Siphon"), xsVectorSet(dPlayerData,xSpySiphonID,p), vector(1,1,1));
 				/*trUnitSelectByQV("P"+p+"Siphon", false);
 				trQuestVarSet("P"+p+"MainSpy", trGetNextUnitScenarioNameNumber());
 				trTechInvokeGodPower(0, "spy", vector(0,0,0), vector(0,0,0));*/
@@ -338,6 +338,10 @@ highFrequency
 				trSetPlayerDefeated(p);
 			}
 			trEndGame();
+		}
+		if(1*trQuestVarGet("LossCondition")+1*trQuestVarGet("TotalNatasWinners") == cNumberNonGaiaPlayers-1){
+			trChatSend(0, "Final cinematic");
+			xsDisableSelf();
 		}
 	}
 	
