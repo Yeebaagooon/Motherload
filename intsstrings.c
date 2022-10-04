@@ -19,7 +19,8 @@ Search //VERSION OVERRIDE HERE for release to rewrite all data
 
 Player active != 1, dont set vector, set as 0,0,0
 if all dead - end game
-Instant animate eggy key?
+-Natas Cine = Leaving system, stars going by. Satan reveal and ready for kill. Yeeb comes in. Fires Satan.
+-100Cine = Ship finds Yeeb. Reward.
 */
 
 
@@ -27,7 +28,7 @@ Instant animate eggy key?
 //\Yeebaagooon\Motherload\Test sound.mp3
 int QuickStart = 1;
 int QuickStage = 11;
-bool OverrideSP = false;
+bool OverrideSP = true;
 bool OverrideStage = false;
 string displayz = "lol";
 

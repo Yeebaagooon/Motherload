@@ -339,8 +339,10 @@ highFrequency
 			}
 			trEndGame();
 		}
-		if(1*trQuestVarGet("LossCondition")+1*trQuestVarGet("TotalNatasWinners") == cNumberNonGaiaPlayers-1){
-			trChatSend(0, "Final cinematic");
+		if((1*trQuestVarGet("LossCondition")+1*trQuestVarGet("TotalNatasWinners") == cNumberNonGaiaPlayers-1) && (1*trQuestVarGet("TotalNatasWinners") > 0)){
+			trLetterBox(true);
+			trUIFadeToColor(0,0,0,1,1,true);
+			xsEnableRule("Natas_Cine_01");
 			xsDisableSelf();
 		}
 	}

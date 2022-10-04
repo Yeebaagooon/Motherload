@@ -1947,7 +1947,7 @@ highFrequency
 		xAddDatabaseBlock(dKey, true);
 		xSetInt(dKey, xKeyUnitName, 1*trQuestVarGet("QVRelic"));
 		xSetInt(dKey, xKey, RELIC_KEY_EGYPT);
-		spawnRelicSpecific(vector(132,3,35), RELIC_KEY_EGYPT);
+		spawnRelicSpecific(vector(132,3,8), RELIC_KEY_EGYPT);
 		
 	}
 	xsEnableRule("Ragnorok");

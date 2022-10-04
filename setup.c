@@ -173,7 +173,7 @@ highFrequency
 	Slot 0
 	Total size: 1
 	*/
-	addSavedDataDB(dPlayerData, xStageUnlocked , 0, 10);
+	addSavedDataDB(dPlayerData, xStageUnlocked , 0, 11);
 	addSavedDataDB(dPlayerData, xStageStatus , 0, 4);
 	//addLocalDataQV("example", 0, 1000); // the QV "example" can have an integer value from 0-999. It is stored in the first slot
 	
@@ -488,7 +488,7 @@ void PaintPlanets(int x = 0, int z = 0, int offsetearth = 0){
 			xSetPointer(dPlayerData, 1);
 			trUnitSelectClear();
 			trUnitSelect(""+next, true);
-			if(xGetInt(dPlayerData, xStageUnlocked) != 9){
+			if(xGetInt(dPlayerData, xStageUnlocked) < 9){
 				trUnitChangeProtoUnit("Cinematic Block");
 			}
 			else{
@@ -1063,6 +1063,7 @@ highFrequency
 			xDatabaseNext(dObelisks);
 			xUnitSelect(dObelisks,xObeliskName);
 			trUnitDestroy();
+			xFreeDatabaseBlock(dObelisks);
 		}
 		aiPlanDestroy(dObelisks);
 		xsDisableSelf();
@@ -1105,6 +1106,7 @@ highFrequency
 			if(xGetInt(dPlanetEyecandy, xPlanetEyecandyStage) != Stage){
 				xUnitSelect(dPlanetEyecandy,xPlanetEyecandyName);
 				trUnitDestroy();
+				xFreeDatabaseBlock(dPlanetEyecandy);
 			}
 		}
 		if(Stage != 10){

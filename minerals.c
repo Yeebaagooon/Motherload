@@ -402,7 +402,7 @@ string relicIcon(int relic = 0) {
 			icon = "ui range indicator atlantean";
 		}
 		if(relic == RELIC_KEY_EGYPT){
-			icon = "ui range indicator egyptian";
+			icon = "ui range indicator egypt";
 		}
 		if(relic == RELIC_KEY_GREEK){
 			icon = "ui range indicator greek";
@@ -1675,12 +1675,21 @@ highFrequency
 					trUnitSetAnimationPath("0,1,0,0,0,0");
 					trQuestVarSet("P"+p+"WinNatas", 1);
 					trQuestVarModify("TotalNatasWinners", "+", 1);
-					trChatSend(0, "Win");
 					trPlayerKillAllGodPowers(p);
 					xSetPointer(dPlayerData, p);
 					trUnitSelectClear();
 					xUnitSelect(dPlayerData, xSpySiphonID);
 					trMutateSelected(kbGetProtoUnitID("Hero Birth"));
+					if(trCurrentPlayer() == p){
+						playSound("xwin.wav");
+						trChatSend(0, "<color=1,0.5,0><u>YOU WIN!");
+						trChatSend(0, "<color=1,0.5,0>Waiting on other players...</color>");
+						if(xGetInt(dPlayerData, xStageUnlocked) == 9){
+							xSetInt(dPlayerData, xStageUnlocked, 10);
+							xSetInt(dPlayerData, xRelicCollected+21, 1);
+							saveAllData();
+						}
+					}
 				}
 			}
 		}

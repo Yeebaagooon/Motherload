@@ -15,6 +15,56 @@ trCameraCut(vector(181.387436,17.402742,156.046768), vector(0.002357,-0.184338,0
 trCameraCut(vector(178.336853,23.402742,134.933929), vector(0.002322,-0.249727,0.968314), vector(0.000599,0.968316,0.249726), vector(0.999997,-0.000000,-0.002398));
 */
 
+void BuildNatasShip(int x = 0, int z = 0){
+	xsSetContextPlayer(0);
+	FloatingUnitAnimIdle("Wonder SPC", x*2+120, 9, z*2+20, 270, 1,1,1);
+	trUnitSelectByQV("QVHero");
+	trUnitSetAnimationPath("2,0,0,0,0,0,0");
+	trUnitSelectByQV("QVRelic");
+	trUnitSetAnimationPath("2,0,0,0,0,0,0");
+	FloatingUnit("Migdol Stronghold", x*2+120, 9, z*2+20, 270, 1.5,1,1.5);
+	FloatingUnit("Migdol Stronghold", x*2+120, 15, z*2+20, 90, 1,1,1.5);
+	FloatingUnitAnimIdle("Cinematic Wake", x*2+120, 12, z*2+20, 90, 1,1,1);
+	FloatingUnit("Columns Fallen", x*2+126, 12, z*2+16, 90, 3,2,3);
+	trUnitSelectByQV("QVHero");
+	trUnitSetAnimationPath("3,0,0,0,0,0,0");
+	trUnitSelectByQV("QVRelic");
+	trUnitSetAnimationPath("3,0,0,0,0,0,0");
+	FloatingUnit("Columns Fallen", x*2+126, 12, z*2+24, 90, 3,2,3);
+	trUnitSelectByQV("QVHero");
+	trUnitSetAnimationPath("3,0,0,0,0,0,0");
+	trUnitSelectByQV("QVRelic");
+	trUnitSetAnimationPath("3,0,0,0,0,0,0");
+	FloatingUnit("Hades Fire", x*2+130, 12, z*2+24, 90, 1,1,1);
+	trUnitSelectByQV("QVHero");
+	trSetUnitOrientation(xsVectorSet(0,0.0,0.0), xsVectorSet(1,0,0.0), true);
+	trUnitSelectByQV("QVRelic");
+	trSetUnitOrientation(xsVectorSet(0,0.0,0.0), xsVectorSet(1,0,0.0), true);
+	FloatingUnit("Hades Fire", x*2+130, 12, z*2+16, 90, 1,1,1);
+	trUnitSelectByQV("QVHero");
+	trSetUnitOrientation(xsVectorSet(0,0.0,0.0), xsVectorSet(1,0,0.0), true);
+	trUnitSelectByQV("QVRelic");
+	trSetUnitOrientation(xsVectorSet(0,0.0,0.0), xsVectorSet(1,0,0.0), true);
+	FloatingUnit("Columns", x*2+125, 21.5, z*2+20, 90, 1,1,1);
+	FloatingUnit("Columns", x*2+125, 21.5, z*2+22, 90, 1,1,1);
+	FloatingUnit("Columns", x*2+125, 21.5, z*2+18, 90, 1,1,1);
+	FloatingUnit("Columns", x*2+124, 21.5, z*2+17, 0, 1,1,1);
+	FloatingUnit("Columns", x*2+122, 21.5, z*2+17, 0, 1,1,1);
+	FloatingUnit("Columns", x*2+120, 21.5, z*2+17, 0, 1,1,1);
+	FloatingUnit("Columns", x*2+118, 21.5, z*2+17, 0, 1,1,1);
+	FloatingUnit("Columns", x*2+116, 21.5, z*2+17, 0, 1,1,1);
+	FloatingUnit("Columns", x*2+115, 21.5, z*2+18, 90, 1,1,1);
+	FloatingUnit("Columns", x*2+115, 21.5, z*2+20, 90, 1,1,1);
+	FloatingUnit("Columns", x*2+115, 21.5, z*2+22, 90, 1,1,1);
+	FloatingUnit("Columns", x*2+124, 21.5, z*2+23, 0, 1,1,1);
+	FloatingUnit("Columns", x*2+122, 21.5, z*2+23, 0, 1,1,1);
+	FloatingUnit("Columns", x*2+120, 21.5, z*2+23, 0, 1,1,1);
+	FloatingUnit("Columns", x*2+118, 21.5, z*2+23, 0, 1,1,1);
+	FloatingUnit("Columns", x*2+116, 21.5, z*2+23, 0, 1,1,1);
+	FloatingUnitAnimIdle("Pyramid Osiris Xpack", x*2+120, 25.5, z*2+20, 270, 0.3,0.3,0.4);
+	//END
+}
+
 rule CineSetup
 inactive
 highFrequency
@@ -872,7 +922,256 @@ highFrequency
 {
 	if((trTime()-cActivationTime) >= 2){
 		xsDisableSelf();
-		//xsEnableRule("Cine_Off");
+		//xsEnableRule("Natas_Cine_Off");
 	}
 }
 */
+
+rule Natas_Cine_01
+inactive
+highFrequency
+{
+	trOverlayTextColour(255,125,0);
+	trOverlayText("Loading...", 3.0, 600, 450, 1000);
+	xsDisableSelf();
+	xsEnableRule("Natas_Cine_02");
+	trFadeOutMusic(3);
+	trFadeOutAllSounds(3);
+}
+
+rule Natas_Cine_02
+inactive
+highFrequency
+{
+	int remain = 0;
+	remain = xGetDatabaseCount(dHeldRelics)+xGetDatabaseCount(dHiddenRelics)+xGetDatabaseCount(dFreeRelics);
+	for (x=xGetDatabaseCount(dHeldRelics); > 0) {
+		xDatabaseNext(dHeldRelics);
+		xUnitSelect(dHeldRelics, xRelicName);
+		trUnitDestroy();
+		xFreeDatabaseBlock(dHeldRelics);
+	}
+	for (x=xGetDatabaseCount(dHiddenRelics); > 0) {
+		xDatabaseNext(dHiddenRelics);
+		xUnitSelect(dHiddenRelics, xRelicName);
+		trUnitDestroy();
+		xFreeDatabaseBlock(dHiddenRelics);
+	}
+	for (x=xGetDatabaseCount(dFreeRelics); > 0) {
+		xDatabaseNext(dFreeRelics);
+		xUnitSelect(dFreeRelics, xRelicName);
+		trUnitDestroy();
+		xFreeDatabaseBlock(dFreeRelics);
+	}
+	for (x=xGetDatabaseCount(dTrap); > 0) {
+		xDatabaseNext(dTrap);
+		xFreeDatabaseBlock(dFreeRelics);
+	}
+	characterDialog("Relics", ""+remain, "");
+	for(p=1; < cNumberNonGaiaPlayers) {
+		trUnitSelectClear();
+		xUnitSelect(dPlayerData, xSpySiphonID);
+		trMutateSelected(kbGetProtoUnitID("Fire Siphon"));
+		trUnitSelectByQV("P"+p+"Siphon");
+		trUnitChangeProtoUnit("Cinematic Block");
+	}
+	unitTransform("Garrison Flag Sky Passage", "Cinematic Block");
+	unitTransform("Tartarian Gate", "Cinematic Block");
+	unitTransform("Sentinel Base", "Cinematic Block");
+	xsEnableRule("Natas_Cine_3");
+	if(remain == 2){
+		//bonus 21
+		for(p=1; < cNumberNonGaiaPlayers) {
+			xSetPointer(dPlayerData, p);
+			xSetInt(dPlayerData, xBonus+21, 1);
+		}
+		ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked! (21)");
+		characterDialog("Bonus Unlocked!", "(21)", "icons\special e son of osiris icon 64");
+		playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
+	}
+	trPaintTerrain(53,36,79,48,0,73,true);
+	//Area behind Natas for gate
+	trQuestVarSet("MrNatasGate", trGetNextUnitScenarioNameNumber());
+	trArmyDispatch("0,0", "Dwarf", 1,134,0,80,0,true);
+	trUnitSelectClear();
+	trUnitSelectByQV("MrNatasGate");
+	trUnitChangeProtoUnit("Gate");
+	trUnitSelectByQV("MrNatasGate");
+	trSetSelectedScale(2,2,2);
+	trUnitSelectByQV("MrNatasGate");
+	trUnitSetAnimationPath("3,4,0,0,0,0");
+	trPaintTerrain(0,60,100,100,5,4,false);
+	BuildNatasShip(0,70);
+	xsDisableSelf();
+	trModifyProtounit("Lampades", 0, 1, 8);
+	int a = trGetNextUnitScenarioNameNumber();
+	BronzeNumber = a;
+	for(b = 1; < 5){
+		a = trGetNextUnitScenarioNameNumber();
+		trQuestVarSetFromRand("TempX", 20, 90);
+		trQuestVarSetFromRand("TempZ", 160, 200);
+		trArmyDispatch("0,0", "Dwarf", 1,1*trQuestVarGet("TempX"),0,1*trQuestVarGet("TempZ"),0,true);
+		trUnitSelectClear();
+		trUnitSelect(""+a);
+		trUnitChangeProtoUnit("Lampades");
+		trSetSelectedScale(0,0,0);
+	}
+}
+
+rule Natas_Cine_3
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 2){
+		xsDisableSelf();
+		xsEnableRule("Natas_Cine_4");
+		xsEnableRule("Natas_Cine_Cut1");
+		trUIFadeToColor(0,0,0,1500,100,false);
+		characterDialog(" ", " ", " ");
+		createCameraTrack(8000);
+		trCameraCut(vector(65.802376,54.842648,93.671890), vector(0.524368,-0.434423,0.732335), vector(0.252909,0.900709,0.353215), vector(0.813065,0.000000,-0.582173));
+		addCameraTrackWaypoint();
+		trCameraCut(vector(124.851067,54.842648,73.539864), vector(-0.008649,-0.434423,0.900667), vector(-0.004171,0.900709,0.434403), vector(0.999954,-0.000000,0.009602));
+		addCameraTrackWaypoint();
+		trCameraCut(vector(169.476303,54.842644,88.641670), vector(-0.399547,-0.434423,0.807241), vector(-0.192706,0.900709,0.389343), vector(0.896229,-0.000000,0.443592));
+		addCameraTrackWaypoint();
+		trCameraCut(vector(124.728424,20.102650,150.140289), vector(-0.256233,-0.327256,0.909532), vector(-0.088740,0.944936,0.314994), vector(0.962533,-0.000000,0.271164));
+		addCameraTrackWaypoint();
+		playCameraTrack();
+		characterDialog("Mr Natas", "Ahahahaha!", "icons\scenario g gargarensis icon 64");
+		for(a = 1; < 10){
+			BronzeNumber = BronzeNumber+1;
+			trUnitSelectClear();
+			trUnitSelect(""+BronzeNumber);
+			trUnitMoveToPoint(190,0,xsVectorGetZ(kbGetBlockPosition(""+1*0)), -1, false);
+		}
+	}
+}
+
+rule Natas_Cine_4
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 3){
+		xsDisableSelf();
+		xsEnableRule("Natas_Cine_5");
+		characterDialog("Mr Natas", "All those minerals you have been mining has made me a fortune.", "icons\scenario g gargarensis icon 64");
+	}
+}
+
+rule Natas_Cine_Cut1
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 8){
+		xsDisableSelf();
+		createCameraTrack(8000);
+		trCameraCut(vector(133.962296,11.083123,51.621403), vector(-0.042182,-0.137956,0.989540), vector(-0.005875,0.990438,0.137831), vector(0.999093,-0.000000,0.042589));
+		addCameraTrackWaypoint();
+		trCameraCut(vector(133.599854,11.083123,54.488567), vector(-0.041852,-0.185320,0.981787), vector(-0.007893,0.982678,0.185152), vector(0.999093,-0.000000,0.042589));
+		addCameraTrackWaypoint();
+		playCameraTrack();
+		trUIFadeToColor(0,0,0,500,100,false);
+	}
+}
+
+rule Natas_Cine_5
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 4){
+		xsDisableSelf();
+		xsEnableRule("Natas_Cine_6");
+		characterDialog("Mr Natas", "So kind of you to also bring your ships to me.", "icons\scenario g gargarensis icon 64");
+		trUnitSelectClear();
+		trUnitSelectByQV("MrNatas");
+		trUnitOverrideAnimation(25,8,false,false,-1,0);
+	}
+}
+
+rule Natas_Cine_6
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 3){
+		xsDisableSelf();
+		xsEnableRule("Natas_Cine_7");
+		characterDialog("Mr Natas", "It will be fun to break them down for parts.", "icons\scenario g gargarensis icon 64");
+		trUnitSelectClear();
+		trUnitSelectByQV("MrNatas");
+	}
+}
+
+rule Natas_Cine_7
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 4){
+		xsDisableSelf();
+		xsEnableRule("Natas_Cine_8");
+		characterDialog("Mr Natas", "With you still inside of course.", "icons\scenario g gargarensis icon 64");
+		trUnitSelectByQV("MrNatas");
+		trUnitOverrideAnimation(25,33,false,false,-1,0);
+	}
+}
+
+rule Natas_Cine_8
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 3){
+		xsDisableSelf();
+		xsEnableRule("Natas_Cine_9");
+		characterDialog("SHIP PROXIMITY ALERT", " ", "world n brazier map");
+		sunColor(255,0,0);
+		trCameraShake(3,0.1);
+	}
+}
+
+rule Natas_Cine_9
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 3){
+		xsDisableSelf();
+		xsEnableRule("Natas_Cine_10");
+		characterDialog("Mr Natas", "WHAT?", "icons\scenario g gargarensis icon 64");
+		trUnitSelectByQV("MrNatas");
+		trUnitOverrideAnimation(25,1,false,false,-1,0);
+		trQuestVarSet("Dwarf", trGetNextUnitScenarioNameNumber());
+		trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1,114,0,180,0,true);
+		spyEffect(1*trQuestVarGet("Dwarf"), kbGetProtoUnitID("Tower Mirror"), vector(0,0,0),vector(0,1.4,0));
+		FloatingUnitAnimIdle("Vortex Landing", 114, 3, 178, 0,1,1,1,"0,0,0,0,0",2);
+		trUnitSelectClear();
+		trUnitSelectByQV("QVRelic");
+		trSetUnitOrientation(xsVectorSet(1,0.0,0.0), xsVectorSet(0,1,0.0), true);
+	}
+}
+
+rule Natas_Cine_10
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 2){
+		xsDisableSelf();
+		xsEnableRule("Natas_Cine_Off");
+		characterDialog(" ", " ", "");
+		trSetLighting("default", 0.1);
+		trCameraCut(vector(78.066513,19.423120,162.347794), vector(0.976032,-0.149754,0.157910), vector(0.147831,0.988723,0.023917), vector(0.159712,-0.000000,-0.987164));
+		trUnitSelectByQV("Dwarf");
+		trUnitMoveToPoint(114,0,168, -1, false);
+		trSetSelectedScale(0,0,0);
+	}
+}
+
+rule Natas_Cine_Off
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 1){
+		xsDisableSelf();
+		trLetterBox(false);
+		//trCameraCut(vector(97.212753,163.322815,-63.585068), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619730,0.784813), vector(0.999997,-0.000000,-0.002398));
+		trUnitSelectClear();
+	}
+}
