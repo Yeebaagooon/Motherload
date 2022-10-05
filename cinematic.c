@@ -937,6 +937,7 @@ highFrequency
 	xsEnableRule("Natas_Cine_02");
 	trFadeOutMusic(3);
 	trFadeOutAllSounds(3);
+	unitTransform("Valkyrie", "Rocket");
 }
 
 rule Natas_Cine_02
@@ -974,6 +975,8 @@ highFrequency
 		trMutateSelected(kbGetProtoUnitID("Fire Siphon"));
 		trUnitSelectByQV("P"+p+"Siphon");
 		trUnitChangeProtoUnit("Cinematic Block");
+		trUnitSelectByQV("P"+p+"Siphon");
+		trUnitTeleport(1,1,1);
 	}
 	unitTransform("Garrison Flag Sky Passage", "Cinematic Block");
 	unitTransform("Tartarian Gate", "Cinematic Block");
@@ -991,6 +994,22 @@ highFrequency
 	}
 	trPaintTerrain(53,36,79,48,0,73,true);
 	//Area behind Natas for gate
+	int temp = 0;
+	for(x = 53 ; <= 80){
+		for(z = 40; <= 48){
+			if((trGetTerrainSubType(x,z) == 73) && (trGetTerrainType(x,z) == 0)){
+				temp = trGetNextUnitScenarioNameNumber();
+				trArmyDispatch("0,2", "Dwarf", 1, x*2,3,z*2, 0, true);
+				trUnitSelectClear();
+				trUnitSelect(""+temp);
+				trUnitChangeProtoUnit("Statue of Automaton Base");
+				trUnitSelectClear();
+				trUnitSelect(""+temp);
+				trSetSelectedScale(2,2,2);
+				
+			}
+		}
+	}
 	trQuestVarSet("MrNatasGate", trGetNextUnitScenarioNameNumber());
 	trArmyDispatch("0,0", "Dwarf", 1,134,0,80,0,true);
 	trUnitSelectClear();
@@ -1016,6 +1035,32 @@ highFrequency
 		trUnitChangeProtoUnit("Lampades");
 		trSetSelectedScale(0,0,0);
 	}
+	a = trGetNextUnitScenarioNameNumber();
+	trArmyDispatch("0,0", "Dwarf", 1,124,0,80,0,true);
+	trUnitSelectClear();
+	trUnitSelect(""+a);
+	trUnitChangeProtoUnit("Columns");
+	trSetSelectedScale(2,3,2);
+	a = trGetNextUnitScenarioNameNumber();
+	trArmyDispatch("0,0", "Dwarf", 1,144,0,80,0,true);
+	trUnitSelectClear();
+	trUnitSelect(""+a);
+	trUnitChangeProtoUnit("Columns");
+	trSetSelectedScale(2,3,2);
+	a = trGetNextUnitScenarioNameNumber();
+	trArmyDispatch("0,0", "Dwarf", 1,114,0,80,0,true);
+	trUnitSelectClear();
+	trUnitSelect(""+a);
+	trUnitChangeProtoUnit("Gate");
+	trSetSelectedScale(2,2,2);
+	trUnitSetAnimationPath("3,4,0,0,0,0");
+	a = trGetNextUnitScenarioNameNumber();
+	trArmyDispatch("0,0", "Dwarf", 1,154,0,80,0,true);
+	trUnitSelectClear();
+	trUnitSelect(""+a);
+	trUnitChangeProtoUnit("Gate");
+	trSetSelectedScale(2,2,2);
+	trUnitSetAnimationPath("3,4,0,0,0,0");
 }
 
 rule Natas_Cine_3
@@ -1039,6 +1084,7 @@ highFrequency
 		addCameraTrackWaypoint();
 		playCameraTrack();
 		characterDialog("Mr Natas", "Ahahahaha!", "icons\scenario g gargarensis icon 64");
+		playSound("xpack\xcinematics\7_in\music2.mp3");
 		for(a = 1; < 10){
 			BronzeNumber = BronzeNumber+1;
 			trUnitSelectClear();
@@ -1112,6 +1158,7 @@ highFrequency
 		characterDialog("Mr Natas", "With you still inside of course.", "icons\scenario g gargarensis icon 64");
 		trUnitSelectByQV("MrNatas");
 		trUnitOverrideAnimation(25,33,false,false,-1,0);
+		playSound("cinematics\20_out\music.mp3");
 	}
 }
 
@@ -1125,6 +1172,7 @@ highFrequency
 		characterDialog("SHIP PROXIMITY ALERT", " ", "world n brazier map");
 		sunColor(255,0,0);
 		trCameraShake(3,0.1);
+		playSound("attackwarning.wav");
 	}
 }
 
@@ -1132,7 +1180,7 @@ rule Natas_Cine_9
 inactive
 highFrequency
 {
-	if((trTime()-cActivationTime) >= 3){
+	if((trTime()-cActivationTime) >= 2){
 		xsDisableSelf();
 		xsEnableRule("Natas_Cine_10");
 		characterDialog("Mr Natas", "WHAT?", "icons\scenario g gargarensis icon 64");
@@ -1142,9 +1190,7 @@ highFrequency
 		trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1,114,0,180,0,true);
 		spyEffect(1*trQuestVarGet("Dwarf"), kbGetProtoUnitID("Tower Mirror"), vector(0,0,0),vector(0,1.4,0));
 		FloatingUnitAnimIdle("Vortex Landing", 114, 3, 178, 0,1,1,1,"0,0,0,0,0",2);
-		trUnitSelectClear();
-		trUnitSelectByQV("QVRelic");
-		trSetUnitOrientation(xsVectorSet(1,0.0,0.0), xsVectorSet(0,1,0.0), true);
+		playSound("cinematics\32_out\music.mp3");
 	}
 }
 
@@ -1154,13 +1200,410 @@ highFrequency
 {
 	if((trTime()-cActivationTime) >= 2){
 		xsDisableSelf();
-		xsEnableRule("Natas_Cine_Off");
+		xsEnableRule("Natas_Cine_11");
 		characterDialog(" ", " ", "");
 		trSetLighting("default", 0.1);
-		trCameraCut(vector(78.066513,19.423120,162.347794), vector(0.976032,-0.149754,0.157910), vector(0.147831,0.988723,0.023917), vector(0.159712,-0.000000,-0.987164));
+		trCameraCut(vector(66.338997,19.423120,160.450455), vector(0.976032,-0.149754,0.157910), vector(0.147831,0.988723,0.023917), vector(0.159712,-0.000000,-0.987164));
 		trUnitSelectByQV("Dwarf");
-		trUnitMoveToPoint(114,0,168, -1, false);
+		trUnitMoveToPoint(114,0,160, -1, false);
 		trSetSelectedScale(0,0,0);
+		playSound("meteorapproach.wav");
+		trQuestVarSet("Yeeb", trGetNextUnitScenarioNameNumber());
+		trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1,132,3,55,0,true);
+		//spyEffect(1*trQuestVarGet("Yeeb"), kbGetProtoUnitID("Phoenix Egg"), vector(0,0,0),vector(2,2,2));
+	}
+}
+
+rule Natas_Cine_11
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 5){
+		xsDisableSelf();
+		xsEnableRule("Natas_Cine_12");
+		createCameraTrack(10000);
+		trCameraCut(vector(132.962524,26.306038,-4.607869), vector(0.002250,-0.346088,0.938199), vector(0.000830,0.938202,0.346087), vector(0.999997,-0.000000,-0.002398));
+		addCameraTrackWaypoint();
+		trCameraCut(vector(133.046265,26.306038,30.312029), vector(0.002093,-0.487652,0.873036), vector(0.001169,0.873038,0.487650), vector(0.999997,-0.000000,-0.002398));
+		addCameraTrackWaypoint();
+		playCameraTrack();
+		trUnitSelectByQV("Yeeb");
+		trUnitChangeProtoUnit("Pharaoh of Osiris XP");
+		trUnitSelectByQV("Yeeb");
+		trUnitMoveToPoint(132,3,70,-1,false);
+		characterDialog("Yeebaagooon", "NATAS!", "icons\special e son of osiris icon 64");
+	}
+}
+
+rule Natas_Cine_12
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 2){
+		xsDisableSelf();
+		xsEnableRule("Natas_Cine_13");
+		characterDialog("Mr Natas", "Yeebaagooon!", "icons\scenario g gargarensis icon 64");
+		trUnitSelectByQV("MrNatas");
+		trUnitOverrideAnimation(25,12,false,false,-1,0);
+	}
+}
+
+rule Natas_Cine_13
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 2){
+		characterDialog("Yeebaagooon", "This is how you repay me? Besmirching the name of my company and thieving my money.", "icons\special e son of osiris icon 64");
+		xsEnableRule("Natas_Cine_14");
+		xsDisableSelf();
+	}
+}
+
+rule Natas_Cine_14
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 5){
+		characterDialog("Yeebaagooon", "I simply cannot allow this to continue.", "icons\special e son of osiris icon 64");
+		xsEnableRule("Natas_Cine_15");
+		xsDisableSelf();
+	}
+}
+
+rule Natas_Cine_15
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 2){
+		xsDisableSelf();
+		xsEnableRule("Natas_Cine_16");
+		characterDialog("Mr Natas", "And what are you going to do?", "icons\scenario g gargarensis icon 64");
+		trUnitSelectByQV("MrNatas");
+		trUnitOverrideAnimation(25,34,false,false,-1,0);
+		createCameraTrack(3000);
+		trCameraCut(vector(133.046265,26.306038,30.312029), vector(0.002093,-0.487652,0.873036), vector(0.001169,0.873038,0.487650), vector(0.999997,-0.000000,-0.002398));
+		addCameraTrackWaypoint();
+		trCameraCut(vector(133.599854,11.083123,54.488567), vector(-0.041852,-0.185320,0.981787), vector(-0.007893,0.982678,0.185152), vector(0.999093,-0.000000,0.042589));
+		addCameraTrackWaypoint();
+		playCameraTrack();
+		//here
+		trQuestVarSet("Temp", trGetNextUnitScenarioNameNumber());
+		trChangeTerrainHeight(63,80,64,81,15,true);
+		//trPaintTerrain(63,80,64,81,0,70,false);
+		trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1,130,3,156,120,true);
+		trCameraCut(vector(147.439651,38.248768,142.507339), vector(-0.397862,-0.707107,0.584556), vector(-0.397862,0.707107,0.584556), vector(0.826687,0.000000,0.562662));
+		trUnitSelectClear();
+		trUnitSelect(""+1*trQuestVarGet("Temp"));
+		trUnitChangeProtoUnit("Gargarensis");
+		trUnitOverrideAnimation(25, 7, false,false, -1, 0);
+		trUnitSelect(""+1*trQuestVarGet("Temp"));
+		trUnitTeleport(128,3,161);
+		trUnitSelect(""+1*trQuestVarGet("Temp"));
+		trSetSelectedScale(0.3,0.3,0.3);
+		trQuestVarSet("Timer2", trTimeMS()+13210);
+	}
+}
+
+rule Natas_Cine_16
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 3){
+		xsDisableSelf();
+		characterDialog("Mr Natas", "AGAINST THE POWER OF SATAN", "icons\scenario g gargarensis icon 64");
+		xsEnableRule("Natas_Cine_17");
+		createCameraTrack(5000);
+		trCameraCut(vector(133.599854,11.083123,54.488567), vector(-0.041852,-0.185320,0.981787), vector(-0.007893,0.982678,0.185152), vector(0.999093,-0.000000,0.042589));
+		addCameraTrackWaypoint();
+		trCameraCut(vector(133.046265,26.306038,30.312029), vector(0.002093,-0.487652,0.873036), vector(0.001169,0.873038,0.487650), vector(0.999997,-0.000000,-0.002398));
+		addCameraTrackWaypoint();
+		playCameraTrack();
+	}
+}
+
+rule Natas_Cine_17
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 3){
+		characterDialog("Yeebaagooon", "Please.", "icons\special e son of osiris icon 64");
+		xsEnableRule("Natas_Cine_18");
+		xsDisableSelf();
+	}
+}
+
+rule Natas_Cine_18
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 2){
+		characterDialog("Yeebaagooon", "You're embarassing yourself.", "icons\special e son of osiris icon 64");
+		xsEnableRule("Natas_Cine_19");
+		xsDisableSelf();
+	}
+}
+
+rule Natas_Cine_19
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 3){
+		characterDialog(" ", " ", "");
+		xsEnableRule("Natas_Cine_20");
+		xsDisableSelf();
+		trUnitSelectByQV("Yeeb");
+		trUnitOverrideAnimation(19,0,false,false,-1,0);
+		trQuestVarSet("Timer1", trTimeMS()+1650);
+	}
+}
+
+rule Natas_Cine_20
+inactive
+highFrequency
+{
+	if(trTimeMS() > 1*trQuestVarGet("Timer1")){
+		xsDisableSelf();
+		xsEnableRule("Natas_Cine_21");
+		characterDialog("Mr Natas", "Noooooooooo!", "icons\scenario g gargarensis icon 64");
+		trUnitSelectByQV("MrNatas");
+		trUnitOverrideAnimation(25,35,false,false,-1,0);
+	}
+}
+
+rule Natas_Cine_21
+inactive
+highFrequency
+{
+	if(trTimeMS() > 1*trQuestVarGet("Timer2")){
+		xsDisableSelf();
+		xsEnableRule("Natas_Cine_22");
+		characterDialog("Mr Natas", "Blargh!", "icons\scenario g gargarensis icon 64");
+		playSound("gargarensisdie.wav");
+		trCameraCut(vector(147.439651,38.248768,142.507339), vector(-0.397862,-0.707107,0.584556), vector(-0.397862,0.707107,0.584556), vector(0.826687,0.000000,0.562662));
+	}
+}
+
+rule Natas_Cine_22
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 1){
+		xsDisableSelf();
+		trUnitSelectByQV("MrNatas");
+		trUnitDestroy();
+		trUnitSelectByQV("Temp");
+		trUnitDestroy();
+		trUnitSelectByQV("Yeeb");
+		trUnitDestroy();
+		xsEnableRule("Natas_Cine_23");
+		trFadeOutMusic(3);
+		trFadeOutAllSounds(3);
+		trQuestVarSet("Yeeb", trGetNextUnitScenarioNameNumber());
+		trArmyDispatch(""+cNumberNonGaiaPlayers+",0", "Dwarf", 1,132,0,70,180,true);
+		trUnitSelectClear();
+		trUnitSelectByQV("Yeeb");
+		trUnitChangeProtoUnit("Pharaoh of Osiris XP");
+	}
+}
+
+rule Natas_Cine_23
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 2){
+		xsDisableSelf();
+		xsEnableRule("Natas_Cine_24");
+		trCameraCut(vector(133.222977,9.386039,53.951668), vector(0.002277,-0.313046,0.949735), vector(0.000750,0.949738,0.313044), vector(0.999997,-0.000000,-0.002398));
+		characterDialog("Yeebaagooon", "Miners, I apologise for making your supervisor actual Satan.", "icons\special e son of osiris icon 64");
+		trSetLighting("default", 0.1);
+		playSound("cinematics\29_in\music2.mp3");
+	}
+}
+
+rule Natas_Cine_24
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 4){
+		xsDisableSelf();
+		xsEnableRule("Natas_Cine_25");
+		trSetLighting("Dawn", 15);
+		characterDialog("Yeebaagooon", "I am an equal opportunity employer you see.", "icons\special e son of osiris icon 64");
+		trQuestVarSet("MrNatasGate2", trGetNextUnitScenarioNameNumber());
+		trArmyDispatch("0,0", "Dwarf", 1,134,0,94,0,true);
+		trUnitSelectClear();
+		trUnitSelectByQV("MrNatasGate2");
+		trUnitChangeProtoUnit("Gate");
+		trUnitSelectByQV("MrNatasGate2");
+		trSetSelectedScale(2,2,2);
+		trUnitSelectByQV("MrNatasGate2");
+		trUnitSetAnimationPath("3,4,0,0,0,0");
+		trUnitSelectByQV("MrNatasGate2");
+		trUnitTeleport(134,3,94);
+	}
+}
+
+rule Natas_Cine_25
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 4){
+		xsDisableSelf();
+		xsEnableRule("Natas_Cine_26");
+		characterDialog("Yeebaagooon", "Regardless we have both been stolen from.", "icons\special e son of osiris icon 64");
+		createCameraTrack(3500);
+		trCameraCut(vector(133.222977,9.386039,53.951668), vector(0.002277,-0.313046,0.949735), vector(0.000750,0.949738,0.313044), vector(0.999997,-0.000000,-0.002398));
+		addCameraTrackWaypoint();
+		trCameraCut(vector(133.250748,9.386039,65.531639), vector(0.002372,-0.143897,0.989590), vector(0.000345,0.989593,0.143896), vector(0.999997,-0.000000,-0.002398));
+		addCameraTrackWaypoint();
+		playCameraTrack();
+	}
+}
+
+rule Natas_Cine_26
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 4){
+		xsDisableSelf();
+		xsEnableRule("Natas_Cine_27");
+		characterDialog("Yeebaagooon", "So I feel it is only right you take what Mr Natas was hoarding.", "icons\special e son of osiris icon 64");
+		BronzeNumber = trGetNextUnitScenarioNameNumber();
+		trArmyDispatch("0,2", "Dwarf", 1,11,11,11,0,true);
+		trTechInvokeGodPower(0, "Bronze", vector(11.24, 9.06, 10.94), vector(0,0,0));
+	}
+}
+
+rule Natas_Cine_27
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 4){
+		xsDisableSelf();
+		xsEnableRule("Natas_Cine_28");
+		characterDialog("Yeebaagooon", "Behold, The Motherload.", "icons\special e son of osiris icon 64");
+		trFadeOutMusic(0.1);
+		trFadeOutAllSounds(0.1);
+		playSound("cinematics\35_out\music2.mp3");
+		trUnitSelectByQV("MrNatasGate");
+		trUnitOverrideAnimation(41,0,true,true,-1,0);
+		createCameraTrack(3500);
+		trCameraCut(vector(133.232895,13.346039,58.091667), vector(0.002328,-0.239060,0.971002), vector(0.000573,0.971005,0.239059), vector(0.999997,-0.000000,-0.002398));
+		addCameraTrackWaypoint();
+		trCameraCut(vector(133.250748,9.386039,65.531639), vector(0.002372,-0.143897,0.989590), vector(0.000345,0.989593,0.143896), vector(0.999997,-0.000000,-0.002398));
+		addCameraTrackWaypoint();
+		playCameraTrack();
+		//Motherload
+		spawnRelicSpecific(vector(136,3,92), 21);
+		spawnRelicSpecific(vector(136,3,90), 21);
+		spawnRelicSpecific(vector(132,3,90), 21);
+		spawnRelicSpecific(vector(132,3,92), 21);
+		spawnRelicSpecific(vector(128,3,90), 21);
+		spawnRelicSpecific(vector(128,3,92), 21);
+		trUnitSelectClear();
+		trUnitSelect(""+BronzeNumber);
+		trMutateSelected(kbGetProtoUnitID("Plenty Vault"));
+		trUnitSelectClear();
+		trUnitSelect(""+BronzeNumber);
+		trSetSelectedScale(1,-1,1);
+		trUnitSelectClear();
+		trUnitSelect(""+BronzeNumber);
+		trUnitTeleport(134,3,92);
+	}
+}
+
+rule Natas_Cine_28
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 3){
+		xsDisableSelf();
+		xsEnableRule("Natas_Cine_29");
+		characterDialog(" ", " ", "");
+	}
+}
+
+rule Natas_Cine_29
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 3){
+		xsDisableSelf();
+		xsEnableRule("Natas_Cine_30");
+		trUIFadeToColor(0,0,0,1500,1,true);
+	}
+}
+
+rule Natas_Cine_30
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 2){
+		xsDisableSelf();
+		xsEnableRule("Natas_Cine_31");
+		gadgetUnreal("ShowImageBox-BordersTop");
+		gadgetUnreal("ShowImageBox-BordersBottom");
+		gadgetUnreal("ShowImageBox-BordersLeft");
+		gadgetUnreal("ShowImageBox-BordersRight");
+		gadgetUnreal("ShowImageBox-BordersLeftTop");
+		gadgetUnreal("ShowImageBox-BordersLeftBottom");
+		gadgetUnreal("ShowImageBox-BordersRightBottom");
+		gadgetUnreal("ShowImageBox-BordersRightTop");
+		gadgetUnreal("ShowImageBox-CloseButton");
+		pause(0);
+		int p = trCurrentPlayer();
+		xSetPointer(dPlayerData, p);
+		if (xGetInt(dPlayerData, xStageUnlocked) >= Stage-1) {
+			trShowImageDialog(stageIcon(Stage), "Stage complete!");
+		}
+		else{
+			trShowImageDialog(stageIcon(Stage), "Unlock this stage first to claim further rewards!");
+		}
+	}
+}
+
+rule Natas_Cine_31
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 3){
+		xsDisableSelf();
+		xsEnableRule("Natas_Cine_32");
+		int p = trCurrentPlayer();
+		xSetPointer(dPlayerData, p);
+		if (xGetInt(dPlayerData, xStageUnlocked) >= Stage-1) {
+			relicDescription(21);
+			playSoundCustom("tributereceived.wav", "\Yeebaagooon\Motherload\Sell.mp3");
+			xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)+1000);
+		}
+		else{
+			trShowImageDialog(stageIcon(Stage), "Unlock this stage first to claim further rewards!");
+		}
+	}
+}
+
+rule Natas_Cine_32
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 3){
+		xsDisableSelf();
+		xsEnableRule("End1");
+		gadgetUnreal("ShowImageBox");
+		gadgetReal("ShowImageBox-BordersTop");
+		gadgetReal("ShowImageBox-BordersBottom");
+		gadgetReal("ShowImageBox-BordersLeft");
+		gadgetReal("ShowImageBox-BordersRight");
+		gadgetReal("ShowImageBox-BordersLeftTop");
+		gadgetReal("ShowImageBox-BordersLeftBottom");
+		gadgetReal("ShowImageBox-BordersRightBottom");
+		gadgetReal("ShowImageBox-BordersRightTop");
+		gadgetReal("ShowImageBox-CloseButton");
+		int p = trCurrentPlayer();
+		xSetPointer(dPlayerData, p);
+		trQuestVarSet("Profit", xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart));
+		characterDialog(stageName(Stage) + " complete!", "You have made " +1*trQuestVarGet("Profit") + " gold profit here.", "icons\special e son of osiris icon 64");
+		saveAllData();
 	}
 }
 
@@ -1168,10 +1611,9 @@ rule Natas_Cine_Off
 inactive
 highFrequency
 {
-	if((trTime()-cActivationTime) >= 1){
+	if((trTime()-cActivationTime) >= 2){
 		xsDisableSelf();
 		trLetterBox(false);
-		//trCameraCut(vector(97.212753,163.322815,-63.585068), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619730,0.784813), vector(0.999997,-0.000000,-0.002398));
-		trUnitSelectClear();
 	}
 }
+//anoterher gate 14 back

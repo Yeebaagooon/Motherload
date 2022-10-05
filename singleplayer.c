@@ -863,6 +863,8 @@ highFrequency
 			if(Completion == 100){
 				Completion = 99;
 				//Fire the 100 percent complete cinematic
+						trUnitSetVariation(1*trQuestVarGet("CompletionFlag1"), (Completion/10)-1);
+		trUnitSetVariation(1*trQuestVarGet("CompletionFlag2"), (Completion-((Completion/10)*10)-1));
 			}
 			trUnitSelectByQV("CompletionFlag1");
 			trUnitDestroy();

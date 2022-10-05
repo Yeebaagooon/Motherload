@@ -344,6 +344,11 @@ highFrequency
 			trUIFadeToColor(0,0,0,1,1,true);
 			xsEnableRule("Natas_Cine_01");
 			xsDisableSelf();
+			trCounterAbort("CDSTage");
+			StageTime = StageTime+200;
+			xsDisableRule("FuelEconomyNatas");
+			trCounterAbort("CDFuel");
+			trCounterAbort("CDDepth");
 		}
 	}
 	

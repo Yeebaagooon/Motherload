@@ -28,7 +28,7 @@ if all dead - end game
 //\Yeebaagooon\Motherload\Test sound.mp3
 int QuickStart = 1;
 int QuickStage = 11;
-bool OverrideSP = true;
+bool OverrideSP = false;
 bool OverrideStage = false;
 string displayz = "lol";
 

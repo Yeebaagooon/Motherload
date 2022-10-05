@@ -250,7 +250,7 @@ int relicCost(int relic = 0) {
 		}
 		case RELIC_YEEBIUM:
 		{
-			price = 500;
+			price = 1000;
 		}
 		case RELIC_RELIGION:
 		{
