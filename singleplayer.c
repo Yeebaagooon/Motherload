@@ -854,17 +854,22 @@ highFrequency
 			Completion = Completion+xGetInt(dPlayerData, xRadiatorLevel);
 		}
 		//End completion calculation, below does flags and works with decimals (if needed, currently actually = 100)
+		//Completion = 99;
 		trUnitSetVariation(1*trQuestVarGet("CompletionFlag1"), (Completion/10)-1);
 		trUnitSetVariation(1*trQuestVarGet("CompletionFlag2"), (Completion-((Completion/10)*10)-1));
 		xAddDatabaseBlock(dSelectables, true);
 		xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("CompletionObelisk"));
 		xSetInt(dSelectables, xSelectablesPrompt, 24);
+		//FloatingUnitAnimIdle("Pharaoh of Osiris XP", xsVectorGetX(kbGetBlockPosition(""+1*trQuestVarGet("CompletionObelisk")))-1, 27.1, xsVectorGetZ(kbGetBlockPosition(""+1*trQuestVarGet("CompletionObelisk")))-1, 180, 1,1,1);
+		FloatingUnitAnimIdle("Tower Mirror", xsVectorGetX(kbGetBlockPosition(""+1*trQuestVarGet("CompletionObelisk")))-1, Completion/100*3, xsVectorGetZ(kbGetBlockPosition(""+1*trQuestVarGet("CompletionObelisk")))-1, 0, 0,3,0);
+		trUnitSelectByQV("CompletionObelisk");
+		trUnitSetAnimationPath("0,1,0,0,0");
 		if(Completion < 11){
 			if(Completion == 100){
 				Completion = 99;
 				//Fire the 100 percent complete cinematic
-						trUnitSetVariation(1*trQuestVarGet("CompletionFlag1"), (Completion/10)-1);
-		trUnitSetVariation(1*trQuestVarGet("CompletionFlag2"), (Completion-((Completion/10)*10)-1));
+				trUnitSetVariation(1*trQuestVarGet("CompletionFlag1"), (Completion/10)-1);
+				trUnitSetVariation(1*trQuestVarGet("CompletionFlag2"), (Completion-((Completion/10)*10)-1));
 			}
 			trUnitSelectByQV("CompletionFlag1");
 			trUnitDestroy();

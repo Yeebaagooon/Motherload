@@ -1331,6 +1331,21 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				}
 			}
 		}
+		case 721:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Bonus 21.");
+				}
+				case 2:
+				{
+					trShowChoiceDialog("Equip?", "Yes", 43, "No", -1);
+					dialog = 0;
+				}
+			}
+		}
 		case 730:
 		{
 			switch(dialog)
@@ -1562,6 +1577,17 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				case 1:
 				{
 					uiMessageBox("To unlock - spend " + HullSpendForBonus + " on hull repair. Current = " + xGetInt(dPlayerData, xHullSpend));
+					dialog = 0;
+				}
+			}
+		}
+		case 751:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("To unlock - Collect all minerals on Mr. Natas' Ship");
 					dialog = 0;
 				}
 			}

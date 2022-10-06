@@ -1002,11 +1002,10 @@ highFrequency
 				trArmyDispatch("0,2", "Dwarf", 1, x*2,3,z*2, 0, true);
 				trUnitSelectClear();
 				trUnitSelect(""+temp);
-				trUnitChangeProtoUnit("Statue of Automaton Base");
+				trUnitChangeProtoUnit("Hoplite");
 				trUnitSelectClear();
 				trUnitSelect(""+temp);
 				trSetSelectedScale(2,2,2);
-				
 			}
 		}
 	}
@@ -1061,6 +1060,7 @@ highFrequency
 	trUnitChangeProtoUnit("Gate");
 	trSetSelectedScale(2,2,2);
 	trUnitSetAnimationPath("3,4,0,0,0,0");
+	trTechInvokeGodPower(0, "Bronze", vector(128, 9.06, 90), vector(0,0,0));
 }
 
 rule Natas_Cine_3
@@ -1091,6 +1091,7 @@ highFrequency
 			trUnitSelect(""+BronzeNumber);
 			trUnitMoveToPoint(190,0,xsVectorGetZ(kbGetBlockPosition(""+1*0)), -1, false);
 		}
+		unitTransform("Hoplite", "Statue of Automaton Base");
 	}
 }
 
@@ -1470,7 +1471,6 @@ highFrequency
 		characterDialog("Yeebaagooon", "So I feel it is only right you take what Mr Natas was hoarding.", "icons\special e son of osiris icon 64");
 		BronzeNumber = trGetNextUnitScenarioNameNumber();
 		trArmyDispatch("0,2", "Dwarf", 1,11,11,11,0,true);
-		trTechInvokeGodPower(0, "Bronze", vector(11.24, 9.06, 10.94), vector(0,0,0));
 	}
 }
 

@@ -349,6 +349,7 @@ highFrequency
 			xsDisableRule("FuelEconomyNatas");
 			trCounterAbort("CDFuel");
 			trCounterAbort("CDDepth");
+			trClearCounterDisplay();
 		}
 	}
 	

@@ -4,6 +4,11 @@ highFrequency
 {
 	if((trTime()-cActivationTime) >= 2){
 		xSetPointer(dPlayerData, 1);
+		if((xGetInt(dPlayerData, xStageUnlocked) == 10) && (1*trQuestVarGet("CineStatus") == 1)){
+			trQuestVarSet("CineStatus", 2);
+			uiMessageBox("Mr. Natas has been defeated! All bonus descriptions unlocked.");
+			playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
+		}
 		if(xGetInt(dPlayerData, xBonus+1) != 0){
 			trUnitSelectByQV("Bonus1");
 			trUnitChangeProtoUnit("Statue of Major God");
@@ -192,7 +197,7 @@ highFrequency
 			trUnitChangeProtoUnit("Outpost");
 			trUnitSelectByQV("Bonus7");
 			trSetSelectedScale(0.5,0.1,0.5);
-			if(xGetInt(dPlayerData, xFuelLevel) < 3){
+			if((xGetInt(dPlayerData, xFuelLevel) < 3) && (1*trQuestVarGet("CineStatus") != 2)){
 				trUnitSelectByQV("Bonus7");
 				trUnitSetAnimationPath("0,1,0,0,0");
 				xAddDatabaseBlock(dSelectables, true);
@@ -227,7 +232,7 @@ highFrequency
 			trUnitChangeProtoUnit("Outpost");
 			trUnitSelectByQV("Bonus8");
 			trSetSelectedScale(0.5,0.1,0.5);
-			if(xGetInt(dPlayerData, xStageUnlocked) < 6){
+			if((xGetInt(dPlayerData, xStageUnlocked) < 6) && (1*trQuestVarGet("CineStatus") != 2)){
 				trUnitSelectByQV("Bonus8");
 				trUnitSetAnimationPath("0,1,0,0,0");
 				xAddDatabaseBlock(dSelectables, true);
@@ -258,7 +263,7 @@ highFrequency
 			trUnitChangeProtoUnit("Outpost");
 			trUnitSelectByQV("Bonus9");
 			trSetSelectedScale(0.5,0.1,0.5);
-			if(xGetInt(dPlayerData, xStageUnlocked) < 5){
+			if((xGetInt(dPlayerData, xStageUnlocked) < 5) && (1*trQuestVarGet("CineStatus") != 2)){
 				trUnitSelectByQV("Bonus9");
 				trUnitSetAnimationPath("0,1,0,0,0");
 				xAddDatabaseBlock(dSelectables, true);
@@ -289,7 +294,7 @@ highFrequency
 			trUnitChangeProtoUnit("Outpost");
 			trUnitSelectByQV("Bonus10");
 			trSetSelectedScale(0.5,0.1,0.5);
-			if(xGetInt(dPlayerData, xStageUnlocked) < 5){
+			if((xGetInt(dPlayerData, xStageUnlocked) < 5) && (1*trQuestVarGet("CineStatus") != 2)){
 				trUnitSelectByQV("Bonus10");
 				trUnitSetAnimationPath("0,1,0,0,0");
 				xAddDatabaseBlock(dSelectables, true);
@@ -358,7 +363,7 @@ highFrequency
 				trUnitChangeProtoUnit("Outpost");
 				trUnitSelectByQV("Bonus11");
 				trSetSelectedScale(0.5,0.1,0.5);
-				if(xGetInt(dPlayerData, xDrillLevel) < 2){
+				if((xGetInt(dPlayerData, xDrillLevel) < 2) && (1*trQuestVarGet("CineStatus") != 2)){
 					trUnitSelectByQV("Bonus11");
 					trUnitSetAnimationPath("0,1,0,0,0");
 					xAddDatabaseBlock(dSelectables, true);
@@ -390,7 +395,7 @@ highFrequency
 			trUnitChangeProtoUnit("Outpost");
 			trUnitSelectByQV("Bonus12");
 			trSetSelectedScale(0.5,0.1,0.5);
-			if(xGetInt(dPlayerData, xGold) < 999){
+			if((xGetInt(dPlayerData, xGold) < 999) && (1*trQuestVarGet("CineStatus") != 2)){
 				trUnitSelectByQV("Bonus12");
 				trUnitSetAnimationPath("0,1,0,0,0");
 				xAddDatabaseBlock(dSelectables, true);
@@ -421,7 +426,7 @@ highFrequency
 			trUnitChangeProtoUnit("Outpost");
 			trUnitSelectByQV("Bonus13");
 			trSetSelectedScale(0.5,0.1,0.5);
-			if(xGetInt(dPlayerData, xStageUnlocked) <= 3){
+			if((xGetInt(dPlayerData, xStageUnlocked) <= 3) && (1*trQuestVarGet("CineStatus") != 2)){
 				trUnitSelectByQV("Bonus13");
 				trUnitSetAnimationPath("0,1,0,0,0");
 				xAddDatabaseBlock(dSelectables, true);
@@ -482,7 +487,7 @@ highFrequency
 				trUnitChangeProtoUnit("Outpost");
 				trUnitSelectByQV("Bonus14");
 				trSetSelectedScale(0.5,0.1,0.5);
-				if(xGetInt(dPlayerData, xDrillLevel) <= 5){
+				if((xGetInt(dPlayerData, xDrillLevel) <= 5) && (1*trQuestVarGet("CineStatus") != 2)){
 					trUnitSelectByQV("Bonus14");
 					trUnitSetAnimationPath("0,1,0,0,0");
 					xAddDatabaseBlock(dSelectables, true);
@@ -518,7 +523,7 @@ highFrequency
 			trUnitChangeProtoUnit("Outpost");
 			trUnitSelectByQV("Bonus15");
 			trSetSelectedScale(0.5,0.1,0.5);
-			if(xGetInt(dPlayerData, xStageUnlocked) < 8){
+			if((xGetInt(dPlayerData, xStageUnlocked) < 8) && (1*trQuestVarGet("CineStatus") != 2)){
 				trUnitSelectByQV("Bonus15");
 				trUnitSetAnimationPath("0,1,0,0,0");
 				xAddDatabaseBlock(dSelectables, true);
@@ -553,7 +558,7 @@ highFrequency
 			trUnitChangeProtoUnit("Outpost");
 			trUnitSelectByQV("Bonus16");
 			trSetSelectedScale(0.5,0.1,0.5);
-			if(xGetInt(dPlayerData, xFuelSpend) < 1000){
+			if((xGetInt(dPlayerData, xFuelSpend) < 1000) && (1*trQuestVarGet("CineStatus") != 2)){
 				trUnitSelectByQV("Bonus16");
 				trUnitSetAnimationPath("0,1,0,0,0");
 				xAddDatabaseBlock(dSelectables, true);
@@ -627,7 +632,7 @@ highFrequency
 			trUnitChangeProtoUnit("Outpost");
 			trUnitSelectByQV("Bonus18");
 			trSetSelectedScale(0.5,0.1,0.5);
-			if(xGetInt(dPlayerData, xRadioactivesSold) < RadiationBonus/4){
+			if((xGetInt(dPlayerData, xRadioactivesSold) < RadiationBonus/4) && (1*trQuestVarGet("CineStatus") != 2)){
 				trUnitSelectByQV("Bonus18");
 				trUnitSetAnimationPath("0,1,0,0,0");
 				xAddDatabaseBlock(dSelectables, true);
@@ -664,7 +669,7 @@ highFrequency
 			trUnitChangeProtoUnit("Outpost");
 			trUnitSelectByQV("Bonus19");
 			trSetSelectedScale(0.5,0.1,0.5);
-			if(xGetInt(dPlayerData, xIceDrill) < 5){
+			if((xGetInt(dPlayerData, xIceDrill) < 5) && (1*trQuestVarGet("CineStatus") != 2)){
 				trUnitSelectByQV("Bonus19");
 				trUnitSetAnimationPath("0,1,0,0,0");
 				xAddDatabaseBlock(dSelectables, true);
@@ -699,7 +704,7 @@ highFrequency
 			trUnitChangeProtoUnit("Outpost");
 			trUnitSelectByQV("Bonus20");
 			trSetSelectedScale(0.5,0.1,0.5);
-			if(xGetInt(dPlayerData, xHullSpend) < 1000){
+			if((xGetInt(dPlayerData, xHullSpend) < 1000) && (1*trQuestVarGet("CineStatus") != 2)){
 				trUnitSelectByQV("Bonus20");
 				trUnitSetAnimationPath("0,1,0,0,0");
 				xAddDatabaseBlock(dSelectables, true);
@@ -710,6 +715,41 @@ highFrequency
 				xAddDatabaseBlock(dSelectables, true);
 				xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus20"));
 				xSetInt(dSelectables, xSelectablesPrompt, 750);
+			}
+		}
+		if(xGetInt(dPlayerData, xBonus+21) != 0){
+			trUnitSelectByQV("Bonus21");
+			trUnitChangeProtoUnit("Troy Wall Connector");
+			trUnitSelectByQV("Bonus21");
+			trSetSelectedScale(0.2,0.2,0.2);
+			xAddDatabaseBlock(dSelectables, true);
+			xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus21"));
+			xSetInt(dSelectables, xSelectablesPrompt, 721);
+			if(xGetInt(dPlayerData, xBonus+21) == 2){
+				trUnitSelectByQV("BonusEffect21");
+				trUnitChangeProtoUnit("Gaia Forest effect");
+				trUnitSelectByQV("BonusUnit");
+				trUnitChangeProtoUnit("Troy Wall Connector");
+				trUnitSelectByQV("BonusUnit");
+				trSetSelectedScale(0.2,0.2,0.2);
+			}
+		}
+		if(xGetInt(dPlayerData, xBonus+21) == 0){
+			trUnitSelectByQV("Bonus21");
+			trUnitChangeProtoUnit("Outpost");
+			trUnitSelectByQV("Bonus21");
+			trSetSelectedScale(0.5,0.1,0.5);
+			if(xGetInt(dPlayerData, xStageUnlocked) != 10){
+				trUnitSelectByQV("Bonus21");
+				trUnitSetAnimationPath("0,1,0,0,0");
+				xAddDatabaseBlock(dSelectables, true);
+				xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus21"));
+				xSetInt(dSelectables, xSelectablesPrompt, 730);
+			}
+			else{
+				xAddDatabaseBlock(dSelectables, true);
+				xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus21"));
+				xSetInt(dSelectables, xSelectablesPrompt, 751);
 			}
 		}
 		xsDisableSelf();
@@ -865,6 +905,12 @@ void Select_Bonus(int bonus = 0){
 			trSetSelectedScale(0.2,0.2,0.2);
 			ColouredChat("1,0.5,0", "+1500 hull hp equipped");
 		}
+		if(bonus == 21){
+			trUnitChangeProtoUnit("Troy Wall Connector");
+			trUnitSelectByQV("BonusUnit");
+			trSetSelectedScale(0.2,0.2,0.2);
+			ColouredChat("1,0.5,0", "Bonus 21 equipped");
+		}
 		Deselect_Bonus(bonus);
 		playSoundCustom("ageadvance.wav", "\Yeebaagooon\Motherload\SelectBonus.mp3");
 	}
@@ -947,6 +993,9 @@ void Apply_Bonus(int s = -1){
 		}
 		if(xGetInt(dPlayerData, xBonus+20) == 2){
 			xSetInt(dPlayerData, xHullHP, xGetInt(dPlayerData, xHullHP)+1500);
+		}
+		if(xGetInt(dPlayerData, xBonus+21) == 2){
+			//bonus 21
 		}
 	}
 	xsDisableSelf();
