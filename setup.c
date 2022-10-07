@@ -42,6 +42,7 @@ runImmediately
 	//special powers
 	map("l", "game", "uiSetSpecialPower(557) uiSpecialPowerAtPointer");
 	map("a", "game", "uiSetSpecialPower(220) uiSpecialPowerAtPointer");
+	map("d", "game", "uiSetSpecialPower(235) uiSpecialPowerAtPointer");
 }
 
 rule START

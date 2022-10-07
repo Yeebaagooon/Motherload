@@ -576,6 +576,9 @@ void SetDrillSpeed(int p = 0, int x = 0, int z = 0){
 	int terrainsubtype = trGetTerrainSubType(x,z);
 	xSetPointer(dPlayerData, p);
 	trQuestVarSet("DrillCalc", xGetFloat(dPlayerData, xDrillPower)/GetRockHardness(GetRockType(terraintype, terrainsubtype)));
+	if(1*trQuestVarGet("P"+p+"DrillBonusOn") == 1){
+		trQuestVarSet("DrillCalc", 30);
+	}
 	modifyProtounitAbsolute("Wadjet Spit", p, 1, xsMin(30,trQuestVarGet("DrillCalc")*3));
 }
 

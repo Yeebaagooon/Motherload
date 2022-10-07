@@ -10,8 +10,7 @@ Search //VERSION OVERRIDE HERE for release to rewrite all data
 -Bonus final
 -Win bonus
 -Skillpoints
--100% complete reward? (10 stages, 21 relics, 48 levels, 21 bonsues, ?6SPs, 4 something else for % (cine,use AMB, use laser, ?))
--Migdol and wonder for Natas ship selectable DB (done but removes at stage choosen)
+-100% complete reward? 10 stages, 21 relics, 48 levels, 21 bonsues
 -SP exit and go to main menu with map on (modeEnter("Campaign"); modeEnter("Pregame");) trIsGadgetVisible to detect anbd do sequence
 -??Immunity relics for S10
 
@@ -19,7 +18,6 @@ Search //VERSION OVERRIDE HERE for release to rewrite all data
 
 Player active != 1, dont set vector, set as 0,0,0
 if all dead - end game
--Natas Cine = Leaving system, stars going by. Satan reveal and ready for kill. Yeeb comes in. Fires Satan.
 -100Cine = Ship finds Yeeb. Reward.
 */
 
@@ -27,7 +25,7 @@ if all dead - end game
 //---Test controls
 //\Yeebaagooon\Motherload\Test sound.mp3
 int QuickStart = 1;
-int QuickStage = 11;
+int QuickStage = 8;
 bool OverrideSP = false;
 bool OverrideStage = false;
 string displayz = "lol";

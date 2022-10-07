@@ -719,9 +719,7 @@ highFrequency
 		}
 		if(xGetInt(dPlayerData, xBonus+21) != 0){
 			trUnitSelectByQV("Bonus21");
-			trUnitChangeProtoUnit("Troy Wall Connector");
-			trUnitSelectByQV("Bonus21");
-			trSetSelectedScale(0.2,0.2,0.2);
+			trUnitChangeProtoUnit("Monument");
 			xAddDatabaseBlock(dSelectables, true);
 			xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("Bonus21"));
 			xSetInt(dSelectables, xSelectablesPrompt, 721);
@@ -729,9 +727,7 @@ highFrequency
 				trUnitSelectByQV("BonusEffect21");
 				trUnitChangeProtoUnit("Gaia Forest effect");
 				trUnitSelectByQV("BonusUnit");
-				trUnitChangeProtoUnit("Troy Wall Connector");
-				trUnitSelectByQV("BonusUnit");
-				trSetSelectedScale(0.2,0.2,0.2);
+				trUnitChangeProtoUnit("Monument");
 			}
 		}
 		if(xGetInt(dPlayerData, xBonus+21) == 0){
@@ -906,10 +902,8 @@ void Select_Bonus(int bonus = 0){
 			ColouredChat("1,0.5,0", "+1500 hull hp equipped");
 		}
 		if(bonus == 21){
-			trUnitChangeProtoUnit("Troy Wall Connector");
-			trUnitSelectByQV("BonusUnit");
-			trSetSelectedScale(0.2,0.2,0.2);
-			ColouredChat("1,0.5,0", "Bonus 21 equipped");
+			trUnitChangeProtoUnit("Monument");
+			ColouredChat("1,0.5,0", "Reality Drill equipped");
 		}
 		Deselect_Bonus(bonus);
 		playSoundCustom("ageadvance.wav", "\Yeebaagooon\Motherload\SelectBonus.mp3");
@@ -962,6 +956,7 @@ void Apply_Bonus(int s = -1){
 				ColouredChatToPlayer(p, "1,0.5,0", "DIRECTIONAL - mines 10 tiles in the target direction");
 				ColouredChatToPlayer(p, "1,0.5,0", "Use like dynamite - have the cursor next to your ship");
 				spyEffect(1*trQuestVarGet("P"+p+"Siphon"), kbGetProtoUnitID("Tower Mirror"), xsVectorSet(dPlayerData,xSpyObject,p), vector(0.3,0.5,0.3));
+				xsEnableRule("EarthDragon");
 			}
 			else{
 				ColouredChatToPlayer(p, "1,0.5,0", "Super weapons are not permitted on this stage.");
@@ -973,6 +968,7 @@ void Apply_Bonus(int s = -1){
 				ColouredChatToPlayer(p, "1,0.5,0", "Antimatter bomb equipped (A key to use)");
 				ColouredChatToPlayer(p, "1,0.5,0", "Blasts 5x5 squares around you when used.");
 				spyEffect(1*trQuestVarGet("P"+p+"Siphon"), kbGetProtoUnitID("Roc Tent"), xsVectorSet(dPlayerData,xSpyObject,p), vector(1,1,1));
+				xsEnableRule("Vision");
 			}
 			else{
 				ColouredChatToPlayer(p, "1,0.5,0", "Super weapons are not permitted on this stage.");
@@ -995,7 +991,16 @@ void Apply_Bonus(int s = -1){
 			xSetInt(dPlayerData, xHullHP, xGetInt(dPlayerData, xHullHP)+1500);
 		}
 		if(xGetInt(dPlayerData, xBonus+21) == 2){
-			//bonus 21
+			if(Stage != 10){
+				grantGodPowerNoRechargeNextPosition(p, "Nidhogg", 1);
+				ColouredChatToPlayer(p, "1,0.5,0", "Reality drill equipped (D key to use)");
+				ColouredChatToPlayer(p, "1,0.5,0", "Cuts through tiles at max speed for 30 seconds.");
+				spyEffect(1*trQuestVarGet("P"+p+"Siphon"), kbGetProtoUnitID("Monument"), xsVectorSet(dPlayerData,xSpyObject,p), vector(1,1,1));
+				xsEnableRule("Nidhogg");
+			}
+			else{
+				ColouredChatToPlayer(p, "1,0.5,0", "Super weapons are not permitted on this stage.");
+			}
 		}
 	}
 	xsDisableSelf();

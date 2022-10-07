@@ -22,7 +22,9 @@ highFrequency
 	for(x = 1; <= 21){
 		trEventSetHandler(22+x, "Select_Bonus");
 	}
-	//RESERVED TO 43
+	for(p = 1; <= cNumberNonGaiaPlayers){
+		trEventSetHandler(44+p, "DrillBonusOff");
+	}
 	xsDisableSelf();
 }
 
@@ -204,8 +206,6 @@ highFrequency
 			startNPCDialog(23);
 		}
 	}
-	//xSetPointer(dPlayerData, 1);
-	//trChatSend(0, ""+xGetInt(dPlayerData, xDrillLevel));
 	xsEnableRule("StageTimer");
 	xsEnableRule("CheckResigns");
 	xsEnableRule("PlayerStats");
@@ -977,6 +977,15 @@ minInterval 2
 				}
 				if(count != 0){
 					ColouredChat("1,0.5,0", "L - Activates mining laser (cursor)");
+				}
+				count = 0;
+				for(x=0; < 4) {
+					if(trGetGPData(1,0,x) == 235){
+						count = count + trGetGPData(1,1,x);
+					}
+				}
+				if(count != 0){
+					ColouredChat("1,0.5,0", "D - Activates reality drill");
 				}
 			}
 			

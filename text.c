@@ -1337,7 +1337,7 @@ int npcDiag(int npc = 0, int dialog = 0) {
 			{
 				case 1:
 				{
-					uiMessageBox("Bonus 21.");
+					uiMessageBox("Reality drill - Allows you to drill at max speed for 30 seconds.");
 				}
 				case 2:
 				{

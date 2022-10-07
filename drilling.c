@@ -213,7 +213,7 @@ highFrequency
 }
 
 rule EarthDragon
-active
+inactive
 highFrequency
 {
 	for(p = 1; <= cNumberNonGaiaPlayers){
@@ -419,7 +419,7 @@ highFrequency
 }
 
 rule Vision
-active
+inactive
 highFrequency
 {
 	for(p = 1; <= cNumberNonGaiaPlayers){
@@ -468,6 +468,53 @@ highFrequency
 			trUnitChangeProtoUnit("Olympus Temple SFX");
 		}
 	}
+}
+
+rule Nidhogg
+inactive
+highFrequency
+{
+	for(p = 1; <= cNumberNonGaiaPlayers){
+		if (trPlayerUnitCountSpecific(p, "Nidhogg") >= 1) {
+			unitTransform("Nidhogg", "Rocket");
+			int temp = trGetNextUnitScenarioNameNumber();
+			//trUnitSelect(""+temp, true);
+			//trChatSend(0, ""+xGetDatabaseCount(dDestroyMe));
+			//trChatSend(0, "<color=0,1,0>"+xGetInt(dDestroyMe, xDestroyName));
+			xSetPointer(dPlayerData, p);
+			trUnitSelectClear();
+			xUnitSelect(dPlayerData, xSpyObject);
+			trMutateSelected(kbGetProtoUnitID("Monument"));
+			trUnitSelectClear();
+			xUnitSelect(dPlayerData, xSpyObject);
+			trSetSelectedScale(1,1,1);
+			trUnitSelectClear();
+			trUnitOverrideAnimation(4,0,false,false,-1);
+			xAddDatabaseBlock(dDestroyMe, true);
+			xSetInt(dDestroyMe, xDestroyName, xGetInt(dPlayerData, xSpyObject));
+			xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+30000);
+			trQuestVarSet("P"+p+"DrillBonusOn", 1);
+			if(trCurrentPlayer() == p){
+				trCounterAddTime("CDDrill", 30, 0, "<color={PlayerColor("+p+")}>Reality drill", 44+p);
+			}
+			spyEffect(1*trQuestVarGet("P"+p+"Siphon"), kbGetProtoUnitID("Implode Sphere Effect"), xsVectorSet(dPlayerData,xSpyObject,p), vector(0,0,0), 6);
+			spyEffect(1*trQuestVarGet("P"+p+"Siphon"), kbGetProtoUnitID("Imperial Examination"), vector(0,0,0), vector(1,1,1));
+		}
+	}
+}
+
+void DrillBonusOff(int p = 0){
+	xsSetContextPlayer(0);
+	p = p-44;
+	trQuestVarSet("P"+p+"DrillBonusOn", 0);
+	if(trCurrentPlayer() == p){
+		playSound("godpowerfailed.wav");
+	}
+	xSetPointer(dPlayerData, p);
+	xAddDatabaseBlock(dDestroyMe, true);
+	xSetInt(dDestroyMe, xDestroyName, xGetInt(dPlayerData, xSpyObject));
+	xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+1);
+	unitTransform("Imperial Examination", "Rocket");
 }
 
 rule AudreyL2
@@ -859,7 +906,12 @@ highFrequency
 				trVectorQuestVarSet("TargetVector"+p+"", xsVectorSet(1*trQuestVarGet("P"+p+"DrillTargetX")-4,3,1*trQuestVarGet("P"+p+"DrillTargetZ")-4));
 				trUnitMoveToVectorEvent("TargetVector"+p+"", false, p);
 				if(trCurrentPlayer() == p){
-					playSoundCustom("earthquakeexist.wav", "earthquakeexist.wav");
+					if(1*trQuestVarGet("P"+p+"DrillBonusOn") == 0){
+						playSoundCustom("earthquakeexist.wav", "earthquakeexist.wav");
+					}
+					else{
+						playSoundCustom("timeshift.wav");
+					}
 				}
 				if(Stage <= 2){
 					trQuestVarSet("P"+p+"Drilling", 19);
