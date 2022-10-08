@@ -1,23 +1,19 @@
 //--SUGGESTIONS
 /*
-BUG - The active SP unlock bonuses need a seperate trigger always on
+BUG - The active SP unlock bonuses need a seperate trigger always on ?Mybe Bonus_Display
 Population will trigger antimatter bomb
 
 Search //VERSION OVERRIDE HERE for release to rewrite all data
 
 --TO DO--
 -Trap stage finish
--Bonus final
 -Win bonus
 -Skillpoints
 -100% complete reward? 10 stages, 21 relics, 48 levels, 21 bonsues
 -SP exit and go to main menu with map on (modeEnter("Campaign"); modeEnter("Pregame");) trIsGadgetVisible to detect anbd do sequence
--??Immunity relics for S10
+-Up S10 trap dmg
+-S10 floor eyecandy
 
--Vector set to 0 on death already done
-
-Player active != 1, dont set vector, set as 0,0,0
-if all dead - end game
 -100Cine = Ship finds Yeeb. Reward.
 */
 

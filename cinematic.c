@@ -1617,3 +1617,251 @@ highFrequency
 	}
 }
 //anoterher gate 14 back
+
+rule Win_Cine_Off
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 3){
+		xsDisableSelf();
+		trLetterBox(false);
+	}
+}
+
+rule Win_Cine_Start
+inactive
+highFrequency
+{
+	xsDisableSelf();
+	trUnitSelectByQV("ExitYeeb");
+	trUnitChangeProtoUnit("Cinematic Block");
+	trPlayerSetDiplomacy(0,1,"Enemy");
+	trLetterBox(true);
+	trArmyDispatch("1,0", "Victory Marker", 1, 1,0,199,0,false);
+	trSetFogAndBlackmap(false, false);
+	createCameraTrack(5000);
+	trCameraCut(vector(69.173103,9.863888,42.203957), vector(0.018607,-0.282499,0.959087), vector(0.005480,0.959267,0.282446), vector(0.999812,0.000000,-0.019397));
+	addCameraTrackWaypoint();
+	trCameraCut(vector(69.173103,34.543886,42.203957), vector(0.018607,-0.282499,0.959087), vector(0.005480,0.959267,0.282446), vector(0.999812,0.000000,-0.019397));
+	addCameraTrackWaypoint();
+	playCameraTrack();
+	xsEnableRule("Win_Cine_01");
+	for(x=xGetDatabaseCount(dObelisks); >0) {
+		xDatabaseNext(dObelisks);
+		xUnitSelect(dObelisks,xObeliskName);
+		trUnitDestroy();
+		xFreeDatabaseBlock(dObelisks);
+	}
+	aiPlanDestroy(dObelisks);
+	for(x=xGetDatabaseCount(dPlanetEyecandy); >0) {
+		xDatabaseNext(dPlanetEyecandy);
+		xUnitSelect(dPlanetEyecandy,xPlanetEyecandyName);
+		trUnitDestroy();
+		xFreeDatabaseBlock(dPlanetEyecandy);
+	}
+	aiPlanDestroy(dPlanetEyecandy);
+	trPaintTerrain(0,30,200,200,5,4,false);
+}
+
+rule Win_Cine_01
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 5){
+		xsDisableSelf();
+		xsEnableRule("Win_Cine_02");
+		trOverlayTextColour(255,125,0);
+		trOverlayText("Map Complete!", 3.0, 550, 450, 1000);
+		FloatingUnitAnimIdle("Guardian XP", xsVectorGetX(kbGetBlockPosition(""+1*trQuestVarGet("CompletionObelisk")))-1, 23.1, xsVectorGetZ(kbGetBlockPosition(""+1*trQuestVarGet("CompletionObelisk")))-1, 180, 0,0,0);
+		FloatingUnitAnimIdle("Healing SFX", xsVectorGetX(kbGetBlockPosition(""+1*trQuestVarGet("CompletionObelisk")))-1, 27.1, xsVectorGetZ(kbGetBlockPosition(""+1*trQuestVarGet("CompletionObelisk")))-1, 180, 0,0,0);
+		trUnitSelectByQV("CompletionObelisk");
+		trUnitSetAnimationPath("0,0,0,0,0");
+		playSoundCustom("ageadvance.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
+	}
+}
+
+rule Win_Cine_02
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 3){
+		xsDisableSelf();
+		xsEnableRule("Win_Cine_03");
+		characterDialog("Coordinates received", "Preparing for imminent launch...", "icons\special e son of osiris icon 64");
+	}
+}
+
+rule Win_Cine_03
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 3){
+		xsDisableSelf();
+		trCameraCut(vector(68.745613,147.463852,-83.793297), vector(0.000866,-0.784816,0.619729), vector(0.001097,0.619729,0.784815), vector(0.999999,-0.000000,-0.001398));
+		characterDialog(" ", " ", "");
+		xsEnableRule("ExitAnim");
+		trUnitSelectByQV("ExitYeeb");
+		trUnitChangeProtoUnit("Underworld Smoke");
+		FloatingUnit("Fire Siphon", 68, 3, 7, 0,1,1,1);
+		trQuestVarSet("Flight", 3);
+		trQuestVarSet("FUnit", 1*trQuestVarGet("QVHero"));
+		trUnitSelectByQV("QVHero");
+		trSetUnitOrientation(xsVectorSet(trQuestVarGet("tempCosH"),90,trQuestVarGet("tempSinH")),xsVectorSet(trQuestVarGet("tempSinT")*trQuestVarGet("tempSinH"),
+				trQuestVarGet("tempCosT"),0.0-trQuestVarGet("tempSinT")*trQuestVarGet("tempCosH")),true);
+		trUnitSelectByQV("MainSiphon");
+		trUnitChangeProtoUnit("Rocket");
+		FloatingUnitAnimIdle("Implode Sphere Effect", 68, 3, 7, 0,10,10,10,"0,0,0,0,0",2);
+		trQuestVarSet("FObject1", 1*trQuestVarGet("QVHero"));
+		for (x=2 ; < 15){
+			FloatingUnitAnimIdle("Vortex Finish Linked", 68, 3, 7, 0,1,1,1,"0,0,0,0,0",2);
+			trQuestVarSet("FObject"+x+"", 1*trQuestVarGet("QVHero"));
+		}
+		FloatingUnit("Columns", 68, -1, 7, 0,2,2,2);
+		trQuestVarSet("FObjectCol", 1*trQuestVarGet("QVHero"));
+		int temp = trGetNextUnitScenarioNameNumber();
+		UnitCreate(0, "Tartarian Gate", 68,7,0);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitTeleport(68,3,7);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trUnitOverrideAnimation(18,0,false,false,-1,-1);
+		trUnitSelectClear();
+		trUnitSelect(""+temp);
+		trSetSelectedScale(0,0,0);
+		trUIFadeToColor(255,255,255,500,2500,true);
+		trCameraShake(5,0.3);
+		playSound("tartarianopen2.wav");
+		playSound("meteorwhoosh.wav");
+		playSound("meteordustcloud.wav");
+		playSound("lightthunder.wav");
+		playSound("lightningbirth.wav");
+		xsEnableRule("Win_Cine_04");
+		trUnitSelectByQV("CompletionFlag1");
+		trUnitDestroy();
+		trUnitSelectByQV("CompletionFlag2");
+		trUnitDestroy();
+		trUnitSelectByQV("CompletionObelisk");
+		trUnitDestroy();
+	}
+}
+
+
+rule Win_Cine_04
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 4){
+		xsDisableSelf();
+		createCameraTrack(10000);
+		trCameraCut(vector(70.296402,17.280727,44.553116), vector(-0.014243,-0.408125,0.912815), vector(-0.006367,0.912926,0.408075), vector(0.999878,0.000000,0.015601));
+		addCameraTrackWaypoint();
+		trCameraCut(vector(69.998711,13.440729,63.630783), vector(-0.015515,-0.105204,0.994330), vector(-0.001641,0.994451,0.105191), vector(0.999878,0.000000,0.015601));
+		addCameraTrackWaypoint();
+		playCameraTrack();
+		trUIFadeToColor(255,255,255,1500,300,false);
+		FloatingUnit("Fire Siphon", 68, 6.5, 73, 0,1,1,1);
+		trQuestVarSet("FUnit", 1*trQuestVarGet("QVHero"));
+		FloatingUnit("Columns Fallen", 68, 5, 70, 0,2,2,2);
+		trQuestVarSet("FObjectCol", 1*trQuestVarGet("QVHero"));
+		FloatingUnit("Fire Hades", 68, 5, 68, 0,0.5,0.5,0.5);
+		trUnitSelectByQV("QVHero");
+		trSetUnitOrientation(xsVectorSet(0,0.0,0.0), xsVectorSet(0,0,-1), true);
+		trUnitSelectByQV("QVRelic");
+		trSetUnitOrientation(xsVectorSet(0,0.0,0.0), xsVectorSet(0,0,-1), true);
+		trQuestVarSet("FObject1", 1*trQuestVarGet("QVHero"));
+		xsEnableRule("Win_Cine_05");
+		FloatingUnitAnimIdle("Stalagtite", 68, 5, 0, 140,2,-2,2);
+		FloatingUnitAnimIdle("Healing SFX", 68, 8, 140, 0,10,10,10,"0,0,0,0,0",2);
+		FloatingUnitAnimIdle("Valkyrie", 68, 8, 140, 0,0,0,0,"0,0,0,0,0",2);
+		FloatingUnitAnimIdle("Vortex Landing", 68, 4, 140, 0,1,1,1);
+		FloatingUnit("Shrine", 68, 8, 140, 0,0.4,0.4,0.4);
+		FloatingUnit("Rock Granite Big", 68, 8, 140, 0, 2,-2,2);
+		FloatingUnit("Rock Granite Big", 66, 8, 140, 90, 1,1,1);
+		FloatingUnit("Rock Granite Big", 70, 8, 140, 90, 1,1,1);
+		xsDisableRule("ExitAnim");
+		trQuestVarSet("Flight", 0);
+		trUnitSelectByQV("FUnit");
+		trUnitMoveToPoint(68, 6.5, 163, -1, false);
+		trUnitSelectByQV("FObjectCol");
+		trUnitMoveToPoint(68,5,160, -1, false);
+		trUnitSelectByQV("FObject1");
+		trUnitMoveToPoint(68,5,158, -1, false);
+		modifyProtounitAbsolute("Wadjet Spit", 0, 1, 4);
+		for(n=1 ; <= 150){
+			trQuestVarSetFromRand("TempX", 30, 90, false);
+			trQuestVarSetFromRand("TempZ", 100, 199, false);
+			trQuestVarSet("TempUnit", trGetNextUnitScenarioNameNumber());
+			trArmyDispatch("0,0", "Victory Marker", 1, 1*trQuestVarGet("TempX"),0,1*trQuestVarGet("TempZ"),0,false);
+			trUnitSelectByQV("TempUnit");
+			trUnitChangeProtoUnit("Armor Glow Small");
+			xAddDatabaseBlock(dSpace, true);
+			xSetInt(dSpace, xSpaceName,1*trQuestVarGet("TempUnit"));
+		}
+		for(n=1 ; <= 20){
+			trQuestVarSetFromRand("TempX", 30, 90, false);
+			trQuestVarSetFromRand("TempZ", 100, 199, false);
+			trQuestVarSet("TempUnit", trGetNextUnitScenarioNameNumber());
+			trArmyDispatch("1,0", "Victory Marker", 1, 1*trQuestVarGet("TempX"),0,1*trQuestVarGet("TempZ"),0,false);
+			trUnitSelectByQV("TempUnit");
+			trUnitChangeProtoUnit("Relic");
+			trUnitSelectByQV("TempUnit");
+			trSetSelectedScale(0,0,0);
+			xAddDatabaseBlock(dSpace, true);
+			xSetInt(dSpace, xSpaceName,1*trQuestVarGet("TempUnit"));
+		}
+		for(n=1 ; <= 20){
+			trQuestVarSetFromRand("TempX", 30, 90, false);
+			trQuestVarSetFromRand("TempZ", 100, 199, false);
+			trQuestVarSet("TempUnit", trGetNextUnitScenarioNameNumber());
+			trArmyDispatch("1,0", "Victory Marker", 1, 1*trQuestVarGet("TempX"),0,1*trQuestVarGet("TempZ"),0,false);
+			trUnitSelectByQV("TempUnit");
+			trUnitChangeProtoUnit("Lampades");
+			trUnitSelectByQV("TempUnit");
+			trSetSelectedScale(0,0,0);
+			xAddDatabaseBlock(dSpace, true);
+			xSetInt(dSpace, xSpaceName,1*trQuestVarGet("TempUnit"));
+		}
+		for(n=1 ; <= 4){
+			trQuestVarSetFromRand("TempX", 30, 90, false);
+			trQuestVarSetFromRand("TempZ", 100, 199, false);
+			trQuestVarSet("TempUnit", trGetNextUnitScenarioNameNumber());
+			trArmyDispatch("1,0", "Victory Marker", 1, 1*trQuestVarGet("TempX"),0,1*trQuestVarGet("TempZ"),0,false);
+			trUnitSelectByQV("TempUnit");
+			trUnitChangeProtoUnit("Plenty Vault");
+			trUnitSelectByQV("TempUnit");
+			trSetSelectedScale(0,0,0);
+			xAddDatabaseBlock(dSpace, true);
+			xSetInt(dSpace, xSpaceName,1*trQuestVarGet("TempUnit"));
+		}
+	}
+}
+
+rule Win_Cine_05
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 10){
+		xsDisableSelf();
+		xsEnableRule("Win_Cine_06");
+		trUIFadeToColor(255,255,255,2000,700,true);
+	}
+}
+
+rule Win_Cine_06
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 3){
+		xsDisableSelf();
+		xsEnableRule("Win_Cine_Off");
+		trUIFadeToColor(255,255,255,2000,700,false);
+		for(x=xGetDatabaseCount(dSpace); >0) {
+			xDatabaseNext(dSpace);
+			xUnitSelect(dSpace,xSpaceName);
+			trUnitDestroy();
+		}
+		aiPlanDestroy(dSpace);
+	}
+}
+
