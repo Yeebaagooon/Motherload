@@ -1,7 +1,13 @@
 //--SUGGESTIONS
 /*
 BUG - The active SP unlock bonuses need a seperate trigger always on ?Mybe Bonus_Display
-Population will trigger antimatter bomb
+Audrey and Audrey L2 count
+laugh on lose with text
+senda cap hull 46948hp happened ?on max hp
+Planet specific unlocks for stage minerals
+S10 attack walls and lampades
+S10 trap dmg
+Shop area increase buy area
 
 Search //VERSION OVERRIDE HERE for release to rewrite all data
 
@@ -20,8 +26,8 @@ Search //VERSION OVERRIDE HERE for release to rewrite all data
 
 //---Test controls
 //\Yeebaagooon\Motherload\Test sound.mp3
-int QuickStart = 1;
-int QuickStage = 8;
+int QuickStart = 0;
+int QuickStage = 1;
 bool OverrideSP = false;
 bool OverrideStage = false;
 string displayz = "lol";

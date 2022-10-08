@@ -900,7 +900,7 @@ highFrequency
 	trSoundPlayDialog("default", "1", -1, false, " : ", "");
 	trSetUnitIdleProcessing(false);
 	gadgetUnreal("ScoreDisplay");
-	gadgetUnreal("GodPowers");
+	//gadgetUnreal("GodPowers");
 	gadgetUnreal("tributedlg-sendButton");
 	gadgetUnreal("tributedlg-clearButton");
 	trSetObscuredUnits(false);

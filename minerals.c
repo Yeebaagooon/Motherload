@@ -1715,7 +1715,7 @@ highFrequency
 							ySetVar("creeps", "lastHealed", trTimeMS()); // set last healed time to current time
 							*/
 							trUnitSelectByQV("P"+p+"Siphon");
-							trDamageUnit(10);
+							trDamageUnit(10000);
 						}
 					}
 				}
@@ -1852,7 +1852,7 @@ highFrequency
 					for(p=1; < cNumberNonGaiaPlayers) {
 						if((trVectorQuestVarGetX("P"+p+"Pos") >= xsVectorGetX(xGetVector(dTrap, xTrapHitVector))-xGetInt(dTrap, xTrapHitboxX)) && (trVectorQuestVarGetX("P"+p+"Pos") < xsVectorGetX(xGetVector(dTrap, xTrapHitVector))+xGetInt(dTrap, xTrapHitboxX)) && (trVectorQuestVarGetZ("P"+p+"Pos") >= xsVectorGetZ(xGetVector(dTrap, xTrapHitVector))-xGetInt(dTrap, xTrapHitboxZ)) && (trVectorQuestVarGetZ("P"+p+"Pos") <= xsVectorGetZ(xGetVector(dTrap, xTrapHitVector))+xGetInt(dTrap, xTrapHitboxZ))){
 							trUnitSelectByQV("P"+p+"Siphon");
-							trDamageUnit(10);
+							trDamageUnit(10000);
 						}
 					}
 				}

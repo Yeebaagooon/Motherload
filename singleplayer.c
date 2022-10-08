@@ -854,7 +854,7 @@ highFrequency
 			Completion = Completion+xGetInt(dPlayerData, xRadiatorLevel);
 		}
 		//End completion calculation, below does flags and works with decimals (if needed, currently actually = 100)
-		Completion = 100;
+		//Completion = 100;
 		trUnitSetVariation(1*trQuestVarGet("CompletionFlag1"), (Completion/10)-1);
 		trUnitSetVariation(1*trQuestVarGet("CompletionFlag2"), (Completion-((Completion/10)*10)-1));
 		xAddDatabaseBlock(dSelectables, true);

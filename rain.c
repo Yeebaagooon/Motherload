@@ -92,6 +92,9 @@ highFrequency
 		}
 		aiPlanDestroy(dPlanetEyecandy);
 		for(p = 1; < cNumberNonGaiaPlayers){
+			if(Stage == 10){
+				trPlayerSetDiplomacy(p, cNumberNonGaiaPlayers, "Ally");
+			}
 			xSetPointer(dPlayerData, p);
 			//trQuestVarSet("P"+p+"RadiationResist", 1.00);
 			//trQuestVarModify("P"+p+"RadiationResist", "-", 0.05*xGetInt(dPlayerData, xRadiatorLevel));
@@ -101,9 +104,9 @@ highFrequency
 				if(Stage <= 2){
 					UnitCreate(p, "Hero Greek Atalanta", 75+5*p, 180, 180);
 				}
-				else if(Stage == 10){
-					UnitCreate(p, "Hero Greek Atalanta", 132, 10, 180);
-				}
+				//else if(Stage == 10){
+				//	UnitCreate(p, "Hero Greek Atalanta", 132, 10, 180);
+				//}
 				else{
 					UnitCreate(p, "Hero Greek Atalanta", 35+5*p, 168, 180);
 				}
@@ -521,7 +524,7 @@ highFrequency
 							xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*Shop2Cost);
 							count = 0;
 							for(x=0; < 4) {
-								if(trGetGPData(1,0,x) == 407){
+								if(trGetGPData(p,0,x) == 407){
 									count = count + trGetGPData(1,1,x);
 								}
 							}

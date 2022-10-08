@@ -590,12 +590,15 @@ highFrequency
 				}
 				count = 0;
 				for(x=0; < 4) {
-					if(trGetGPData(1,0,x) == 407){
+					if(trGetGPData(p,0,x) == 407){
 						count = count + trGetGPData(1,1,x);
 					}
 				}
 				if(count == 0){
 					trChatSendToPlayer(0, p, "<color=1,0,0>You have no more heavy explosives left.</color>");
+				}
+				else{
+					ColouredChatToPlayer(p, "1,0.5,0", "Remaining <color=1,1,1>["+count+"]");
 				}
 				int temp = trGetNextUnitScenarioNameNumber();
 				trArmyDispatch("0,0","Dwarf",1,trVectorQuestVarGetX("P"+p+"Pos"),0,trVectorQuestVarGetZ("P"+p+"Pos"),0,true);
