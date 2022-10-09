@@ -228,7 +228,12 @@ highFrequency
 		gadgetUnreal("ShowImageBox-CloseButton");
 		pause(0);
 		xsDisableSelf();
-		xsEnableRule("End1");
+		if(NewPlayers == 0){
+			xsEnableRule("End1");
+		}
+		else{
+			xsEnableRule("End0");
+		}
 	}
 	
 }
@@ -263,6 +268,28 @@ highFrequency
 		}
 	}
 	xsDisableSelf();
+}
+
+rule End0
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 4){
+		gadgetUnreal("ShowImageBox");
+		gadgetReal("ShowImageBox-BordersTop");
+		gadgetReal("ShowImageBox-BordersBottom");
+		gadgetReal("ShowImageBox-BordersLeft");
+		gadgetReal("ShowImageBox-BordersRight");
+		gadgetReal("ShowImageBox-BordersLeftTop");
+		gadgetReal("ShowImageBox-BordersLeftBottom");
+		gadgetReal("ShowImageBox-BordersRightBottom");
+		gadgetReal("ShowImageBox-BordersRightTop");
+		gadgetReal("ShowImageBox-CloseButton");
+		xsEnableRule("End1");
+		characterDialog("Launch this map in singleplayer to upgrade your ship.", "Singleplayer > Random Map > Motherload", "icons\special e son of osiris icon 64");
+		xsDisableSelf();
+	}
+	
 }
 
 rule End1

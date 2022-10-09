@@ -108,12 +108,15 @@ highFrequency
 					}
 					count = 0;
 					for(x=0; < 4) {
-						if(trGetGPData(1,0,x) == 407){
-							count = count + trGetGPData(1,1,x);
+						if(trGetGPData(p,0,x) == 407){
+							count = count + trGetGPData(p,1,x);
 						}
 					}
 					if(count == 0){
 						trChatSendToPlayer(0, p, "<color=1,0,0>You have no dynamite remaining.</color>");
+					}
+					else{
+						ColouredChatToPlayer(p, "1,0.5,0", "Dynamite remaining - <color=1,1,1>"+count+"");
 					}
 					if((Col-startCol) == 1){
 						MineSquare(Row, Col);
@@ -495,8 +498,10 @@ highFrequency
 			xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+30000);
 			trQuestVarSet("P"+p+"DrillBonusOn", 1);
 			if(trCurrentPlayer() == p){
-				trCounterAddTime("CDDrill", 30, 0, "<color={PlayerColor("+p+")}>Reality drill", 44+p);
+				trCounterAddTime("CDDrill", 30, 0, "<color={PlayerColor("+p+")}>Reality drill", -1);
 			}
+			trQuestVarSet("StopB22T"+p+"", trTime()+30);
+			trEventFire(44+p);
 			spyEffect(1*trQuestVarGet("P"+p+"Siphon"), kbGetProtoUnitID("Implode Sphere Effect"), xsVectorSet(dPlayerData,xSpyObject,p), vector(0,0,0), 6);
 			spyEffect(1*trQuestVarGet("P"+p+"Siphon"), kbGetProtoUnitID("Imperial Examination"), vector(0,0,0), vector(1,1,1));
 		}
@@ -506,15 +511,18 @@ highFrequency
 void DrillBonusOff(int p = 0){
 	xsSetContextPlayer(0);
 	p = p-44;
-	trQuestVarSet("P"+p+"DrillBonusOn", 0);
-	if(trCurrentPlayer() == p){
-		playSound("godpowerfailed.wav");
+	if(trTime() > 1*trQuestVarGet("StopB22T"+p+"")){
+		trQuestVarSet("P"+p+"DrillBonusOn", 0);
+		if(trCurrentPlayer() == p){
+			playSound("godpowerfailed.wav");
+		}
+		xSetPointer(dPlayerData, p);
+		xAddDatabaseBlock(dDestroyMe, true);
+		xSetInt(dDestroyMe, xDestroyName, xGetInt(dPlayerData, xSpyObject));
+		xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+1);
+		unitTransform("Imperial Examination", "Rocket");
+		xsDisableSelf();
 	}
-	xSetPointer(dPlayerData, p);
-	xAddDatabaseBlock(dDestroyMe, true);
-	xSetInt(dDestroyMe, xDestroyName, xGetInt(dPlayerData, xSpyObject));
-	xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+1);
-	unitTransform("Imperial Examination", "Rocket");
 }
 
 rule AudreyL2
@@ -591,14 +599,19 @@ highFrequency
 				count = 0;
 				for(x=0; < 4) {
 					if(trGetGPData(p,0,x) == 407){
-						count = count + trGetGPData(1,1,x);
+						count = count + trGetGPData(p,1,x);
 					}
 				}
 				if(count == 0){
 					trChatSendToPlayer(0, p, "<color=1,0,0>You have no more heavy explosives left.</color>");
 				}
 				else{
-					ColouredChatToPlayer(p, "1,0.5,0", "Remaining <color=1,1,1>["+count+"]");
+					if(Stage <= 7){
+						ColouredChatToPlayer(p, "1,0.5,0", "Remaining plastic explosives <color=1,1,1>["+count+"]");
+					}
+					else{
+						ColouredChatToPlayer(p, "1,0.5,0", "Remaining nuclear explosives<color=1,1,1>["+count+"]");
+					}
 				}
 				int temp = trGetNextUnitScenarioNameNumber();
 				trArmyDispatch("0,0","Dwarf",1,trVectorQuestVarGetX("P"+p+"Pos"),0,trVectorQuestVarGetZ("P"+p+"Pos"),0,true);

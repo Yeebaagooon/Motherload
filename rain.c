@@ -98,6 +98,9 @@ highFrequency
 			xSetPointer(dPlayerData, p);
 			//trQuestVarSet("P"+p+"RadiationResist", 1.00);
 			//trQuestVarModify("P"+p+"RadiationResist", "-", 0.05*xGetInt(dPlayerData, xRadiatorLevel));
+			if(xGetInt(dPlayerData, xStageUnlocked) == 0){
+				NewPlayers = 1;
+			}
 			if(xGetInt(dPlayerData, xPlayerActive) == 1){
 				trQuestVarSet("P"+p+"Siphon", trGetNextUnitScenarioNameNumber());
 				//VECTOR IS 2X+1
@@ -313,6 +316,7 @@ highFrequency
 					trPlayerKillAllGodPowers(p);
 					if(trCurrentPlayer() == p){
 						trShowWinLose("You have been destroyed!", "xlose.wav");
+						playSound("dialog\en\skul062.mp3");
 					}
 					trVectorQuestVarSet("P"+p+"Pos", xsVectorSet(0,0,0));
 					trArmyDispatch(""+p+",0","Victory Marker", 1, 0,0,0,0);
@@ -381,44 +385,44 @@ int GetFuelPump(float x = 0, float z = 0){
 
 int GetHullShop(float x = 0){
 	if(Stage < 7){
-		if((x > Hull1XMin*2) && (x < Hull1XMax*2)){
+		if((x > Hull1XMin*2) && (x < (Hull1XMax*2+2))){
 			return(1);
 		}
-		else if((x > Hull2XMin*2) && (x < Hull2XMax*2)){
+		else if((x > Hull2XMin*2) && (x < (Hull2XMax*2+2))){
 			return(2);
 		}
-		else if((x > Hull3XMin*2) && (x < Hull3XMax*2)){
+		else if((x > Hull3XMin*2) && (x < (Hull3XMax*2+2))){
 			return(3);
 		}
-		else if((x > Hull4XMin*2) && (x < Hull4XMax*2)){
+		else if((x > Hull4XMin*2) && (x < (Hull4XMax*2+2))){
 			return(4);
 		}
 	}
 	if(Stage == 7){
-		if((x > Hull1XMin*2) && (x < Hull1XMax*2)){
+		if((x > Hull1XMin*2) && (x < (Hull1XMax*2+2))){
 			return(1);
 		}
-		else if((x > Hull2XMin*2) && (x < Hull2XMax*2)){
+		else if((x > Hull2XMin*2) && (x < (Hull2XMax*2+2))){
 			return(2);
 		}
-		else if((x > Hull3XMin*2) && (x < Hull3XMax*2)){
+		else if((x > Hull3XMin*2) && (x < (Hull3XMax*2+2))){
 			return(4);
 		}
-		else if((x > Hull4XMin*2) && (x < Hull4XMax*2)){
+		else if((x > Hull4XMin*2) && (x < (Hull4XMax*2+2))){
 			return(8);
 		}
 	}
 	if(Stage >= 8){
-		if((x > Hull1XMin*2) && (x < Hull1XMax*2)){
+		if((x > Hull1XMin*2) && (x < (Hull1XMax*2+2))){
 			return(2);
 		}
-		else if((x > Hull2XMin*2) && (x < Hull2XMax*2)){
+		else if((x > Hull2XMin*2) && (x < (Hull2XMax*2+2))){
 			return(4);
 		}
-		else if((x > Hull3XMin*2) && (x < Hull3XMax*2)){
+		else if((x > Hull3XMin*2) && (x < (Hull3XMax*2+2))){
 			return(8);
 		}
-		else if((x > Hull4XMin*2) && (x < Hull4XMax*2)){
+		else if((x > Hull4XMin*2) && (x < (Hull4XMax*2+2))){
 			return(10);
 		}
 	}
@@ -498,7 +502,7 @@ highFrequency
 			xSetPointer(dPlayerData, p);
 			if(xGetInt(dPlayerData, xPlayerActive) == 1){
 				if((trVectorQuestVarGetZ("P"+p+"Pos") > 190) && (trVectorQuestVarGetZ("P"+p+"Pos") < 196)){
-					if((trVectorQuestVarGetX("P"+p+"Pos") > Shop1XMin*2) && (trVectorQuestVarGetX("P"+p+"Pos") < Shop1XMax*2)){
+					if((trVectorQuestVarGetX("P"+p+"Pos") > Shop1XMin*2) && (trVectorQuestVarGetX("P"+p+"Pos") < (Shop1XMax*2+2))){
 						if (trPlayerResourceCount(p, "Gold") >= Shop1Cost) {
 							
 							grantGodPowerNoRechargeNextPosition(p, "Ragnorok", 1);
@@ -518,7 +522,7 @@ highFrequency
 							}
 						}
 					}
-					if((trVectorQuestVarGetX("P"+p+"Pos") > Shop2XMin*2) && (trVectorQuestVarGetX("P"+p+"Pos") < Shop2XMax*2)){
+					if((trVectorQuestVarGetX("P"+p+"Pos") > Shop2XMin*2) && (trVectorQuestVarGetX("P"+p+"Pos") < (Shop2XMax*2+2))){
 						if (trPlayerResourceCount(p, "Gold") >= Shop2Cost) {
 							grantGodPowerNoRechargeNextPosition(p, "Audrey", 1);
 							xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*Shop2Cost);
@@ -548,7 +552,7 @@ highFrequency
 							}
 						}
 					}
-					if((trVectorQuestVarGetX("P"+p+"Pos") > Shop3XMin*2) && (trVectorQuestVarGetX("P"+p+"Pos") < Shop3XMax*2)){
+					if((trVectorQuestVarGetX("P"+p+"Pos") > Shop3XMin*2) && (trVectorQuestVarGetX("P"+p+"Pos") < (Shop3XMax*2+2))){
 						if (trPlayerResourceCount(p, "Gold") >= Shop3Cost) {
 							grantGodPowerNoRechargeNextPosition(p, "Rain", 1);
 							xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*Shop3Cost);
@@ -564,7 +568,7 @@ highFrequency
 							ColouredChatToPlayer(p, "1,0,0", "You do not have enough gold to buy this item!");
 						}
 					}
-					if((trVectorQuestVarGetX("P"+p+"Pos") > Shop4XMin*2) && (trVectorQuestVarGetX("P"+p+"Pos") < Shop4XMax*2)){
+					if((trVectorQuestVarGetX("P"+p+"Pos") > Shop4XMin*2) && (trVectorQuestVarGetX("P"+p+"Pos") < (Shop4XMax*2+2))){
 						if (trPlayerResourceCount(p, "Gold") >= Shop4Cost) {
 							trUnitSelectClear();
 							trUnitSelectByQV("P"+p+"Siphon");
@@ -610,26 +614,28 @@ highFrequency
 								trUnitSelectClear();
 								trUnitSelectByQV("P"+p+"Siphon");
 								if(trUnitPercentDamaged() != 0){
-									ColouredChatToPlayer(p, "1,0.5,0", ""+250*GetHullShop(trVectorQuestVarGetX("P"+p+"Pos"))+"" + " hp hull repaired.");
-									if(trCurrentPlayer() == p){
-										playSoundCustom("roll.wav", "\Yeebaagooon\Motherload\Repair.mp3");
-									}
-									spyEffect(1*trQuestVarGet("P"+p+"Siphon"), kbGetProtoUnitID("White Tiger"), vector(0,0,0), vector(0,0,0), 18);
-									xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*HullCost*GetHullShop(trVectorQuestVarGetX("P"+p+"Pos")));
-									if(xGetInt(dPlayerData, xHullSpend) < 4700){
-										xSetInt(dPlayerData, xHullSpend, xGetInt(dPlayerData, xHullSpend)+1*HullCost*GetHullShop(trVectorQuestVarGetX("P"+p+"Pos")));
-										if ((xGetInt(dPlayerData, xBonus+20) == 0) && (xGetInt(dPlayerData, xHullSpend) >= HullSpendForBonus)){
-											xSetInt(dPlayerData, xBonus+20, 1);
-											if(trCurrentPlayer() == p){
-												saveAllData();
-												ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked (20)!");
-												playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
+									if(250*GetHullShop(trVectorQuestVarGetX("P"+p+"Pos")) < 3001){
+										ColouredChatToPlayer(p, "1,0.5,0", ""+250*GetHullShop(trVectorQuestVarGetX("P"+p+"Pos"))+"" + " hp hull repaired.");
+										if(trCurrentPlayer() == p){
+											playSoundCustom("roll.wav", "\Yeebaagooon\Motherload\Repair.mp3");
+										}
+										spyEffect(1*trQuestVarGet("P"+p+"Siphon"), kbGetProtoUnitID("White Tiger"), vector(0,0,0), vector(0,0,0), 18);
+										xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*HullCost*GetHullShop(trVectorQuestVarGetX("P"+p+"Pos")));
+										if(xGetInt(dPlayerData, xHullSpend) < 4700){
+											xSetInt(dPlayerData, xHullSpend, xGetInt(dPlayerData, xHullSpend)+1*HullCost*GetHullShop(trVectorQuestVarGetX("P"+p+"Pos")));
+											if ((xGetInt(dPlayerData, xBonus+20) == 0) && (xGetInt(dPlayerData, xHullSpend) >= HullSpendForBonus)){
+												xSetInt(dPlayerData, xBonus+20, 1);
+												if(trCurrentPlayer() == p){
+													saveAllData();
+													ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked (20)!");
+													playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
+												}
 											}
 										}
+										trUnitSelectClear();
+										trUnitSelectByQV("P"+p+"Siphon");
+										trDamageUnit(-250*GetHullShop(trVectorQuestVarGetX("P"+p+"Pos")));
 									}
-									trUnitSelectClear();
-									trUnitSelectByQV("P"+p+"Siphon");
-									trDamageUnit(-250*GetHullShop(trVectorQuestVarGetX("P"+p+"Pos")));
 								}
 								else{
 									ColouredChatToPlayer(p, "1,0,0", "You are at full health.");
@@ -902,6 +908,16 @@ minInterval 2
 	int count = 0;
 	for(p=1; < cNumberNonGaiaPlayers) {
 		xSetPointer(dPlayerData, p);
+		if((NewPlayers == 1) && (xGetInt(dPlayerData, xStageUnlocked) == 0)){
+			trUnitSelectByQV("P"+p+"Siphon");
+			if((trUnitGetContained() == xGetInt(dPlayerData, xCargoHold)) && (1*trQuestVarGet("P"+p+"CargoHelper") == 0)){
+				trQuestVarSet("P"+p+"CargoHelper", 1);
+				ColouredChatToPlayer(p, "1,0.5,0", "Your cargo hold is full, return to the surface to sell your minerals.");
+				if(trCurrentPlayer() == p){
+					playSound("crushmetal2.wav");
+				}
+			}
+		}
 		if(trCurrentPlayer() == p){
 			if((trChatHistoryContains("level", p) == true) || (trChatHistoryContains("drill", p) == true) || (trChatHistoryContains("mine", p) == true) || (trChatHistoryContains("help", p) == true) || (trChatHistoryContains("upgrade", p) == true)){
 				if(xGetInt(dPlayerData, xStageUnlocked) < 3){

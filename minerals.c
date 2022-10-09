@@ -1409,21 +1409,21 @@ highFrequency
 				}
 			}
 			//Stage 2
-			if((xGetInt(dPlayerData, xStageUnlocked) == 1) && (xGetInt(dPlayerData, xStageStatus) == 0) && (r == RELIC_GOLD)){
+			if((xGetInt(dPlayerData, xStageUnlocked) == 1) && (xGetInt(dPlayerData, xStageStatus) == 0) && (r == RELIC_GOLD) && (Stage == 2)){
 				xSetInt(dPlayerData, xStageStatus, 1);
 				if (trCurrentPlayer() == GSeller) {
 					ColouredIconChat("1,0.5,0", "icons/star", "Progression goal achieved.");
 				}
 			}
 			//Stage 6
-			if((xGetInt(dPlayerData, xStageUnlocked) == 5) && (xGetInt(dPlayerData, xStageStatus) == 0) && (r == RELIC_DIAMOND)){
+			if((xGetInt(dPlayerData, xStageUnlocked) == 5) && (xGetInt(dPlayerData, xStageStatus) == 0) && (r == RELIC_DIAMOND) && (Stage == 6)){
 				xSetInt(dPlayerData, xStageStatus, 1);
 				if (trCurrentPlayer() == GSeller) {
 					ColouredIconChat("1,0.5,0", "icons/star", "Progression goal achieved.");
 				}
 			}
 			//Stage 7
-			if((xGetInt(dPlayerData, xStageUnlocked) == 6) && (xGetInt(dPlayerData, xStageStatus) == 0) && (r == RELIC_OBSIDIAN)){
+			if((xGetInt(dPlayerData, xStageUnlocked) == 6) && (xGetInt(dPlayerData, xStageStatus) == 0) && (r == RELIC_OBSIDIAN) && (Stage == 7)){
 				xSetInt(dPlayerData, xStageStatus, 1);
 				if (trCurrentPlayer() == GSeller) {
 					ColouredIconChat("1,0.5,0", "icons/star", "Progression goal achieved.");

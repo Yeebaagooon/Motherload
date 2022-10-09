@@ -32,13 +32,14 @@ inactive
 highFrequency
 {
 	trModifyProtounit("Dwarf", 0, 55, 4);
-	trModifyProtounit("Relic", 0, 55, 4); //recent change
+	trModifyProtounit("Relic", 0, 55, 4);
 	trModifyProtounit("Armory", 0, 55, 4);
 	trModifyProtounit("Heka Shockwave SFX", cNumberNonGaiaPlayers, 8, 1);
 	//movetype to air for mutated relics means they ungarrison in a pile
 	trModifyProtounit("Wadjet Spit", 0, 8, -1000);
 	trModifyProtounit("Alfred", 0, 1, -1000);
-	trModifyProtounit("Athena", 1, 1, 4);
+	xSetPointer(dPlayerData, 1);
+	trModifyProtounit("Athena", 1, 1, 2+xGetInt(dPlayerData, xStageUnlocked));
 	trModifyProtounit("Meteorite", 0, 8, 4);
 	trModifyProtounit("Lampades", cNumberNonGaiaPlayers, 0, 1000);
 	trModifyProtounit("Lampades", cNumberNonGaiaPlayers, 1, 5);

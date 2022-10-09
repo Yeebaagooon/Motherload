@@ -1,13 +1,12 @@
 //--SUGGESTIONS
 /*
 BUG - The active SP unlock bonuses need a seperate trigger always on ?Mybe Bonus_Display
-Audrey and Audrey L2 count
-laugh on lose with text
-senda cap hull 46948hp happened ?on max hp
-Planet specific unlocks for stage minerals
-S10 attack walls and lampades
+xAudrey and Audrey L2 count
+xlaugh on lose with text
+xsenda cap hull 46948hp happened ?on max hp
+xPlanet specific unlocks for stage minerals
+xS10 attack walls and lampades
 S10 trap dmg
-Shop area increase buy area
 
 Search //VERSION OVERRIDE HERE for release to rewrite all data
 
@@ -19,6 +18,7 @@ Search //VERSION OVERRIDE HERE for release to rewrite all data
 -SP exit and go to main menu with map on (modeEnter("Campaign"); modeEnter("Pregame");) trIsGadgetVisible to detect anbd do sequence
 -Up S10 trap dmg
 -S10 floor eyecandy
+-Fire event for B21
 
 -100Cine = Ship finds Yeeb. Reward.
 */
@@ -50,6 +50,7 @@ int TERRAIN_SUBTYPE = 2;
 int OVERTERRAIN_TYPE = 5;
 int OVERTERRAIN_SUBTYPE = 4;
 int CheckTime = 1;
+int NewPlayers = 0;
 
 int MineT = 5;
 int MineST = 3;
