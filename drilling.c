@@ -501,27 +501,9 @@ highFrequency
 				trCounterAddTime("CDDrill", 30, 0, "<color={PlayerColor("+p+")}>Reality drill", -1);
 			}
 			trQuestVarSet("StopB22T"+p+"", trTime()+30);
-			trEventFire(44+p);
 			spyEffect(1*trQuestVarGet("P"+p+"Siphon"), kbGetProtoUnitID("Implode Sphere Effect"), xsVectorSet(dPlayerData,xSpyObject,p), vector(0,0,0), 6);
 			spyEffect(1*trQuestVarGet("P"+p+"Siphon"), kbGetProtoUnitID("Imperial Examination"), vector(0,0,0), vector(1,1,1));
 		}
-	}
-}
-
-void DrillBonusOff(int p = 0){
-	xsSetContextPlayer(0);
-	p = p-44;
-	if(trTime() > 1*trQuestVarGet("StopB22T"+p+"")){
-		trQuestVarSet("P"+p+"DrillBonusOn", 0);
-		if(trCurrentPlayer() == p){
-			playSound("godpowerfailed.wav");
-		}
-		xSetPointer(dPlayerData, p);
-		xAddDatabaseBlock(dDestroyMe, true);
-		xSetInt(dDestroyMe, xDestroyName, xGetInt(dPlayerData, xSpyObject));
-		xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+1);
-		unitTransform("Imperial Examination", "Rocket");
-		xsDisableSelf();
 	}
 }
 
@@ -816,9 +798,9 @@ highFrequency
 					xSetPointer(dPlayerData, p);
 					if (xGetInt(dPlayerData, xBonus+3) == 0){
 						xSetInt(dPlayerData, xBonus+3, 1);
-						ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked (3)!");
 						if(trCurrentPlayer() == p){
 							saveAllData();
+							ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked (3)!");
 							playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
 						}
 					}

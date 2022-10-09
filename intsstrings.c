@@ -1,24 +1,21 @@
 //--SUGGESTIONS
 /*
 BUG - The active SP unlock bonuses need a seperate trigger always on ?Mybe Bonus_Display
-xAudrey and Audrey L2 count
-xlaugh on lose with text
-xsenda cap hull 46948hp happened ?on max hp
-xPlanet specific unlocks for stage minerals
-xS10 attack walls and lampades
 S10 trap dmg
 
 Search //VERSION OVERRIDE HERE for release to rewrite all data
 
 --TO DO--
--Trap stage finish
+-Trap stage finish, final room, instructions
 -Win bonus
 -Skillpoints
 -100% complete reward? 10 stages, 21 relics, 48 levels, 21 bonsues
 -SP exit and go to main menu with map on (modeEnter("Campaign"); modeEnter("Pregame");) trIsGadgetVisible to detect anbd do sequence
 -Up S10 trap dmg
 -S10 floor eyecandy
--Fire event for B21
+-Laughs
+
+Gadgets it the name of any element in uimain.xml
 
 -100Cine = Ship finds Yeeb. Reward.
 */
@@ -27,7 +24,7 @@ Search //VERSION OVERRIDE HERE for release to rewrite all data
 //---Test controls
 //\Yeebaagooon\Motherload\Test sound.mp3
 int QuickStart = 0;
-int QuickStage = 1;
+int QuickStage = 0;
 bool OverrideSP = false;
 bool OverrideStage = false;
 string displayz = "lol";

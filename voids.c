@@ -1288,31 +1288,6 @@ void CTFBuildBase(int p = 1, float PosX = 0, float PosZ = 0){
 	
 }
 
-void playSoundCustom(string BasesoundName = "", string CustomsoundName = ""){
-	if((1*trQuestVarGet("CustomContent") == 0) || (CustomsoundName == "")){
-		trSoundPlayPaused(""+BasesoundName+"", "1", -1, "", "");
-	}
-	else{
-		trSoundPlayPaused(""+CustomsoundName+"", "1", -1, "", "");
-	}
-}
-
-void ColouredIconChat(string colour = "1,1,1", string icon = "", string chats = ""){
-	trChatSend(0, "<color="+colour+"><icon=(20)("+icon+")> "+chats+"</color>");
-}
-
-void ColouredChat(string colour = "1,1,1", string chats = ""){
-	trChatSend(0, "<color="+colour+">"+chats+"</color>");
-}
-
-void ColouredIconChatToPlayer(int p = 1, string colour = "1,1,1", string icon = "", string chats = ""){
-	trChatSendToPlayer(0, p, "<color=" + colour + "><icon=(20)(" + icon + ")> " + chats + "</color>");
-}
-
-void ColouredChatToPlayer(int p = 1, string colour = "1,1,1", string chats = ""){
-	trChatSendToPlayer(0, p, "<color=" + colour + ">" + chats + "</color>");
-}
-
 void PaintSmelter(int x = 0, int z = 0){
 	trBlockAllSounds();
 	trQuestVarSet("Temp", trGetNextUnitScenarioNameNumber());
@@ -1835,4 +1810,19 @@ void Trap7(int PPXmin = 0, int PPZmin = 0, int PPXmax = 0, int PPZmax = 0, int Z
 	xSetInt(dTrap, xTrapHitboxZ, ZOffset);
 	PaintAtlantisArea(PPXmin-1,PPZmin-1,PPXmax+1,PPZmax+1,"black");
 	trPaintTerrain(PPXmin,PPZmin,PPXmax,PPZmax,10,10,false);
+}
+
+void DrillBonusOff(int p = 0){
+	xsSetContextPlayer(0);
+	if((trTime() > 1*trQuestVarGet("StopB22T"+p+"")) && (1*trQuestVarGet("StopB22T"+p+"") != 0) && (1*trQuestVarGet("P"+p+"DrillBonusOn") != 0)){
+		trQuestVarSet("P"+p+"DrillBonusOn", 0);
+		if(trCurrentPlayer() == p){
+			playSound("godpowerfailed.wav");
+		}
+		xSetPointer(dPlayerData, p);
+		xAddDatabaseBlock(dDestroyMe, true);
+		xSetInt(dDestroyMe, xDestroyName, xGetInt(dPlayerData, xSpyObject));
+		xSetInt(dDestroyMe, xDestroyTime, trTimeMS()+1);
+		unitTransform("Imperial Examination", "Rocket");
+	}
 }

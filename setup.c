@@ -28,11 +28,6 @@ runImmediately
 	xsDisableRule("BasicVC2");
 	
 	//trSetFogAndBlackmap(false, false);
-	%
-	for(p=1; < cNumberNonGaiaPlayers) {
-		code("trStringQuestVarSet(\"p"+p+"name\", \""+rmGetPlayerName(p)+"\");");
-	}
-	%
 	xsDisableSelf();
 	xsSetContextPlayer(0);
 	map("q", "game", "uiSetSpecialPower(227) uiSpecialPowerAtPointer");
@@ -43,6 +38,7 @@ runImmediately
 	map("l", "game", "uiSetSpecialPower(557) uiSpecialPowerAtPointer");
 	map("a", "game", "uiSetSpecialPower(220) uiSpecialPowerAtPointer");
 	map("d", "game", "uiSetSpecialPower(235) uiSpecialPowerAtPointer");
+	trSetCivilizationNameOverride(cNumberNonGaiaPlayers, "Mr. Natas");
 }
 
 rule START
@@ -52,6 +48,7 @@ highFrequency
 	trPlayerKillAllGodPowers(0);
 	for(p = 1; <= cNumberNonGaiaPlayers){
 		trSetCivAndCulture(p, 3, 1);
+		trSetCivilizationNameOverride(p, "Mr. Natas");
 		trPlayerGrantResources(p, "Food", -10000.0);
 		trPlayerGrantResources(p, "Wood", -10000.0);
 		trPlayerGrantResources(p, "Gold", -10000.0);
@@ -62,6 +59,12 @@ highFrequency
 			trSoundPlayFN("\Yeebaagooon\Motherload\Test sound.mp3", "1", 13, "","");
 		}
 	}
+	
+	%
+	for(p=1; < cNumberNonGaiaPlayers) {
+		code("trStringQuestVarSet(\"p"+p+"name\", \""+rmGetPlayerName(p)+"\");");
+	}
+	%
 	
 	while(cNumberNonGaiaPlayers>=trQuestVarGet("PlayerID")) {
 		trQuestVarSet("PlayerID2", 0);
@@ -160,6 +163,54 @@ rule setup_data
 inactive
 highFrequency
 {
+	trQuestVarSetFromRand("Music", 1, 11);
+	switch(1*trQuestVarGet("Music"))
+	{
+		case 1:
+		{
+			playSound("music\quiet\(fine layers of) slaysenflite (mellow mix).mp3");
+		}
+		case 2:
+		{
+			playSound("music\quiet\adult swim (mellow mix).mp3");
+		}
+		case 3:
+		{
+			playSound("music\quiet\behold the great science fi (mellow mix).mp3");
+		}
+		case 4:
+		{
+			playSound("music\quiet\chocolate outline (mellow mix).mp3");
+		}
+		case 5:
+		{
+			playSound("music\quiet\eat your potatoes (mellow mix).mp3");
+		}
+		case 6:
+		{
+			playSound("music\quiet\flavor cats (in the comfort zone) (mellow mix).mp3");
+		}
+		case 7:
+		{
+			playSound("music\quiet\hoping for real betterness (mellow mix).mp3");
+		}
+		case 8:
+		{
+			playSound("music\quiet\in a pile of its own good (mellow mix).mp3");
+		}
+		case 9:
+		{
+			playSound("music\quiet\never mind the slacks and bashers (mellow mix).mp3");
+		}
+		case 10:
+		{
+			playSound("music\quiet\suture self (mellow mix).mp3");
+		}
+		case 11:
+		{
+			playSound("music\quiet\the ballad of ace lebaron (mellow mix).mp3");
+		}
+	}
 	NEXT_TRIGGER_NAME = "load1"; // the next trigger to run after data load is complete
 	/*
 	Add data to slots here
@@ -347,6 +398,7 @@ highFrequency
 	}
 	else if(aiIsMultiplayer() == true){
 		trDelayedRuleActivation("LoadMP");
+		//playSound("cinematics\35_out\music2.mp3");
 	}
 	trSetFogAndBlackmap(false, false);
 	gadgetReal("ShowImageBox-BordersTop");
@@ -996,6 +1048,9 @@ highFrequency
 		PaintPlanets(20,20, 1);
 		trQuestVarSet("StageSelector", trGetNextUnitScenarioNameNumber());
 		UnitCreate(1, "Athena", 40, 60, 90);
+		trQuestVarSet("StageTimeout", trTime()+30);
+		xsEnableRule("StageAuto");
+		xsEnableRule("StageAutoWarn");
 		//spyEffect(1*trQuestVarGet("StageSelector"), kbGetProtoUnitID("Hero Birth"), vector(0,0,0), vector(0,0,0), 18);
 		//StageSelector
 		if(QuickStart == 1){
@@ -1040,6 +1095,60 @@ highFrequency
 	}
 }
 
+rule StageAutoWarn
+inactive
+highFrequency
+{
+	if((trTime() > (1*trQuestVarGet("StageTimeout")-10)) && (Stage == 0)){
+		xSetPointer(dPlayerData, 1);
+		int target = 0;
+		if(xGetInt(dPlayerData, xStageUnlocked) >= 9){
+			target = 10;
+		}
+		else{
+			target = xGetInt(dPlayerData, xStageUnlocked)+1;
+		}
+		string texty = "In 10 seconds " + stageName(target) + " will be auto selected.";
+		if(trCurrentPlayer() == 1){
+			trMessageSetText(texty, 8000);
+			playSound("repeaton.wav");
+		}
+		else{
+			trMessageSetText("The host has 10 seconds left to choose a stage.", 8000);
+		}
+		xsDisableSelf();
+	}
+}
+
+rule StageAuto
+inactive
+highFrequency
+{
+	if((trTime() > 1*trQuestVarGet("StageTimeout")) && (Stage == 0)){
+		int n = 0;
+		int target = 0;
+		if(xGetInt(dPlayerData, xStageUnlocked) >= 9){
+			target = 10;
+		}
+		else{
+			target = xGetInt(dPlayerData, xStageUnlocked)+1;
+		}
+		xSetPointer(dPlayerData, 1);
+		trUnitSelectClear();
+		trUnitSelectByQV("StageSelector");
+		trUnitChangeProtoUnit("Athena");
+		for(x=xGetDatabaseCount(dObelisks); >0) {
+			xDatabaseNext(dObelisks);
+			if(xGetInt(dObelisks, xObeliskStage) == target){
+				n = xGetInt(dObelisks, xObeliskName);
+				trUnitSelectByQV("StageSelector");
+				trUnitTeleport(xsVectorGetX(kbGetBlockPosition(""+n)),3,xsVectorGetZ(kbGetBlockPosition(""+n)));
+			}
+		}
+		xsDisableSelf();
+	}
+}
+
 rule choose_stage
 inactive
 highFrequency
@@ -1050,6 +1159,8 @@ highFrequency
 	if (trCountUnitsInArea(""+n, 1, "Athena",5) == 1){
 		trQuestVarSet("Stage", xGetInt(dObelisks,xObeliskStage));
 		Stage = 1*trQuestVarGet("Stage");
+		trFadeOutAllSounds(2);
+		trFadeOutMusic(2);
 		//fire event build stage
 		trUnitSelectClear();
 		trUnitSelectByQV("StageSelector", true);

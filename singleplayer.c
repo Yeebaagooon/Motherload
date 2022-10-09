@@ -81,8 +81,8 @@ void PaintSP(){
 				trUnitSelectByQV("RelicEffectA"+z);
 				trUnitChangeProtoUnit("Spy Eye");
 				trUnitSelectByQV("RelicEffectA"+z);
-				trMutateSelected(kbGetProtoUnitID("Hero Norse"));
-				trSetSelectedScale(0,0,0);
+				trMutateSelected(kbGetProtoUnitID("Hero Birth"));
+				trUnitSetAnimationPath("0,1,0,0,0,0,0");
 				trUnitSelectClear();
 			}
 			if(z == RELIC_QUARTZ){
@@ -860,14 +860,24 @@ highFrequency
 		xAddDatabaseBlock(dSelectables, true);
 		xSetInt(dSelectables, xSelectablesName, 1*trQuestVarGet("CompletionObelisk"));
 		xSetInt(dSelectables, xSelectablesPrompt, 24);
-		//FloatingUnitAnimIdle("Pharaoh of Osiris XP", xsVectorGetX(kbGetBlockPosition(""+1*trQuestVarGet("CompletionObelisk")))-1, 27.1, xsVectorGetZ(kbGetBlockPosition(""+1*trQuestVarGet("CompletionObelisk")))-1, 180, 1,1,1);
-		FloatingUnitAnimIdle("Tower Mirror", xsVectorGetX(kbGetBlockPosition(""+1*trQuestVarGet("CompletionObelisk")))-1, Completion/100*3, xsVectorGetZ(kbGetBlockPosition(""+1*trQuestVarGet("CompletionObelisk")))-1, 0, 0,3,0);
+		if(Completion > 89){
+			FloatingUnitAnimIdle("Tower Mirror", xsVectorGetX(kbGetBlockPosition(""+1*trQuestVarGet("CompletionObelisk")))-1, Completion/100*3, xsVectorGetZ(kbGetBlockPosition(""+1*trQuestVarGet("CompletionObelisk")))-1, 0, 0,3,0);
+		}
 		trUnitSelectByQV("CompletionObelisk");
 		trUnitSetAnimationPath("0,1,0,0,0");
 		if(Completion == 100){
-			xsEnableRule("Win_Cine_Start");
-			trUnitSetVariation(1*trQuestVarGet("CompletionFlag1"), 8);
-			trUnitSetVariation(1*trQuestVarGet("CompletionFlag2"), 8);
+			if(1*trQuestVarGet("CineStatus") == 2){
+				xsEnableRule("Win_Cine_Start");
+				trUnitSetVariation(1*trQuestVarGet("CompletionFlag1"), 8);
+				trUnitSetVariation(1*trQuestVarGet("CompletionFlag2"), 8);
+			}
+			if(1*trQuestVarGet("CineStatus") == 3){
+				FloatingUnitAnimIdle("Pharaoh of Osiris XP", xsVectorGetX(kbGetBlockPosition(""+1*trQuestVarGet("CompletionObelisk")))-1, 27.1, xsVectorGetZ(kbGetBlockPosition(""+1*trQuestVarGet("CompletionObelisk")))-1, 180, 1,1,1);
+				trUnitSelectByQV("CompletionFlag1");
+				trUnitDestroy();
+				trUnitSelectByQV("CompletionFlag2");
+				trUnitDestroy();
+			}
 		}
 		if(Completion < 11){
 			trUnitSelectByQV("CompletionFlag1");
@@ -1003,6 +1013,8 @@ highFrequency
 	if (trUnitGetContained() == 1) {
 		xsSetContextPlayer(0);
 		xsDisableSelf();
+		trFadeOutMusic(2);
+		trFadeOutAllSounds(2);
 		xsEnableRule("ExitAnim");
 		saveAllData();
 		xsEnableRule("SPExit");

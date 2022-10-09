@@ -856,8 +856,8 @@ void spawnRelicSpecific(vector v = vector (0,0,0), int val = 1){
 			trUnitSelectByQV("TempRelicSFX");
 			trUnitChangeProtoUnit("Spy Eye");
 			trUnitSelectByQV("TempRelicSFX");
-			trMutateSelected(kbGetProtoUnitID("Hero Norse"));
-			trSetSelectedScale(0,0,0);
+			trMutateSelected(kbGetProtoUnitID("Hero Birth"));
+			trUnitSetAnimationPath("0,1,0,0,0,0,0");
 		}
 		if(val == RELIC_QUARTZ){
 			trUnitSelectByQV("TempRelicSFX");
@@ -1025,6 +1025,8 @@ void processFreeRelics(int count = 1) {
 						}
 						trSoundPlayFN("researchcomplete.wav","1",-1,"","");
 					}
+					trUnitSelectByQV("P"+p+"Siphon");
+					trMutateSelected(kbGetProtoUnitID("Hero Greek Atalanta"));
 					/*
 					db = getWarehouseDB(p);
 					xAddDatabaseBlock(db, true);
@@ -1458,6 +1460,9 @@ highFrequency
 	if(Stage == 7){
 		goal = 150;
 	}
+	if(Stage == 8){
+		goal = 350;
+	}
 	trChatSendToPlayer(0, GSeller, "<color=1,0.5,0>--------------------</color>");
 	if(xGetInt(dPlayerData, xStageUnlocked) == Stage-1){
 		if((CurrentProfit < goal) && (goal != 0)){
@@ -1495,6 +1500,10 @@ highFrequency
 	}
 	trQuestVarSet("P"+GSeller+"Invoice", 0);
 	xsDisableSelf();
+	xSetPointer(dPlayerData, GSeller);
+	int profit = xGetInt(dPlayerData, xGold) - xGetInt(dPlayerData, xGoldStart);
+	trSetCivilizationNameOverride(GSeller, "Profit: " + profit);
+	gadgetRefresh("unitStatPanel");
 }
 
 //These two are probably wrong anyway, also DB set
@@ -1555,6 +1564,7 @@ highFrequency
 	processHeldRelics(10);
 	if((Stage != 0) || (aiIsMultiplayer() == false)){
 		for(p=1; < cNumberNonGaiaPlayers) {
+			DrillBonusOff(p);
 			xSetPointer(dPlayerData, p);
 			if(trPlayerResourceCount(p, "Gold") != xGetInt(dPlayerData, xGold)){
 				trPlayerGrantResources(p, "Gold", -1000000);

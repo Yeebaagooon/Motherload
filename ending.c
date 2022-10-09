@@ -93,9 +93,14 @@ highFrequency
 					characterDialog("You did not meet the requirements to progress.", "You needed to make 10 gold profit.", "icons\special e son of osiris icon 64");
 				}
 				else{
-					xSetInt(dPlayerData, xStageUnlocked, xGetInt(dPlayerData, xStageUnlocked) + 1);
-					trShowImageDialog(stageIcon(Stage+1), "Next planet unlocked - " + stageName(Stage+1));
-					xSetInt(dPlayerData, xStageStatus, 0);
+					if(xGetInt(dPlayerData, xPlayerActive) == 1){
+						xSetInt(dPlayerData, xStageUnlocked, xGetInt(dPlayerData, xStageUnlocked) + 1);
+						trShowImageDialog(stageIcon(Stage+1), "Next planet unlocked - " + stageName(Stage+1));
+						xSetInt(dPlayerData, xStageStatus, 0);
+					}
+					else{
+						trShowImageDialog(stageIcon(Stage+1), "Complete this stage with an intact ship to progress.");
+					}
 				}
 			}
 			//Upgrade requirements for Stage 2
@@ -113,9 +118,14 @@ highFrequency
 					}
 				}
 				else{
-					xSetInt(dPlayerData, xStageUnlocked, xGetInt(dPlayerData, xStageUnlocked) + 1);
-					xSetInt(dPlayerData, xStageStatus, 0);
-					trShowImageDialog(stageIcon(Stage+1), "Next planet unlocked - " + stageName(Stage+1));
+					if(xGetInt(dPlayerData, xPlayerActive) == 1){
+						xSetInt(dPlayerData, xStageUnlocked, xGetInt(dPlayerData, xStageUnlocked) + 1);
+						xSetInt(dPlayerData, xStageStatus, 0);
+						trShowImageDialog(stageIcon(Stage+1), "Next planet unlocked - " + stageName(Stage+1));
+					}
+					else{
+						trShowImageDialog(stageIcon(Stage+1), "Complete this stage with an intact ship to progress.");
+					}
 				}
 			}
 			if(Stage == 3){
@@ -128,9 +138,14 @@ highFrequency
 						xSetInt(dPlayerData, xStageStatus, 1);
 					}
 					else{
-						xSetInt(dPlayerData, xStageUnlocked, xGetInt(dPlayerData, xStageUnlocked) + 1);
-						trShowImageDialog(stageIcon(Stage+1), "Next planet unlocked - " + stageName(Stage+1));
-						xSetInt(dPlayerData, xStageStatus, 0);
+						if(xGetInt(dPlayerData, xPlayerActive) == 1){
+							xSetInt(dPlayerData, xStageUnlocked, xGetInt(dPlayerData, xStageUnlocked) + 1);
+							trShowImageDialog(stageIcon(Stage+1), "Next planet unlocked - " + stageName(Stage+1));
+							xSetInt(dPlayerData, xStageStatus, 0);
+						}
+						else{
+							trShowImageDialog(stageIcon(Stage+1), "Complete this stage with an intact ship to progress.");
+						}
 					}
 				}
 			}
@@ -140,9 +155,14 @@ highFrequency
 					xSetInt(dPlayerData, xStageStatus, 1);
 				}
 				else{
-					xSetInt(dPlayerData, xStageUnlocked, xGetInt(dPlayerData, xStageUnlocked) + 1);
-					trShowImageDialog(stageIcon(Stage+1), "Next planet unlocked - " + stageName(Stage+1));
-					xSetInt(dPlayerData, xStageStatus, 0);
+					if(xGetInt(dPlayerData, xPlayerActive) == 1){
+						xSetInt(dPlayerData, xStageUnlocked, xGetInt(dPlayerData, xStageUnlocked) + 1);
+						trShowImageDialog(stageIcon(Stage+1), "Next planet unlocked - " + stageName(Stage+1));
+						xSetInt(dPlayerData, xStageStatus, 0);
+					}
+					else{
+						trShowImageDialog(stageIcon(Stage+1), "Complete this stage with an intact ship to progress.");
+					}
 				}
 			}
 			if(Stage == 5){
@@ -154,9 +174,14 @@ highFrequency
 						characterDialog("You did not meet the requirements to progress.", "You needed to reach 2km depth.", "icons\special e son of osiris icon 64");
 					}
 					else{
-						xSetInt(dPlayerData, xStageUnlocked, xGetInt(dPlayerData, xStageUnlocked) + 1);
-						trShowImageDialog(stageIcon(Stage+1), "Next planet unlocked - " + stageName(Stage+1));
-						xSetInt(dPlayerData, xStageStatus, 0);
+						if(xGetInt(dPlayerData, xPlayerActive) == 1){
+							xSetInt(dPlayerData, xStageUnlocked, xGetInt(dPlayerData, xStageUnlocked) + 1);
+							trShowImageDialog(stageIcon(Stage+1), "Next planet unlocked - " + stageName(Stage+1));
+							xSetInt(dPlayerData, xStageStatus, 0);
+						}
+						else{
+							trShowImageDialog(stageIcon(Stage+1), "Complete this stage with an intact ship to progress.");
+						}
 					}
 				}
 			}
@@ -177,9 +202,14 @@ highFrequency
 						}
 					}
 					else{
-						xSetInt(dPlayerData, xStageUnlocked, xGetInt(dPlayerData, xStageUnlocked) + 1);
-						trShowImageDialog(stageIcon(Stage+1), "Next planet unlocked - " + stageName(Stage+1));
-						xSetInt(dPlayerData, xStageStatus, 0);
+						if(xGetInt(dPlayerData, xPlayerActive) == 1){
+							xSetInt(dPlayerData, xStageUnlocked, xGetInt(dPlayerData, xStageUnlocked) + 1);
+							trShowImageDialog(stageIcon(Stage+1), "Next planet unlocked - " + stageName(Stage+1));
+							xSetInt(dPlayerData, xStageStatus, 0);
+						}
+						else{
+							trShowImageDialog(stageIcon(Stage+1), "Complete this stage with an intact ship to progress.");
+						}
 					}
 				}
 			}
@@ -192,9 +222,14 @@ highFrequency
 						characterDialog("You did not meet the requirements to progress.", "You need to sell obsidian.", "icons\special e son of osiris icon 64");
 					}
 					else{
-						xSetInt(dPlayerData, xStageUnlocked, xGetInt(dPlayerData, xStageUnlocked) + 1);
-						trShowImageDialog(stageIcon(Stage+1), "Next planet unlocked - " + stageName(Stage+1));
-						xSetInt(dPlayerData, xStageStatus, 0);
+						if(xGetInt(dPlayerData, xPlayerActive) == 1){
+							xSetInt(dPlayerData, xStageUnlocked, xGetInt(dPlayerData, xStageUnlocked) + 1);
+							trShowImageDialog(stageIcon(Stage+1), "Next planet unlocked - " + stageName(Stage+1));
+							xSetInt(dPlayerData, xStageStatus, 0);
+						}
+						else{
+							trShowImageDialog(stageIcon(Stage+1), "Complete this stage with an intact ship to progress.");
+						}
 					}
 				}
 			}
@@ -203,9 +238,14 @@ highFrequency
 					characterDialog("You did not meet the requirements to progress.", "You needed to make 350 gold profit.", "icons\special e son of osiris icon 64");
 				}
 				else{
-					xSetInt(dPlayerData, xStageUnlocked, xGetInt(dPlayerData, xStageUnlocked) + 1);
-					trShowImageDialog(stageIcon(Stage+1), "Next planet unlocked - " + stageName(Stage+1));
-					xSetInt(dPlayerData, xStageStatus, 0);
+					if(xGetInt(dPlayerData, xPlayerActive) == 1){
+						xSetInt(dPlayerData, xStageUnlocked, xGetInt(dPlayerData, xStageUnlocked) + 1);
+						trShowImageDialog(stageIcon(Stage+1), "Next planet unlocked - " + stageName(Stage+1));
+						xSetInt(dPlayerData, xStageStatus, 0);
+					}
+					else{
+						trShowImageDialog(stageIcon(Stage+1), "Complete this stage with an intact ship to progress.");
+					}
 				}
 			}
 		} else if (xGetInt(dPlayerData, xStageUnlocked) < Stage-1) {
@@ -255,8 +295,8 @@ highFrequency
 		}
 	}
 	trChatSend(0, "<color=1,0.5,0><u>Mr Natas' " + stageName(Stage) + " Report:</u></color>");
-	for(p = 1; < cNumberNonGaiaPlayers){
-		for(x = 1; < cNumberNonGaiaPlayers){
+	for(x = 1; < cNumberNonGaiaPlayers){
+		for(p = 1; < cNumberNonGaiaPlayers){
 			if(1*trQuestVarGet("P"+p+"Place") == x){
 				if(x == 1){
 					trChatSend(0, "<color={PlayerColor("+p+")}><icon=(20)(icons/star)> {Playername("+p+")} - "+1*trQuestVarGet("P"+p+"Profit")+"");

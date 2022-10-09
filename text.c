@@ -1,3 +1,32 @@
+void playSoundCustom(string BasesoundName = "", string CustomsoundName = ""){
+	if((1*trQuestVarGet("CustomContent") == 0) || (CustomsoundName == "")){
+		trSoundPlayPaused(""+BasesoundName+"", "1", -1, "", "");
+	}
+	else{
+		trSoundPlayPaused(""+CustomsoundName+"", "1", -1, "", "");
+	}
+}
+
+void ColouredIconChat(string colour = "1,1,1", string icon = "", string chats = ""){
+	trChatSend(0, "<color="+colour+"><icon=(20)("+icon+")> "+chats+"</color>");
+}
+
+void ColouredChat(string colour = "1,1,1", string chats = ""){
+	trChatSend(0, "<color="+colour+">"+chats+"</color>");
+}
+
+void PlayerColouredChat(int colour = 1, string chats = ""){
+	trChatSend(0, "<color={PlayerColor("+colour+")}>"+chats+"</color>");
+}
+
+void ColouredIconChatToPlayer(int p = 1, string colour = "1,1,1", string icon = "", string chats = ""){
+	trChatSendToPlayer(0, p, "<color=" + colour + "><icon=(20)(" + icon + ")> " + chats + "</color>");
+}
+
+void ColouredChatToPlayer(int p = 1, string colour = "1,1,1", string chats = ""){
+	trChatSendToPlayer(0, p, "<color=" + colour + ">" + chats + "</color>");
+}
+
 string stageName(int stage = 0) {
 	string name = "(This stage has not been made yet)";
 	switch(stage)
@@ -214,6 +243,7 @@ int npcDiag(int npc = 0, int dialog = 0) {
 					xSetPointer(dPlayerData, p);
 					if(xGetInt(dPlayerData, xStageUnlocked) == 0){
 						uiMessageBox("Make 10 gold in 8 minutes to unlock the next planet.");
+						ColouredIconChat("1,0.5,0", "icons\siege x fire siphon icons 64", "Press Q to drill to your cursor!");
 					}
 					dialog = 0;
 				}
@@ -295,6 +325,11 @@ int npcDiag(int npc = 0, int dialog = 0) {
 					xSetPointer(dPlayerData, p);
 					if(xGetInt(dPlayerData, xStageUnlocked) == 1){
 						uiMessageBox("To unlock the next planet - upgrade your drill to level 2 and sell a gold relic on this stage.");
+						ColouredIconChat("1,0.5,0", "icons\siege x fire siphon icons 64", "To upgrade your ship - launch this map in singleplayer!");
+					}
+					if(xGetInt(dPlayerData, xStageUnlocked) == 0){
+						uiMessageBox("Try and make as much money as you can.");
+						ColouredIconChat("1,0.5,0", "icons\siege x fire siphon icons 64", "Press Q to drill to your cursor!");
 					}
 					dialog = 0;
 				}

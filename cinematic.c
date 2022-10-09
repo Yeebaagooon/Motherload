@@ -1625,6 +1625,7 @@ highFrequency
 	if((trTime()-cActivationTime) >= 3){
 		xsDisableSelf();
 		trLetterBox(false);
+		trCameraCut(vector(97.212753,163.322815,-63.585068), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619730,0.784813), vector(0.999997,-0.000000,-0.002398));
 	}
 }
 
@@ -1855,6 +1856,7 @@ highFrequency
 	if((trTime()-cActivationTime) >= 3){
 		xsDisableSelf();
 		xsEnableRule("Win_Cine_Off");
+		xsEnableRule("Win_Cine_07");
 		trUIFadeToColor(255,255,255,2000,700,false);
 		for(x=xGetDatabaseCount(dSpace); >0) {
 			xDatabaseNext(dSpace);
@@ -1862,6 +1864,27 @@ highFrequency
 			trUnitDestroy();
 		}
 		aiPlanDestroy(dSpace);
+	}
+}
+
+rule Win_Cine_07
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 1){
+		xsDisableSelf();
+		FloatingUnit("Wall Connector", 190, 8, 130, 0,1,1,1);
+		trUnitSelectByQV("QVRelic");
+		trUnitSetAnimationPath("0,2,0,0,0,0");
+		FloatingUnit("Wall Connector", 190, 4, 130, 0,1,1,1);
+		trUnitSelectByQV("QVRelic");
+		trUnitSetAnimationPath("0,2,0,0,0,0");
+		FloatingUnit("Wall Connector", 190, 12, 130, 0,1,1,1);
+		trUnitSelectByQV("QVRelic");
+		trUnitSetAnimationPath("0,2,0,0,0,0");
+		FloatingUnit("Columns", 190, 16, 130, 0,1,1,1);
+		trUnitSelectByQV("QVRelic");
+		trUnitSetAnimationPath("0,0,0,0,0,0");
 	}
 }
 

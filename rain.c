@@ -282,6 +282,7 @@ rule CheckResigns
 inactive
 highFrequency
 {
+	xsSetContextPlayer(0);
 	if((trTime()-cActivationTime) >= CheckTime){
 		CheckTime = CheckTime+1;
 		for(p = 1; < cNumberNonGaiaPlayers){
@@ -314,12 +315,14 @@ highFrequency
 					//So can chat
 					xSetInt(dPlayerData, xPlayerActive, 0);
 					trPlayerKillAllGodPowers(p);
+					PlayerColouredChat(p, trStringQuestVarGet("p"+p+"name") + " has been destroyed!");
+					//chat
 					if(trCurrentPlayer() == p){
 						trShowWinLose("You have been destroyed!", "xlose.wav");
 						playSound("dialog\en\skul062.mp3");
 					}
 					trVectorQuestVarSet("P"+p+"Pos", xsVectorSet(0,0,0));
-					trArmyDispatch(""+p+",0","Victory Marker", 1, 0,0,0,0);
+					//trArmyDispatch(""+p+",0","Victory Marker", 1, 0,0,0,0);
 					if (xGetInt(dPlayerData, xBonus+9) == 0){
 						xSetInt(dPlayerData, xBonus+9, 1);
 						if(trCurrentPlayer() == p){
@@ -906,8 +909,11 @@ inactive
 minInterval 2
 {
 	int count = 0;
+	int profit = 0;
 	for(p=1; < cNumberNonGaiaPlayers) {
 		xSetPointer(dPlayerData, p);
+		profit = xGetInt(dPlayerData, xGold) - xGetInt(dPlayerData, xGoldStart);
+		trSetCivilizationNameOverride(p, "Profit: " + profit);
 		if((NewPlayers == 1) && (xGetInt(dPlayerData, xStageUnlocked) == 0)){
 			trUnitSelectByQV("P"+p+"Siphon");
 			if((trUnitGetContained() == xGetInt(dPlayerData, xCargoHold)) && (1*trQuestVarGet("P"+p+"CargoHelper") == 0)){
@@ -918,8 +924,17 @@ minInterval 2
 				}
 			}
 		}
+		if((NewPlayers == 1) && (xGetInt(dPlayerData, xStageUnlocked) == 0)){
+			if(xGetFloat(dPlayerData, xFuel) <= 500){
+				trQuestVarSet("P"+p+"FuelHelper", 1);
+				ColouredChatToPlayer(p, "1,0.5,0", "Remember to refuel at the surface, over half your fuel is gone.");
+				if(trCurrentPlayer() == p){
+					playSound("attackwarning.wav");
+				}
+			}
+		}
 		if(trCurrentPlayer() == p){
-			if((trChatHistoryContains("level", p) == true) || (trChatHistoryContains("drill", p) == true) || (trChatHistoryContains("mine", p) == true) || (trChatHistoryContains("help", p) == true) || (trChatHistoryContains("upgrade", p) == true)){
+			if((trChatHistoryContains("level", p) == true) || (trChatHistoryContains("drill", p) == true) || (trChatHistoryContains("mine", p) == true) || (trChatHistoryContains("play", p) == true)|| (trChatHistoryContains("help", p) == true) || (trChatHistoryContains("upgrade", p) == true)){
 				if(xGetInt(dPlayerData, xStageUnlocked) < 3){
 					trChatHistoryClear();
 					if(aiIsMultiplayer() == true){
