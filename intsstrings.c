@@ -13,9 +13,10 @@ Search //VERSION OVERRIDE HERE for release to rewrite all data
 -SP exit and go to main menu with map on (modeEnter("Campaign"); modeEnter("Pregame");) trIsGadgetVisible to detect anbd do sequence
 -Up S10 trap dmg
 -S10 floor eyecandy
--Laughs
+#Laughs
+-Clouds
 
-Gadgets it the name of any element in uimain.xml
+#Gadgets it the name of any element in uimain.xml
 
 -100Cine = Ship finds Yeeb. Reward.
 */
@@ -25,7 +26,7 @@ Gadgets it the name of any element in uimain.xml
 //\Yeebaagooon\Motherload\Test sound.mp3
 int QuickStart = 0;
 int QuickStage = 0;
-bool OverrideSP = false;
+bool OverrideSP = true;
 bool OverrideStage = false;
 string displayz = "lol";
 

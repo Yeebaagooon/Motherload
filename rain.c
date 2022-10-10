@@ -84,6 +84,10 @@ inactive
 highFrequency
 {
 	if((trTime()-cActivationTime) >= 1){
+		gadgetToggle("godPowerCountdownText-1");
+		gadgetToggle("godPowerCountdownText-2");
+		gadgetToggle("godPowerCountdownText-3");
+		gadgetToggle("godPowerCountdownText-4");
 		trCameraCut(vector(97.212753,163.322815,-63.585068), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619730,0.784813), vector(0.999997,-0.000000,-0.002398));
 		for(x=xGetDatabaseCount(dPlanetEyecandy); >0) {
 			xDatabaseNext(dPlanetEyecandy);
@@ -317,9 +321,21 @@ highFrequency
 					trPlayerKillAllGodPowers(p);
 					PlayerColouredChat(p, trStringQuestVarGet("p"+p+"name") + " has been destroyed!");
 					//chat
+					trQuestVarSetFromRand("lol", 1, 4);
 					if(trCurrentPlayer() == p){
 						trShowWinLose("You have been destroyed!", "xlose.wav");
-						playSound("dialog\en\skul062.mp3");
+						if (trQuestVarGet("lol") == 1) {
+							playSound("dialog\ko\skul062.mp3");
+						}
+						if (trQuestVarGet("lol") == 2) {
+							playSound("dialog\en\skul062.mp3");
+						}
+						if (trQuestVarGet("lol") == 3) {
+							playSound("xpack\xdialog\ko\xkri075.mp3");
+						}
+						if (trQuestVarGet("lol") == 4) {
+							playSound("xpack\xdialog\en\xkri075.mp3");
+						}
 					}
 					trVectorQuestVarSet("P"+p+"Pos", xsVectorSet(0,0,0));
 					//trArmyDispatch(""+p+",0","Victory Marker", 1, 0,0,0,0);

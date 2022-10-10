@@ -1572,7 +1572,17 @@ highFrequency
 			}
 		}
 	}
-	
+	//Cargo hold capacity gadget
+	for(p=1; < cNumberNonGaiaPlayers) {
+		if(trPlayerUnitCountSpecific(p, "Hero Greek Atalanta") == 1){
+			trUnitSelectByQV("P"+p+"Siphon");
+			if (trUnitIsSelected()) {
+				gadgetReal("unitStatPanel-stat-Capacity");
+				gadgetReal("CapacityTextDisplay");
+			}
+			trUnitSelectClear();
+		}
+	}
 	
 	//debug destroymedb not destroying because not in db???
 	/*trChatHistoryClear();

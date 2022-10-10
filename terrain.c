@@ -876,6 +876,8 @@ highFrequency
 		sunColor(57,22,102);
 		ambientColor(17,15,200);
 		terrainAmbient(55,55,100);
+		trSetCloudData(1.0, 1, 1, 17.0, 1.0, 0.2);
+		trSetCloudMap("sfx g lightning skyflash");
 		xAddDatabaseBlock(dGasPocket, true);
 		xSetPointer(dGasPocket, 1);
 		trQuestVarSetFromRand("temp", 1, 20);
