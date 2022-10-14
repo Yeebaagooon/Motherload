@@ -6,7 +6,7 @@ highFrequency
 		xSetPointer(dPlayerData, 1);
 		if((xGetInt(dPlayerData, xStageUnlocked) == 10) && (1*trQuestVarGet("CineStatus") == 1)){
 			trQuestVarSet("CineStatus", 2);
-			uiMessageBox("Mr. Natas has been defeated! All bonus descriptions unlocked.");
+			startNPCDialog(30);
 			playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
 		}
 		if(xGetInt(dPlayerData, xBonus+1) != 0){

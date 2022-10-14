@@ -44,6 +44,11 @@ highFrequency
 	trModifyProtounit("Lampades", cNumberNonGaiaPlayers, 0, 1000);
 	trModifyProtounit("Lampades", cNumberNonGaiaPlayers, 1, 5);
 	trModifyProtounit("Lampades", cNumberNonGaiaPlayers, 55, 4);
+	modifyProtounitAbsolute("Gargarensis", 0, 0, 666);
+	modifyProtounitAbsolute("Gargarensis", cNumberNonGaiaPlayers, 0, 666);
+	modifyProtounitAbsolute("Pharaoh Of Osiris XP", 0, 0, 47);
+	modifyProtounitAbsolute("Pharaoh Of Osiris XP", 1, 0, 47);
+	modifyProtounitAbsolute("Pharaoh Of Osiris XP", cNumberNonGaiaPlayers, 0, 47);
 	xsDisableSelf();
 }
 

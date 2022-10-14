@@ -1554,7 +1554,20 @@ void SPCineOption(){
 	xAddDatabaseBlock(dSelectables, true);
 	xSetInt(dSelectables, xSelectablesName, 1*CinematicObelisk);
 	xSetInt(dSelectables, xSelectablesPrompt, 99);
-	FloatingUnitAnimIdle("Camera", 2, 12, 2, 180, 1,1,1);
+	FloatingUnitAnimIdle("Camera", 2, 11, 2, 180, 1,1,1);
+	int temp = trGetNextUnitScenarioNameNumber();
+	UnitCreate(1, "Victory Marker", 2, 6, 0);
+	trUnitSelectClear();
+	trUnitSelect(""+temp);
+	trUnitChangeProtoUnit("Outpost");
+	trUnitSelectClear();
+	trUnitSelect(""+temp);
+	trUnitTeleport(2,0,6);
+	xAddDatabaseBlock(dSelectables, true);
+	xSetInt(dSelectables, xSelectablesName, 1*temp);
+	xSetInt(dSelectables, xSelectablesPrompt, 47);
+	FloatingUnitAnimIdle("UI Range Indicator Norse SFX", 2, 11, 6, 180, 1,1,1);
+	trQuestVarSet("Playtester", 1*trQuestVarGet("QVRelic"));
 }
 
 void Trap3Horizontal(int LZxx = 0, int LZxmax = 0, int ZLz = 0, int PPXmin = 0, int PPXmax = 0, int PPZmin = 0, int PPZmax = 0, int Timer = 0){

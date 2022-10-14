@@ -413,7 +413,7 @@ highFrequency
 {
 	if((trTime()-cActivationTime) >= 2){
 		xsDisableSelf();
-		characterDialog("Mr Natas", "You will touch down on a planet and drill for minerals.", "icons\scenario g gargarensis icon 64");
+		characterDialog("Mr Natas", "Host this map in multiplayer to drill for minerals.", "icons\scenario g gargarensis icon 64");
 		xsEnableRule("Cine_17");
 		createCameraTrack(6000);
 		trCameraCut(vector(170.945755,11.402742,163.928833), vector(0.181878,-0.216666,0.959154), vector(0.040366,0.976246,0.212873), vector(0.982492,-0.000000,-0.186303));
@@ -968,7 +968,6 @@ highFrequency
 		xDatabaseNext(dTrap);
 		xFreeDatabaseBlock(dFreeRelics);
 	}
-	characterDialog("Relics", ""+remain, "");
 	for(p=1; < cNumberNonGaiaPlayers) {
 		trUnitSelectClear();
 		xUnitSelect(dPlayerData, xSpySiphonID);

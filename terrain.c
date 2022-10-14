@@ -774,6 +774,8 @@ highFrequency
 		sunColor(25,155,25);
 		ambientColor(55,155,10);
 		terrainAmbient(55,55,5);
+		trSetCloudData(1.0, 1, 1, 3.0, 1.0, 0.2);
+		trSetCloudMap("sfx g lightning skyflash");
 	}
 	if(Stage == 5){
 		FuelCost = 10;
@@ -1019,6 +1021,8 @@ highFrequency
 		sunColor(57,222,202);
 		ambientColor(17,15,200);
 		terrainAmbient(55,55,100);
+		trSetCloudData(1.0, 1, 1, 13.0, 1.0, 0.2);
+		trSetCloudMap("sfx g lightning skyflash");
 		for(x=1; < 25){
 			xAddDatabaseBlock(dGasPocket, true);
 			xSetPointer(dGasPocket, x);
@@ -1169,6 +1173,8 @@ highFrequency
 		sunColor(57,47,222);
 		ambientColor(17,15,211);
 		terrainAmbient(55,55,200);
+		trSetCloudData(1.0, 1, 1, 16.0, 1.0, 0.2);
+		trSetCloudMap("sfx g lightning skyflash");
 		//Somehow this explodes on surface
 		/*for(x=1; < 10){
 			xAddDatabaseBlock(dGasPocket);
@@ -1494,6 +1500,8 @@ highFrequency
 		}
 	}
 	if(Stage == 10){
+		trSetCloudData(1.0, 1, 1, 17.0, 1.0, 0.2);
+		trSetCloudMap("ui\ui button radial 32x32");
 		MineT = 0;
 		MineST = 70;
 		FuelCost = 1;
@@ -1521,6 +1529,11 @@ highFrequency
 			}
 		}
 		Layout(16,24);
+		SelectableSign(31, 185, 25);
+		SelectableSign(180, 114, 26);
+		SelectableSign(80, 114, 27);
+		SelectableSign(76, 16, 28);
+		SelectableSign(180, 95, 29);
 		for(a=1; <=25){
 			Layout(15,a);
 		}

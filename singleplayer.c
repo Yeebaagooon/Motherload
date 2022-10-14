@@ -1,3 +1,56 @@
+rule SP_Refresh
+inactive
+minInterval 2
+{
+	xSetPointer(dPlayerData, 1);
+	if(xGetInt(dPlayerData, xBonus+11) == 0){
+		if((xGetInt(dPlayerData, xDrillLevel) >= 3) || (xGetInt(dPlayerData, xHullLevel) >= 3) || (xGetInt(dPlayerData, xFuelLevel) >= 3) || (xGetInt(dPlayerData, xEngineLevel) >= 3) || (xGetInt(dPlayerData, xCargoLevel) >= 3) || (xGetInt(dPlayerData, xRadiatorLevel) >= 3)){
+			trUnitSelectByQV("Bonus11");
+			trUnitChangeProtoUnit("Prisoner");
+			trUnitSelectByQV("Bonus11");
+			trBlockAllSounds();
+			trUnitChangeProtoUnit("Wonder SPC");
+			trUnblockAllSounds();
+			trUnitSelectByQV("Bonus11");
+			trSetSelectedScale(0.3,0.3,0.3);
+			trUnitSelectByQV("Bonus11");
+			trUnitHighlight(5,true);
+			xSetInt(dPlayerData, xBonus+11, 1);
+			for(x=xGetDatabaseCount(dSelectables); >0) {
+				xDatabaseNext(dSelectables);
+				if(xGetInt(dSelectables, xSelectablesName) == 1*trQuestVarGet("Bonus11")){
+					xSetInt(dSelectables, xSelectablesPrompt, 711);
+				}
+			}
+			trUnitSelectByQV("Bonus11");
+			trUnitSetAnimationPath("3,0,0,1,0");
+			ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked (11)!");
+			playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
+		}
+	}
+	if(xGetInt(dPlayerData, xBonus+14) == 0){
+		if((xGetInt(dPlayerData, xDrillLevel) >= 8) || (xGetInt(dPlayerData, xHullLevel) >= 8) || (xGetInt(dPlayerData, xFuelLevel) >= 8) || (xGetInt(dPlayerData, xEngineLevel) >= 8) || (xGetInt(dPlayerData, xCargoLevel) >= 8) || (xGetInt(dPlayerData, xRadiatorLevel) >= 8)){
+			trUnitSelectByQV("Bonus14");
+			trUnitChangeProtoUnit("Prisoner");
+			trUnitSelectByQV("Bonus14");
+			trUnitChangeProtoUnit("Tower Mirror");
+			trUnitSelectByQV("Bonus14");
+			trSetSelectedScale(0.3,0.5,0.3);
+			trUnitSelectByQV("Bonus14");
+			trUnitHighlight(5,true);
+			xSetInt(dPlayerData, xBonus+14, 1);
+			for(x=xGetDatabaseCount(dSelectables); >0) {
+				xDatabaseNext(dSelectables);
+				if(xGetInt(dSelectables, xSelectablesName) == 1*trQuestVarGet("Bonus14")){
+					xSetInt(dSelectables, xSelectablesPrompt, 714);
+				}
+			}
+			ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked (14)!");
+			playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
+		}
+	}
+}
+
 void PaintSP(){
 	xsSetContextPlayer(0);
 	xSetPointer(dPlayerData, 1);
@@ -5,9 +58,11 @@ void PaintSP(){
 	PaintAtlantisArea(32,12,36,16,"BlackRock"); // main sq
 	PaintAtlantisArea(32,23,36,27,"black"); // boon sq
 	PaintAtlantisArea(32,1,36,5,"black"); // exit sq
-	
+	trSetCivilizationNameOverride(1, "Mr. Natas");
+	trSetCivilizationNameOverride(0, "Mr. Natas");
 	PaintAtlantisArea(33,28,35,30,"black"); //bonus central
 	PaintAtlantisArea(70,0,72,44,"black"); //relic warehouse
+	modifyProtounitAbsolute("Fire Siphon", 0, 5, xGetInt(dPlayerData, xCargoHold));
 	for(z=1 ; <= 21){
 		trQuestVarSet("RelicEffect"+z, trGetNextUnitScenarioNameNumber());
 		trArmyDispatch("0,0", "Victory Marker", 1, 142,3,4*z, 90, true);
@@ -461,7 +516,7 @@ highFrequency
 	trQuestVarSet("ExitTunnel", trGetNextUnitScenarioNameNumber());
 	UnitCreate(1, "Tunnel", 68, 7, 180); //exit unit
 	trQuestVarSet("BonusUnit", trGetNextUnitScenarioNameNumber());
-	UnitCreate(0, "Outpost", 68, 51, 180); //boon unit
+	UnitCreate(0, "Cinematic Block", 68, 51, 180); //boon unit
 	//UNITS for the 6 boxes and flags
 	int UnitBox1 = trGetNextUnitScenarioNameNumber();
 	UnitCreate(0, "Victory Marker", 46, 38, 90); //drill unit
@@ -774,6 +829,7 @@ highFrequency
 	xsEnableRule("Bonus_Display");
 	xsEnableRule("SPSiphonStats");
 	xsEnableRule("CompletionObelisk");
+	trDelayedRuleActivation("SP_Refresh");
 }
 
 rule CompletionObelisk
@@ -817,41 +873,41 @@ highFrequency
 				Completion = Completion+1;
 			}
 		}
-		if(1*xGetInt(dPlayerData, xDrillLevel) > 8){
+		if(1*xGetInt(dPlayerData, xDrillLevel) > 7){
 			Completion = Completion+8;
 		}
 		else{
-			Completion = Completion+xGetInt(dPlayerData, xDrillLevel);
+			Completion = Completion+xGetInt(dPlayerData, xDrillLevel)-1;
 		}
-		if(1*xGetInt(dPlayerData, xFuelLevel) > 8){
+		if(1*xGetInt(dPlayerData, xFuelLevel) > 7){
 			Completion = Completion+8;
 		}
 		else{
-			Completion = Completion+xGetInt(dPlayerData, xFuelLevel);
+			Completion = Completion+xGetInt(dPlayerData, xFuelLevel)-1;
 		}
-		if(1*xGetInt(dPlayerData, xHullLevel) > 8){
+		if(1*xGetInt(dPlayerData, xHullLevel) > 7){
 			Completion = Completion+8;
 		}
 		else{
-			Completion = Completion+xGetInt(dPlayerData, xHullLevel);
+			Completion = Completion+xGetInt(dPlayerData, xHullLevel)-1;
 		}
-		if(1*xGetInt(dPlayerData, xCargoLevel) > 8){
+		if(1*xGetInt(dPlayerData, xCargoLevel) > 7){
 			Completion = Completion+8;
 		}
 		else{
-			Completion = Completion+xGetInt(dPlayerData, xCargoLevel);
+			Completion = Completion+xGetInt(dPlayerData, xCargoLevel)-1;
 		}
-		if(1*xGetInt(dPlayerData, xEngineLevel) > 8){
+		if(1*xGetInt(dPlayerData, xEngineLevel) > 7){
 			Completion = Completion+8;
 		}
 		else{
-			Completion = Completion+xGetInt(dPlayerData, xEngineLevel);
+			Completion = Completion+xGetInt(dPlayerData, xEngineLevel)-1;
 		}
-		if(1*xGetInt(dPlayerData, xRadiatorLevel) > 8){
+		if(1*xGetInt(dPlayerData, xRadiatorLevel) > 7){
 			Completion = Completion+8;
 		}
 		else{
-			Completion = Completion+xGetInt(dPlayerData, xRadiatorLevel);
+			Completion = Completion+xGetInt(dPlayerData, xRadiatorLevel)-1;
 		}
 		//End completion calculation, below does flags and works with decimals (if needed, currently actually = 100)
 		//Completion = 100;
@@ -886,6 +942,20 @@ highFrequency
 			trUnitDestroy();
 			trUnitSelectByQV("CompletionObelisk");
 			trUnitDestroy();
+		}
+		if(Completion >= 11){
+			int temp = trGetNextUnitScenarioNameNumber();
+			UnitCreate(1, "Victory Marker", 198, 2, 0);
+			trUnitSelectClear();
+			trUnitSelect(""+temp);
+			trUnitChangeProtoUnit("Outpost");
+			trUnitSelectClear();
+			trUnitSelect(""+temp);
+			trUnitTeleport(198,0,2);
+			xAddDatabaseBlock(dSelectables, true);
+			xSetInt(dSelectables, xSelectablesName, 1*temp);
+			xSetInt(dSelectables, xSelectablesPrompt, 50);
+			FloatingUnitAnimIdle("Moveto", 198, 11, 2, 0, 1,1,1);
 		}
 	}
 }
@@ -964,6 +1034,7 @@ void UpgradeCargo(int p = -1){
 	trChatSend(0, trStringQuestVarGet("CargoL"+1*trQuestVarGet("CurrentCargoL")+"") + " "+1*xGetInt(dPlayerData, xCargoHold)+" minerals");
 	playSoundCustom("ageadvance.wav", "\Yeebaagooon\Motherload\Upgrade.mp3");
 	UpgradeEffect(4);
+	modifyProtounitAbsolute("Fire Siphon", 0, 5, xGetInt(dPlayerData, xCargoHold));
 }
 
 void UpgradeEngine(int p = -1){
@@ -1090,8 +1161,8 @@ highFrequency
 	if((trTime()-cActivationTime) >= 4){
 		if(OverrideStage == true){
 			xSetPointer(dPlayerData, 1);
-			xSetInt(dPlayerData, xStageStatus, 0);
-			xSetInt(dPlayerData, xStageUnlocked, 3);
+			xSetInt(dPlayerData, xBonus+16, 1);
+			xSetInt(dPlayerData, xBonus+18, 1);
 			saveAllData();
 		}
 		xsDisableSelf();

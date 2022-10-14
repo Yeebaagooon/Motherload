@@ -25,6 +25,29 @@ highFrequency
 	for(p = 1; <= cNumberNonGaiaPlayers){
 		trEventSetHandler(44+p, "DrillBonusOff");
 	}
+	trEventSetHandler(57, "DataClick1");
+	trEventSetHandler(58, "DataClick2");
+	xsDisableSelf();
+}
+
+void DataClick1(int p = 0){
+	xsSetContextPlayer(0);
+	startNPCDialog(51);
+	xsDisableSelf();
+}
+
+void DataClick2(int p = 0){
+	xsSetContextPlayer(0);
+	playSound("wonderdeath.wav");
+	for(x = 0; <= 14){
+		trSetCurrentScenarioUserData(x, 0);
+	}
+	subModeEnter("Simulation", "Editor");
+	uiMessageBox("moo","restartCurrentGame()");
+	uiCycleCurrentActivate();
+	subModeLeave("Simulation", "Editor");
+	modeEnter("pregame");
+	modeEnter("Simulation");
 	xsDisableSelf();
 }
 
@@ -56,6 +79,7 @@ void SPCineNo(int p = 0){
 	if(1*trQuestVarGet("CineStatus") == 0){
 		trChatSend(0, "The introduction cinematic explains gameplay essentials.");
 		trChatSend(0, "Watching at a later time is strongly recommended.");
+		trMessageSetText("Garrison the son of osiris in the underworld passage to save your changes.", 20000);
 		/*	if(CinematicObelisk == 0){
 			SPCineOption();
 		}*/
@@ -482,6 +506,10 @@ void FuelBuy(int p = 0){
 						xSetFloat(dPlayerData, xFuel, xGetFloat(dPlayerData, xFuel)+1000*GetFuelPump(trVectorQuestVarGetX("P"+p+"Pos"),trVectorQuestVarGetZ("P"+p+"Pos")));
 						xSetInt(dPlayerData, xFuelCountdown, 0);
 						xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*FuelCost*GetFuelPump(trVectorQuestVarGetX("P"+p+"Pos"),trVectorQuestVarGetZ("P"+p+"Pos")));
+						xSetPointer(dPlayerData, p);
+						int profit = xGetInt(dPlayerData, xGold) - xGetInt(dPlayerData, xGoldStart);
+						trSetCivilizationNameOverride(p, "Profit: " + profit);
+						gadgetRefresh("unitStatPanel");
 						if(xGetInt(dPlayerData, xFuelSpend) < 4700){
 							xSetInt(dPlayerData, xFuelSpend, xGetInt(dPlayerData, xFuelSpend)+1*FuelCost*GetFuelPump(trVectorQuestVarGetX("P"+p+"Pos"),trVectorQuestVarGetZ("P"+p+"Pos")));
 							if ((xGetInt(dPlayerData, xBonus+16) == 0) && (xGetInt(dPlayerData, xFuelSpend) >= FuelSpendForBonus)){
@@ -518,6 +546,7 @@ highFrequency
 	if(trTime() > 1*trQuestVarGet("ShopTimer")){
 		for(p = 1; <= cNumberNonGaiaPlayers){
 			int count = 0;
+			int profit = 0;
 			xSetPointer(dPlayerData, p);
 			if(xGetInt(dPlayerData, xPlayerActive) == 1){
 				if((trVectorQuestVarGetZ("P"+p+"Pos") > 190) && (trVectorQuestVarGetZ("P"+p+"Pos") < 196)){
@@ -526,6 +555,10 @@ highFrequency
 							
 							grantGodPowerNoRechargeNextPosition(p, "Ragnorok", 1);
 							xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*Shop1Cost);
+							xSetPointer(dPlayerData, p);
+							profit = xGetInt(dPlayerData, xGold) - xGetInt(dPlayerData, xGoldStart);
+							trSetCivilizationNameOverride(p, "Profit: " + profit);
+							gadgetRefresh("unitStatPanel");
 							count = 0;
 							for(x=0; < 4) {
 								if(trGetGPData(1,0,x) == 234){
@@ -545,6 +578,10 @@ highFrequency
 						if (trPlayerResourceCount(p, "Gold") >= Shop2Cost) {
 							grantGodPowerNoRechargeNextPosition(p, "Audrey", 1);
 							xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*Shop2Cost);
+							xSetPointer(dPlayerData, p);
+							profit = xGetInt(dPlayerData, xGold) - xGetInt(dPlayerData, xGoldStart);
+							trSetCivilizationNameOverride(p, "Profit: " + profit);
+							gadgetRefresh("unitStatPanel");
 							count = 0;
 							for(x=0; < 4) {
 								if(trGetGPData(p,0,x) == 407){
@@ -575,6 +612,10 @@ highFrequency
 						if (trPlayerResourceCount(p, "Gold") >= Shop3Cost) {
 							grantGodPowerNoRechargeNextPosition(p, "Rain", 1);
 							xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*Shop3Cost);
+							xSetPointer(dPlayerData, p);
+							profit = xGetInt(dPlayerData, xGold) - xGetInt(dPlayerData, xGoldStart);
+							trSetCivilizationNameOverride(p, "Profit: " + profit);
+							gadgetRefresh("unitStatPanel");
 							count = 0;
 							for(x=0; < 4) {
 								if(trGetGPData(1,0,x) == 156){
@@ -598,6 +639,10 @@ highFrequency
 								}
 								spyEffect(1*trQuestVarGet("P"+p+"Siphon"), kbGetProtoUnitID("White Tiger"), vector(0,0,0), vector(0,0,0), 18);
 								xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*Shop4Cost);
+								xSetPointer(dPlayerData, p);
+								profit = xGetInt(dPlayerData, xGold) - xGetInt(dPlayerData, xGoldStart);
+								trSetCivilizationNameOverride(p, "Profit: " + profit);
+								gadgetRefresh("unitStatPanel");
 								if(xGetInt(dPlayerData, xHullSpend) < 4700){
 									xSetInt(dPlayerData, xHullSpend, xGetInt(dPlayerData, xHullSpend)+1*Shop4Cost);
 									if ((xGetInt(dPlayerData, xBonus+20) == 0) && (xGetInt(dPlayerData, xHullSpend) >= HullSpendForBonus)){
@@ -640,6 +685,10 @@ highFrequency
 										}
 										spyEffect(1*trQuestVarGet("P"+p+"Siphon"), kbGetProtoUnitID("White Tiger"), vector(0,0,0), vector(0,0,0), 18);
 										xSetInt(dPlayerData, xGold, xGetInt(dPlayerData, xGold)-1*HullCost*GetHullShop(trVectorQuestVarGetX("P"+p+"Pos")));
+										xSetPointer(dPlayerData, p);
+										profit = xGetInt(dPlayerData, xGold) - xGetInt(dPlayerData, xGoldStart);
+										trSetCivilizationNameOverride(p, "Profit: " + profit);
+										gadgetRefresh("unitStatPanel");
 										if(xGetInt(dPlayerData, xHullSpend) < 4700){
 											xSetInt(dPlayerData, xHullSpend, xGetInt(dPlayerData, xHullSpend)+1*HullCost*GetHullShop(trVectorQuestVarGetX("P"+p+"Pos")));
 											if ((xGetInt(dPlayerData, xBonus+20) == 0) && (xGetInt(dPlayerData, xHullSpend) >= HullSpendForBonus)){
@@ -926,290 +975,292 @@ minInterval 2
 {
 	int count = 0;
 	int profit = 0;
-	for(p=1; < cNumberNonGaiaPlayers) {
-		xSetPointer(dPlayerData, p);
-		profit = xGetInt(dPlayerData, xGold) - xGetInt(dPlayerData, xGoldStart);
-		trSetCivilizationNameOverride(p, "Profit: " + profit);
-		if((NewPlayers == 1) && (xGetInt(dPlayerData, xStageUnlocked) == 0)){
-			trUnitSelectByQV("P"+p+"Siphon");
-			if((trUnitGetContained() == xGetInt(dPlayerData, xCargoHold)) && (1*trQuestVarGet("P"+p+"CargoHelper") == 0)){
-				trQuestVarSet("P"+p+"CargoHelper", 1);
-				ColouredChatToPlayer(p, "1,0.5,0", "Your cargo hold is full, return to the surface to sell your minerals.");
-				if(trCurrentPlayer() == p){
-					playSound("crushmetal2.wav");
-				}
-			}
-		}
-		if((NewPlayers == 1) && (xGetInt(dPlayerData, xStageUnlocked) == 0)){
-			if(xGetFloat(dPlayerData, xFuel) <= 500){
-				trQuestVarSet("P"+p+"FuelHelper", 1);
-				ColouredChatToPlayer(p, "1,0.5,0", "Remember to refuel at the surface, over half your fuel is gone.");
-				if(trCurrentPlayer() == p){
-					playSound("attackwarning.wav");
-				}
-			}
-		}
-		if(trCurrentPlayer() == p){
-			if((trChatHistoryContains("level", p) == true) || (trChatHistoryContains("drill", p) == true) || (trChatHistoryContains("mine", p) == true) || (trChatHistoryContains("play", p) == true)|| (trChatHistoryContains("help", p) == true) || (trChatHistoryContains("upgrade", p) == true)){
-				if(xGetInt(dPlayerData, xStageUnlocked) < 3){
-					trChatHistoryClear();
-					if(aiIsMultiplayer() == true){
-						ColouredChat("1,0.5,0", "To mine the ground, place your cursor over an area of land.");
-						ColouredChat("1,0.5,0", "This must also be next to your fire siphon (no diagonals).");
-						ColouredChat("1,0.5,0", "Then press 'Q' to drill that square.");
-						ColouredChat("1,0.5,0", "Gather minerals and return them to the surface to sell them.");
-						ColouredChat("1,0.5,0", "You can carry "+xGetInt(dPlayerData, xCargoHold)+" minerals at once.");
-						ColouredChat("1,0.5,0", "Use your profit to upgrade your stats in singleplayer.");
-						ColouredChat("1,0.5,0", "(Singleplayer - Random map - Motherload)");
-					}
-					else{
-						ColouredChat("1,0.5,0", "Click an obelisk and you will be asked if you wish to upgrade.");
-						ColouredChat("1,0.5,0", "Remember to garrison in the underworld passage to save.");
-						if(1*trQuestVarGet("CineStatus") == 0){
-							trChatHistoryClear();
-							xsEnableRule("CineSetup");
-						}
+	if(aiIsMultiplayer() == true){
+		for(p=1; < cNumberNonGaiaPlayers) {
+			xSetPointer(dPlayerData, p);
+			profit = xGetInt(dPlayerData, xGold) - xGetInt(dPlayerData, xGoldStart);
+			trSetCivilizationNameOverride(p, "Profit: " + profit);
+			if((NewPlayers == 1) && (xGetInt(dPlayerData, xStageUnlocked) == 0)){
+				trUnitSelectByQV("P"+p+"Siphon");
+				if((trUnitGetContained() == xGetInt(dPlayerData, xCargoHold)) && (1*trQuestVarGet("P"+p+"CargoHelper") == 0)){
+					trQuestVarSet("P"+p+"CargoHelper", 1);
+					ColouredChatToPlayer(p, "1,0.5,0", "Your cargo hold is full, return to the surface to sell your minerals.");
+					if(trCurrentPlayer() == p){
+						playSound("crushmetal2.wav");
 					}
 				}
 			}
-			if((trChatHistoryContains("control", p) == true) || (trChatHistoryContains("hotkey", p) == true) || (trChatHistoryContains("inventory", p) == true) || (trChatHistoryContains("power", p) == true) || (trChatHistoryContains("inventenory", p) == true)){
-				trChatHistoryClear();
-				ColouredChat("1,0.5,0", "Q - Drill to cursor");
-				count = 0;
-				for(x=0; < 4) {
-					if(trGetGPData(1,0,x) == 407){
-						count = count + trGetGPData(1,1,x);
+			if((NewPlayers == 1) && (xGetInt(dPlayerData, xStageUnlocked) == 0) && (1*trQuestVarGet("P"+p+"FuelHelper") == 0)){
+				if(xGetFloat(dPlayerData, xFuel) <= 500){
+					trQuestVarSet("P"+p+"FuelHelper", 1);
+					ColouredChatToPlayer(p, "1,0.5,0", "Remember to refuel at the surface, over half your fuel is gone.");
+					if(trCurrentPlayer() == p){
+						playSound("attackwarning.wav");
 					}
-				}
-				if(count != 0){
-					if(Stage < 6){
-						ColouredChatToPlayer(p, "1,0.5,0", "W - Dynamite ("+count+")");
-					}
-					else if((Stage >= 6) && (Stage <= 7)){
-						ColouredChatToPlayer(p, "1,0.5,0", "W - Plastic explosive ("+count+")");
-					}
-					else if(Stage >= 8){
-						ColouredChatToPlayer(p, "1,0.5,0", "W - Nuclear explosive ("+count+")");
-					}
-				}
-				count = 0;
-				for(x=0; < 4) {
-					if(trGetGPData(1,0,x) == 156){
-						count = count + trGetGPData(1,1,x);
-					}
-				}
-				if(count != 0){
-					ColouredChat("1,0.5,0", "E - Emergency surface teleport ("+count+")");
-				}
-				count = 0;
-				for(x=0; < 4) {
-					if(trGetGPData(1,0,x) == 234){
-						count = count + trGetGPData(1,1,x);
-					}
-				}
-				if(count != 0){
-					ColouredChat("1,0.5,0", "R - Use backup fuel tank ("+count+")");
-				}
-				count = 0;
-				for(x=0; < 4) {
-					if(trGetGPData(1,0,x) == 220){
-						count = count + trGetGPData(1,1,x);
-					}
-				}
-				if(count != 0){
-					ColouredChat("1,0.5,0", "A - Activates antimatter bomb");
-				}
-				count = 0;
-				for(x=0; < 4) {
-					if(trGetGPData(1,0,x) == 557){
-						count = count + trGetGPData(1,1,x);
-					}
-				}
-				if(count != 0){
-					ColouredChat("1,0.5,0", "L - Activates mining laser (cursor)");
-				}
-				count = 0;
-				for(x=0; < 4) {
-					if(trGetGPData(1,0,x) == 235){
-						count = count + trGetGPData(1,1,x);
-					}
-				}
-				if(count != 0){
-					ColouredChat("1,0.5,0", "D - Activates reality drill");
 				}
 			}
-			
-			if((trChatHistoryContains("heal", p) == true) || (trChatHistoryContains("repair", p) == true) || (trChatHistoryContains("hitpoint", p) == true)){
-				if(xGetInt(dPlayerData, xStageUnlocked) < 6){
-					trChatHistoryClear();
-					ColouredChat("1,0.5,0", "Go to the hull shop in the top right corner of the map to repair your ship.");
+			if(trCurrentPlayer() == p){
+				if((trChatHistoryContains("level", p) == true) || (trChatHistoryContains("drill", p) == true) || (trChatHistoryContains("mine", p) == true) || (trChatHistoryContains("play", p) == true)|| (trChatHistoryContains("help", p) == true) || (trChatHistoryContains("upgrade", p) == true)){
+					if(xGetInt(dPlayerData, xStageUnlocked) < 3){
+						trChatHistoryClear();
+						if(aiIsMultiplayer() == true){
+							ColouredChat("1,0.5,0", "To mine the ground, place your cursor over an area of land.");
+							ColouredChat("1,0.5,0", "This must also be next to your fire siphon (no diagonals).");
+							ColouredChat("1,0.5,0", "Then press 'Q' to drill that square.");
+							ColouredChat("1,0.5,0", "Gather minerals and return them to the surface to sell them.");
+							ColouredChat("1,0.5,0", "You can carry "+xGetInt(dPlayerData, xCargoHold)+" minerals at once.");
+							ColouredChat("1,0.5,0", "Use your profit to upgrade your stats in singleplayer.");
+							ColouredChat("1,0.5,0", "(Singleplayer - Random map - Motherload)");
+						}
+						else{
+							ColouredChat("1,0.5,0", "Click an obelisk and you will be asked if you wish to upgrade.");
+							ColouredChat("1,0.5,0", "Remember to garrison in the underworld passage to save.");
+							if(1*trQuestVarGet("CineStatus") == 0){
+								trChatHistoryClear();
+								xsEnableRule("CineSetup");
+							}
+						}
+					}
 				}
-			}
-			if((trChatHistoryContains("fuel", p) == true) || (trChatHistoryContains("petrol", p) == true)){
-				if(xGetInt(dPlayerData, xStageUnlocked) < 4){
+				if((trChatHistoryContains("control", p) == true) || (trChatHistoryContains("hotkey", p) == true) || (trChatHistoryContains("inventory", p) == true) || (trChatHistoryContains("power", p) == true) || (trChatHistoryContains("inventenory", p) == true)){
 					trChatHistoryClear();
-					ColouredChat("1,0.5,0", "To refuel, go to the fuel shop in the top right corner of the map.");
-					
+					ColouredChat("1,0.5,0", "Q - Drill to cursor");
+					count = 0;
+					for(x=0; < 4) {
+						if(trGetGPData(1,0,x) == 407){
+							count = count + trGetGPData(1,1,x);
+						}
+					}
+					if(count != 0){
+						if(Stage < 6){
+							ColouredChatToPlayer(p, "1,0.5,0", "W - Dynamite ("+count+")");
+						}
+						else if((Stage >= 6) && (Stage <= 7)){
+							ColouredChatToPlayer(p, "1,0.5,0", "W - Plastic explosive ("+count+")");
+						}
+						else if(Stage >= 8){
+							ColouredChatToPlayer(p, "1,0.5,0", "W - Nuclear explosive ("+count+")");
+						}
+					}
+					count = 0;
+					for(x=0; < 4) {
+						if(trGetGPData(1,0,x) == 156){
+							count = count + trGetGPData(1,1,x);
+						}
+					}
+					if(count != 0){
+						ColouredChat("1,0.5,0", "E - Emergency surface teleport ("+count+")");
+					}
+					count = 0;
+					for(x=0; < 4) {
+						if(trGetGPData(1,0,x) == 234){
+							count = count + trGetGPData(1,1,x);
+						}
+					}
+					if(count != 0){
+						ColouredChat("1,0.5,0", "R - Use backup fuel tank ("+count+")");
+					}
+					count = 0;
+					for(x=0; < 4) {
+						if(trGetGPData(1,0,x) == 220){
+							count = count + trGetGPData(1,1,x);
+						}
+					}
+					if(count != 0){
+						ColouredChat("1,0.5,0", "A - Activates antimatter bomb");
+					}
+					count = 0;
+					for(x=0; < 4) {
+						if(trGetGPData(1,0,x) == 557){
+							count = count + trGetGPData(1,1,x);
+						}
+					}
+					if(count != 0){
+						ColouredChat("1,0.5,0", "L - Activates mining laser (cursor)");
+					}
+					count = 0;
+					for(x=0; < 4) {
+						if(trGetGPData(1,0,x) == 235){
+							count = count + trGetGPData(1,1,x);
+						}
+					}
+					if(count != 0){
+						ColouredChat("1,0.5,0", "D - Activates reality drill");
+					}
 				}
-			}
-			if((trChatHistoryContains("progress", p) == true) || (trChatHistoryContains("goal", p) == true) || (trChatHistoryContains("objective", p) == true) || (trChatHistoryContains("unlock", p) == true)){
-				if(xGetInt(dPlayerData, xStageUnlocked) > Stage-1){
-					trChatHistoryClear();
-					ColouredChat("1,0.5,0", "You have already unlocked the next stage.");
+				
+				if((trChatHistoryContains("heal", p) == true) || (trChatHistoryContains("repair", p) == true) || (trChatHistoryContains("hitpoint", p) == true)){
+					if(xGetInt(dPlayerData, xStageUnlocked) < 6){
+						trChatHistoryClear();
+						ColouredChat("1,0.5,0", "Go to the hull shop in the top right corner of the map to repair your ship.");
+					}
 				}
-				if(xGetInt(dPlayerData, xStageUnlocked) < Stage-1){
-					trChatHistoryClear();
-					ColouredChat("1,0.5,0", "You need to beat earlier stages to unlock this planet.");
+				if((trChatHistoryContains("fuel", p) == true) || (trChatHistoryContains("petrol", p) == true)){
+					if(xGetInt(dPlayerData, xStageUnlocked) < 4){
+						trChatHistoryClear();
+						ColouredChat("1,0.5,0", "To refuel, go to the fuel shop in the top right corner of the map.");
+						
+					}
 				}
-				if(xGetInt(dPlayerData, xStageUnlocked) == Stage-1){
-					trChatHistoryClear();
-					if(Stage == 1){
-						ColouredChat("1,0.5,0", "<u>To win this planet:</u>");
-						if(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart) < 10){
-							ColouredIconChat("1,0,0", "cursors\cursor_no", "Make 10 profit ["+(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart))+"]");
-						}
-						if(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart) >= 10){
-							ColouredIconChat("0,1,0", "icons\star", "Make 10 profit ["+(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart))+"]");
-						}
+				if((trChatHistoryContains("progress", p) == true) || (trChatHistoryContains("goal", p) == true) || (trChatHistoryContains("objective", p) == true) || (trChatHistoryContains("unlock", p) == true)){
+					if(xGetInt(dPlayerData, xStageUnlocked) > Stage-1){
+						trChatHistoryClear();
+						ColouredChat("1,0.5,0", "You have already unlocked the next stage.");
 					}
-					if(Stage == 2){
-						ColouredChat("1,0.5,0", "<u>To win this planet:</u>");
-						if(xGetInt(dPlayerData, xDrillLevel) < 2){
-							ColouredIconChat("1,0,0", "cursors\cursor_no", "Upgrade drill to level 2 (in singleplayer)");
-						}
-						if(xGetInt(dPlayerData, xDrillLevel) >= 2){
-							ColouredIconChat("0,1,0", "icons\star", "Upgrade drill to level 2");
-						}
-						if(xGetInt(dPlayerData, xStageStatus) != 1){
-							ColouredIconChat("1,0,0", "cursors\cursor_no", "Sell gold on this stage");
-						}
-						if(xGetInt(dPlayerData, xStageStatus) == 1){
-							ColouredIconChat("0,1,0", "icons\star", "Sell gold on this stage");
-						}
-						if((xGetInt(dPlayerData, xStageStatus) == 1) && (xGetInt(dPlayerData, xDrillLevel) < 2)){
-							trChatSend(0, "Once this game has ended you can unlock the next planet directly in singleplayer!");
-						}
+					if(xGetInt(dPlayerData, xStageUnlocked) < Stage-1){
+						trChatHistoryClear();
+						ColouredChat("1,0.5,0", "You need to beat earlier stages to unlock this planet.");
 					}
-					if(Stage == 3){
-						ColouredChat("1,0.5,0", "<u>To win this planet:</u>");
-						if(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart) < 25){
-							ColouredIconChat("1,0,0", "cursors\cursor_no", "Make 25 profit ["+(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart))+"]");
+					if(xGetInt(dPlayerData, xStageUnlocked) == Stage-1){
+						trChatHistoryClear();
+						if(Stage == 1){
+							ColouredChat("1,0.5,0", "<u>To win this planet:</u>");
+							if(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart) < 10){
+								ColouredIconChat("1,0,0", "cursors\cursor_no", "Make 10 profit ["+(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart))+"]");
+							}
+							if(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart) >= 10){
+								ColouredIconChat("0,1,0", "icons\star", "Make 10 profit ["+(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart))+"]");
+							}
 						}
-						if(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart) >= 25){
-							ColouredIconChat("0,1,0", "icons\star", "Make 25 profit ["+(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart))+"]");
+						if(Stage == 2){
+							ColouredChat("1,0.5,0", "<u>To win this planet:</u>");
+							if(xGetInt(dPlayerData, xDrillLevel) < 2){
+								ColouredIconChat("1,0,0", "cursors\cursor_no", "Upgrade drill to level 2 (in singleplayer)");
+							}
+							if(xGetInt(dPlayerData, xDrillLevel) >= 2){
+								ColouredIconChat("0,1,0", "icons\star", "Upgrade drill to level 2");
+							}
+							if(xGetInt(dPlayerData, xStageStatus) != 1){
+								ColouredIconChat("1,0,0", "cursors\cursor_no", "Sell gold on this stage");
+							}
+							if(xGetInt(dPlayerData, xStageStatus) == 1){
+								ColouredIconChat("0,1,0", "icons\star", "Sell gold on this stage");
+							}
+							if((xGetInt(dPlayerData, xStageStatus) == 1) && (xGetInt(dPlayerData, xDrillLevel) < 2)){
+								trChatSend(0, "Once this game has ended you can unlock the next planet directly in singleplayer!");
+							}
 						}
-						if(xGetInt(dPlayerData, xHullLevel) < 3){
-							ColouredIconChat("1,0,0", "cursors\cursor_no", "Upgrade hull to level 3 (in singleplayer)");
+						if(Stage == 3){
+							ColouredChat("1,0.5,0", "<u>To win this planet:</u>");
+							if(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart) < 25){
+								ColouredIconChat("1,0,0", "cursors\cursor_no", "Make 25 profit ["+(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart))+"]");
+							}
+							if(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart) >= 25){
+								ColouredIconChat("0,1,0", "icons\star", "Make 25 profit ["+(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart))+"]");
+							}
+							if(xGetInt(dPlayerData, xHullLevel) < 3){
+								ColouredIconChat("1,0,0", "cursors\cursor_no", "Upgrade hull to level 3 (in singleplayer)");
+							}
+							if(xGetInt(dPlayerData, xHullLevel) >= 3){
+								ColouredIconChat("0,1,0", "icons\star", "Upgrade hull to level 3");
+							}
+							if((xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart) >= 25) && (xGetInt(dPlayerData, xDrillLevel) < 3)){
+								trChatSend(0, "Once this game has ended you can unlock the next planet directly in singleplayer!");
+							}
 						}
-						if(xGetInt(dPlayerData, xHullLevel) >= 3){
-							ColouredIconChat("0,1,0", "icons\star", "Upgrade hull to level 3");
+						if(Stage == 4){
+							ColouredChat("1,0.5,0", "<u>To win this planet:</u>");
+							if(xGetInt(dPlayerData, xDrillLevel) < 3){
+								ColouredIconChat("1,0,0", "cursors\cursor_no", "Upgrade drill to level 3 <color=1,1,1>["+xGetInt(dPlayerData, xDrillLevel)+"]");
+							}
+							if(xGetInt(dPlayerData, xDrillLevel) >= 3){
+								ColouredIconChat("0,1,0", "icons\star", "Upgrade drill to level 3");
+							}
+							if(xGetInt(dPlayerData, xHullLevel) < 3){
+								ColouredIconChat("1,0,0", "cursors\cursor_no", "Upgrade hull to level 3 <color=1,1,1>["+xGetInt(dPlayerData, xHullLevel)+"]");
+							}
+							if(xGetInt(dPlayerData, xHullLevel) >= 3){
+								ColouredIconChat("0,1,0", "icons\star", "Upgrade hull to level 3");
+							}
+							if(xGetInt(dPlayerData, xFuelLevel) < 3){
+								ColouredIconChat("1,0,0", "cursors\cursor_no", "Upgrade fuel tank to level 3 <color=1,1,1>["+xGetInt(dPlayerData, xFuelLevel)+"]");
+							}
+							if(xGetInt(dPlayerData, xFuelLevel) >= 3){
+								ColouredIconChat("0,1,0", "icons\star", "Upgrade fuel tank to level 3");
+							}
+							if(xGetInt(dPlayerData, xCargoLevel) < 3){
+								ColouredIconChat("1,0,0", "cursors\cursor_no", "Upgrade cargo hold to level 3 <color=1,1,1>["+xGetInt(dPlayerData, xCargoLevel)+"]");
+							}
+							if(xGetInt(dPlayerData, xCargoLevel) >= 3){
+								ColouredIconChat("0,1,0", "icons\star", "Upgrade cargo hold to level 3");
+							}
+							if(xGetInt(dPlayerData, xEngineLevel) < 3){
+								ColouredIconChat("1,0,0", "cursors\cursor_no", "Upgrade engine to level 3 <color=1,1,1>["+xGetInt(dPlayerData, xEngineLevel)+"]");
+							}
+							if(xGetInt(dPlayerData, xEngineLevel) >= 3){
+								ColouredIconChat("0,1,0", "icons\star", "Upgrade engine to level 3");
+							}
+							if(xGetInt(dPlayerData, xRadiatorLevel) < 3){
+								ColouredIconChat("1,0,0", "cursors\cursor_no", "Upgrade radiator to level 3 <color=1,1,1>["+xGetInt(dPlayerData, xRadiatorLevel)+"]");
+							}
+							if(xGetInt(dPlayerData, xRadiatorLevel) >= 3){
+								ColouredIconChat("0,1,0", "icons\star", "Upgrade radiator to level 3");
+							}
 						}
-						if((xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart) >= 25) && (xGetInt(dPlayerData, xDrillLevel) < 3)){
-							trChatSend(0, "Once this game has ended you can unlock the next planet directly in singleplayer!");
+						if(Stage == 5){
+							ColouredChat("1,0.5,0", "<u>To win this planet:</u>");
+							if(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart) < 50){
+								ColouredIconChat("1,0,0", "cursors\cursor_no", "Make 50 profit ["+(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart))+"]");
+							}
+							if(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart) >= 50){
+								ColouredIconChat("0,1,0", "icons\star", "Make 50 profit ["+(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart))+"]");
+							}
+							if(xGetInt(dPlayerData, xStageStatus) == 0){
+								ColouredIconChat("1,0,0", "cursors\cursor_no", "Reach 2km depth");
+							}
+							if(xGetInt(dPlayerData, xStageStatus) == 1){
+								ColouredIconChat("0,1,0", "icons\star", "Reach 2km depth");
+							}
 						}
-					}
-					if(Stage == 4){
-						ColouredChat("1,0.5,0", "<u>To win this planet:</u>");
-						if(xGetInt(dPlayerData, xDrillLevel) < 3){
-							ColouredIconChat("1,0,0", "cursors\cursor_no", "Upgrade drill to level 3 <color=1,1,1>["+xGetInt(dPlayerData, xDrillLevel)+"]");
+						if(Stage == 6){
+							ColouredChat("1,0.5,0", "<u>To win this planet:</u>");
+							if(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart) < 200){
+								ColouredIconChat("1,0,0", "cursors\cursor_no", "Make 200 profit ["+(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart))+"]");
+							}
+							if(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart) >= 200){
+								ColouredIconChat("0,1,0", "icons\star", "Make 200 profit ["+(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart))+"]");
+							}
+							if(xGetInt(dPlayerData, xStageStatus) == 0){
+								ColouredIconChat("1,0,0", "cursors\cursor_no", "Sell a diamond");
+							}
+							if(xGetInt(dPlayerData, xStageStatus) == 1){
+								ColouredIconChat("0,1,0", "icons\star", "Sell a diamond");
+							}
+							if(xGetInt(dPlayerData, xDrillLevel) < 5){
+								ColouredIconChat("1,0,0", "cursors\cursor_no", "Upgrade drill to level 5 <color=1,1,1>["+xGetInt(dPlayerData, xDrillLevel)+"]");
+							}
+							if(xGetInt(dPlayerData, xDrillLevel) >= 5){
+								ColouredIconChat("0,1,0", "icons\star", "Upgrade drill to level 5");
+							}
 						}
-						if(xGetInt(dPlayerData, xDrillLevel) >= 3){
-							ColouredIconChat("0,1,0", "icons\star", "Upgrade drill to level 3");
+						if(Stage == 7){
+							ColouredChat("1,0.5,0", "<u>To win this planet:</u>");
+							if(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart) < 150){
+								ColouredIconChat("1,0,0", "cursors\cursor_no", "Make 150 profit ["+(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart))+"]");
+							}
+							if(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart) >= 150){
+								ColouredIconChat("0,1,0", "icons\star", "Make 150 profit ["+(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart))+"]");
+							}
+							if(xGetInt(dPlayerData, xStageStatus) == 0){
+								ColouredIconChat("1,0,0", "cursors\cursor_no", "Sell a lump of obsidian");
+							}
+							if(xGetInt(dPlayerData, xStageStatus) == 1){
+								ColouredIconChat("0,1,0", "icons\star", "Sell a lump of obsidian");
+							}
 						}
-						if(xGetInt(dPlayerData, xHullLevel) < 3){
-							ColouredIconChat("1,0,0", "cursors\cursor_no", "Upgrade hull to level 3 <color=1,1,1>["+xGetInt(dPlayerData, xHullLevel)+"]");
+						if(Stage == 8){
+							ColouredChat("1,0.5,0", "<u>To win this planet:</u>");
+							if(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart) < 350){
+								ColouredIconChat("1,0,0", "cursors\cursor_no", "Make 350 profit ["+(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart))+"]");
+							}
+							if(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart) >= 350){
+								ColouredIconChat("0,1,0", "icons\star", "Make 350 profit ["+(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart))+"]");
+							}
 						}
-						if(xGetInt(dPlayerData, xHullLevel) >= 3){
-							ColouredIconChat("0,1,0", "icons\star", "Upgrade hull to level 3");
+						if(Stage == 9){
+							ColouredChat("1,0.5,0", "<u>To win this planet:</u>");
+							ColouredIconChat("1,0,0", "cursors\cursor_no", "Reach maximum depth");
 						}
-						if(xGetInt(dPlayerData, xFuelLevel) < 3){
-							ColouredIconChat("1,0,0", "cursors\cursor_no", "Upgrade fuel tank to level 3 <color=1,1,1>["+xGetInt(dPlayerData, xFuelLevel)+"]");
-						}
-						if(xGetInt(dPlayerData, xFuelLevel) >= 3){
-							ColouredIconChat("0,1,0", "icons\star", "Upgrade fuel tank to level 3");
-						}
-						if(xGetInt(dPlayerData, xCargoLevel) < 3){
-							ColouredIconChat("1,0,0", "cursors\cursor_no", "Upgrade cargo hold to level 3 <color=1,1,1>["+xGetInt(dPlayerData, xCargoLevel)+"]");
-						}
-						if(xGetInt(dPlayerData, xCargoLevel) >= 3){
-							ColouredIconChat("0,1,0", "icons\star", "Upgrade cargo hold to level 3");
-						}
-						if(xGetInt(dPlayerData, xEngineLevel) < 3){
-							ColouredIconChat("1,0,0", "cursors\cursor_no", "Upgrade engine to level 3 <color=1,1,1>["+xGetInt(dPlayerData, xEngineLevel)+"]");
-						}
-						if(xGetInt(dPlayerData, xEngineLevel) >= 3){
-							ColouredIconChat("0,1,0", "icons\star", "Upgrade engine to level 3");
-						}
-						if(xGetInt(dPlayerData, xRadiatorLevel) < 3){
-							ColouredIconChat("1,0,0", "cursors\cursor_no", "Upgrade radiator to level 3 <color=1,1,1>["+xGetInt(dPlayerData, xRadiatorLevel)+"]");
-						}
-						if(xGetInt(dPlayerData, xRadiatorLevel) >= 3){
-							ColouredIconChat("0,1,0", "icons\star", "Upgrade radiator to level 3");
-						}
-					}
-					if(Stage == 5){
-						ColouredChat("1,0.5,0", "<u>To win this planet:</u>");
-						if(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart) < 50){
-							ColouredIconChat("1,0,0", "cursors\cursor_no", "Make 50 profit ["+(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart))+"]");
-						}
-						if(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart) >= 50){
-							ColouredIconChat("0,1,0", "icons\star", "Make 50 profit ["+(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart))+"]");
-						}
-						if(xGetInt(dPlayerData, xStageStatus) == 0){
-							ColouredIconChat("1,0,0", "cursors\cursor_no", "Reach 2km depth");
-						}
-						if(xGetInt(dPlayerData, xStageStatus) == 1){
-							ColouredIconChat("0,1,0", "icons\star", "Reach 2km depth");
-						}
-					}
-					if(Stage == 6){
-						ColouredChat("1,0.5,0", "<u>To win this planet:</u>");
-						if(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart) < 200){
-							ColouredIconChat("1,0,0", "cursors\cursor_no", "Make 200 profit ["+(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart))+"]");
-						}
-						if(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart) >= 200){
-							ColouredIconChat("0,1,0", "icons\star", "Make 200 profit ["+(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart))+"]");
-						}
-						if(xGetInt(dPlayerData, xStageStatus) == 0){
-							ColouredIconChat("1,0,0", "cursors\cursor_no", "Sell a diamond");
-						}
-						if(xGetInt(dPlayerData, xStageStatus) == 1){
-							ColouredIconChat("0,1,0", "icons\star", "Sell a diamond");
-						}
-						if(xGetInt(dPlayerData, xDrillLevel) < 5){
-							ColouredIconChat("1,0,0", "cursors\cursor_no", "Upgrade drill to level 5 <color=1,1,1>["+xGetInt(dPlayerData, xDrillLevel)+"]");
-						}
-						if(xGetInt(dPlayerData, xDrillLevel) >= 5){
-							ColouredIconChat("0,1,0", "icons\star", "Upgrade drill to level 5");
-						}
-					}
-					if(Stage == 7){
-						ColouredChat("1,0.5,0", "<u>To win this planet:</u>");
-						if(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart) < 150){
-							ColouredIconChat("1,0,0", "cursors\cursor_no", "Make 150 profit ["+(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart))+"]");
-						}
-						if(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart) >= 150){
-							ColouredIconChat("0,1,0", "icons\star", "Make 150 profit ["+(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart))+"]");
-						}
-						if(xGetInt(dPlayerData, xStageStatus) == 0){
-							ColouredIconChat("1,0,0", "cursors\cursor_no", "Sell a lump of obsidian");
-						}
-						if(xGetInt(dPlayerData, xStageStatus) == 1){
-							ColouredIconChat("0,1,0", "icons\star", "Sell a lump of obsidian");
-						}
-					}
-					if(Stage == 8){
-						ColouredChat("1,0.5,0", "<u>To win this planet:</u>");
-						if(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart) < 350){
-							ColouredIconChat("1,0,0", "cursors\cursor_no", "Make 350 profit ["+(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart))+"]");
-						}
-						if(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart) >= 350){
-							ColouredIconChat("0,1,0", "icons\star", "Make 350 profit ["+(xGetInt(dPlayerData, xGold)-xGetInt(dPlayerData, xGoldStart))+"]");
-						}
-					}
-					if(Stage == 9){
-						ColouredChat("1,0.5,0", "<u>To win this planet:</u>");
-						ColouredIconChat("1,0,0", "cursors\cursor_no", "Reach maximum depth");
 					}
 				}
 			}

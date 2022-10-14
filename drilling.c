@@ -733,7 +733,7 @@ highFrequency
 			}
 			else if(trDistanceToVectorSquared("P"+p+"Siphon", "TargetVector"+p+"") > 111){
 				trChatSendToPlayer(0, p,
-					"<color=1,0,0>Drill request too far!</color>  "+trDistanceToVectorSquared("P"+p+"Siphon", "TargetVector"+p+"")+"");
+					"<color=1,0,0>Drill request too far!</color>");
 				if(trCurrentPlayer() == p){
 					trSoundPlayFN("cantdothat.wav","1",-1,"","");
 				}

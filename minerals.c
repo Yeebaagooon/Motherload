@@ -1573,6 +1573,20 @@ highFrequency
 		}
 	}
 	//Cargo hold capacity gadget
+	if(aiIsMultiplayer() == false){
+		trUnitSelectByQV("MainSiphon");
+		if (trUnitIsSelected()) {
+			xSetPointer(dPlayerData, 1);
+			gadgetReal("unitStatPanel-stat-Capacity");
+			gadgetReal("CapacityTextDisplay");
+			trSetCivilizationNameOverride(0, "Fuel: " + 1*trQuestVarGet("FuelCL"+xGetInt(dPlayerData, xFuelLevel)+"") + "L");
+			gadgetRefresh("unitStatPanel");
+		}
+		else{
+			trSetCivilizationNameOverride(0, "Mr. Natas");
+		}
+		trUnitSelectClear();
+	}
 	for(p=1; < cNumberNonGaiaPlayers) {
 		if(trPlayerUnitCountSpecific(p, "Hero Greek Atalanta") == 1){
 			trUnitSelectByQV("P"+p+"Siphon");
@@ -1829,7 +1843,7 @@ highFrequency
 					if(xGetInt(dTrap, xTrapType) == 5){
 						if((trVectorQuestVarGetX("P"+p+"Pos") >= xsVectorGetX(xGetVector(dTrap, xTrapHitVector))-xGetInt(dTrap, xTrapHitboxX)) && (trVectorQuestVarGetX("P"+p+"Pos") < xsVectorGetX(xGetVector(dTrap, xTrapHitVector))+xGetInt(dTrap, xTrapHitboxX)) && (trVectorQuestVarGetZ("P"+p+"Pos") >= xsVectorGetZ(xGetVector(dTrap, xTrapHitVector))-xGetInt(dTrap, xTrapHitboxZ)) && (trVectorQuestVarGetZ("P"+p+"Pos") <= xsVectorGetZ(xGetVector(dTrap, xTrapHitVector))+xGetInt(dTrap, xTrapHitboxZ))){
 							trUnitSelectByQV("P"+p+"Siphon");
-							trDamageUnit(10);
+							trDamageUnit(10000);
 						}
 					}
 				}
@@ -1847,7 +1861,7 @@ highFrequency
 							ySetVar("creeps", "lastHealed", trTimeMS()); // set last healed time to current time
 							*/
 							trUnitSelectByQV("P"+p+"Siphon");
-							trDamageUnit(10);
+							trDamageUnit(10000);
 						}
 					}
 				}

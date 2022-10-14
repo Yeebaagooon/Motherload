@@ -208,42 +208,73 @@ int npcDiag(int npc = 0, int dialog = 0) {
 			{
 				case 1:
 				{
-					uiMessageBox("Welcome to  " + stageName(Stage) + ", we need you to dig some minerals out of this planet!");
+					if (1*trQuestVarGet("CustomContent") == 0){
+						uiMessageBox("Welcome to  " + stageName(Stage) + ", we need you to dig some minerals out of this planet!");
+					}
+					if (1*trQuestVarGet("CustomContent") == 1){
+						trShowImageDialog("Yeebaagooon\Motherload\instr0", "");
+					}
 					if(xGetInt(dPlayerData, xStageUnlocked) >= 4){
 						dialog = 0;
 					}
 				}
 				case 2:
 				{
-					uiMessageBox("Use lure or 'Q' on a square to drill it out.");
+					if (1*trQuestVarGet("CustomContent") == 0){
+						uiMessageBox("Press the 'Q' key with your cursor on a square to drill it out.");
+					}
+					if (1*trQuestVarGet("CustomContent") == 1){
+						trShowImageDialog("Yeebaagooon\Motherload\instr1", "");
+					}
 				}
 				case 3:
 				{
-					uiMessageBox("Then pick up minerals...");
+					if (1*trQuestVarGet("CustomContent") == 0){
+						uiMessageBox("Then pick up minerals (relics)...");
+					}
+					if (1*trQuestVarGet("CustomContent") == 1){
+						trShowImageDialog("Yeebaagooon\Motherload\instr2", "");
+					}
 				}
 				case 4:
 				{
 					trCameraCut(vector(62.953140,98.965134,111.442215), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
-					uiMessageBox("And bring them to the processing shop to sell them, no need to drop them.");
+					if (1*trQuestVarGet("CustomContent") == 0){
+						uiMessageBox("And bring them to the processing shop to sell them, no need to drop them.");
+					}
+					if (1*trQuestVarGet("CustomContent") == 1){
+						trShowImageDialog("Yeebaagooon\Motherload\instr3", "");
+					}
 				}
 				case 5:
 				{
 					trCameraCut(vector(146.952896,98.965134,111.240631), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
-					uiMessageBox("We are subsidising petrol, so fuel is free here.");
+					if (1*trQuestVarGet("CustomContent") == 0){
+						uiMessageBox("We are subsidising petrol, so fuel is free here.");
+					}
+					if (1*trQuestVarGet("CustomContent") == 1){
+						trShowImageDialog("Yeebaagooon\Motherload\instr4", "");
+					}
 				}
 				case 6:
 				{
-					uiMessageBox("Just remember to fill up and don't run out!");
+					if (1*trQuestVarGet("CustomContent") == 0){
+						uiMessageBox("Just remember to fill up and don't run out!");
+					}
+					if (1*trQuestVarGet("CustomContent") == 1){
+						trShowImageDialog("Yeebaagooon\Motherload\instr5", "");
+					}
 				}
 				case 7:
 				{
 					trCameraCut(vector(100.463554,153.803818,-59.088593), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
 					uiZoomToProto("Hero Greek Atalanta");
-					trMessageSetText("Click the flashing signs on type 'help' for further information.", 10000);
+					trMessageSetText("Click the flashing signs or type 'help' for further information.", 10000);
 					xSetPointer(dPlayerData, p);
 					if(xGetInt(dPlayerData, xStageUnlocked) == 0){
 						uiMessageBox("Make 10 gold in 8 minutes to unlock the next planet.");
 						ColouredIconChat("1,0.5,0", "icons\siege x fire siphon icons 64", "Press Q to drill to your cursor!");
+						trSetCounterDisplay("Use Q to drill to your cursor");
 					}
 					dialog = 0;
 				}
@@ -712,6 +743,190 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				}
 			}
 		}
+		case 25:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Beware the traps that will instantly kill you!");
+				}
+				case 2:
+				{
+					uiMessageBox("Watch where you tread, there are plenty of pressure pads around.");
+					dialog = 0;
+				}
+			}
+		}
+		case 26:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Some pressure pads will fire missiles out of walls.");
+				}
+				case 2:
+				{
+					uiMessageBox("Naturally, they kill on touch.");
+					dialog = 0;
+				}
+			}
+		}
+		case 27:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Pressure pads can be to your advantage.");
+				}
+				case 2:
+				{
+					uiMessageBox("Some may activate/deactivate deadly forcefields.");
+					dialog = 0;
+				}
+			}
+		}
+		case 28:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("At least two players are needed to survive this room.");
+					dialog = 0;
+				}
+			}
+		}
+		case 29:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Stand on the pressure pad to summon a lava sledge.");
+					dialog = 0;
+				}
+			}
+		}
+		case 30:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Mr. Natas has been defeated! All bonus descriptions unlocked.");
+				}
+				case 2:
+				{
+					uiMessageBox("Map percent complete = " + Completion);
+					dialog = 0;
+				}
+			}
+		}
+		case 47:
+		{
+			switch(dialog)
+			{
+				case 1:
+				{
+					uiMessageBox("Mega thank you to my wonderful playtesters.");
+				}
+				case 2:
+				{
+					uiMessageBox("Zenophobia - RMS senpai");
+					trUnitSelectByQV("Playtester");
+					trMutateSelected(kbGetProtoUnitID("Hoplite"));
+				}
+				case 3:
+				{
+					uiMessageBox("nottud - RMS consultant");
+					trUnitSelectByQV("Playtester");
+					trMutateSelected(kbGetProtoUnitID("Minotaur"));
+				}
+				case 4:
+				{
+					uiMessageBox("Yimababwe");
+					trUnitSelectByQV("Playtester");
+					trMutateSelected(kbGetProtoUnitID("Automaton SPC"));
+				}
+				case 5:
+				{
+					uiMessageBox("devil_do1");
+					trUnitSelectByQV("Playtester");
+					trMutateSelected(kbGetProtoUnitID("Shaba Ka"));
+				}
+				case 6:
+				{
+					uiMessageBox("Arca");
+					trUnitSelectByQV("Playtester");
+					trMutateSelected(kbGetProtoUnitID("Cinematic Block"));
+				}
+				case 7:
+				{
+					uiMessageBox("Gravoc");
+					trUnitSelectByQV("Playtester");
+					trMutateSelected(kbGetProtoUnitID("Cinematic Block"));
+				}
+				case 8:
+				{
+					uiMessageBox("Masaomi");
+					trUnitSelectByQV("Playtester");
+					trMutateSelected(kbGetProtoUnitID("Cinematic Block"));
+				}
+				case 9:
+				{
+					uiMessageBox("Nickonhawk");
+					trUnitSelectByQV("Playtester");
+					trMutateSelected(kbGetProtoUnitID("Odysseus"));
+				}
+				case 10:
+				{
+					uiMessageBox("phdorogers4");
+					trUnitSelectByQV("Playtester");
+					trMutateSelected(kbGetProtoUnitID("Cinematic Block"));
+				}
+				case 11:
+				{
+					trUnitSelectByQV("Playtester");
+					trMutateSelected(kbGetProtoUnitID("Curse SFX"));
+					dialog = 0;
+				}
+			}
+		}
+		case 50:
+		{
+			switch(dialog){
+				case 1:
+				{
+					uiMessageBox("This obelisk can wipe your map progress");
+				}
+				case 2:
+				{
+					trShowChoiceDialog("Reset all your data?", "Yes", 57, "No", -1);
+					dialog = 0;
+				}
+			}
+		}
+		case 51:
+		{
+			switch(dialog){
+				case 1:
+				{
+					uiMessageBox("You are about to reset everything!");
+				}
+				case 2:
+				{
+					uiMessageBox("You will lose all your gold, levels and progress.");
+				}
+				case 3:
+				{
+					trShowChoiceDialog("Are you sure?", "Yes", 58, "No", -1);
+					dialog = 0;
+				}
+			}
+		}
 		case 99:
 		{
 			switch(dialog){
@@ -729,6 +944,7 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				case 1:
 				{
 					trChatHistoryClear();
+					xSetPointer(dPlayerData, 1);
 					trChatSend(0, "<u><color=1,1,1>Current Drill:</color></u>");
 					trChatSend(0, trStringQuestVarGet("DrillL"+1*trQuestVarGet("CurrentDrillL")+"") + " "+1*xGetFloat(dPlayerData, xDrillPower)+" m/s");
 					uiMessageBox("Your drill power controls how easy it is to drill through harder rock.");
@@ -759,8 +975,10 @@ int npcDiag(int npc = 0, int dialog = 0) {
 						trChatHistoryClear();
 						trChatSend(0, "<u><color=1,1,1>Current Drill:</color></u>");
 						trChatSend(0, trStringQuestVarGet("DrillL"+1*trQuestVarGet("CurrentDrillL")+"") + " "+1*xGetFloat(dPlayerData, xDrillPower)+" m/s");
-						trChatSend(0, "<u><color=1,1,1>Upgraded Drill:</color></u>");
-						trChatSend(0, DrillUp + " "+1*trQuestVarGet("DrillPowerL"+1*trQuestVarGet("NextDrillL")+"")+" m/s");
+						if (xGetInt(dPlayerData, xDrillLevel) < 8) {
+							trChatSend(0, "<u><color=1,1,1>Upgraded Drill:</color></u>");
+							trChatSend(0, DrillUp + " "+1*trQuestVarGet("DrillPowerL"+1*trQuestVarGet("NextDrillL")+"")+" m/s");
+						}
 					}
 					else if(xGetInt(dPlayerData, xGold) >= 1*trQuestVarGet("goldCost")){
 						if (xGetInt(dPlayerData, xDrillLevel) < 8) {
@@ -772,8 +990,10 @@ int npcDiag(int npc = 0, int dialog = 0) {
 						trChatHistoryClear();
 						trChatSend(0, "<u><color=1,1,1>Current Drill:</color></u>");
 						trChatSend(0, trStringQuestVarGet("DrillL"+1*trQuestVarGet("CurrentDrillL")+"") + " "+1*xGetFloat(dPlayerData, xDrillPower)+" m/s");
-						trChatSend(0, "<u><color=1,1,1>Upgraded Drill:</color></u>");
-						trChatSend(0, DrillUp + " "+1*trQuestVarGet("DrillPowerL"+1*trQuestVarGet("NextDrillL")+"")+" m/s");
+						if (xGetInt(dPlayerData, xDrillLevel) < 8) {
+							trChatSend(0, "<u><color=1,1,1>Upgraded Drill:</color></u>");
+							trChatSend(0, DrillUp + " "+1*trQuestVarGet("DrillPowerL"+1*trQuestVarGet("NextDrillL")+"")+" m/s");
+						}
 						dialog = 0;
 					}
 				}
@@ -786,6 +1006,7 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				case 1:
 				{
 					trChatHistoryClear();
+					xSetPointer(dPlayerData, 1);
 					trChatSend(0, "<u><color=1,1,1>Current Hull:</color></u>");
 					trChatSend(0, trStringQuestVarGet("HullL"+1*trQuestVarGet("CurrentHullL")+"") + " "+1*xGetInt(dPlayerData, xHullHP)+" hp");
 					uiMessageBox("Your hull strength determines how much damage your ship can take before exploding.");
@@ -816,8 +1037,10 @@ int npcDiag(int npc = 0, int dialog = 0) {
 						trChatHistoryClear();
 						trChatSend(0, "<u><color=1,1,1>Current Hull:</color></u>");
 						trChatSend(0, trStringQuestVarGet("HullL"+1*trQuestVarGet("CurrentHullL")+"") + " "+1*xGetInt(dPlayerData, xHullHP)+" hp");
-						trChatSend(0, "<u><color=1,1,1>Upgraded Hull:</color></u>");
-						trChatSend(0, HullUp + " "+1*trQuestVarGet("HullHPL"+1*trQuestVarGet("NextHullL")+"")+" hp");
+						if (xGetInt(dPlayerData, xHullLevel) < 8) {
+							trChatSend(0, "<u><color=1,1,1>Upgraded Hull:</color></u>");
+							trChatSend(0, HullUp + " "+1*trQuestVarGet("HullHPL"+1*trQuestVarGet("NextHullL")+"")+" hp");
+						}
 					}
 					else if(xGetInt(dPlayerData, xGold) >= 1*trQuestVarGet("goldCost")){
 						if (xGetInt(dPlayerData, xHullLevel) < 8) {
@@ -829,8 +1052,10 @@ int npcDiag(int npc = 0, int dialog = 0) {
 						trChatHistoryClear();
 						trChatSend(0, "<u><color=1,1,1>Current Hull:</color></u>");
 						trChatSend(0, trStringQuestVarGet("HullL"+1*trQuestVarGet("CurrentHullL")+"") + " "+1*xGetInt(dPlayerData, xHullHP)+" hp");
-						trChatSend(0, "<u><color=1,1,1>Upgraded Hull:</color></u>");
-						trChatSend(0, HullUp + " "+1*trQuestVarGet("HullHPL"+1*trQuestVarGet("NextHullL")+"")+" hp");
+						if (xGetInt(dPlayerData, xHullLevel) < 8) {
+							trChatSend(0, "<u><color=1,1,1>Upgraded Hull:</color></u>");
+							trChatSend(0, HullUp + " "+1*trQuestVarGet("HullHPL"+1*trQuestVarGet("NextHullL")+"")+" hp");
+						}
 						dialog = 0;
 					}
 				}
@@ -842,6 +1067,7 @@ int npcDiag(int npc = 0, int dialog = 0) {
 			{
 				case 1:
 				{
+					xSetPointer(dPlayerData, 1);
 					trChatHistoryClear();
 					trChatSend(0, "<u><color=1,1,1>Current Fuel Tank:</color></u>");
 					trChatSend(0, trStringQuestVarGet("FuelL"+1*trQuestVarGet("CurrentFuelL")+"") + " "+1*xGetInt(dPlayerData, xFuelTank)+" L");
@@ -849,7 +1075,8 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				}
 				case 2:
 				{
-					uiMessageBox("Current fuel tank capacity =  "+ 1*xGetInt(dPlayerData, xFuelTank) +  " L");
+					xSetPointer(dPlayerData, 1);
+					uiMessageBox("Current fuel tank capacity = "+1*trQuestVarGet("FuelCL"+xGetInt(dPlayerData, xFuelLevel)+"")+" L");
 					dialog = 0;
 				}
 			}
@@ -872,8 +1099,10 @@ int npcDiag(int npc = 0, int dialog = 0) {
 						trChatHistoryClear();
 						trChatSend(0, "<u><color=1,1,1>Current Fuel:</color></u>");
 						trChatSend(0, trStringQuestVarGet("FuelL"+1*trQuestVarGet("CurrentFuelL")+"") + " "+1*xGetInt(dPlayerData, xFuelTank)+" L");
-						trChatSend(0, "<u><color=1,1,1>Upgraded Fuel:</color></u>");
-						trChatSend(0, FuelUp + " "+1*trQuestVarGet("FuelCL"+1*trQuestVarGet("NextFuelL")+"")+" L");
+						if (xGetInt(dPlayerData, xFuelLevel) < 8) {
+							trChatSend(0, "<u><color=1,1,1>Upgraded Fuel:</color></u>");
+							trChatSend(0, FuelUp + " "+1*trQuestVarGet("FuelCL"+1*trQuestVarGet("NextFuelL")+"")+" L");
+						}
 					}
 					else if(xGetInt(dPlayerData, xGold) >= 1*trQuestVarGet("goldCost")){
 						if (xGetInt(dPlayerData, xFuelLevel) < 8) {
@@ -885,8 +1114,10 @@ int npcDiag(int npc = 0, int dialog = 0) {
 						trChatHistoryClear();
 						trChatSend(0, "<u><color=1,1,1>Current Fuel:</color></u>");
 						trChatSend(0, trStringQuestVarGet("FuelL"+1*trQuestVarGet("CurrentFuelL")+"") + " "+1*xGetInt(dPlayerData, xFuelTank)+" L");
-						trChatSend(0, "<u><color=1,1,1>Upgraded Fuel:</color></u>");
-						trChatSend(0, FuelUp + " "+1*trQuestVarGet("FuelCL"+1*trQuestVarGet("NextFuelL")+"")+" L");
+						if (xGetInt(dPlayerData, xFuelLevel) < 8) {
+							trChatSend(0, "<u><color=1,1,1>Upgraded Fuel:</color></u>");
+							trChatSend(0, FuelUp + " "+1*trQuestVarGet("FuelCL"+1*trQuestVarGet("NextFuelL")+"")+" L");
+						}
 						dialog = 0;
 					}
 				}
@@ -899,12 +1130,14 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				case 1:
 				{
 					trChatHistoryClear();
+					xSetPointer(dPlayerData, 1);
 					trChatSend(0, "<u><color=1,1,1>Current Cargo Hold:</color></u>");
 					trChatSend(0, trStringQuestVarGet("CargoL"+1*trQuestVarGet("CurrentCargoL")+"") + " "+1*xGetInt(dPlayerData, xCargoHold)+" minerals");
 					uiMessageBox("Your cargo hold specifies how many minerals you can hold at any one time.");
 				}
 				case 2:
 				{
+					xSetPointer(dPlayerData, 1);
 					uiMessageBox("Current cargo hold limit = "+ 1*xGetInt(dPlayerData, xCargoHold) +  " minerals");
 					dialog = 0;
 				}
@@ -928,8 +1161,10 @@ int npcDiag(int npc = 0, int dialog = 0) {
 						trChatHistoryClear();
 						trChatSend(0, "<u><color=1,1,1>Current cargo hold:</color></u>");
 						trChatSend(0, trStringQuestVarGet("CargoL"+1*trQuestVarGet("CurrentCargoL")+"") + " "+1*xGetInt(dPlayerData, xCargoHold)+" minerals");
-						trChatSend(0, "<u><color=1,1,1>Upgraded cargo hold:</color></u>");
-						trChatSend(0, CargoUp + " "+1*trQuestVarGet("CargoCL"+1*trQuestVarGet("NextCargoL")+"")+" minerals");
+						if (xGetInt(dPlayerData, xCargoLevel) < 8) {
+							trChatSend(0, "<u><color=1,1,1>Upgraded cargo hold:</color></u>");
+							trChatSend(0, CargoUp + " "+1*trQuestVarGet("CargoCL"+1*trQuestVarGet("NextCargoL")+"")+" minerals");
+						}
 					}
 					else if(xGetInt(dPlayerData, xGold) >= 1*trQuestVarGet("goldCost")){
 						if (xGetInt(dPlayerData, xCargoLevel) < 8) {
@@ -941,8 +1176,10 @@ int npcDiag(int npc = 0, int dialog = 0) {
 						trChatHistoryClear();
 						trChatSend(0, "<u><color=1,1,1>Current cargo hold:</color></u>");
 						trChatSend(0, trStringQuestVarGet("CargoL"+1*trQuestVarGet("CurrentCargoL")+"") + " "+1*xGetInt(dPlayerData, xCargoHold)+" minerals");
-						trChatSend(0, "<u><color=1,1,1>Upgraded cargo hold:</color></u>");
-						trChatSend(0, CargoUp + " "+1*trQuestVarGet("CargoCL"+1*trQuestVarGet("NextCargoL")+"")+" minerals");
+						if (xGetInt(dPlayerData, xCargoLevel) < 8) {
+							trChatSend(0, "<u><color=1,1,1>Upgraded cargo hold:</color></u>");
+							trChatSend(0, CargoUp + " "+1*trQuestVarGet("CargoCL"+1*trQuestVarGet("NextCargoL")+"")+" minerals");
+						}
 						dialog = 0;
 					}
 				}
@@ -955,12 +1192,14 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				case 1:
 				{
 					trChatHistoryClear();
+					xSetPointer(dPlayerData, 1);
 					trChatSend(0, "<u><color=1,1,1>Current Engine:</color></u>");
 					trChatSend(0, trStringQuestVarGet("EngineL"+1*trQuestVarGet("CurrentEngineL")+"") + " "+1*xGetInt(dPlayerData, xEnginePower)+" kW");
 					uiMessageBox("A more powerful engine will help with fuel efficiency.");
 				}
 				case 2:
 				{
+					xSetPointer(dPlayerData, 1);
 					uiMessageBox("Current engine power = "+ 1*xGetInt(dPlayerData, xEnginePower) +  " kW");
 					dialog = 0;
 				}
@@ -984,8 +1223,10 @@ int npcDiag(int npc = 0, int dialog = 0) {
 						trChatHistoryClear();
 						trChatSend(0, "<u><color=1,1,1>Current Engine:</color></u>");
 						trChatSend(0, trStringQuestVarGet("EngineL"+1*trQuestVarGet("CurrentEngineL")+"") + " "+1*xGetInt(dPlayerData, xEnginePower)+" kW");
-						trChatSend(0, "<u><color=1,1,1>Upgraded Engine:</color></u>");
-						trChatSend(0, EngineUp + " "+1*trQuestVarGet("EngineCL"+1*trQuestVarGet("NextEngineL")+"")+" kW");
+						if (xGetInt(dPlayerData, xEngineLevel) < 8) {
+							trChatSend(0, "<u><color=1,1,1>Upgraded Engine:</color></u>");
+							trChatSend(0, EngineUp + " "+1*trQuestVarGet("EngineCL"+1*trQuestVarGet("NextEngineL")+"")+" kW");
+						}
 					}
 					else if(xGetInt(dPlayerData, xGold) >= 1*trQuestVarGet("goldCost")){
 						if (xGetInt(dPlayerData, xEngineLevel) < 8) {
@@ -997,8 +1238,10 @@ int npcDiag(int npc = 0, int dialog = 0) {
 						trChatHistoryClear();
 						trChatSend(0, "<u><color=1,1,1>Current Engine:</color></u>");
 						trChatSend(0, trStringQuestVarGet("EngineL"+1*trQuestVarGet("CurrentEngineL")+"") + " "+1*xGetInt(dPlayerData, xEnginePower)+" kW");
-						trChatSend(0, "<u><color=1,1,1>Upgraded Engine:</color></u>");
-						trChatSend(0, EngineUp + " "+1*trQuestVarGet("EngineCL"+1*trQuestVarGet("NextEngineL")+"")+" kW");
+						if (xGetInt(dPlayerData, xEngineLevel) < 8) {
+							trChatSend(0, "<u><color=1,1,1>Upgraded Engine:</color></u>");
+							trChatSend(0, EngineUp + " "+1*trQuestVarGet("EngineCL"+1*trQuestVarGet("NextEngineL")+"")+" kW");
+						}
 						dialog = 0;
 					}
 				}
@@ -1011,12 +1254,14 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				case 1:
 				{
 					trChatHistoryClear();
+					xSetPointer(dPlayerData, 1);
 					trChatSend(0, "<u><color=1,1,1>Current Radiator:</color></u>");
 					trChatSend(0, trStringQuestVarGet("RadiatorL"+1*trQuestVarGet("CurrentRadiatorL")+"") + " "+1*xGetInt(dPlayerData, xRadiator)+" percent");
 					uiMessageBox("Your radiator will help save fuel and prevent temperature damage.");
 				}
 				case 2:
 				{
+					xSetPointer(dPlayerData, 1);
 					uiMessageBox("Current radiator efficiency = "+ 1*xGetInt(dPlayerData, xRadiator) +  " percent");
 					dialog = 0;
 				}
@@ -1040,8 +1285,10 @@ int npcDiag(int npc = 0, int dialog = 0) {
 						trChatHistoryClear();
 						trChatSend(0, "<u><color=1,1,1>Current Radiator:</color></u>");
 						trChatSend(0, trStringQuestVarGet("RadiatorL"+1*trQuestVarGet("CurrentRadiatorL")+"") + " "+1*xGetInt(dPlayerData, xRadiator)+" percent efficient");
-						trChatSend(0, "<u><color=1,1,1>Upgraded Radiator:</color></u>");
-						trChatSend(0, RadiatorUp + " "+1*trQuestVarGet("RadiatorCL"+1*trQuestVarGet("NextRadiatorL")+"")+" percent efficient");
+						if (xGetInt(dPlayerData, xRadiatorLevel) < 8) {
+							trChatSend(0, "<u><color=1,1,1>Upgraded Radiator:</color></u>");
+							trChatSend(0, RadiatorUp + " "+1*trQuestVarGet("RadiatorCL"+1*trQuestVarGet("NextRadiatorL")+"")+" percent efficient");
+						}
 					}
 					else if(xGetInt(dPlayerData, xGold) >= 1*trQuestVarGet("goldCost")){
 						if (xGetInt(dPlayerData, xRadiatorLevel) < 8) {
@@ -1053,8 +1300,10 @@ int npcDiag(int npc = 0, int dialog = 0) {
 						trChatHistoryClear();
 						trChatSend(0, "<u><color=1,1,1>Current Radiator:</color></u>");
 						trChatSend(0, trStringQuestVarGet("RadiatorL"+1*trQuestVarGet("CurrentRadiatorL")+"") + " "+1*xGetInt(dPlayerData, xRadiator)+" percent efficient");
-						trChatSend(0, "<u><color=1,1,1>Upgraded Radiator:</color></u>");
-						trChatSend(0, RadiatorUp + " "+1*trQuestVarGet("RadiatorCL"+1*trQuestVarGet("NextRadiatorL")+"")+" percent efficient");
+						if (xGetInt(dPlayerData, xRadiatorLevel) < 8) {
+							trChatSend(0, "<u><color=1,1,1>Upgraded Radiator:</color></u>");
+							trChatSend(0, RadiatorUp + " "+1*trQuestVarGet("RadiatorCL"+1*trQuestVarGet("NextRadiatorL")+"")+" percent efficient");
+						}
 						dialog = 0;
 					}
 				}
