@@ -7,6 +7,27 @@ void playSoundCustom(string BasesoundName = "", string CustomsoundName = ""){
 	}
 }
 
+bool cameraFirstWaypoint = true;
+int cameraTrackTime = 0;
+
+void createCameraTrack(int timeMS = 0){
+	cameraFirstWaypoint = true;
+	cameraTrackTime = timeMS;
+	trackInsert();
+	trackPlay(cameraTrackTime, -1);
+}
+void addCameraTrackWaypoint(){
+	if(cameraFirstWaypoint){
+		cameraFirstWaypoint = false;
+	} else {
+		trackAddWaypoint();
+	}
+	trackEditWaypoint();
+}
+void playCameraTrack(int eventId = -1){
+	trackPlay(cameraTrackTime, eventId);
+}
+
 void ColouredIconChat(string colour = "1,1,1", string icon = "", string chats = ""){
 	trChatSend(0, "<color="+colour+"><icon=(20)("+icon+")> "+chats+"</color>");
 }
@@ -347,7 +368,12 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				}
 				case 3:
 				{
-					uiMessageBox("As always, click the signs to find out more information about refuelling.");
+					if (1*trQuestVarGet("CustomContent") == 0){
+						uiMessageBox("As always, click the signs to find out more information about refuelling.");
+					}
+					if (1*trQuestVarGet("CustomContent") == 1){
+						trShowImageDialog("Yeebaagooon\Motherload\instr6", "");
+					}
 				}
 				case 4:
 				{
@@ -822,6 +848,10 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				{
 					uiMessageBox("Map percent complete = " + Completion);
 					dialog = 0;
+					xSetPointer(dPlayerData, 1);
+					if(xGetInt(dPlayerData, xBonus+7) == 0){
+						xSetInt(dPlayerData, xBonus+7, 1);
+					}
 				}
 			}
 		}
@@ -832,30 +862,85 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				case 1:
 				{
 					uiMessageBox("Mega thank you to my wonderful playtesters.");
+					trUnitSelectClear();
+					trUnitSelect(""+CinematicObelisk);
+					trUnitChangeProtoUnit("Cinematic Block");
+					subModeEnter("Simulation", "Editor");
+					uiMessageBox("moo","uiToggleGame");
+					uiCycleCurrentActivate();
+					subModeLeave("Simulation", "Editor");
+					modeEnter("pregame");
+					modeEnter("Simulation");
+					trRenderSky(true, "SkySunset");
+					createCameraTrack(200000);
+					trCameraCut(vector(40.959942,1.703771,4.25), vector(-0.981351,0.187485,0.042415), vector(0.187310,0.982267,-0.008096), vector(0.043181,-0.000000,0.999067));
+					addCameraTrackWaypoint();
+					trCameraCut(vector(40.959942,1.703771,4.25), vector(-0.981351,0.187485,0.042415), vector(0.187310,0.982267,-0.008096), vector(0.043181,-0.000000,0.999067));
+					addCameraTrackWaypoint();
+					playCameraTrack();
+					trUnitSelectByQV("CCamera");
+					trMutateSelected(kbGetProtoUnitID("Cinematic Block"));
+					trQuestVarSet("FirstTimePlaytest", 1*trQuestVarGet("FirstTimePlaytest")+1);
+					trFadeOutMusic(3);
+					trFadeOutAllSounds(3);
 				}
 				case 2:
 				{
+					playSoundCustom("music\interface\if you can use a doorknob.mp3", "\Yeebaagooon\Motherload\Triton.mp3");
+					trRenderSky(true, "SkyBlue");
 					uiMessageBox("Zenophobia - RMS senpai");
 					trUnitSelectByQV("Playtester");
-					trMutateSelected(kbGetProtoUnitID("Hoplite"));
+					trMutateSelected(kbGetProtoUnitID("Increase Prospertiy"));
+					trSetSelectedScale(0,0,0);
+					FloatingUnitAnimIdle("Hoplite", 1, 13, 5, 90, 1,1,1, "0,0,0,0,0", 25);
+					trQuestVarSet("Playtester", 1*trQuestVarGet("QVRelic"));
+					trQuestVarSet("PlaytesterHolder", 1*trQuestVarGet("QVHero"));
+					if(1*trQuestVarGet("FirstTimePlaytest") == 1){
+						FloatingUnitAnimIdle("Wall Connector", 1, 0, 5, 90, 1,1,1, "0,2,0,0,0");
+						FloatingUnitAnimIdle("Wall Connector", 1, 0, 1, 90, 1,1,1, "0,3,0,0,0");
+						FloatingUnitAnimIdle("Wall Connector", 1, -2, 3, 90, 1,1,1, "0,3,0,0,0");
+						FloatingUnitAnimIdle("Wall Connector", 1, -2, 7, 90, 1,1,1, "0,3,0,0,0");
+						FloatingUnitAnimIdle("Wall Connector", 1, 0, 9, 90, 1,1,1, "0,3,0,0,0");
+						FloatingUnitAnimIdle("Monument", 1, 3, 3, 90, 1,1,1,);
+						FloatingUnitAnimIdle("Monument", 1, 3, 7, 90, 1,1,1,);
+						for(x = 1 ; < 4){
+							FloatingUnitAnimIdle("Columns", 1, 1+4*x, 1, 90, 1,1,1,);
+							FloatingUnitAnimIdle("Columns", 1, 1+4*x, 9, 90, 1,1,1,);
+						}
+						FloatingUnitAnimIdle("Columns Fallen", 1, 16, 7, 0, 1,1,1,);
+						FloatingUnitAnimIdle("Columns Fallen", 1, 16, 3, 180, 1,1,1,);
+					}
 				}
 				case 3:
 				{
 					uiMessageBox("nottud - RMS consultant");
 					trUnitSelectByQV("Playtester");
-					trMutateSelected(kbGetProtoUnitID("Minotaur"));
+					trUnitDestroy();
+					FloatingUnitAnimIdle("Minotaur", 1, 13, 5, 90, 1,1,1, "0,0,0,0,0", 26);
+					trQuestVarSet("Playtester", 1*trQuestVarGet("QVRelic"));
+					trQuestVarSet("PlaytesterHolder", 1*trQuestVarGet("QVHero"));
+					trRenderSky(true, "SkyStormy");
 				}
 				case 4:
 				{
 					uiMessageBox("Yimababwe");
 					trUnitSelectByQV("Playtester");
-					trMutateSelected(kbGetProtoUnitID("Automaton SPC"));
+					trUnitDestroy();
+					FloatingUnitAnimIdle("Automaton", 1, 13, 5, 90, 1,1,1, "1,0,0,0,0");
+					trQuestVarSet("Playtester", 1*trQuestVarGet("QVRelic"));
+					trQuestVarSet("PlaytesterHolder", 1*trQuestVarGet("QVHero"));
+					trRenderSky(true, "SkyWinter");
+					trSetObscuredUnits(false);
 				}
 				case 5:
 				{
 					uiMessageBox("devil_do1");
 					trUnitSelectByQV("Playtester");
-					trMutateSelected(kbGetProtoUnitID("Shaba Ka"));
+					trUnitDestroy();
+					FloatingUnitAnimIdle("Shaba Ka", 1, 13, 5, 90, 1,1,1, "0,0,0,0,0", 25, 4);
+					trQuestVarSet("Playtester", 1*trQuestVarGet("QVRelic"));
+					trQuestVarSet("PlaytesterHolder", 1*trQuestVarGet("QVHero"));
+					trRenderSky(true, "SkySunset");
 				}
 				case 6:
 				{
@@ -871,27 +956,108 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				}
 				case 8:
 				{
-					uiMessageBox("Masaomi");
+					uiMessageBox("Graffitiwars");
 					trUnitSelectByQV("Playtester");
 					trMutateSelected(kbGetProtoUnitID("Cinematic Block"));
 				}
 				case 9:
 				{
-					uiMessageBox("Nickonhawk");
-					trUnitSelectByQV("Playtester");
-					trMutateSelected(kbGetProtoUnitID("Odysseus"));
-				}
-				case 10:
-				{
-					uiMessageBox("phdorogers4");
+					uiMessageBox("Masaomi");
 					trUnitSelectByQV("Playtester");
 					trMutateSelected(kbGetProtoUnitID("Cinematic Block"));
 				}
+				case 10:
+				{
+					uiMessageBox("Nickonhawk");
+					trUnitSelectByQV("Playtester");
+					trUnitDestroy();
+					FloatingUnitAnimIdle("Odysseus", 1, 13, 5, 90, 1,1,1, "0,0,0,0,0", 25, 3);
+					trQuestVarSet("Playtester", 1*trQuestVarGet("QVRelic"));
+					trQuestVarSet("PlaytesterHolder", 1*trQuestVarGet("QVHero"));
+					FloatingUnitAnimIdle("Caravan Atlantean", 1, 13, 5, 90, 1,1,1, "0,0,0,0,0", 3);
+				}
 				case 11:
+				{
+					uiMessageBox("phdorogers4");
+					trUnitSelectByQV("Playtester");
+					trUnitDestroy();
+					trUnitSelectByQV("QVRelic");
+					trUnitDestroy();
+					trUnitSelectByQV("QVHero");
+					trUnitDestroy();
+					FloatingUnitAnimIdle("Hero Greek Jason", 1, 13, 5, 90, 1,1,1, "0,0,0,0,0", 3);
+					trQuestVarSet("Playtester", 1*trQuestVarGet("QVRelic"));
+					trQuestVarSet("PlaytesterHolder", 1*trQuestVarGet("QVHero"));
+				}
+				case 12:
 				{
 					trUnitSelectByQV("Playtester");
 					trMutateSelected(kbGetProtoUnitID("Curse SFX"));
 					dialog = 0;
+					createCameraTrack(1);
+					trCameraCut(vector(75.284393,123.743744,-82.367760), vector(-0.009618,-0.707107,0.707041), vector(-0.009618,0.707106,0.707042), vector(0.999907,0.000000,0.013601));
+					addCameraTrackWaypoint();
+					trCameraCut(vector(75.284393,123.743744,-82.367760), vector(-0.009618,-0.707107,0.707041), vector(-0.009618,0.707106,0.707042), vector(0.999907,0.000000,0.013601));
+					addCameraTrackWaypoint();
+					playCameraTrack();
+					trLetterBox(false);
+					trFadeOutMusic(1);
+					trFadeOutAllSounds(1);
+					trQuestVarSetFromRand("Music", 1, 11);
+					switch(1*trQuestVarGet("Music"))
+					{
+						case 1:
+						{
+							playSound("music\quiet\(fine layers of) slaysenflite (mellow mix).mp3");
+						}
+						case 2:
+						{
+							playSound("music\quiet\adult swim (mellow mix).mp3");
+						}
+						case 3:
+						{
+							playSound("music\quiet\behold the great science fi (mellow mix).mp3");
+						}
+						case 4:
+						{
+							playSound("music\quiet\chocolate outline (mellow mix).mp3");
+						}
+						case 5:
+						{
+							playSound("music\quiet\eat your potatoes (mellow mix).mp3");
+						}
+						case 6:
+						{
+							playSound("music\quiet\flavor cats (in the comfort zone) (mellow mix).mp3");
+						}
+						case 7:
+						{
+							playSound("music\quiet\hoping for real betterness (mellow mix).mp3");
+						}
+						case 8:
+						{
+							playSound("music\quiet\in a pile of its own good (mellow mix).mp3");
+						}
+						case 9:
+						{
+							playSound("music\quiet\never mind the slacks and bashers (mellow mix).mp3");
+						}
+						case 10:
+						{
+							playSound("music\quiet\suture self (mellow mix).mp3");
+						}
+						case 11:
+						{
+							playSound("music\quiet\the ballad of ace lebaron (mellow mix).mp3");
+						}
+					}
+					/*
+					trUnitSelectClear();
+					trUnitSelect(""+CinematicObelisk);
+					trUnitChangeProtoUnit("Outpost");
+					trUnitSelectByQV("CCamera");
+					trMutateSelected(kbGetProtoUnitID("Camera"));
+					*/
 				}
 			}
 		}

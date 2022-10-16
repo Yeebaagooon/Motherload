@@ -49,6 +49,37 @@ minInterval 2
 			playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
 		}
 	}
+	//SP Obelisk remove at L8
+	if(xGetInt(dPlayerData, xDrillLevel) == 8){
+		trUnitSelectClear();
+		trUnitSelect(""+UnitObelisk1);
+		trUnitChangeProtoUnit("Cinematic Block");
+	}
+	if(xGetInt(dPlayerData, xHullLevel) == 8){
+		trUnitSelectClear();
+		trUnitSelect(""+UnitObelisk2);
+		trUnitChangeProtoUnit("Cinematic Block");
+	}
+	if(xGetInt(dPlayerData, xFuelLevel) == 8){
+		trUnitSelectClear();
+		trUnitSelect(""+UnitObelisk3);
+		trUnitChangeProtoUnit("Cinematic Block");
+	}
+	if(xGetInt(dPlayerData, xCargoLevel) == 8){
+		trUnitSelectClear();
+		trUnitSelect(""+UnitObelisk4);
+		trUnitChangeProtoUnit("Cinematic Block");
+	}
+	if(xGetInt(dPlayerData, xEngineLevel) == 8){
+		trUnitSelectClear();
+		trUnitSelect(""+UnitObelisk5);
+		trUnitChangeProtoUnit("Cinematic Block");
+	}
+	if(xGetInt(dPlayerData, xRadiatorLevel) == 8){
+		trUnitSelectClear();
+		trUnitSelect(""+UnitObelisk6);
+		trUnitChangeProtoUnit("Cinematic Block");
+	}
 }
 
 void PaintSP(){

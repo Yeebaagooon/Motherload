@@ -943,7 +943,7 @@ void FloatingUnitAnim2(string protounitname="", int xx = 0, int yy = 0, int zz =
 }
 
 void FloatingUnitAnimIdle(string protounitname="", int xx = 0, int yy = 0, int zz = 0, int xheadingx = 0,
-	float scalex = 1, float scaley = 1, float scalez = 1, string anim="0,0,0,0,0", int animtype = 2){
+	float scalex = 1, float scaley = 1, float scalez = 1, string anim="0,0,0,0,0", int animtype = 2, int subtype = 0){
 	//trArmyDispatch("0,0", "Revealer", 1, xx, yy, zz, xheadingx, true);
 	if(aiIsMultiplayer() == true){
 		zz = zz +2.5;
@@ -959,13 +959,13 @@ void FloatingUnitAnimIdle(string protounitname="", int xx = 0, int yy = 0, int z
 	trUnitChangeProtoUnit("Amanra");
 	trUnitSelectClear();
 	trUnitSelect(""+1*trQuestVarGet("QVHero"));
-	trUnitOverrideAnimation(animtype, 0, true, true, -1, 0);
+	trUnitOverrideAnimation(animtype, subtype, true, true, -1, 0);
 	trQuestVarSet("QVRelic"+(1*trQuestVarGet("BuildID"))+"", trGetNextUnitScenarioNameNumber());
 	trQuestVarSet("QVRelic", trGetNextUnitScenarioNameNumber());
 	trArmyDispatch("0,0", "Ajax", 1, xx, yy, zz, trQuestVarGet("Heading"+(1*trQuestVarGet("Build"))+""), true);
 	trUnitSelectClear();
 	trUnitSelect(""+1*trQuestVarGet("QVRelic"));
-	trUnitOverrideAnimation(animtype, 0, true, true, -1, 0);
+	trUnitOverrideAnimation(animtype, subtype, true, true, -1, 0);
 	trMutateSelected(kbGetProtoUnitID("Relic"));
 	trQuestVarCopy("QVHero", "QVHero"+(1*trQuestVarGet("BuildID"))+"");
 	trVectorQuestVarSet("V1", kbGetBlockPosition("0"));
@@ -1521,27 +1521,6 @@ void SelectableSign(int x = 0, int z = 0, int prompt = 0){
 	trUnitHighlight(1000, false);
 }
 
-bool cameraFirstWaypoint = true;
-int cameraTrackTime = 0;
-
-void createCameraTrack(int timeMS = 0){
-	cameraFirstWaypoint = true;
-	cameraTrackTime = timeMS;
-	trackInsert();
-	trackPlay(cameraTrackTime, -1);
-}
-void addCameraTrackWaypoint(){
-	if(cameraFirstWaypoint){
-		cameraFirstWaypoint = false;
-	} else {
-		trackAddWaypoint();
-	}
-	trackEditWaypoint();
-}
-void playCameraTrack(int eventId = -1){
-	trackPlay(cameraTrackTime, eventId);
-}
-
 void SPCineOption(){
 	CinematicObelisk = trGetNextUnitScenarioNameNumber();
 	UnitCreate(1, "Victory Marker", 2, 2, 0);
@@ -1554,7 +1533,9 @@ void SPCineOption(){
 	xAddDatabaseBlock(dSelectables, true);
 	xSetInt(dSelectables, xSelectablesName, 1*CinematicObelisk);
 	xSetInt(dSelectables, xSelectablesPrompt, 99);
-	FloatingUnitAnimIdle("Camera", 2, 11, 2, 180, 1,1,1);
+	FloatingUnitAnimIdle("Camera", 1, 13, 1, 180, 1,1,1);
+	trQuestVarSet("CCamera", 1*trQuestVarGet("QVRelic"));
+	trQuestVarSet("CCameraHolder", 1*trQuestVarGet("QVHero"));
 	int temp = trGetNextUnitScenarioNameNumber();
 	UnitCreate(1, "Victory Marker", 2, 6, 0);
 	trUnitSelectClear();
@@ -1566,8 +1547,9 @@ void SPCineOption(){
 	xAddDatabaseBlock(dSelectables, true);
 	xSetInt(dSelectables, xSelectablesName, 1*temp);
 	xSetInt(dSelectables, xSelectablesPrompt, 47);
-	FloatingUnitAnimIdle("UI Range Indicator Norse SFX", 2, 11, 6, 180, 1,1,1);
+	FloatingUnitAnimIdle("UI Range Indicator Norse SFX", 1, 13, 5, 90, 1,1,1);
 	trQuestVarSet("Playtester", 1*trQuestVarGet("QVRelic"));
+	trQuestVarSet("PlaytesterHolder", 1*trQuestVarGet("QVHero"));
 }
 
 void Trap3Horizontal(int LZxx = 0, int LZxmax = 0, int ZLz = 0, int PPXmin = 0, int PPXmax = 0, int PPZmin = 0, int PPZmax = 0, int Timer = 0){

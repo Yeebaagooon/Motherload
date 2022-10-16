@@ -18,6 +18,9 @@ Use override obelisk code
 #Reset data
 -Final upgrade level code
 
+#End L8 obelisks?
+x  no L9 after Natas?
+
 #Gadgets it the name of any element in uimain.xml
 
 -100Cine = Ship finds Yeeb. Reward.
@@ -27,7 +30,7 @@ Use override obelisk code
 //---Test controls
 //\Yeebaagooon\Motherload\Test sound.mp3
 int QuickStart = 0;
-int QuickStage = 1;
+int QuickStage = 0;
 bool OverrideSP = false;
 bool OverrideStage = false;
 string displayz = "lol";
@@ -240,7 +243,7 @@ highFrequency
 	trQuestVarSet("DrillCostL8", 500);
 	trQuestVarSet("DrillPowerL8", 500);
 	trStringQuestVarSet("DrillL8", "Plasma Drill");
-	trQuestVarSet("DrillCostL9", 10000);
+	trQuestVarSet("DrillCostL9", 100000);
 	trQuestVarSet("DrillPowerL9", 400);
 	trStringQuestVarSet("DrillL9", "NOT MADE YET");
 	
@@ -268,7 +271,7 @@ highFrequency
 	trQuestVarSet("HullCostL8", 500);
 	trQuestVarSet("HullHPL8", 7000);
 	trStringQuestVarSet("HullL8", "Dimondium hull");
-	trQuestVarSet("HullCostL9", 10000);
+	trQuestVarSet("HullCostL9", 100000);
 	trQuestVarSet("HullHPL9", 5000);
 	trStringQuestVarSet("HullL9", "NOT MADE YET");
 	
@@ -295,8 +298,8 @@ highFrequency
 	trStringQuestVarSet("FuelL7", "Oceanic tank");
 	trQuestVarSet("FuelCostL8", 400);
 	trQuestVarSet("FuelCL8", 5000);
-	trStringQuestVarSet("FuelL8", "Whirlpool extraction tank");
-	trQuestVarSet("FuelCostL9", 10000);
+	trStringQuestVarSet("FuelL8", "Molecular extraction tank");
+	trQuestVarSet("FuelCostL9", 100000);
 	trQuestVarSet("FuelCL9", 4000);
 	trStringQuestVarSet("FuelL9", "NOT MADE YET");
 	
@@ -324,7 +327,7 @@ highFrequency
 	trQuestVarSet("CargoCostL8", 300);
 	trQuestVarSet("CargoCL8", 10);
 	trStringQuestVarSet("CargoL8", "Singularity Hold");
-	trQuestVarSet("CargoCostL9", 10000);
+	trQuestVarSet("CargoCostL9", 100000);
 	trQuestVarSet("CargoCL9", 9);
 	trStringQuestVarSet("CargoL9", "NOT MADE YET");
 	
@@ -345,14 +348,14 @@ highFrequency
 	trStringQuestVarSet("EngineL5", "Crocodileslam engine");
 	trQuestVarSet("EngineCostL6", 250);
 	trQuestVarSet("EngineCL6", 150);
-	trStringQuestVarSet("EngineL6", "Tyrannosauruschomp engine");
+	trStringQuestVarSet("EngineL6", "Squidpull engine");
 	trQuestVarSet("EngineCostL7", 330);
 	trQuestVarSet("EngineCL7", 180);
-	trStringQuestVarSet("EngineL7", "Megalodongnaw engine");
+	trStringQuestVarSet("EngineL7", "Tyrannosauruschomp engine");
 	trQuestVarSet("EngineCostL8", 350);
 	trQuestVarSet("EngineCL8", 200);
-	trStringQuestVarSet("EngineL8", "Squidpull engine");
-	trQuestVarSet("EngineCostL9", 10000);
+	trStringQuestVarSet("EngineL8", "Megalodongnaw engine");
+	trQuestVarSet("EngineCostL9", 100000);
 	trQuestVarSet("EngineCL9", 180);
 	trStringQuestVarSet("EngineL9", "NOT MADE YET");
 	
@@ -380,7 +383,7 @@ highFrequency
 	trQuestVarSet("RadiatorCostL8", 400);
 	trQuestVarSet("RadiatorCL8", 60);
 	trStringQuestVarSet("RadiatorL8", "Thermal dissipation radiator");
-	trQuestVarSet("RadiatorCostL9", 10000);
+	trQuestVarSet("RadiatorCostL9", 100000);
 	trQuestVarSet("RadiatorCL9", 50);
 	trStringQuestVarSet("RadiatorL9", "NOT MADE YET");
 }

@@ -203,7 +203,7 @@ highFrequency
 	for(x = 1; <= 19){
 		trArmyDispatch("0,8", "Revealer", 1, 200-x*10, 1, 190, 0, true);
 		if(Stage == 10){
-			trArmyDispatch("0,8", "Revealer", 1, 200-x*10, 1, 175, 0, true);
+			//	trArmyDispatch("0,8", "Revealer", 1, 200-x*10, 1, 175, 0, true);
 		}
 	}
 	trPlayerResetBlackMapForAllPlayers();
