@@ -1857,6 +1857,12 @@ highFrequency
 		xsEnableRule("Win_Cine_Off");
 		xsEnableRule("Win_Cine_07");
 		trUIFadeToColor(255,255,255,2000,700,false);
+		createCameraTrack(2500);
+		trCameraCut(vector(151.447128,34.612152,79.050674), vector(0.002389,-0.087287,0.996180), vector(0.000209,0.996183,0.087287), vector(0.999997,-0.000000,-0.002398));
+		addCameraTrackWaypoint();
+		trCameraCut(vector(151.447128,9.532150,79.050674), vector(0.002389,-0.087287,0.996180), vector(0.000209,0.996183,0.087287), vector(0.999997,-0.000000,-0.002398));
+		addCameraTrackWaypoint();
+		playCameraTrack();
 		for(x=xGetDatabaseCount(dSpace); >0) {
 			xDatabaseNext(dSpace);
 			xUnitSelect(dSpace,xSpaceName);
@@ -1866,24 +1872,95 @@ highFrequency
 	}
 }
 
+void BuildYeebCol(int x = 0, int z = 0, int y = 0){
+	FloatingUnit("Wall Connector", x, 3, z, 0,1,2,1);
+	trUnitSelectByQV("QVRelic");
+	trUnitSetAnimationPath("0,2,0,0,0,0");
+	FloatingUnit("Wall Connector", x, 11, z, 0,1,2,1);
+	trUnitSelectByQV("QVRelic");
+	trUnitSetAnimationPath("0,2,0,0,0,0");
+	FloatingUnit("Wall Connector", x, 3, z-2, 0,1,1,1);
+	trUnitSelectByQV("QVRelic");
+	trUnitSetAnimationPath("0,2,0,0,0,0");
+	FloatingUnit("Wall Connector", x, 3, z+2, 0,1,1,1);
+	trUnitSelectByQV("QVRelic");
+	trUnitSetAnimationPath("0,2,0,0,0,0");
+	FloatingUnit("Wall Connector", x+2, 3, z, 0,1,1,1);
+	trUnitSelectByQV("QVRelic");
+	trUnitSetAnimationPath("0,2,0,0,0,0");
+	FloatingUnit("Wall Connector", x-2, 3, z, 0,1,1,1);
+	trUnitSelectByQV("QVRelic");
+	trUnitSetAnimationPath("0,2,0,0,0,0");
+	FloatingUnit("Monument", x-2, 7, z, 270,1,1,1);
+	FloatingUnit("Monument", x+2, 7, z, 90,1,1,1);
+	FloatingUnit("Monument", x, 7, z+2, 0,1,1,1);
+	FloatingUnit("Monument", x, 7, z-2, 180,1,1,1);
+	FloatingUnit("Flag", x, 19, z, 90,1,1,4);
+	trUnitSelectByQV("QVRelic");
+	trUnitSetAnimationPath("0,0,0,0,0,0");
+	trUnitSelectByQV("QVRelic");
+	if(y == 0){
+		trSetSelectedUpVector(1,1,0);
+	}
+	else{
+		trSetSelectedUpVector(-1,1,0);
+	}
+	FloatingUnitAnimIdle("Plenty Vault", x, 3, z, 0,0.6,-1,0.6);
+}
+
 rule Win_Cine_07
 inactive
 highFrequency
 {
 	if((trTime()-cActivationTime) >= 1){
 		xsDisableSelf();
-		FloatingUnit("Wall Connector", 190, 8, 130, 0,1,1,1);
-		trUnitSelectByQV("QVRelic");
-		trUnitSetAnimationPath("0,2,0,0,0,0");
-		FloatingUnit("Wall Connector", 190, 4, 130, 0,1,1,1);
-		trUnitSelectByQV("QVRelic");
-		trUnitSetAnimationPath("0,2,0,0,0,0");
-		FloatingUnit("Wall Connector", 190, 12, 130, 0,1,1,1);
-		trUnitSelectByQV("QVRelic");
-		trUnitSetAnimationPath("0,2,0,0,0,0");
-		FloatingUnit("Columns", 190, 16, 130, 0,1,1,1);
-		trUnitSelectByQV("QVRelic");
-		trUnitSetAnimationPath("0,0,0,0,0,0");
+		trPlayerSetDiplomacy(0, 1, "Ally");
+		BuildYeebCol(160,130,1);
+		BuildYeebCol(160,110,1);
+		BuildYeebCol(140,110,0);
+		BuildYeebCol(140,130,0);
+		BuildYeebCol(140,150,0);
+		BuildYeebCol(160,150,1);
+		BuildYeebCol(140,170,0);
+		BuildYeebCol(160,170,1);
+		BuildYeebCol(140,190,0);
+		BuildYeebCol(160,190,1);
+		trPaintTerrain(60,52,90,100,0,53, false);
+		trPaintTerrain(70,52,80,100,0,73, false);
+		int temp = trGetNextUnitScenarioNameNumber();
+		for(x = 0 ; < 7){
+			UnitCreate(1, "Underworld Passage SPC", 120+x*10, 199, 0);
+			trUnitSelectClear();
+			trUnitSelect(""+(temp+x));
+			trSetSelectedUpVector(0,3,0);
+			trSetSelectedScale(2,1,1);
+			trUnitSelectClear();
+			trUnitSelect(""+(temp+x));
+			trUnitSetAnimationPath("2,0,0,0,0,0,0");
+		}
+		UnitCreate(0, "Pharaoh of Osiris XP", 150, 190, 180);
+		temp = trGetNextUnitScenarioNameNumber();
+		for(x = 0 ; < 9){
+			UnitCreate(1, "Underworld Passage SPC", 120, 109+x*10, 90);
+			trUnitSelectClear();
+			trUnitSelect(""+(temp+x));
+			trSetSelectedUpVector(0,3,0);
+			trSetSelectedScale(2,1,1);
+			trUnitSelectClear();
+			trUnitSelect(""+(temp+x));
+			trUnitSetAnimationPath("2,0,0,0,0,0,0");
+		}
+		temp = trGetNextUnitScenarioNameNumber();
+		for(x = 0 ; < 9){
+			UnitCreate(1, "Underworld Passage SPC", 180, 109+x*10, 270);
+			trUnitSelectClear();
+			trUnitSelect(""+(temp+x));
+			trSetSelectedUpVector(0,3,0);
+			trSetSelectedScale(2,1,1);
+			trUnitSelectClear();
+			trUnitSelect(""+(temp+x));
+			trUnitSetAnimationPath("2,0,0,0,0,0,0");
+		}
 	}
 }
 

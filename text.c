@@ -944,30 +944,48 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				}
 				case 6:
 				{
+					trRenderSky(true, "SkyBlue");
 					uiMessageBox("Arca");
 					trUnitSelectByQV("Playtester");
-					trMutateSelected(kbGetProtoUnitID("Cinematic Block"));
+					trUnitDestroy();
+					FloatingUnitAnimIdle("Audrey", 1, 13, 5, 90, 1,1,1, "0,0,0,0,0", 1);
+					trQuestVarSet("Playtester", 1*trQuestVarGet("QVRelic"));
+					trQuestVarSet("PlaytesterHolder", 1*trQuestVarGet("QVHero"));
+					FloatingUnitAnimIdle("Audrey Base", 1, 13, 5, 90, 1,1,1);
 				}
 				case 7:
 				{
+					trRenderSky(true, "SkySunset");
+					trUnitSelectByQV("QVRelic");
+					trUnitDestroy();
+					trUnitSelectByQV("QVHero");
+					trUnitDestroy();
 					uiMessageBox("Gravoc");
 					trUnitSelectByQV("Playtester");
 					trMutateSelected(kbGetProtoUnitID("Cinematic Block"));
 				}
 				case 8:
 				{
+					trRenderSky(true, "SkyStormy");
 					uiMessageBox("Graffitiwars");
 					trUnitSelectByQV("Playtester");
-					trMutateSelected(kbGetProtoUnitID("Cinematic Block"));
+					trUnitDestroy();
+					FloatingUnitAnimIdle("Earth Dragon", 1, 13, 5, 90, 1,1,1);
+					trQuestVarSet("Playtester", 1*trQuestVarGet("QVRelic"));
+					trQuestVarSet("PlaytesterHolder", 1*trQuestVarGet("QVHero"));
+					trUnitSelectByQV("Playtester");
+					trSetSelectedScale(0.3,0.3,0.3);
 				}
 				case 9:
 				{
+					trRenderSky(true, "SkySunset");
 					uiMessageBox("Masaomi");
 					trUnitSelectByQV("Playtester");
 					trMutateSelected(kbGetProtoUnitID("Cinematic Block"));
 				}
 				case 10:
 				{
+					trRenderSky(true, "SkySunset");
 					uiMessageBox("Nickonhawk");
 					trUnitSelectByQV("Playtester");
 					trUnitDestroy();

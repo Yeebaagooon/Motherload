@@ -1057,7 +1057,7 @@ highFrequency
 			trUnitSelectByQV("StageSelector");
 			trUnitTeleport(50+10*QuickStage,3,60);
 		}
-		trOverlayText("Host, choose a stage", 8.0, 508, 70, 1000);
+		trOverlayText("Host, choose a planet", 8.0, 508, 70, 1000);
 		trLetterBox(false);
 		xsDisableSelf();
 		xsEnableRule("choose_stage");
