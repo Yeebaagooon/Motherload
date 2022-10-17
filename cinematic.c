@@ -1854,10 +1854,9 @@ highFrequency
 {
 	if((trTime()-cActivationTime) >= 3){
 		xsDisableSelf();
-		xsEnableRule("Win_Cine_Off");
 		xsEnableRule("Win_Cine_07");
 		trUIFadeToColor(255,255,255,2000,700,false);
-		createCameraTrack(2500);
+		createCameraTrack(8000);
 		trCameraCut(vector(151.447128,34.612152,79.050674), vector(0.002389,-0.087287,0.996180), vector(0.000209,0.996183,0.087287), vector(0.999997,-0.000000,-0.002398));
 		addCameraTrackWaypoint();
 		trCameraCut(vector(151.447128,9.532150,79.050674), vector(0.002389,-0.087287,0.996180), vector(0.000209,0.996183,0.087287), vector(0.999997,-0.000000,-0.002398));
@@ -1905,6 +1904,15 @@ void BuildYeebCol(int x = 0, int z = 0, int y = 0){
 	else{
 		trSetSelectedUpVector(-1,1,0);
 	}
+	if(y == 0){
+		FloatingUnit("Flag", x+2, 19, z, 90,1,-1,1);
+	}
+	else{
+		FloatingUnit("Flag", x-1.6, 19, z, 90,1,-1,1);
+	}
+	trUnitSelectByQV("QVRelic");
+	trUnitSetAnimationPath("0,1,0,0,0,0");
+	trUnitSelectByQV("QVRelic");
 	FloatingUnitAnimIdle("Plenty Vault", x, 3, z, 0,0.6,-1,0.6);
 }
 
@@ -1913,7 +1921,24 @@ inactive
 highFrequency
 {
 	if((trTime()-cActivationTime) >= 1){
+		trSetObscuredUnits(false);
+		int temp = trGetNextUnitScenarioNameNumber();
 		xsDisableSelf();
+		xsEnableRule("Win_Cine_08");
+		for(x = 30 ; < 46){
+			for(z = 26 ; < 50){
+				temp = trGetNextUnitScenarioNameNumber();
+				UnitCreate(0, "Dwarf", x*4, z*4, 0);
+				trUnitSelectClear();
+				trUnitSelect(""+temp);
+				trUnitChangeProtoUnit("Spy Eye");
+				trUnitSelectClear();
+				trUnitSelect(""+temp);
+				trMutateSelected(kbGetProtoUnitID("Wall Connector"));
+				trUnitSetAnimationPath("0,1,0,0,0,0,0");
+				trSetSelectedScale(2,0.01,2);
+			}
+		}
 		trPlayerSetDiplomacy(0, 1, "Ally");
 		BuildYeebCol(160,130,1);
 		BuildYeebCol(160,110,1);
@@ -1927,7 +1952,7 @@ highFrequency
 		BuildYeebCol(160,190,1);
 		trPaintTerrain(60,52,90,100,0,53, false);
 		trPaintTerrain(70,52,80,100,0,73, false);
-		int temp = trGetNextUnitScenarioNameNumber();
+		temp = trGetNextUnitScenarioNameNumber();
 		for(x = 0 ; < 7){
 			UnitCreate(1, "Underworld Passage SPC", 120+x*10, 199, 0);
 			trUnitSelectClear();
@@ -1961,6 +1986,75 @@ highFrequency
 			trUnitSelect(""+(temp+x));
 			trUnitSetAnimationPath("2,0,0,0,0,0,0");
 		}
+		temp = trGetNextUnitScenarioNameNumber();
+		UnitCreate(1, "Hero Greek Atalanta", 150, 80, 0);
+		trQuestVarSet("CineUnit", temp);
+		trUnitSelectClear();
+		trUnitSelectByQV("CineUnit");
+		trUnitMoveToPoint(153,3,184,-1,false);
 	}
 }
 
+rule Win_Cine_08
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 9){
+		xsDisableSelf();
+		xsEnableRule("Win_Cine_09");
+		createCameraTrack(6500);
+		trCameraCut(vector(187.656906,9.532150,81.314079), vector(-0.487300,0.046585,0.871991), vector(0.022725,0.998914,-0.040666), vector(0.872939,0.000000,0.487830));
+		addCameraTrackWaypoint();
+		trCameraCut(vector(189.625168,13.432149,117.879936), vector(-0.706263,-0.135976,0.694769), vector(-0.096935,0.990712,0.095357), vector(0.701282,0.000000,0.712884));
+		addCameraTrackWaypoint();
+		playCameraTrack();
+	}
+}
+
+rule Win_Cine_09
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 7){
+		xsDisableSelf();
+		xsEnableRule("Win_Cine_10");
+		createCameraTrack(8000);
+		trCameraCut(vector(153.827408,84.532089,104.050842), vector(-0.006560,-0.646814,0.762620), vector(-0.005564,0.762648,0.646790), vector(0.999963,0.000000,0.008602));
+		addCameraTrackWaypoint();
+		trCameraCut(vector(153.827408,57.352131,104.050842), vector(-0.007240,-0.539968,0.841655), vector(-0.004645,0.841686,0.539948), vector(0.999963,0.000000,0.008602));
+		addCameraTrackWaypoint();
+		trCameraCut(vector(153.741226,31.372126,114.070450), vector(-0.008117,-0.331033,0.943584), vector(-0.002848,0.943619,0.331021), vector(0.999963,0.000000,0.008602));
+		addCameraTrackWaypoint();
+		trCameraCut(vector(151.283646,16.312134,144.830353), vector(-0.008330,-0.249727,0.968280), vector(-0.002148,0.968316,0.249718), vector(0.999963,0.000000,0.008602));
+		addCameraTrackWaypoint();
+		playCameraTrack();
+		trUnitSelectByQV("CineUnit");
+		trUnitDestroy();
+		int temp = trGetNextUnitScenarioNameNumber();
+		UnitCreate(1, "Hero Greek Atalanta", 150, 184, 0);
+		trQuestVarSet("CineUnit", temp);
+		characterDialog("Yeebaagooon", "Impressive. Most impressive.", "icons\special e son of osiris icon 64");
+	}
+}
+
+rule Win_Cine_10
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 3){
+		xsDisableSelf();
+		xsEnableRule("Win_Cine_11");
+		characterDialog("Yeebaagooon", "Not only have you defeated Satan, you've become the most successful space miner.", "icons\special e son of osiris icon 64");
+	}
+}
+
+rule Win_Cine_11
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 4){
+		xsDisableSelf();
+		xsEnableRule("Win_Cine_Off");
+		characterDialog("Yeebaagooon", "And rich. Rich beyond your wildest dreams.", "icons\special e son of osiris icon 64");
+	}
+}

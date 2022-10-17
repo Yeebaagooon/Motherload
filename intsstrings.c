@@ -22,7 +22,7 @@ Use override obelisk code
 x  no L9 after Natas?
 
 #Gadgets it the name of any element in uimain.xml
-
+?pixiu for star sfx
 -100Cine = Ship finds Yeeb. Reward.
 */
 
