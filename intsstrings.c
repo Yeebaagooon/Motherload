@@ -1,7 +1,7 @@
 //--SUGGESTIONS
 /*
 Search //VERSION OVERRIDE HERE for release to rewrite all data
-Use override obelisk code
+Search //VERSION UPDATES for text prompt
 
 --TO DO--
 -Trap stage final room ?cycle dodge
@@ -39,7 +39,7 @@ string displayz = "lol";
 int Stage = 0;
 int StageTime = 0;
 int savedata = 0;
-string MapVersion = "Test Version";
+int MapVersion = 1;
 string MapName = "Motherload.xs";
 int MaxRows = 20;
 int MaxCols = 25;

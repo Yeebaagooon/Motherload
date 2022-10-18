@@ -275,6 +275,8 @@ highFrequency
 	Total size: 0
 	*/
 	addLocalDataQV("CineStatus", 8, 10);
+	addLocalDataQV("VersionMessage", 8, 2);
+	addLocalDataQV("OldVersion", 8, 100);
 	
 	/*
 	Slot 9
@@ -355,7 +357,7 @@ rule load1
 inactive
 highFrequency
 {
-	characterDialog("Loading map", ""+MapVersion+"", "icons\special e son of osiris icon 64");
+	characterDialog("Loading map", "Version "+MapVersion+"", "icons\special e son of osiris icon 64");
 	xsEnableRule("load4");
 	xsEnableRule("Stats");
 	trBlockAllSounds(false);
@@ -372,6 +374,14 @@ highFrequency
 		trPlayerGrantResources(p, "Favor", -10000.0);
 		trPlayerKillAllGodPowers(p);
 	}
+	//VERSION UPDATES
+	if((trGetScenarioUserData(15) == 1) && (1*trQuestVarGet("VersionMessage") == 0) && (1*trQuestVarGet("OldVersion") < 1)){
+		uiMessageBox("Verison 1 text.");
+		trQuestVarSet("VersionMessage", 1);
+		trQuestVarSet("OldVersion", 1);
+	}
+	trQuestVarSet("OldVersion", MapVersion);
+	saveAllData();
 	xsDisableSelf();
 }
 
