@@ -375,12 +375,15 @@ highFrequency
 		trPlayerKillAllGodPowers(p);
 	}
 	//VERSION UPDATES
-	if((trGetScenarioUserData(15) == 1) && (1*trQuestVarGet("VersionMessage") == 0) && (1*trQuestVarGet("OldVersion") < 1)){
-		uiMessageBox("Verison 1 text.");
+	int a = trCurrentPlayer();
+	if((trGetScenarioUserData(15) < 1) && (1*trQuestVarGet("VersionMessage") == 0) && (1*trQuestVarGet("OldVersion") < 1)){
+		uiMessageBox("Updated to V1.");
 		trQuestVarSet("VersionMessage", 1);
 		trQuestVarSet("OldVersion", 1);
+		xSetPointer(dPlayerData, a);
+		xSetInt(dPlayerData, xVersionControl, 1);
 	}
-	trQuestVarSet("OldVersion", MapVersion);
+	//trQuestVarSet("OldVersion", MapVersion);
 	saveAllData();
 	xsDisableSelf();
 }

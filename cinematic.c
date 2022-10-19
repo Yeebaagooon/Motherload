@@ -157,6 +157,8 @@ highFrequency
 		trUIFadeToColor(0,0,0,1000,1,false);
 		xsEnableRule("Cine_02");
 		characterDialog("Yeebaagooon", "Space. The final frontier.", "icons\special e son of osiris icon 64");
+		trFadeOutMusic(3);
+		trFadeOutAllSounds(3);
 		playSound("cinematics\35_out\music2.mp3");
 	}
 }
@@ -2054,7 +2056,18 @@ highFrequency
 {
 	if((trTime()-cActivationTime) >= 4){
 		xsDisableSelf();
-		xsEnableRule("Win_Cine_Off");
+		xsEnableRule("Win_Cine_12");
 		characterDialog("Yeebaagooon", "And rich. Rich beyond your wildest dreams.", "icons\special e son of osiris icon 64");
+	}
+}
+
+rule Win_Cine_12
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 4){
+		xsDisableSelf();
+		xsEnableRule("Win_Cine_Off");
+		characterDialog("Yeebaagooon", "You've mined every morsel out of this system.", "icons\special e son of osiris icon 64");
 	}
 }

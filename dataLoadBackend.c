@@ -329,14 +329,14 @@ highFrequency
 	trLetterBox(true);
 	trUIFadeToColor(0,0,0,0,0,true);
 	//VERSION OVERRIDE HERE
-	/*
+	
 	if(trGetScenarioUserData(15) == 0){
 		for(i=0; < 16) {
 			trSetCurrentScenarioUserData(i, 0);
 		}
-		trSetCurrentScenarioUserData(15, MapVersion);
+		//	trSetCurrentScenarioUserData(15, MapVersion);
 	}
-	*/
+	
 	
 	/*
 	The dSavedData database contains every requested piece of data. This is how

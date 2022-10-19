@@ -978,10 +978,13 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				}
 				case 9:
 				{
-					trRenderSky(true, "SkySunset");
+					trRenderSky(true, "SkyWinter");
 					uiMessageBox("Masaomi");
 					trUnitSelectByQV("Playtester");
-					trMutateSelected(kbGetProtoUnitID("Cinematic Block"));
+					trUnitDestroy();
+					FloatingUnitAnimIdle("Crowned Crane", 1, 13, 5, 90, 1,1,1);
+					trQuestVarSet("Playtester", 1*trQuestVarGet("QVRelic"));
+					trQuestVarSet("PlaytesterHolder", 1*trQuestVarGet("QVHero"));
 				}
 				case 10:
 				{

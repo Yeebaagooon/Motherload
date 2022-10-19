@@ -5,24 +5,11 @@ Search //VERSION UPDATES for text prompt
 
 --TO DO--
 -Trap stage final room ?cycle dodge
--Win bonus
+-Version chats
 -Skillpoints
-#100% complete reward? 10 stages, 21 relics, 48 levels, 21 bonsues
 -SP exit and go to main menu with map on (modeEnter("Campaign"); modeEnter("Pregame");) trIsGadgetVisible to detect anbd do sequence
-#Up S10 trap dmg
 -S10 floor eyecandy
-#Laughs
-#Trap text
-#Clouds
-#Testers (case 47)
-#Reset data
--Final upgrade level code
 
-#End L8 obelisks?
-x  no L9 after Natas?
-
-#Gadgets it the name of any element in uimain.xml
-?pixiu for star sfx
 -100Cine = Ship finds Yeeb. Reward.
 */
 
