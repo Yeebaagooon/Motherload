@@ -1821,3 +1821,209 @@ void DrillBonusOff(int p = 0){
 		unitTransform("Imperial Examination", "Rocket");
 	}
 }
+
+void WinText1(){
+	BronzeNumber = trGetNextUnitScenarioNameNumber();
+	for(a = 0 ; < 21){
+		UnitCreate(0, "Hoplite", 1, 1, 0);
+	}
+}
+
+void WinText2(int x = 0, int z = 0){
+	for(a = 1 ; < 20){
+		BronzeNumber = BronzeNumber+1;
+		trUnitSelectClear();
+		trUnitSelect(""+BronzeNumber);
+		switch(a){
+			case 1:
+			{
+				trUnitTeleport(x+18.405,0,z+11.971);
+				trUnitSelectClear();
+				trUnitSelect(""+BronzeNumber);
+				trUnitSetHeading(180);
+				trMutateSelected(kbGetProtoUnitID("Wall Long"));
+				trUnitSetAnimationPath("0,2,0,0,0,0");
+			}
+			case 2:
+			{
+				trUnitTeleport(x+13.465,0,z+7.051);
+				trUnitSelectClear();
+				trUnitSelect(""+BronzeNumber);
+				trUnitSetHeading(90);
+				trMutateSelected(kbGetProtoUnitID("Wall Long"));
+				trUnitSetAnimationPath("0,2,0,0,0,0");
+			}
+			case 3:
+			{
+				trUnitTeleport(x+23.445,0,z+6.822);
+				trUnitSelectClear();
+				trUnitSelect(""+BronzeNumber);
+				trUnitSetHeading(90);
+				trMutateSelected(kbGetProtoUnitID("Wall Long"));
+				trUnitSetAnimationPath("0,2,0,0,0,0");
+			}
+			case 4:
+			{
+				trUnitTeleport(x+18.378,0,z+2.036);
+				trUnitSelectClear();
+				trUnitSelect(""+BronzeNumber);
+				trUnitSetHeading(0);
+				trMutateSelected(kbGetProtoUnitID("Wall Long"));
+				trUnitSetAnimationPath("0,2,0,0,0,0");
+			}
+			case 5:
+			{
+				trUnitTeleport(x+5.98,0,z+5.477);
+				trUnitSelectClear();
+				trUnitSelect(""+BronzeNumber);
+				trUnitSetHeading(90);
+				trMutateSelected(kbGetProtoUnitID("Wall Medium"));
+				trUnitSetAnimationPath("0,2,0,0,0,0");
+			}
+			case 6:
+			{
+				trUnitTeleport(x+8.512,0,z+11.465);
+				trUnitSelectClear();
+				trUnitSelect(""+BronzeNumber);
+				trUnitSetHeading(135);
+				trMutateSelected(kbGetProtoUnitID("Wall Medium"));
+				trUnitSetAnimationPath("0,2,0,0,0,0");
+			}
+			case 7:
+			{
+				trUnitTeleport(x+3.507,0,z+11.642);
+				trUnitSelectClear();
+				trUnitSelect(""+BronzeNumber);
+				trUnitSetHeading(44);
+				trMutateSelected(kbGetProtoUnitID("Wall Medium"));
+				trUnitSetAnimationPath("0,2,0,0,0,0");
+			}
+			case 8:
+			{
+				trUnitTeleport(x+31,0,z+2);
+				trUnitSelectClear();
+				trUnitSelect(""+BronzeNumber);
+				trUnitSetHeading(180);
+				trMutateSelected(kbGetProtoUnitID("Wall Medium"));
+				trUnitSetAnimationPath("0,2,0,0,0,0");
+			}
+			case 9:
+			{
+				trUnitTeleport(x+27.648,0,z+7.214);
+				trUnitSelectClear();
+				trUnitSelect(""+BronzeNumber);
+				trUnitSetHeading(90);
+				trMutateSelected(kbGetProtoUnitID("Wall Long"));
+				trUnitSetAnimationPath("0,2,0,0,0,0");
+			}
+			case 10:
+			{
+				trUnitTeleport(x+34.887,0,z+7.042);
+				trUnitSelectClear();
+				trUnitSelect(""+BronzeNumber);
+				trUnitSetHeading(90);
+				trMutateSelected(kbGetProtoUnitID("Wall Long"));
+				trUnitSetAnimationPath("0,2,0,0,0,0");
+			}
+			case 11:
+			{
+				trUnitTeleport(x+49.676,0,z+6.769);
+				trUnitSelectClear();
+				trUnitSelect(""+BronzeNumber);
+				trUnitSetHeading(67);
+				trMutateSelected(kbGetProtoUnitID("Wall Long"));
+				trUnitSetAnimationPath("0,2,0,0,0,0");
+			}
+			case 12:
+			{
+				trUnitTeleport(x+53.526,0,z+6.756);
+				trUnitSelectClear();
+				trUnitSelect(""+BronzeNumber);
+				trUnitSetHeading(112);
+				trMutateSelected(kbGetProtoUnitID("Wall Long"));
+				trUnitSetAnimationPath("0,2,0,0,0,0");
+			}
+			case 13:
+			{
+				trUnitTeleport(x+57.376,0,z+6.743);
+				trUnitSelectClear();
+				trUnitSelect(""+BronzeNumber);
+				trUnitSetHeading(67);
+				trMutateSelected(kbGetProtoUnitID("Wall Long"));
+				trUnitSetAnimationPath("0,2,0,0,0,0");
+			}
+			case 14:
+			{
+				trUnitTeleport(x+61.283,0,z+6.673);
+				trUnitSelectClear();
+				trUnitSelect(""+BronzeNumber);
+				trUnitSetHeading(112);
+				trMutateSelected(kbGetProtoUnitID("Wall Long"));
+				trUnitSetAnimationPath("0,2,0,0,0,0");
+			}
+			case 15:
+			{
+				trUnitTeleport(x+68.701,0,z+6.761);
+				trUnitSelectClear();
+				trUnitSelect(""+BronzeNumber);
+				trUnitSetHeading(90);
+				trMutateSelected(kbGetProtoUnitID("Wall Long"));
+				trUnitSetAnimationPath("0,2,0,0,0,0");
+			}
+			case 16:
+			{
+				trUnitTeleport(x+75.779,0,z+6.835);
+				trUnitSelectClear();
+				trUnitSelect(""+BronzeNumber);
+				trUnitSetHeading(90);
+				trMutateSelected(kbGetProtoUnitID("Wall Long"));
+				trUnitSetAnimationPath("0,2,0,0,0,0");
+			}
+			case 17:
+			{
+				trUnitTeleport(x+80.194,0,z+6.835);
+				trUnitSelectClear();
+				trUnitSelect(""+BronzeNumber);
+				trUnitSetHeading(90);
+				trMutateSelected(kbGetProtoUnitID("Wall Long"));
+				trUnitSetAnimationPath("0,2,0,0,0,0");
+			}
+			case 18:
+			{
+				trUnitTeleport(x+77.158,0,z+8.782);
+				trUnitSelectClear();
+				trUnitSelect(""+BronzeNumber);
+				trUnitSetHeading(67);
+				trMutateSelected(kbGetProtoUnitID("Wall Medium"));
+				trUnitSetAnimationPath("0,2,0,0,0,0");
+			}
+			case 19:
+			{
+				trUnitTeleport(x+78.782,0,z+5.09);
+				trUnitSelectClear();
+				trUnitSelect(""+BronzeNumber);
+				trUnitSetHeading(67);
+				trMutateSelected(kbGetProtoUnitID("Wall Medium"));
+				trUnitSetAnimationPath("0,2,0,0,0,0");
+			}
+			case 20:
+			{
+				trUnitTeleport(x+85.335,0,z+3.083);
+				trUnitSelectClear();
+				trUnitSelect(""+BronzeNumber);
+				trUnitSetHeading(180);
+				trMutateSelected(kbGetProtoUnitID("Wall Connector"));
+				trUnitSetAnimationPath("0,2,0,0,0,0");
+			}
+			case 21:
+			{
+				trUnitTeleport(x+85.373,0,z+8.48);
+				trUnitSelectClear();
+				trUnitSelect(""+BronzeNumber);
+				trUnitSetHeading(90);
+				trMutateSelected(kbGetProtoUnitID("Wall Short"));
+				trUnitSetAnimationPath("0,2,0,0,0,0");
+			}
+		}
+	}
+}

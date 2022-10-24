@@ -325,6 +325,7 @@ highFrequency
 	Slot 14
 	Total size: 0
 	*/
+	addSavedDataDB(dPlayerData, xVersionUpdate, 15, 100);
 	
 	/*
 	Slot 15
@@ -383,7 +384,7 @@ highFrequency
 		xSetPointer(dPlayerData, a);
 		xSetInt(dPlayerData, xVersionControl, 1);
 	}
-	//trQuestVarSet("OldVersion", MapVersion);
+	trQuestVarSet("OldVersion", MapVersion);
 	saveAllData();
 	xsDisableSelf();
 }

@@ -27,6 +27,7 @@ highFrequency
 	}
 	trEventSetHandler(57, "DataClick1");
 	trEventSetHandler(58, "DataClick2");
+	trEventSetHandler(59, "PlayWinCinematic");
 	xsDisableSelf();
 }
 
@@ -48,6 +49,14 @@ void DataClick2(int p = 0){
 	subModeLeave("Simulation", "Editor");
 	modeEnter("pregame");
 	modeEnter("Simulation");
+	xsDisableSelf();
+}
+
+void PlayWinCinematic(int p = 0){
+	xsSetContextPlayer(0);
+	xsEnableRule("Win_Cine_Start");
+	trUnitSetVariation(1*trQuestVarGet("CompletionFlag1"), 8);
+	trUnitSetVariation(1*trQuestVarGet("CompletionFlag2"), 8);
 	xsDisableSelf();
 }
 

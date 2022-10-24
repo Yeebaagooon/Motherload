@@ -765,6 +765,12 @@ int npcDiag(int npc = 0, int dialog = 0) {
 				case 1:
 				{
 					uiMessageBox("Map percent complete = " + Completion);
+				}
+				case 2:
+				{
+					if(1*trQuestVarGet("CineStatus") == 3){
+						trShowChoiceDialog("Watch ending cinematic now?", "Yes", 59, "No", -1);
+					}
 					dialog = 0;
 				}
 			}
@@ -958,11 +964,13 @@ int npcDiag(int npc = 0, int dialog = 0) {
 					trRenderSky(true, "SkySunset");
 					trUnitSelectByQV("QVRelic");
 					trUnitDestroy();
-					trUnitSelectByQV("QVHero");
-					trUnitDestroy();
-					uiMessageBox("Gravoc");
 					trUnitSelectByQV("Playtester");
-					trMutateSelected(kbGetProtoUnitID("Cinematic Block"));
+					trUnitDestroy();
+					trUnitSelectByQV("PlaytesterHolder");
+					trUnitDestroy();
+					FloatingUnitAnimIdle("Swordsman", 1, 13, 5, 90, 1,1,1);
+					trQuestVarSet("Playtester", 1*trQuestVarGet("QVRelic"));
+					trQuestVarSet("PlaytesterHolder", 1*trQuestVarGet("QVHero"));
 				}
 				case 8:
 				{

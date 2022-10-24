@@ -70,6 +70,7 @@ inactive
 highFrequency
 {
 	xsDisableSelf();
+	trRenderSky(false, "SkyBlue");
 	trUnitSelectByQV("ExitYeeb");
 	trUnitChangeProtoUnit("Cinematic Block");
 	trPlayerSetDiplomacy(0,1,"Enemy");
@@ -1623,10 +1624,16 @@ rule Win_Cine_Off
 inactive
 highFrequency
 {
-	if((trTime()-cActivationTime) >= 3){
+	if((trTime()-cActivationTime) >= 5){
 		xsDisableSelf();
 		trLetterBox(false);
-		trCameraCut(vector(97.212753,163.322815,-63.585068), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619730,0.784813), vector(0.999997,-0.000000,-0.002398));
+		createCameraTrack(50000);
+		trCameraCut(vector(62.603432,140.663559,106.860794), vector(0.000019,-0.999990,0.004398), vector(0.004397,0.004397,0.999981), vector(0.999990,0.000000,-0.004398));
+		addCameraTrackWaypoint();
+		trCameraCut(vector(62.603432,140.663559,106.860794), vector(0.000019,-0.999990,0.004398), vector(0.004397,0.004397,0.999981), vector(0.999990,0.000000,-0.004398));
+		addCameraTrackWaypoint();
+		modeEnter("Campaign");
+		modeEnter("Pregame");
 	}
 }
 
@@ -1639,6 +1646,7 @@ highFrequency
 	trUnitChangeProtoUnit("Cinematic Block");
 	trPlayerSetDiplomacy(0,1,"Enemy");
 	trLetterBox(true);
+	trRenderSky(false, "SkyBlue");
 	trArmyDispatch("1,0", "Victory Marker", 1, 1,0,199,0,false);
 	trSetFogAndBlackmap(false, false);
 	createCameraTrack(5000);
@@ -1662,7 +1670,7 @@ highFrequency
 		xFreeDatabaseBlock(dPlanetEyecandy);
 	}
 	aiPlanDestroy(dPlanetEyecandy);
-	trPaintTerrain(0,30,200,200,5,4,false);
+	trPaintTerrain(0,31,200,200,5,4,false);
 }
 
 rule Win_Cine_01
@@ -1847,6 +1855,11 @@ highFrequency
 		xsDisableSelf();
 		xsEnableRule("Win_Cine_06");
 		trUIFadeToColor(255,255,255,2000,700,true);
+		if(1*trQuestVarGet("CustomContent") == 1){
+			trFadeOutMusic(2);
+			trFadeOutAllSounds(2);
+			playSound("\Yeebaagooon\Motherload\WinTrack.mp3");
+		}
 	}
 }
 
@@ -2036,6 +2049,7 @@ highFrequency
 		UnitCreate(1, "Hero Greek Atalanta", 150, 184, 0);
 		trQuestVarSet("CineUnit", temp);
 		characterDialog("Yeebaagooon", "Impressive. Most impressive.", "icons\special e son of osiris icon 64");
+		WinText1();
 	}
 }
 
@@ -2047,6 +2061,7 @@ highFrequency
 		xsDisableSelf();
 		xsEnableRule("Win_Cine_11");
 		characterDialog("Yeebaagooon", "Not only have you defeated Satan, you've become the most successful space miner.", "icons\special e son of osiris icon 64");
+		trTechInvokeGodPower(0, "Bronze", vector(11.24, 9.06, 10.94), vector(0,0,0));
 	}
 }
 
@@ -2067,7 +2082,81 @@ highFrequency
 {
 	if((trTime()-cActivationTime) >= 4){
 		xsDisableSelf();
+		xsEnableRule("Win_Cine_13");
+		characterDialog("Yeebaagooon", "Congratulations, you win!", "icons\special e son of osiris icon 64");
+		WinText2(20,100);
+		//trCameraCut(vector(60.514080,120.241547,20.382381), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619730,0.784813), vector(0.999997,-0.000000,-0.002398));
+		for(n=1 ; <= 150){
+			trQuestVarSetFromRand("TempX", 10, 100, false);
+			trQuestVarSetFromRand("TempZ", 90, 139, false);
+			trQuestVarSet("TempUnit", trGetNextUnitScenarioNameNumber());
+			trArmyDispatch("0,0", "Victory Marker", 1, 1*trQuestVarGet("TempX"),0,1*trQuestVarGet("TempZ"),0,false);
+			trUnitSelectByQV("TempUnit");
+			trUnitChangeProtoUnit("Armor Glow Small");
+			xAddDatabaseBlock(dSpace, true);
+			xSetInt(dSpace, xSpaceName,1*trQuestVarGet("TempUnit"));
+		}
+		for(n=1 ; <= 20){
+			trQuestVarSetFromRand("TempX", 10, 100, false);
+			trQuestVarSetFromRand("TempZ", 90, 139, false);
+			trQuestVarSet("TempUnit", trGetNextUnitScenarioNameNumber());
+			trArmyDispatch("1,0", "Victory Marker", 1, 1*trQuestVarGet("TempX"),0,1*trQuestVarGet("TempZ"),0,false);
+			trUnitSelectByQV("TempUnit");
+			trUnitChangeProtoUnit("Relic");
+			trUnitSelectByQV("TempUnit");
+			trSetSelectedScale(0,0,0);
+			xAddDatabaseBlock(dSpace, true);
+			xSetInt(dSpace, xSpaceName,1*trQuestVarGet("TempUnit"));
+		}
+		for(n=1 ; <= 20){
+			trQuestVarSetFromRand("TempX", 10, 100, false);
+			trQuestVarSetFromRand("TempZ", 90, 139, false);
+			trQuestVarSet("TempUnit", trGetNextUnitScenarioNameNumber());
+			trArmyDispatch("0,2", "Victory Marker", 1, 1*trQuestVarGet("TempX"),0,1*trQuestVarGet("TempZ"),0,false);
+			trUnitSelectByQV("TempUnit");
+			trUnitChangeProtoUnit("Pixiu");
+			trUnitSelectByQV("TempUnit");
+			trSetSelectedScale(0,0,0);
+			xAddDatabaseBlock(dSpace, true);
+			xSetInt(dSpace, xSpaceName,1*trQuestVarGet("TempUnit"));
+		}
+		for(n=1 ; <= 20){
+			trQuestVarSetFromRand("TempX", 10, 100, false);
+			trQuestVarSetFromRand("TempZ", 90, 139, false);
+			trQuestVarSet("TempUnit", trGetNextUnitScenarioNameNumber());
+			trArmyDispatch("0,2", "Victory Marker", 1, 1*trQuestVarGet("TempX"),0,1*trQuestVarGet("TempZ"),0,false);
+			trUnitSelectByQV("TempUnit");
+			trUnitChangeProtoUnit("Lampades");
+			trUnitSelectByQV("TempUnit");
+			trSetSelectedScale(0,0,0);
+			xAddDatabaseBlock(dSpace, true);
+			xSetInt(dSpace, xSpaceName,1*trQuestVarGet("TempUnit"));
+		}
+		for(n=1 ; <= 4){
+			trQuestVarSetFromRand("TempX", 10, 100, false);
+			trQuestVarSetFromRand("TempZ", 90, 139, false);
+			trQuestVarSet("TempUnit", trGetNextUnitScenarioNameNumber());
+			trArmyDispatch("0,2", "Victory Marker", 1, 1*trQuestVarGet("TempX"),0,1*trQuestVarGet("TempZ"),0,false);
+			trUnitSelectByQV("TempUnit");
+			trUnitChangeProtoUnit("Plenty Vault");
+			trUnitSelectByQV("TempUnit");
+			trSetSelectedScale(0,0,0);
+			xAddDatabaseBlock(dSpace, true);
+			xSetInt(dSpace, xSpaceName,1*trQuestVarGet("TempUnit"));
+		}
+	}
+}
+
+rule Win_Cine_13
+inactive
+highFrequency
+{
+	if((trTime()-cActivationTime) >= 3){
+		xsDisableSelf();
+		trQuestVarSet("CineStatus", 3);
+		saveAllData();
 		xsEnableRule("Win_Cine_Off");
-		characterDialog("Yeebaagooon", "You've mined every morsel out of this system.", "icons\special e son of osiris icon 64");
+		characterDialog(" ", " ", "");
+		trCameraCut(vector(62.603432,140.663559,106.860794), vector(0.000019,-0.999990,0.004398), vector(0.004397,0.004397,0.999981), vector(0.999990,0.000000,-0.004398));
 	}
 }
