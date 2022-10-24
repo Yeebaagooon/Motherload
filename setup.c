@@ -378,7 +378,7 @@ highFrequency
 	//VERSION UPDATES
 	int a = trCurrentPlayer();
 	if((trGetScenarioUserData(15) < 1) && (1*trQuestVarGet("VersionMessage") == 0) && (1*trQuestVarGet("OldVersion") < 1)){
-		uiMessageBox("Updated to V1.");
+		//uiMessageBox("Updated to V1.");
 		trQuestVarSet("VersionMessage", 1);
 		trQuestVarSet("OldVersion", 1);
 		xSetPointer(dPlayerData, a);
@@ -1095,19 +1095,63 @@ highFrequency
 			trCameraCut(vector(100.463554,153.803818,-59.088593), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
 			uiZoomToProto("Athena");
 		}
-		/*
-		//CREATE CAMERA TRACK
-		createCameraTrack(10000);
-		trCameraCut(vector(100.463554,153.803818,-59.088593), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
-		addCameraTrackWaypoint();
-		trCameraCut(vector(100.463554,103.803818,-59.088593), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
-		addCameraTrackWaypoint();
-		trCameraCut(vector(100.463554,103.803818,-9.088593), vector(0.001486,-0.784815,0.619728), vector(0.001882,0.619729,0.784813), vector(0.999997,0.000000,-0.002398));
-		addCameraTrackWaypoint();
-		playCameraTrack();
-		*/
+		//Version check
+		//xSetPointer(dPlayerData, 2);
+		//xSetInt(dPlayerData, xVersionUpdate, 2);
+		int temp = 0;
+		for(p=1 ; < cNumberNonGaiaPlayers){
+			xSetPointer(dPlayerData, p);
+			if(xGetInt(dPlayerData, xVersionControl) > xGetInt(dPlayerData, xVersionUpdate)){
+				xSetInt(dPlayerData, xVersionControl, xGetInt(dPlayerData, xVersionUpdate));
+			}
+			if(MapVersion > xGetInt(dPlayerData, xVersionUpdate)){
+				xSetInt(dPlayerData, xVersionControl, MapVersion);
+			}
+			temp = xGetInt(dPlayerData, xVersionControl);
+			for(b=1 ; < cNumberNonGaiaPlayers){
+				xSetPointer(dPlayerData, b);
+				if(kbIsPlayerHuman(b) == true){
+					if(temp < xGetInt(dPlayerData, xVersionUpdate)){
+						temp = xGetInt(dPlayerData, xVersionUpdate);
+						xSetPointer(dPlayerData, p);
+						xSetInt(dPlayerData, xVersionUpdate, temp);
+					}
+				}
+			}
+		}
+		xSetPointer(dPlayerData, trCurrentPlayer());
+		if(MapVersion == xGetInt(dPlayerData, xVersionUpdate)){
+			trChatSend(0, "Version up to date.");
+		}
+		if(MapVersion < xGetInt(dPlayerData, xVersionUpdate)){
+			trChatSend(0, "Version not up to date.");
+			trChatSend(0, "Subscribe on the steam workshop for auto-updates.");
+		}
+		if(MapVersion > xGetInt(dPlayerData, xVersionUpdate)){
+			xSetInt(dPlayerData, xVersionControl, xGetInt(dPlayerData, xVersionUpdate));
+			trChatSend(0, "Version error wtf.");
+		}
+		saveAllData();
 	}
 }
+
+/*
+int New = MapVersion;
+int Old = 1*trQuestVarGet("OldVersion");
+int a = trCurrentPlayer();
+xSetPointer(dPlayerData, a);
+xSetInt(dPlayerData, xVersionControl, xGetInt(dPlayerData, xVersionUpdate));
+for(p=1 ; < cNumberNonGaiaPlayers){
+	xSetPointer(dPlayerData, p);
+	if(kbIsPlayerHuman(p) == false){
+		if(New < xGetInt(dPlayerData, xVersionControl)){
+			New = xGetInt(dPlayerData, xVersionControl);
+			xSetPointer(dPlayerData, a);
+			xSetInt(dPlayerData, xVersionUpdate, New);
+		}
+	}
+}
+*/
 
 rule StageAutoWarn
 inactive
@@ -1141,6 +1185,7 @@ highFrequency
 	if((trTime() > 1*trQuestVarGet("StageTimeout")) && (Stage == 0)){
 		int n = 0;
 		int target = 0;
+		xSetPointer(dPlayerData, 1);
 		if(xGetInt(dPlayerData, xStageUnlocked) >= 9){
 			target = 10;
 		}

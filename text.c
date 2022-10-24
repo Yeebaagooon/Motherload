@@ -235,6 +235,7 @@ int npcDiag(int npc = 0, int dialog = 0) {
 					if (1*trQuestVarGet("CustomContent") == 1){
 						trShowImageDialog("Yeebaagooon\Motherload\instr0", "");
 					}
+					xSetPointer(dPlayerData, p);
 					if(xGetInt(dPlayerData, xStageUnlocked) >= 4){
 						dialog = 0;
 					}
@@ -968,6 +969,7 @@ int npcDiag(int npc = 0, int dialog = 0) {
 					trUnitDestroy();
 					trUnitSelectByQV("PlaytesterHolder");
 					trUnitDestroy();
+					uiMessageBox("Gravoc");
 					FloatingUnitAnimIdle("Swordsman", 1, 13, 5, 90, 1,1,1);
 					trQuestVarSet("Playtester", 1*trQuestVarGet("QVRelic"));
 					trQuestVarSet("PlaytesterHolder", 1*trQuestVarGet("QVHero"));

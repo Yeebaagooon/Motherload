@@ -72,7 +72,7 @@ highFrequency
 {
 	if((trTime()-cActivationTime) >= 2){
 		xsDisableSelf();
-		trShowChoiceDialog("Play opening cinematic?", "Yes", 15, "No", 16);
+		trShowChoiceDialog("Play introduction cinematic?", "Yes", 15, "No", 16);
 	}
 }
 

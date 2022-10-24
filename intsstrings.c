@@ -7,7 +7,6 @@ Search //VERSION UPDATES for text prompt
 -Trap stage final room ?cycle dodge
 -Version chats
 -Skillpoints
--SP exit and go to main menu with map on (modeEnter("Campaign"); modeEnter("Pregame");) trIsGadgetVisible to detect anbd do sequence
 -S10 floor eyecandy
 
 #100Cine = Ship finds Yeeb.

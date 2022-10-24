@@ -940,9 +940,13 @@ highFrequency
 		else{
 			Completion = Completion+xGetInt(dPlayerData, xRadiatorLevel)-1;
 		}
+		if(1*trQuestVarGet("CineStatus") > 0){
+			if(MapVersion < xGetInt(dPlayerData, xVersionUpdate)){
+				trChatSend(0, "Version not up to date.");
+				trChatSend(0, "Subscribe on the steam workshop for auto-updates.");
+			}
+		}
 		//End completion calculation, below does flags and works with decimals (if needed, currently actually = 100)
-		Completion = 100;
-		//xsEnableRule("Win_Cine_06");
 		trUnitSetVariation(1*trQuestVarGet("CompletionFlag1"), (Completion/10)-1);
 		trUnitSetVariation(1*trQuestVarGet("CompletionFlag2"), (Completion-((Completion/10)*10)-1));
 		xAddDatabaseBlock(dSelectables, true);
