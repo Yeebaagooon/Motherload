@@ -18,7 +18,7 @@ Search //VERSION UPDATES for text prompt
 //\Yeebaagooon\Motherload\Test sound.mp3
 int QuickStart = 0;
 int QuickStage = 0;
-bool OverrideSP = false;
+bool OverrideSP = true;
 bool OverrideStage = false;
 string displayz = "lol";
 
