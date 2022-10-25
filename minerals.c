@@ -1331,7 +1331,7 @@ void processHeldRelics(int count = 1) {
 					dropper = p;
 					trUnitChangeProtoUnit("Rocket");
 					trUnitSelectClear();
-					spyEffect(1*trQuestVarGet("P"+dropper+"Siphon"), kbGetProtoUnitID("Automaton"), vector(0,0,0), vector(0,0,0), 18);
+					//spyEffect(1*trQuestVarGet("P"+dropper+"Siphon"), kbGetProtoUnitID("Automaton"), vector(0,0,0), vector(0,0,0), 18);
 					//trMutateSelected(kbGetProtoUnitID("Rocket"));
 					xUnitSelect(dHeldRelics, xRelicName);
 					xSetPointer(dPlayerData, p);
@@ -1534,6 +1534,7 @@ highFrequency
 {
 	//trChatSendToPlayer(0, GSeller, ""+1*trQuestVarGet("TEMPNumber")+"x "+relicName(1*trQuestVarGet("TEMPValue"))+" sold!");
 	trChatSendToPlayer(0, GSeller, "<color=1,0.5,0><u>Receipt:</u></color>");
+	spyEffect(1*trQuestVarGet("P"+GSeller+"Siphon"), kbGetProtoUnitID("Automaton"), vector(0,0,0), vector(0,0,0), 18);
 	for(r=RELIC_NUMBER; >= 1) {
 		if(trQuestVarGet("P"+GSeller+"R"+r+"") > 0){
 			ColouredChatToPlayer(GSeller, RelicColour(r), ""+1*trQuestVarGet("P"+GSeller+"R"+r+"")+"x "+relicName(r)+" sold!");

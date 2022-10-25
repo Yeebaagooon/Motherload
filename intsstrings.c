@@ -5,7 +5,7 @@ Search //VERSION UPDATES for text prompt
 
 --TO DO--
 -Trap stage final room ?cycle dodge
--Version chats
+#Version chats
 -Skillpoints
 -S10 floor eyecandy
 
@@ -16,9 +16,10 @@ Search //VERSION UPDATES for text prompt
 
 //---Test controls
 //\Yeebaagooon\Motherload\Test sound.mp3
+int MapVersion = 1;
 int QuickStart = 0;
 int QuickStage = 0;
-bool OverrideSP = true;
+bool OverrideSP = false;
 bool OverrideStage = false;
 string displayz = "lol";
 
@@ -26,7 +27,7 @@ string displayz = "lol";
 int Stage = 0;
 int StageTime = 0;
 int savedata = 0;
-int MapVersion = 1;
+int HighestPlayerVersion = 1;
 string MapName = "Motherload.xs";
 int MaxRows = 20;
 int MaxCols = 25;
@@ -140,7 +141,6 @@ int xRadioactivesSold = 0;
 int CinematicObelisk = 0;
 
 int xVersionControl = 0;
-int xVersionUpdate = 0;
 int xSpyObject = 0;
 int xIceDrill = 0;
 
@@ -192,7 +192,6 @@ highFrequency
 	xFuelSpend = xInitAddInt(dPlayerData, "fuel spend", 0);
 	xHullSpend = xInitAddInt(dPlayerData, "hull spend", 0);
 	xVersionControl = xInitAddInt(dPlayerData, "version", 1);
-	xVersionUpdate = xInitAddInt(dPlayerData, "updated", 1);
 	xSpyObject = xInitAddInt(dPlayerData, "spy id", 0);
 	xRadioactivesSold = xInitAddInt(dPlayerData, "radioactives sold", 0);
 	xIceDrill = xInitAddInt(dPlayerData, "ice drilled", 0);

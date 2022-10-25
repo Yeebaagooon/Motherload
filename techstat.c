@@ -44,6 +44,7 @@ highFrequency
 	trModifyProtounit("Lampades", cNumberNonGaiaPlayers, 0, 1000);
 	trModifyProtounit("Lampades", cNumberNonGaiaPlayers, 1, 5);
 	trModifyProtounit("Lampades", cNumberNonGaiaPlayers, 55, 4);
+	trModifyProtounit("Servant", 0, 55, 4);
 	modifyProtounitAbsolute("Gargarensis", 0, 0, 666);
 	modifyProtounitAbsolute("Gargarensis", cNumberNonGaiaPlayers, 0, 666);
 	modifyProtounitAbsolute("Pharaoh Of Osiris XP", 0, 0, 47);
@@ -61,6 +62,7 @@ highFrequency
 		trModifyProtounit("Audrey", p, 55, 4);
 		trModifyProtounit("Armory", p, 55, 4);
 		trModifyProtounit("Meteorite", p, 8, 4);
+		trModifyProtounit("Servant", p, 55, 4);
 		trModifyProtounit("Animal Attractor", p, 2, -40);
 		trModifyProtounit("Animal Attractor", p, 55, 4);
 		trModifyProtounit("Earth Dragon", p, 55, 4);

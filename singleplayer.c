@@ -941,9 +941,9 @@ highFrequency
 			Completion = Completion+xGetInt(dPlayerData, xRadiatorLevel)-1;
 		}
 		if(1*trQuestVarGet("CineStatus") > 0){
-			if(MapVersion < xGetInt(dPlayerData, xVersionUpdate)){
-				trChatSend(0, "Version not up to date.");
-				trChatSend(0, "Subscribe on the steam workshop for auto-updates.");
+			if(MapVersion < xGetInt(dPlayerData, xVersionControl)){
+				trChatSend(0, "<color=1,0,0>Version not up to date.</color>");
+				trChatSend(0, "<color=0.88,0,0>Subscribe on the steam workshop for auto-updates.</color>");
 			}
 		}
 		//End completion calculation, below does flags and works with decimals (if needed, currently actually = 100)

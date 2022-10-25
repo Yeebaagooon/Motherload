@@ -275,8 +275,7 @@ highFrequency
 	Total size: 0
 	*/
 	addLocalDataQV("CineStatus", 8, 10);
-	addLocalDataQV("VersionMessage", 8, 2);
-	addLocalDataQV("OldVersion", 8, 100);
+	addLocalDataQV("VersionMessage", 8, 100);
 	
 	/*
 	Slot 9
@@ -325,7 +324,6 @@ highFrequency
 	Slot 14
 	Total size: 0
 	*/
-	addSavedDataDB(dPlayerData, xVersionUpdate, 15, 100);
 	
 	/*
 	Slot 15
@@ -375,17 +373,6 @@ highFrequency
 		trPlayerGrantResources(p, "Favor", -10000.0);
 		trPlayerKillAllGodPowers(p);
 	}
-	//VERSION UPDATES
-	int a = trCurrentPlayer();
-	if((trGetScenarioUserData(15) < 1) && (1*trQuestVarGet("VersionMessage") == 0) && (1*trQuestVarGet("OldVersion") < 1)){
-		//uiMessageBox("Updated to V1.");
-		trQuestVarSet("VersionMessage", 1);
-		trQuestVarSet("OldVersion", 1);
-		xSetPointer(dPlayerData, a);
-		xSetInt(dPlayerData, xVersionControl, 1);
-	}
-	trQuestVarSet("OldVersion", MapVersion);
-	saveAllData();
 	xsDisableSelf();
 }
 
@@ -446,11 +433,20 @@ highFrequency
 			xSetInt(dPlayerData, xRadiatorLevel, 1);
 		}
 	}
+	//VERSION UPDATES
+	int a = trCurrentPlayer();
+	if(1*trQuestVarGet("VersionMessage") == 0){
+		//uiMessageBox("Updated to V1.");
+		trQuestVarSet("VersionMessage", 1);
+		xSetPointer(dPlayerData, a);
+		xSetInt(dPlayerData, xVersionControl, MapVersion);
+	}
+	saveAllData();
 }
 
 void PaintPlanets(int x = 0, int z = 0, int offsetearth = 0){
 	PaintAtlantisArea(x,z,x+60,z+20,"black");
-	trPaintTerrain(x+1,z+10,x+59,z+10, 0, 50, false);
+	//trPaintTerrain(x+1,z+10,x+59,z+10, 0, 50, false);
 	//EYECANDY PLANET 7
 	trBlockAllSounds();
 	int temp = trGetNextUnitScenarioNameNumber();
@@ -1037,8 +1033,6 @@ highFrequency
 {
 	if((trTime()-cActivationTime) >= 4){
 		trLetterBox(false);
-		//FEATURE - Kick inactives on planet screen
-		/*
 		for(p = 2; < cNumberNonGaiaPlayers){
 			xSetPointer(dPlayerData, p);
 			if(xGetInt(dPlayerData, xPlayerActive) == 1){
@@ -1057,7 +1051,7 @@ highFrequency
 					}
 				}
 			}
-		}*/
+		}
 		trSetLighting("default", 5.0);
 		PaintPlanets(20,20, 1);
 		trQuestVarSet("StageSelector", trGetNextUnitScenarioNameNumber());
@@ -1096,62 +1090,32 @@ highFrequency
 			uiZoomToProto("Athena");
 		}
 		//Version check
-		//xSetPointer(dPlayerData, 2);
-		//xSetInt(dPlayerData, xVersionUpdate, 2);
-		int temp = 0;
 		for(p=1 ; < cNumberNonGaiaPlayers){
 			xSetPointer(dPlayerData, p);
-			if(xGetInt(dPlayerData, xVersionControl) > xGetInt(dPlayerData, xVersionUpdate)){
-				xSetInt(dPlayerData, xVersionControl, xGetInt(dPlayerData, xVersionUpdate));
-			}
-			if(MapVersion > xGetInt(dPlayerData, xVersionUpdate)){
-				xSetInt(dPlayerData, xVersionControl, MapVersion);
-			}
-			temp = xGetInt(dPlayerData, xVersionControl);
-			for(b=1 ; < cNumberNonGaiaPlayers){
-				xSetPointer(dPlayerData, b);
-				if(kbIsPlayerHuman(b) == true){
-					if(temp < xGetInt(dPlayerData, xVersionUpdate)){
-						temp = xGetInt(dPlayerData, xVersionUpdate);
-						xSetPointer(dPlayerData, p);
-						xSetInt(dPlayerData, xVersionUpdate, temp);
-					}
-				}
+			if (xGetInt(dPlayerData, xVersionControl) > HighestPlayerVersion) {
+				HighestPlayerVersion = xGetInt(dPlayerData, xVersionControl);
 			}
 		}
+		for(p=1 ; < cNumberNonGaiaPlayers){
+			xSetPointer(dPlayerData, p);
+			xSetInt(dPlayerData, xVersionControl, xsMax(HighestPlayerVersion, MapVersion));
+		}
+		
 		xSetPointer(dPlayerData, trCurrentPlayer());
-		if(MapVersion == xGetInt(dPlayerData, xVersionUpdate)){
+		/*if(MapVersion == xGetInt(dPlayerData, xVersionControl)){
 			trChatSend(0, "Version up to date.");
+		}*/
+		if(MapVersion < xGetInt(dPlayerData, xVersionControl)){
+			trChatSend(0, "<color=1,0,0>Version not up to date.</color>");
+			trChatSend(0, "<color=0.88,0,0>Subscribe on the steam workshop for auto-updates.</color>");
 		}
-		if(MapVersion < xGetInt(dPlayerData, xVersionUpdate)){
-			trChatSend(0, "Version not up to date.");
-			trChatSend(0, "Subscribe on the steam workshop for auto-updates.");
-		}
-		if(MapVersion > xGetInt(dPlayerData, xVersionUpdate)){
-			xSetInt(dPlayerData, xVersionControl, xGetInt(dPlayerData, xVersionUpdate));
+		/*if(MapVersion > xGetInt(dPlayerData, xVersionControl)){
+			xSetInt(dPlayerData, xVersionControl, MapVersion);
 			trChatSend(0, "Version error wtf.");
-		}
+		}*/
 		saveAllData();
 	}
 }
-
-/*
-int New = MapVersion;
-int Old = 1*trQuestVarGet("OldVersion");
-int a = trCurrentPlayer();
-xSetPointer(dPlayerData, a);
-xSetInt(dPlayerData, xVersionControl, xGetInt(dPlayerData, xVersionUpdate));
-for(p=1 ; < cNumberNonGaiaPlayers){
-	xSetPointer(dPlayerData, p);
-	if(kbIsPlayerHuman(p) == false){
-		if(New < xGetInt(dPlayerData, xVersionControl)){
-			New = xGetInt(dPlayerData, xVersionControl);
-			xSetPointer(dPlayerData, a);
-			xSetInt(dPlayerData, xVersionUpdate, New);
-		}
-	}
-}
-*/
 
 rule StageAutoWarn
 inactive
