@@ -1,13 +1,15 @@
 //--SUGGESTIONS
 /*
-Search //VERSION OVERRIDE HERE for release to rewrite all data
 Search //VERSION UPDATES for text prompt
 
 --TO DO--
 -Trap stage final room ?cycle dodge
-#Version chats
 -Skillpoints
 -S10 floor eyecandy
+-Natas Ship eyecandy
+
+-Dialog
+-Natas SS eyecandy
 
 #100Cine = Ship finds Yeeb.
 -Reward.

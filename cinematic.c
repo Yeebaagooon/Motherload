@@ -170,7 +170,7 @@ highFrequency
 {
 	if((trTime()-cActivationTime) >= 5){
 		xsDisableSelf();
-		characterDialog("Yeebaagooon", "We are approaching the rogue star known as Sol.", "icons\special e son of osiris icon 64");
+		characterDialog("Yeebaagooon", "We are approaching the star known as Solaris.", "icons\special e son of osiris icon 64");
 		xsEnableRule("Cine_03");
 	}
 }

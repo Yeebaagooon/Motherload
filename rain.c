@@ -343,41 +343,43 @@ highFrequency
 				}
 			}
 			if(xGetInt(dPlayerData, xPlayerActive) == 1){
-				trUnitSelectClear();
-				trUnitSelectByQV("P"+p+"Siphon");
-				if(trUnitDead()==true){
-					trPlayerKillAllUnits(p);
-					trPlayerKillAllBuildings(p);
-					//trSetPlayerDefeated(p);
-					//So can chat
-					xSetInt(dPlayerData, xPlayerActive, 0);
-					trPlayerKillAllGodPowers(p);
-					PlayerColouredChat(p, trStringQuestVarGet("p"+p+"name") + " has been destroyed!");
-					//chat
-					trQuestVarSetFromRand("lol", 1, 4);
-					if(trCurrentPlayer() == p){
-						trShowWinLose("You have been destroyed!", "xlose.wav");
-						if (trQuestVarGet("lol") == 1) {
-							playSound("dialog\ko\skul062.mp3");
-						}
-						if (trQuestVarGet("lol") == 2) {
-							playSound("dialog\en\skul062.mp3");
-						}
-						if (trQuestVarGet("lol") == 3) {
-							playSound("xpack\xdialog\ko\xkri075.mp3");
-						}
-						if (trQuestVarGet("lol") == 4) {
-							playSound("xpack\xdialog\en\xkri075.mp3");
-						}
-					}
-					trVectorQuestVarSet("P"+p+"Pos", xsVectorSet(0,0,0));
-					//trArmyDispatch(""+p+",0","Victory Marker", 1, 0,0,0,0);
-					if (xGetInt(dPlayerData, xBonus+9) == 0){
-						xSetInt(dPlayerData, xBonus+9, 1);
+				if(1*trQuestVarGet("P"+p+"WinNatas") == 0){
+					trUnitSelectClear();
+					trUnitSelectByQV("P"+p+"Siphon");
+					if(trUnitDead()==true){
+						trPlayerKillAllUnits(p);
+						trPlayerKillAllBuildings(p);
+						//trSetPlayerDefeated(p);
+						//So can chat
+						xSetInt(dPlayerData, xPlayerActive, 0);
+						trPlayerKillAllGodPowers(p);
+						PlayerColouredChat(p, trStringQuestVarGet("p"+p+"name") + " has been destroyed!");
+						//chat
+						trQuestVarSetFromRand("lol", 1, 4);
 						if(trCurrentPlayer() == p){
-							ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked (9)!");
-							saveAllData();
-							playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
+							trShowWinLose("You have been destroyed!", "xlose.wav");
+							if (trQuestVarGet("lol") == 1) {
+								playSound("dialog\ko\skul062.mp3");
+							}
+							if (trQuestVarGet("lol") == 2) {
+								playSound("dialog\en\skul062.mp3");
+							}
+							if (trQuestVarGet("lol") == 3) {
+								playSound("xpack\xdialog\ko\xkri075.mp3");
+							}
+							if (trQuestVarGet("lol") == 4) {
+								playSound("xpack\xdialog\en\xkri075.mp3");
+							}
+						}
+						trVectorQuestVarSet("P"+p+"Pos", xsVectorSet(0,0,0));
+						//trArmyDispatch(""+p+",0","Victory Marker", 1, 0,0,0,0);
+						if (xGetInt(dPlayerData, xBonus+9) == 0){
+							xSetInt(dPlayerData, xBonus+9, 1);
+							if(trCurrentPlayer() == p){
+								ColouredIconChat("1,0.5,0", "icons\special e son of osiris icon 64","Bonus unlocked (9)!");
+								saveAllData();
+								playSoundCustom("cinematics\10_in\clearedcity.wav", "\Yeebaagooon\Motherload\UnlockBonus.mp3");
+							}
 						}
 					}
 				}

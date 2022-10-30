@@ -446,7 +446,7 @@ highFrequency
 						RockType(33);
 					}
 					else if((row == 14) && (col == 2)){
-						RockType(41);
+						RockType(35);
 					}
 					else if((row == 14) && (col == 24)){
 						RockType(33);
@@ -1928,6 +1928,20 @@ highFrequency
 		trUnitSelectByQV("MrNatas");
 		trUnitChangeProtoUnit("Gargarensis");
 		trPaintTerrain(53,9,79,31,0,73,false);
+		for(x = 53 ; <= 79){
+			for(z = 9; <= 31){
+				if((trGetTerrainSubType(x,z) == 73) && (trGetTerrainType(x,z) == 0)){
+					temp = trGetNextUnitScenarioNameNumber();
+					trArmyDispatch("0,0", "Dwarf", 1, x*2,3,z*2, 0, true);
+					trUnitSelectClear();
+					trUnitSelect(""+temp);
+					trUnitChangeProtoUnit("Statue of Automaton Base");
+					trUnitSelectClear();
+					trUnitSelect(""+temp);
+					trSetSelectedScale(2,2,2);
+				}
+			}
+		}
 		//Natas room playable area
 		PaintAtlantisArea(65,33,67,35,"BlackRock");
 		trPaintTerrain(66,34,66,34,10,10,false);
@@ -2477,6 +2491,16 @@ highFrequency
 					spawnFuelRelic(v,150);
 					//command room fuel
 				}
+				if((row >= 13) && (row <= 13) && (col >= 12) && (col <= 20)){
+					trQuestVarSetFromRand("Temp2",7,9);
+					spawnRelicSpecific(v,1*trQuestVarGet("Temp2"));
+				}
+				//if(cNumberNonGaiaPlayers > 4){
+				if((row >= 11) && (row <= 11) && (col >= 12) && (col <= 20)){
+					trQuestVarSetFromRand("Temp2",12,18);
+					spawnRelicSpecific(v,1*trQuestVarGet("Temp2"));
+				}
+				//}
 			}
 		}
 	}
