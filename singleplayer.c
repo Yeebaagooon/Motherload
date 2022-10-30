@@ -294,12 +294,12 @@ void PaintSP(){
 		trPaintTerrain(21,y*5+4,21,y*5+4,0,77,false);  //3x frill to obelisk L
 		trPaintTerrain(20,y*5+4,20,y*5+4,0,75,false);
 		trPaintTerrain(19,y*5+4,19,y*5+4,0,79,false);
-		PaintAtlantisArea(5,y*5+3,16,y*5+5, "black"); // square
+		//PaintAtlantisArea(5,y*5+3,16,y*5+5, "black"); // skillpoint square
 		
 		trPaintTerrain(47,y*5+4,47,y*5+4,0,79,false); //3x frill to obelisk R
 		trPaintTerrain(48,y*5+4,48,y*5+4,0,75,false);
 		trPaintTerrain(49,y*5+4,49,y*5+4,0,77,false);
-		PaintAtlantisArea(51,y*5+3,62,y*5+5, "black"); // square
+		//PaintAtlantisArea(51,y*5+3,62,y*5+5, "black"); // skillpoint square
 	}
 }
 

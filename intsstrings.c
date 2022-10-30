@@ -1,4 +1,3 @@
-//--SUGGESTIONS
 /*
 Search //VERSION UPDATES for text prompt
 
@@ -8,15 +7,12 @@ Search //VERSION UPDATES for text prompt
 -S10 floor eyecandy
 -Natas Ship eyecandy
 
--Dialog
--Natas SS eyecandy
+-Dialog voice?
 
-#100Cine = Ship finds Yeeb.
--Reward.
 */
 
 
-//---Test controls
+//---Controls
 //\Yeebaagooon\Motherload\Test sound.mp3
 int MapVersion = 1;
 int QuickStart = 0;
